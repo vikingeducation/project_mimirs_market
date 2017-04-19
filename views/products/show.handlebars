@@ -9,6 +9,10 @@
       </a>
     <p class="card-text">{{ product.description }}</p>
   </div>
+  <form action="/cart" method="post">
+    <input type="hidden" name="id" value="{{ product.id }}">
+    <button type="submit" class="btn btn-primary">+ Cart</button>
+  </form>
 </div>
 
 <h2 class="text-center">Related Products</h2>
@@ -17,33 +21,7 @@
 {{#if product.Category.Products.length }}
   <div class="row">
     {{#each product.Category.Products as |related| }}
-      <div class="col-sm-4">
-        <div class="card">
-          <a href="/products/{{ related.id }}">
-            <img class="card-img-top gallery-image" src="http://i.imgur.com/qK42fUu.jpg">
-          </a>
-          <div class="card-block">
-            <div class="float-right">
-              ${{related.price}}
-            </div>
-            <h4 class="card-title">
-              <a href="/products/{{ related.id }}">
-                {{related.name}}
-              </a>
-            </h4>
-            <p class="card-text">
-              in
-              <a href="/categories/{{ ../product.Category.id }}">
-                {{../product.Category.name}}
-              </a>
-            </p>
-            <p class="card-text">
-              {{related.description}}
-            </p>
-            <a href="#" class="btn btn-primary">+ Cart</a>
-          </div>
-        </div>
-      </div>
+      {{> products/_product product=related}}
     {{/each }}
   </div>
 

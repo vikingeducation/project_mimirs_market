@@ -36,7 +36,8 @@ router.get("/:id", (req, res) => {
             model: Product,
             where: {
               id: { $ne: req.params.id }
-            }
+            },
+            include: [{ model: Category }]
           }
         ]
       }

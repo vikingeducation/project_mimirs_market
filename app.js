@@ -7,24 +7,11 @@ var app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const cookieParser = require("cookie-parser");
-// app.use(cookieParser);
 // ----------------------------------------
 // Sessions/Cookies
 // ----------------------------------------
-var cookieSession = require("cookie-session");
-
-app.use(
-  cookieSession({
-    name: "session",
-    keys: ["asdf1234567890qwer"]
-  })
-);
-app.use((req, res, next) => {
-  res.locals.session = req.session;
-  res.locals.currentUser = req.session.currentUser;
-  next();
-});
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 // ----------------------------------------
 // Flash Messages
@@ -78,6 +65,9 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+var indexRouter = require("./routes/index");
+app.use("/", indexRouter);
+
 var productsRouter = require("./routes/products");
 app.use("/products", productsRouter);
 

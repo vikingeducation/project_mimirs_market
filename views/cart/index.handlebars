@@ -16,6 +16,19 @@
             </a>
           </h4>
           <p class="card-text">
+            <form action="cart/edit" method="post">
+              <label>Quantity</label>
+              <input type="hidden" name="id" value="{{product.id}}">
+              <input type="number" name="quantity" min="0" value="{{product.quantity}}">
+              <button type="submit" class="btn btn-primary">Set Quantity</button>
+            </form>
+          </p>
+          <p class="card-text">
+            <form>
+
+            </form>
+          </p>
+          <p class="card-text">
             in
             <a href="/categories/{{ product.Category.id }}">
               {{product.Category.name}}
@@ -24,7 +37,6 @@
           <p class="card-text">
             {{product.description}}
           </p>
-          <a href="#" class="btn btn-primary">+ Cart</a>
         </div>
       </div>
     </div>
