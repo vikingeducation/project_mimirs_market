@@ -49,24 +49,32 @@ router.get("/", onIndex);
 // ----------------------------------------
 // Show
 // ----------------------------------------
-// router.get("/:id", (req, res) => {
-//   Profile.findById(req.params.id, {
-//     include: [
-//       {
-//         all: true,
-//         include: [{ all: true }]
-//       }
-//     ]
-//   })
-//     .then(profile => {
-//       if (profile) {
-//         res.render("users/show", { profile });
-//       } else {
-//         res.send(404);
-//       }
-//     })
-//     .catch(e => res.status(500).send(e.stack));
-// });
+router.get("/:id", (req, res) => {
+
+  Product.findById(req.params.id, {
+    include: [
+      {
+        model: Category,
+        include: [
+          {
+            model: Product,
+            where: {
+              id: { $ne: req.params.id }
+            }
+          }
+        ]
+      }
+    ]
+  })
+    .then(product => {
+      if (product) {
+        res.render("products/show", { product });
+      } else {
+        res.send(404);
+      }
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
 //
 // // ----------------------------------------
 // // Create

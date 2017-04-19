@@ -1,0 +1,32 @@
+<header class="page-header">
+  <h1>Product</h1>
+</header>
+
+<p>Name: {{ product.name }}</p>
+<p>Category: {{ product.Category.name }}</p>
+<p>Price: {{ product.price }}</p>
+<p>Description: {{ product.description }}</p>
+
+{{#if product.Category.Product.length }}
+  <div class="row">
+    {{#each product.Category.Product as |related| }}
+      <div class="col-sm-4">
+        <div class="thumbnail">
+          <div>
+            <a href="/categories/{{ product.Category.id }}">
+              {{product.Category.name}}
+            </a>
+          </div>
+          <a href="/products/{{ related.id }}">
+            <img src="http://i.imgur.com/qK42fUu.jpg">
+            <h6>{{related.name}} - {{related.price}}</h6>
+          </a>
+				</div>
+      </div>
+    {{/each }}
+  </div>
+
+
+{{else }}
+  <p class="text-danger">No related products</p>
+{{/if }}
