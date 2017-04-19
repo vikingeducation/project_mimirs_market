@@ -3,6 +3,9 @@
  {{#if hasSearched}}
  <h2>Results from search: {{search}}<h2>
  {{/if}}
+ {{#if hasFiltered}}
+ <h2>Results from filtering (min price: {{minPrice}}, max price: {{maxPrice}}, category: {{product.Category.name}})<h2>
+ {{/if}}
 </header>
 
 <form action="/search" method="GET">
@@ -16,7 +19,7 @@
   <div class="form-group">
     <input type="number" name="minPrice" class="form-control" id="min_price" placeholder="Minimum Price">
     <input type="number" name="maxPrice" class="form-control" id="max_price" placeholder="Maximum Price">
-    <select name="category[id]" id="category" class="form-control">
+    <select name="product[categoryId]" id="category" class="form-control">
       <option value="empty"></option>
         {{#each categories as |category| }}
           <option value="{{ category.id }}">{{ category.name }}</option>
