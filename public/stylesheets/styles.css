@@ -12,20 +12,13 @@
   color: #fff;
 }
 
-.banner {
-  background-color: #C6D8D3;
-  padding-top: 75px;
-  margin-bottom: 50px;
-  border-bottom: 1px solid #ACB0BD;
-}
-
-.user-profile {
-  height: 150px;
-  width: 150px;
-  position: absolute;
-  border: 1px solid #ACB0BD;
-}
-
 .index-img {
-  width:auto;
+  margin-bottom: 10px;
 }
+
+
+img {
+  margin: auto;
+  width: 200px;
+}
+*/
