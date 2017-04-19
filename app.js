@@ -7,6 +7,8 @@ var app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// const cookieParser = require("cookie-parser");
+// app.use(cookieParser);
 // ----------------------------------------
 // Sessions/Cookies
 // ----------------------------------------
@@ -78,6 +80,9 @@ app.use((req, res, next) => {
 // ----------------------------------------
 var productsRouter = require("./routes/products");
 app.use("/products", productsRouter);
+
+var cartRouter = require("./routes/cart");
+app.use("/cart", cartRouter);
 
 // var usersRouter = require("./routers/users");
 // app.use("/users", usersRouter);
