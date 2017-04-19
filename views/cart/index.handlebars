@@ -3,7 +3,7 @@
 
 </header>
 
-{{#each products as |product|}}
+{{#each cartProducts as |product|}}
 <div class="row">
   <div class="col-xs-3">
       <img src="/images/{{product.photo}}" height="180" width="180">
@@ -14,14 +14,14 @@
       <p>{{product.price}}</p>
   </div>
   <div class="col-xs-3">
-      <form action="/updateQuantity" method="POST">
+      <form action="/cart/updateQuantity" method="POST">
         <input type="hidden" name="productId" value="{{product.id}}">
         <input type="text" name="productQuantity" value="{{product.quantity}}">
   </div>
   <div class="col-xs-3">
     <button type="submit" class="btn btn-primary">Set Quantity</button>
     </form>
-    <form action="/removeFromCart" method="POST">
+    <form action="/cart/remove" method="POST">
       <input type="hidden" name="productId" value="{{product.id}}">
       <button type="submit" class="btn btn-danger">Remove</button>
   </div>
@@ -29,4 +29,6 @@
 </div>
 {{/each}}
 
-
+<form action="/cart/clear" method="POST">
+  <button type="submit" class="btn btn-danger">Clear Cart</button>
+</form>

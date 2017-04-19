@@ -8,12 +8,10 @@ var sequelize = models.sequelize;
 
 var onIndex = (req, res) => {
   var products, categories;
-
   if (!req.session.shoppingCart) {
     req.session.shoppingCart = [];
   }
-
-  console.log(req.session.shoppingCart);
+  var cartProducts = req.session.shoppingCart;
 
   Product.findAll({
     include: [{ model: Category, required: true }],
@@ -22,7 +20,7 @@ var onIndex = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', { products, categories });
+      res.render('products/index', { products, categories, cartProducts });
     });
   });
 };
@@ -137,6 +135,7 @@ var onAdd = (req, res) => {
     include: [{ model: Category, required: true }]
   })
     .then(product => {
+      console.log(product);
       product.dataValues.quantity = 1;
       req.session.shoppingCart.push(product);
     })
@@ -149,6 +148,7 @@ router.post('/addToCart', onAdd);
 
 var onShow = (req, res) => {
   var products, currentProduct;
+  var cartProducts = req.session.shoppingCart;
 
   Product.findById(req.params.id, {
     include: [{ model: Category, required: true }]
@@ -159,7 +159,7 @@ var onShow = (req, res) => {
       limit: 30
     }).then(result => {
       products = result;
-      res.render('products/show', { products, currentProduct });
+      res.render('products/show', { products, currentProduct, cartProducts });
     });
   });
 };

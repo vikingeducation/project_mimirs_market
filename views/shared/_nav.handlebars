@@ -22,11 +22,14 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shopping Cart<span class="caret"></span></a>
           <ul class="dropdown-menu">
+            {{#each cartProducts as |product|}}
+            <li>{{product.quantity}} : {{product.name}}</li>
+            {{/each}}
             <li><a href="/cart">Shopping Cart</a></li>
             <li><a href="#">Checkout</a></li>
           </ul>
         </li>
-       
+
       </ul>
 
     </div><!-- /.navbar-collapse -->
