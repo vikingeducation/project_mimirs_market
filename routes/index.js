@@ -1,7 +1,7 @@
-var url = require('url');
-const express = require('express');
+var url = require("url");
+const express = require("express");
 let router = express.Router();
-var models = require('./../models/sequelize');
+var models = require("./../models/sequelize");
 var Product = models.Product;
 var Category = models.Category;
 var sequelize = models.sequelize;
@@ -16,7 +16,7 @@ var onIndex = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', { products, categories });
+      res.render("products/index", { products, categories });
     });
   });
 };
@@ -34,7 +34,7 @@ var onSearch = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', {
+      res.render("products/index", {
         products,
         categories,
         hasSearched,
@@ -54,7 +54,7 @@ var onFilter = (req, res) => {
   !minPrice ? (minPrice = 0) : minPrice;
   !maxPrice ? (maxPrice = 9999) : maxPrice;
 
-  if (typeof categoryId === 'number') {
+  if (categoryId) {
     Product.findAll({
       where: {
         $and: [
@@ -69,12 +69,13 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render('products/index', {
+        res.render("products/index", {
           products,
           categories,
           hasFiltered,
           minPrice,
-          maxPrice
+          maxPrice,
+          categoryId
         });
       });
     });
@@ -89,7 +90,7 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render('products/index', {
+        res.render("products/index", {
           products,
           categories,
           hasFiltered,
@@ -101,14 +102,14 @@ var onFilter = (req, res) => {
   }
 };
 
-router.get('/search', onSearch);
+router.get("/search", onSearch);
 
 // var onFilter = (req, res) => {};
 //
 // var onSort = (req, res) => {};
 
-router.get('/', onIndex);
-router.get('/filter', onFilter);
+router.get("/", onIndex);
+router.get("/filter", onFilter);
 // router.post('/products/sort', onSort);
 
 var onShow = (req, res) => {
@@ -123,11 +124,11 @@ var onShow = (req, res) => {
       limit: 30
     }).then(result => {
       products = result;
-      res.render('products/show', { products, currentProduct });
+      res.render("products/show", { products, currentProduct });
     });
   });
 };
 
-router.get('/products/:id', onShow);
+router.get("/products/:id", onShow);
 
 module.exports = router;
