@@ -1,7 +1,7 @@
 <header class="page-header">
   <h1>Products</h1>
 
-  <form class="form-inline" action="/products/search" method="get">
+  <form class="form-inline" action="/products" method="get">
     <div class="form-group">
       <label for="search">Search</label>
       <input type="text" class="form-control" name="search" id="search">
@@ -11,11 +11,11 @@
 
 
   <br>
-  <form class="form-inline" action="/products/filter" method="get">
+  <form class="form-inline" action="/products" method="get">
     <div class="form-group">
       <label for="sortSelect">Category</label>
       <select class="form-control" name="category" id="sortSelect">
-        <option value="">All</option>
+        <option>All</option>
         {{#each categories as |category|}}
         <option value="{{category.id}}">{{category.name}}</option>
         {{/each}}
@@ -34,7 +34,7 @@
   </form>
   <br>
 
-  <form class="form-inline" action="/products/sort" method="get">
+  <form class="form-inline" action="/products" method="get">
     <div class="form-group">
       <label for="sortSelect">Sort by</label>
       <select class="form-control" name="sort" id="sortSelect">

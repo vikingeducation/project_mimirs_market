@@ -5,18 +5,66 @@ const sequelize = models.sequelize;
 
 const { Product, Category } = models;
 
+function _makeQuery(query) {
+  if (query.search) {
+    const searchQuery = query.search;
+    return {
+      include: [{ all: true }],
+      where: { name: { $iLike: `%${searchQuery}%` } }
+    };
+  } else if (query.category) {
+    let min = query.min || 0;
+    let max = query.max || 1000;
+    let category = query.category === 'All'
+      ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      : [query.category];
+    return {
+      include: [{ all: true }],
+      where: { price: { $gte: min, $lte: max }, categoryId: { $in: category } }
+    };
+  } else if (query.sort) {
+    let orderParam;
+    switch (query.sort) {
+      case "price":
+        orderParam = "price";
+        break;
+      case "priceDesc":
+        orderParam = "price DESC";
+        break;
+      case "name":
+        orderParam = "name";
+        break;
+      case "nameDesc":
+        orderParam = "name DESC";
+        break;
+      case "created":
+        orderParam = '"createdAt"';
+        break;
+      case "createdDesc":
+        orderParam = '"createdAt" DESC';
+        break;
+      default:
+        orderParam = "";
+    }
+    return {
+      include: [{ all: true }],
+      order: orderParam
+    };
+  } else {
+    return {
+      include: [{ all: true }]
+    }
+  }
+}
+
 // ----------------------------------------
 // Index
 // ----------------------------------------
-var onIndex = (req, res) => {
+router.get("/", (req, res) => {
+  const queryObj = _makeQuery(req.query);
+
   let products;
-  Product.findAll({
-    include: [
-      {
-        all: true
-      }
-    ]
-  })
+  Product.findAll(queryObj)
     .then(prod => {
       products = prod;
       return Category.findAll({});
@@ -25,103 +73,43 @@ var onIndex = (req, res) => {
       res.render("products/index", { products, categories });
     })
     .catch(e => res.status(500).send(e.stack));
-};
-router.get("/", onIndex);
-
-// ----------------------------------------
-// Search
-// ----------------------------------------
-router.get("/search", (req, res) => {
-  const searchQuery = req.query.search;
-  Product.findAll({
-    include: [
-      {
-        all: true
-      }
-    ],
-    where: {
-      name: {
-        $iLike: `%${searchQuery}%`
-      }
-    }
-  })
-    .then(products => {
-      res.render("products/index", { products });
-    })
-    .catch(e => res.status(500).send(e.stack));
 });
 
-// ----------------------------------------
-// Filter
-// ----------------------------------------
-
-router.get("/filter", (req, res) => {
-  let min = req.query.min || 0;
-  let max = req.query.max || 1000;
-  let category = [req.query.category] || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  Product.findAll({
-    include: [
-      {
-        all: true
-      }
-    ],
-    where: {
-      price: {
-        $gte: min,
-        $lte: max
-      },
-      categoryId: { $in: category }
-    }
-  })
-    .then(products => {
-      res.render("products/index", { products });
-    })
-    .catch(e => res.status(500).send(e.stack));
-});
-
-// ----------------------------------------
-// Sort
-// ----------------------------------------
-router.get("/sort", (req, res) => {
-  const sortingMethod = req.query.sort;
-  let orderParam;
-  switch (sortingMethod) {
-    case "price":
-      orderParam = "price";
-      break;
-    case "priceDesc":
-      orderParam = "price DESC";
-      break;
-    case "name":
-      orderParam = "name";
-      break;
-    case "nameDesc":
-      orderParam = "name DESC";
-      break;
-    case "created":
-      orderParam = '"createdAt"';
-      break;
-    case "createdDesc":
-      orderParam = '"createdAt" DESC';
-      break;
-    default:
-      orderParam = "";
-  }
-
-  Product.findAll({
-    include: [
-      {
-        all: true
-      }
-    ],
-    order: orderParam
-  })
-    .then(products => {
-      res.render("products/index", { products });
-    })
-    .catch(e => res.status(500).send(e.stack));
-});
+// // ----------------------------------------
+// // Search
+// // ----------------------------------------
+// router.get("/search", (req, res) => {
+//   Product.findAll()
+//     .then(products => {
+//       res.render("products/index", { products });
+//     })
+//     .catch(e => res.status(500).send(e.stack));
+// });
+//
+// // ----------------------------------------
+// // Filter
+// // ----------------------------------------
+//
+// router.get("/filter", (req, res) => {
+//   Product.findAll()
+//     .then(products => {
+//       res.render("products/index", { products });
+//     })
+//     .catch(e => res.status(500).send(e.stack));
+// });
+//
+// // ----------------------------------------
+// // Sort
+// // ----------------------------------------
+// router.get("/sort", (req, res) => {
+//
+//
+//   Product.findAll()
+//     .then(products => {
+//       res.render("products/index", { products });
+//     })
+//     .catch(e => res.status(500).send(e.stack));
+// });
 //router.get("/users", onIndex);
 //
 // // ----------------------------------------
@@ -166,7 +154,6 @@ router.get("/:id", (req, res) => {
     ]
   })
     .then(product => {
-      console.log(product.Category.name);
       if (product) {
         res.render("products/show", { product });
       } else {
