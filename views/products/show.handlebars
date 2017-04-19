@@ -13,10 +13,16 @@
   </div>
   <div class="col-xs-6">
       <p>{{currentProduct.description}}</p>
-      <form action="/addToCart" method="POST">
-        <input type="hidden" name="productId" value="{{currentProduct.id}}">
-        </a><button type="submit" class="btn btn-primary">Add to Cart</button>
-      </form>
+      {{#if (isInCart currentProduct.id cartProducts)}}
+        <form action="/cart" method="GET">
+        <button type="submit" class="btn btn-success">Edit Cart</button>
+        </form>
+      {{else}}
+        <form action="/addToCart" method="POST">
+          <input type="hidden" name="productId" value="{{currentProduct.id}}">
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+      {{/if}}
   </div>
 
 </div>
