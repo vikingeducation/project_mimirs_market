@@ -49,9 +49,9 @@ router.post("/", (req, res) => {
 
 router.post("/edit", (req, res) => {
   let cart = req.cookies.cart || {};
-  const quant = req.body.quantity;
+  const quant = +req.body.quantity;
   const id = req.body.id;
-  if (quant === "0") {
+  if (quant <= 0) {
     delete cart[id];
   } else {
     cart[id] = quant;

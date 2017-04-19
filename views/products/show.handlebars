@@ -11,9 +11,8 @@
   </div>
   {{#if (alreadyInCart cartIds product.id)}}
 
-  <form action="/cart" method="get">
-    <button type="submit" class="btn btn-warning">To the Cart!!!!</button>
-  </form>
+    <a href="/cart" class="btn btn-warning">To the Cart!!!!</a>
+
   {{else}}
     <form action="/cart" method="post">
       <input type="hidden" name="id" value="{{ product.id }}">
