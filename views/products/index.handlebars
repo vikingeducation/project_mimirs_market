@@ -68,7 +68,7 @@
         {{#if (isInCart product.id ../cartProducts)}}
         <form action="/cart" method="GET">
           <h4><a href="/products/{{product.id}}">{{product.name}}</a></h4>
-          <h5>{{product.price}}</h5>
+          <h5>${{product.price}}</h5>
           <h5>{{product.Category.name}}</h5>
           <button type="submit" class="btn btn-success">Edit Cart</button>
         </form>
@@ -76,7 +76,7 @@
         <form action="/addToCart" method="POST">
           <input type="hidden" name="productId" value="{{product.id}}">
           <h4><a href="/products/{{product.id}}">{{product.name}}</a></h4>
-          <h5>{{product.price}}</h5>
+          <h5>${{product.price}}</h5>
           <h5>{{product.Category.name}}</h5>
           <button type="submit" class="btn btn-primary">Add to Cart</button>
         </form>

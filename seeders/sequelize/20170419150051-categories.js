@@ -6,7 +6,7 @@ module.exports = {
     var categories = [];
     for (let i = 1; i < 21; i++) {
       let adjective = faker.hacker.adjective();
-      adjective = adjective[0].toLowerCase() + adjective.substring(1);
+      adjective = adjective[0].toUpperCase() + adjective.substring(1);
       let name = adjective + ' ' + faker.commerce.department();
 
       categories.push({
