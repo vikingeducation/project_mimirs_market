@@ -105,8 +105,10 @@ var hbs = expressHandlebars.create({
   partialsDir: "views/",
   defaultLayout: "main",
   helpers: {
-    alreadyInCart: function(cardIds, productId) {
-      return cardIds.includes(productId) ? true : false;
+    alreadyInCart: function(cartIds, productId) {
+      console.log(cartIds);
+      console.log(productId);
+      return cartIds.includes(productId);
     }
   }
 });

@@ -9,8 +9,11 @@
       </a>
     <p class="card-text">{{ product.description }}</p>
   </div>
-  {{#if alreadyInCart cartIds product.id}}
-    YEAHYEAHYEAHYEHYHYHHHEYHAHH
+  {{#if (alreadyInCart cartIds product.id)}}
+
+  <form action="/cart" method="get">
+    <button type="submit" class="btn btn-warning">To the Cart!!!!</button>
+  </form>
   {{else}}
     <form action="/cart" method="post">
       <input type="hidden" name="id" value="{{ product.id }}">

@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
     .then(categories => {
       let cartIds = [];
       if (req.cookies.cart) {
-        cardIds = Object.keys(req.cookies.cart);
+        cartIds = Object.keys(req.cookies.cart);
       }
       res.render("products/index", { cartIds, products, categories });
     })
@@ -49,7 +49,11 @@ router.get("/:id", (req, res) => {
   })
     .then(product => {
       if (product) {
-        res.render("products/show", { product });
+        let cartIds = [];
+        if (req.cookies.cart) {
+          cartIds = Object.keys(req.cookies.cart).map(i => +i);
+        }
+        res.render("products/show", { product, cartIds });
       } else {
         res.send(404);
       }
