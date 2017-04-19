@@ -1,8 +1,9 @@
-var express = require("express");
-var router = express.Router();
-var models = require("./../models/sequelize");
-var sequelize = models.sequelize;
-var { Product, Category } = models;
+const express = require("express");
+const router = express.Router();
+const models = require("./../models/sequelize");
+const sequelize = models.sequelize;
+
+const { Product, Category } = models;
 
 // ----------------------------------------
 // Index
@@ -16,12 +17,77 @@ var onIndex = (req, res) => {
     ]
   })
     .then(products => {
-      console.log(products);
       res.render("products/index", { products });
     })
     .catch(e => res.status(500).send(e.stack));
 };
 router.get("/", onIndex);
+
+// ----------------------------------------
+// Search
+// ----------------------------------------
+router.get('/search', (req, res) => {
+  const searchQuery = req.query.search;
+  Product.findAll({
+    include: [
+      {
+        all: true
+      }
+    ],
+    where: {
+      name: {
+        $iLike: `%${searchQuery}%`
+      }
+    }
+  })
+    .then(products => {
+      res.render("products/index", { products });
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
+
+// ----------------------------------------
+// Sort
+// ----------------------------------------
+router.get('/sort', (req, res) => {
+  const sortingMethod = req.query.sort;
+  let orderParam;
+  switch (sortingMethod) {
+    case 'price':
+      orderParam = 'price';
+      break;
+    case 'priceDesc':
+      orderParam = 'price DESC';
+      break;
+    case 'name':
+      orderParam = 'name';
+      break;
+    case 'nameDesc':
+      orderParam = 'name DESC';
+      break;
+    case 'created':
+      orderParam = '"createdAt"';
+      break;
+    case 'createdDesc':
+      orderParam = '"createdAt" DESC';
+      break;
+    default:
+      orderParam = '';
+  }
+
+  Product.findAll({
+    include: [
+      {
+        all: true
+      }
+    ],
+    order: orderParam
+  })
+    .then(products => {
+      res.render("products/index", { products });
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
 //router.get("/users", onIndex);
 //
 // // ----------------------------------------

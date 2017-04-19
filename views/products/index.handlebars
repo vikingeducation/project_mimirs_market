@@ -1,16 +1,27 @@
 <header class="page-header">
   <h1>Products</h1>
-  <form class="form-inline" action="/products" method="get">
+
+  <form class="form-inline" action="/products/search" method="get">
     <div class="form-group">
-      <label for="exampleSelect1">Sort by</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>Default</option>
-        <option>Price Asc</option>
-        <option>Price Desc</option>
-        <option>Name Asc</option>
-        <option>Name Desc</option>
-        <option>Newest First</option>
-        <option>Oldest First</option>
+      <label for="search">Search</label>
+      <input type="text" class="form-control" name="search" id="search">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+  
+  <br>
+
+  <form class="form-inline" action="/products/sort" method="get">
+    <div class="form-group">
+      <label for="sortSelect">Sort by</label>
+      <select class="form-control" name="sort" id="sortSelect">
+        <option value="">Default</option>
+        <option value="price">Price Asc</option>
+        <option value="priceDesc">Price Desc</option>
+        <option value="name">Name Asc</option>
+        <option value="nameDesc">Name Desc</option>
+        <option value="created">Newest First</option>
+        <option value="createdDesc">Oldest First</option>
       </select>
     </div>
      <button type="submit" class="btn btn-primary">Submit</button>
