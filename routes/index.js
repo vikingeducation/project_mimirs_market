@@ -1,13 +1,19 @@
-var url = require("url");
-const express = require("express");
+var url = require('url');
+const express = require('express');
 let router = express.Router();
-var models = require("./../models/sequelize");
+var models = require('./../models/sequelize');
 var Product = models.Product;
 var Category = models.Category;
 var sequelize = models.sequelize;
 
 var onIndex = (req, res) => {
   var products, categories;
+
+  if (!req.session.shoppingCart) {
+    req.session.shoppingCart = [];
+  }
+
+  console.log(req.session.shoppingCart);
 
   Product.findAll({
     include: [{ model: Category, required: true }],
@@ -16,7 +22,7 @@ var onIndex = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render("products/index", { products, categories });
+      res.render('products/index', { products, categories });
     });
   });
 };
@@ -34,7 +40,7 @@ var onSearch = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render("products/index", {
+      res.render('products/index', {
         products,
         categories,
         hasSearched,
@@ -69,7 +75,7 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render("products/index", {
+        res.render('products/index', {
           products,
           categories,
           hasFiltered,
@@ -90,7 +96,7 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render("products/index", {
+        res.render('products/index', {
           products,
           categories,
           hasFiltered,
@@ -114,15 +120,32 @@ var onOrder = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render("products/index", { products, categories });
+      res.render('products/index', { products, categories });
     });
   });
 };
 
-router.get("/", onIndex);
-router.get("/search", onSearch);
-router.get("/filter", onFilter);
-router.get("/order", onOrder);
+router.get('/', onIndex);
+router.get('/search', onSearch);
+router.get('/filter', onFilter);
+router.get('/order', onOrder);
+
+var onAdd = (req, res) => {
+  var productId = req.body.productId;
+
+  Product.findById(productId, {
+    include: [{ model: Category, required: true }]
+  })
+    .then(product => {
+      product.dataValues.quantity = 1;
+      req.session.shoppingCart.push(product);
+    })
+    .then(() => {
+      res.redirect('/');
+    });
+};
+
+router.post('/addToCart', onAdd);
 
 var onShow = (req, res) => {
   var products, currentProduct;
@@ -136,11 +159,11 @@ var onShow = (req, res) => {
       limit: 30
     }).then(result => {
       products = result;
-      res.render("products/show", { products, currentProduct });
+      res.render('products/show', { products, currentProduct });
     });
   });
 };
 
-router.get("/products/:id", onShow);
+router.get('/products/:id', onShow);
 
 module.exports = router;

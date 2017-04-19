@@ -13,8 +13,8 @@
   </div>
   <div class="col-xs-6">
       <p>{{currentProduct.description}}</p>
-      <form>
-        <input type="hidden" value="{{currentProduct.id}}">
+      <form action="/addToCart" method="POST">
+        <input type="hidden" name="productId" value="{{currentProduct.id}}">
         </a><button type="submit" class="btn btn-primary">Add to Cart</button>
       </form>
   </div>
@@ -32,10 +32,13 @@
     <div class="col-xs-4 index-img">
       <img src="/images/{{product.photo}}" height="180" width="180" /><br>
       <div class="text-center">
-        <p><a href="/products/{{product.id}}">{{product.name}}</a></p>
-        <p>{{product.price}}</p>
-        <p>{{../currentProduct.Category.name}}</p>
-        <button type="submit" class="btn btn-primary">Add to Cart</button>
+        <form action="/addToCart" method="POST">
+          <input type="hidden" name="productId" value="{{product.id}}">
+          <p><a href="/products/{{product.id}}">{{product.name}}</a></p>
+          <p>{{product.price}}</p>
+          <p>{{../currentProduct.Category.name}}</p>
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+      </form>
       </div>
     </div>
   {{/each}}
