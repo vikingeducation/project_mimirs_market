@@ -9,6 +9,7 @@ const { Product, Category } = models;
 // Index
 // ----------------------------------------
 var onIndex = (req, res) => {
+  let products;
   Product.findAll({
     include: [
       {
@@ -16,8 +17,12 @@ var onIndex = (req, res) => {
       }
     ]
   })
-    .then(products => {
-      res.render("products/index", { products });
+    .then(prod => {
+      products = prod;
+      return Category.findAll({});
+    })
+    .then(categories => {
+      res.render("products/index", { products, categories });
     })
     .catch(e => res.status(500).send(e.stack));
 };
@@ -26,7 +31,7 @@ router.get("/", onIndex);
 // ----------------------------------------
 // Search
 // ----------------------------------------
-router.get('/search', (req, res) => {
+router.get("/search", (req, res) => {
   const searchQuery = req.query.search;
   Product.findAll({
     include: [
@@ -47,32 +52,61 @@ router.get('/search', (req, res) => {
 });
 
 // ----------------------------------------
+// Filter
+// ----------------------------------------
+
+router.get("/filter", (req, res) => {
+  let min = req.query.min || 0;
+  let max = req.query.max || 1000;
+  let category = [req.query.category] || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  Product.findAll({
+    include: [
+      {
+        all: true
+      }
+    ],
+    where: {
+      price: {
+        $gte: min,
+        $lte: max
+      },
+      categoryId: { $in: category }
+    }
+  })
+    .then(products => {
+      res.render("products/index", { products });
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
+
+// ----------------------------------------
 // Sort
 // ----------------------------------------
-router.get('/sort', (req, res) => {
+router.get("/sort", (req, res) => {
   const sortingMethod = req.query.sort;
   let orderParam;
   switch (sortingMethod) {
-    case 'price':
-      orderParam = 'price';
+    case "price":
+      orderParam = "price";
       break;
-    case 'priceDesc':
-      orderParam = 'price DESC';
+    case "priceDesc":
+      orderParam = "price DESC";
       break;
-    case 'name':
-      orderParam = 'name';
+    case "name":
+      orderParam = "name";
       break;
-    case 'nameDesc':
-      orderParam = 'name DESC';
+    case "nameDesc":
+      orderParam = "name DESC";
       break;
-    case 'created':
+    case "created":
       orderParam = '"createdAt"';
       break;
-    case 'createdDesc':
+    case "createdDesc":
       orderParam = '"createdAt" DESC';
       break;
     default:
-      orderParam = '';
+      orderParam = "";
   }
 
   Product.findAll({

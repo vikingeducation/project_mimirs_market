@@ -9,6 +9,29 @@
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
 
+
+  <br>
+  <form class="form-inline" action="/products/filter" method="get">
+    <div class="form-group">
+      <label for="sortSelect">Category</label>
+      <select class="form-control" name="category" id="sortSelect">
+        <option value="">All</option>
+        {{#each categories as |category|}}
+        <option value="{{category.id}}">{{category.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="min">Min price</label>
+      <input type="number" class="form-control" min="0" name="min" id="min">
+    </div>
+    <div class="form-group">
+      <label for="max">Max price</label>
+      <input type="number" class="form-control" min="0" name="max" id="max">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
   <br>
 
   <form class="form-inline" action="/products/sort" method="get">
@@ -28,6 +51,7 @@
    </form>
 </header>
 
+<br>
 
 {{#if products.length }}
   <div class="row">
