@@ -23,13 +23,17 @@
               <button type="submit" class="btn btn-primary">Set Quantity</button>
             </form>
           </p>
+          <div>
+            Subtotal: ${{product.subtotal}}
+          </div>
           <p class="card-text">
-            <form>
-
+            <form action="cart/remove" method="post">
+              <input type="hidden" name="id" value="{{product.id}}">
+              <button type="submit" class="btn btn-primary">Remove</button>
             </form>
           </p>
           <p class="card-text">
-            in
+
             <a href="/categories/{{ product.Category.id }}">
               {{product.Category.name}}
             </a>
@@ -44,6 +48,14 @@
   </div>
 
 
+  <div>
+    Total: ${{total}}
+  </div>
+  <p class="card-text">
+    <form action="cart/removeAll" method="post">
+      <button type="submit" class="btn btn-primary">Destroy Everything</button>
+    </form>
+  </p>
 {{else }}
   <p class="text-danger">No products</p>
 {{/if }}

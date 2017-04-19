@@ -21,19 +21,21 @@ router.get("/", (req, res) => {
           $in: keys
         }
       }
-    })
-      .then(products => {
-        products.forEach(product => {
-          product.quantity = cart[product.id];
-        });
-        res.render("cart/index", { products });
+    }).then(products => {
+      let total = 0;
+      products.forEach(product => {
+        product.quantity = cart[product.id];
+        product.subtotal = Number(cart[product.id]) * product.price;
+        total += product.subtotal;
       });
+      res.render("cart/index", { products, total });
+    });
   } else {
     res.render("cart/index", { products });
   }
 });
 
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   let cart = req.cookies.cart || {};
   const id = req.body.id;
   if (cart[id]) {
@@ -42,6 +44,34 @@ router.post('/', (req, res) => {
     cart[id] = 1;
   }
   res.cookie("cart", cart);
+  res.redirect("back");
+});
+
+router.post("/edit", (req, res) => {
+  let cart = req.cookies.cart || {};
+  const quant = req.body.quantity;
+  const id = req.body.id;
+  if (quant === "0") {
+    delete cart[id];
+  } else {
+    cart[id] = quant;
+  }
+  res.cookie("cart", cart);
+  res.redirect("back");
+});
+
+router.post("/remove", (req, res) => {
+  let cart = req.cookies.cart || {};
+  const id = req.body.id;
+  if (cart) {
+    delete cart[id];
+  }
+  res.cookie("cart", cart);
+  res.redirect("back");
+});
+
+router.post("/removeAll", (req, res) => {
+  res.cookie("cart", {});
   res.redirect("back");
 });
 
