@@ -7,14 +7,14 @@
 <p>Price: {{ product.price }}</p>
 <p>Description: {{ product.description }}</p>
 
-{{#if product.Category.Product.length }}
+{{#if product.Category.Products.length }}
   <div class="row">
-    {{#each product.Category.Product as |related| }}
+    {{#each product.Category.Products as |related| }}
       <div class="col-sm-4">
         <div class="thumbnail">
           <div>
-            <a href="/categories/{{ product.Category.id }}">
-              {{product.Category.name}}
+            <a href="/categories/{{ ../product.Category.id }}">
+              {{../product.Category.name}}
             </a>
           </div>
           <a href="/products/{{ related.id }}">

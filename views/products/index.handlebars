@@ -1,5 +1,20 @@
 <header class="page-header">
   <h1>Products</h1>
+  <form class="form-inline" action="/products" method="get">
+    <div class="form-group">
+      <label for="exampleSelect1">Sort by</label>
+      <select class="form-control" id="exampleSelect1">
+        <option>Default</option>
+        <option>Price Asc</option>
+        <option>Price Desc</option>
+        <option>Name Asc</option>
+        <option>Name Desc</option>
+        <option>Newest First</option>
+        <option>Oldest First</option>
+      </select>
+    </div>
+     <button type="submit" class="btn btn-primary">Submit</button>
+   </form>
 </header>
 
 

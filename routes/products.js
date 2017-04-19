@@ -50,7 +50,6 @@ router.get("/", onIndex);
 // Show
 // ----------------------------------------
 router.get("/:id", (req, res) => {
-
   Product.findById(req.params.id, {
     include: [
       {
@@ -67,6 +66,7 @@ router.get("/:id", (req, res) => {
     ]
   })
     .then(product => {
+      console.log(product.Category.name);
       if (product) {
         res.render("products/show", { product });
       } else {
