@@ -7,6 +7,53 @@
     <input type="text" class="form-control" id="search_text" placeholder="Search">
      <button type="submit" class="btn btn-primary">Submit Search</button>
   </div>
-
-
 </form>
+
+<form>
+  <div class="form-group">
+    <input type="number" class="form-control" id="min_price" placeholder="Minimum Price">
+    <input type="number" class="form-control" id="max_price" placeholder="Maximum Price">
+    <select name="category[id]" id="category" class="form-control">
+        {{#each categories as |category| }}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+        {{/each }}
+      </select>
+    </div>
+     <button type="submit" class="btn btn-primary">Submit Search</button>
+  </div>
+</form>
+
+<form>
+  <div class="form-group">
+    <label for="sort">Sort By:</label>
+    <select name="sortBy" id="sort_by" class="form-control">
+      <option value="nameAsc">By name ascending</option>
+      <option value="nameDesc">By name descending</option>
+      <option value="priceAsc">By price ascending</option>
+      <option value="priceDesc">By price ascending</option>
+      <option value="createdAsc">Oldest first</option>
+      <option value="createdDesc">Newest first</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Submit Search</button>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <h2>Products:</h2>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+ {{#each products as |product|}}
+    <div class="col-xs-4 index-img">
+      <img src="/images/{{product.photo}}" /><br>
+      <div class="text-center">
+        <p><a href="{{product.id}}">{{product.name}}</a></p>
+        <p>{{product.price}}</p>
+        <p>{{product.Category.name}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<div class="clearfix"></div>
