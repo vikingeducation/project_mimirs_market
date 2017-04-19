@@ -5,17 +5,17 @@
  {{/if}}
 </header>
 
-<form action="/search" method="POST">
+<form action="/search" method="GET">
   <div class="form-group">
-    <input type="text" name="search_text" class="form-control" id="search_text" placeholder="Search">
+    <input type="text" name="searchText" class="form-control" id="search_text" placeholder="Search">
      <button type="submit" class="btn btn-primary">Submit Search</button>
   </div>
 </form>
 
-<form>
+<form action="/filter" method="GET">
   <div class="form-group">
-    <input type="number" class="form-control" id="min_price" placeholder="Minimum Price">
-    <input type="number" class="form-control" id="max_price" placeholder="Maximum Price">
+    <input type="number" name="minPrice" class="form-control" id="min_price" placeholder="Minimum Price">
+    <input type="number" name="maxPrice" class="form-control" id="max_price" placeholder="Maximum Price">
     <select name="category[id]" id="category" class="form-control">
       <option value="empty"></option>
         {{#each categories as |category| }}
@@ -39,7 +39,7 @@
       <option value="createdAsc">Oldest first</option>
       <option value="createdDesc">Newest first</option>
     </select>
-    <button type="submit" class="btn btn-primary">Submit Search</button>
+    <button type="submit" class="btn btn-primary">Sort</button>
   </div>
 </form>
 
