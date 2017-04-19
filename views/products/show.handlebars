@@ -1,27 +1,48 @@
-<header class="page-header">
-  <h1>Product</h1>
-</header>
+<div class="card mb-3">
+  <img class="card-img-top main-image" src="http://i.imgur.com/qK42fUu.jpg">
+  <div class="card-block">
+    <p class="card-text float-right">${{ product.price }}</p>
+    <h4 class="card-title">{{ product.name }}</h4>
+    <p class="card-text">in
+      <a href="/categories/{{ product.Category.id }}">
+        {{ product.Category.name }}</p>
+      </a>
+    <p class="card-text">{{ product.description }}</p>
+  </div>
+</div>
 
-<p>Name: {{ product.name }}</p>
-<p>Category: {{ product.Category.name }}</p>
-<p>Price: {{ product.price }}</p>
-<p>Description: {{ product.description }}</p>
+<h2 class="text-center">Related Products</h2>
+
 
 {{#if product.Category.Products.length }}
   <div class="row">
     {{#each product.Category.Products as |related| }}
       <div class="col-sm-4">
-        <div class="thumbnail">
-          <div>
-            <a href="/categories/{{ ../product.Category.id }}">
-              {{../product.Category.name}}
-            </a>
-          </div>
+        <div class="card">
           <a href="/products/{{ related.id }}">
-            <img src="http://i.imgur.com/qK42fUu.jpg">
-            <h6>{{related.name}} - {{related.price}}</h6>
+            <img class="card-img-top gallery-image" src="http://i.imgur.com/qK42fUu.jpg">
           </a>
-				</div>
+          <div class="card-block">
+            <div class="float-right">
+              ${{related.price}}
+            </div>
+            <h4 class="card-title">
+              <a href="/products/{{ related.id }}">
+                {{related.name}}
+              </a>
+            </h4>
+            <p class="card-text">
+              in
+              <a href="/categories/{{ ../product.Category.id }}">
+                {{../product.Category.name}}
+              </a>
+            </p>
+            <p class="card-text">
+              {{related.description}}
+            </p>
+            <a href="#" class="btn btn-primary">+ Cart</a>
+          </div>
+        </div>
       </div>
     {{/each }}
   </div>

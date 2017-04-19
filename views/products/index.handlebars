@@ -8,7 +8,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
-  
+
   <br>
 
   <form class="form-inline" action="/products/sort" method="get">
@@ -32,19 +32,33 @@
 {{#if products.length }}
   <div class="row">
     {{#each products as |product| }}
-      <div class="col-sm-4">
-        <div class="thumbnail">
-          <div>
+    <div class="col-sm-4">
+      <div class="card">
+        <a href="/products/{{ product.id }}">
+          <img class="card-img-top gallery-image" src="http://i.imgur.com/qK42fUu.jpg">
+        </a>
+        <div class="card-block">
+          <div class="float-right">
+            ${{product.price}}
+          </div>
+          <h4 class="card-title">
+            <a href="/products/{{ product.id }}">
+              {{product.name}}
+            </a>
+          </h4>
+          <p class="card-text">
+            in
             <a href="/categories/{{ product.Category.id }}">
               {{product.Category.name}}
             </a>
-          </div>
-          <a href="/products/{{ product.id }}">
-            <img src="http://i.imgur.com/qK42fUu.jpg">
-            <h6>{{product.name}} - {{product.price}}</h6>
-          </a>
-				</div>
+          </p>
+          <p class="card-text">
+            {{product.description}}
+          </p>
+          <a href="#" class="btn btn-primary">+ Cart</a>
+        </div>
       </div>
+    </div>
     {{/each }}
   </div>
 

@@ -1,0 +1,15 @@
+.main-image {
+  object-fit: cover;
+  height: 400px;
+  width: 100%;
+}
+
+.gallery-image {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
+body {
+  padding-top: 100px;
+}
