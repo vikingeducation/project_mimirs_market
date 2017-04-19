@@ -1,17 +1,21 @@
-var url = require('url');
-const express = require('express');
+var url = require("url");
+const express = require("express");
 let router = express.Router();
-var models = require('./../models/sequelize');
+var models = require("./../models/sequelize");
 var Product = models.Product;
 var Category = models.Category;
 var sequelize = models.sequelize;
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   var cartProducts = req.session.shoppingCart;
-  res.render('cart/index', { cartProducts });
+  var total = 0;
+  cartProducts.forEach(product => {
+    total += Number(product.price);
+  });
+  res.render("cart/index", { cartProducts, total });
 });
 
-router.post('/updateQuantity', (req, res) => {
+router.post("/updateQuantity", (req, res) => {
   var quantity = req.body.productQuantity;
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
@@ -23,10 +27,10 @@ router.post('/updateQuantity', (req, res) => {
   });
 
   req.session.shoppingCart = shoppingCart;
-  res.redirect('back');
+  res.redirect("back");
 });
 
-router.post('/remove', (req, res) => {
+router.post("/remove", (req, res) => {
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
   var indexOfRemoval;
@@ -39,12 +43,12 @@ router.post('/remove', (req, res) => {
 
   shoppingCart.splice(indexOfRemoval, 1);
   req.session.shoppingCart = shoppingCart;
-  res.redirect('back');
+  res.redirect("back");
 });
 
-router.post('/clear', (req, res) => {
+router.post("/clear", (req, res) => {
   req.session.shoppingCart = [];
-  res.redirect('back');
+  res.redirect("back");
 });
 
 module.exports = router;

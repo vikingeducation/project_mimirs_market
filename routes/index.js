@@ -1,7 +1,7 @@
-var url = require('url');
-const express = require('express');
+var url = require("url");
+const express = require("express");
 let router = express.Router();
-var models = require('./../models/sequelize');
+var models = require("./../models/sequelize");
 var Product = models.Product;
 var Category = models.Category;
 var sequelize = models.sequelize;
@@ -20,7 +20,7 @@ var onIndex = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', { products, categories, cartProducts });
+      res.render("products/index", { products, categories, cartProducts });
     });
   });
 };
@@ -29,20 +29,22 @@ var onSearch = (req, res) => {
   var search = req.query.searchText;
   var products, categories;
   var hasSearched = true;
+  var cartProducts = req.session.shoppingCart;
 
   Product.findAll({
-    where: { name: { $like: `%${search}%` } },
+    where: { name: { $iLike: `%${search}%` } },
     include: [{ model: Category, required: true }],
     limit: 30
   }).then(product => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', {
+      res.render("products/index", {
         products,
         categories,
         hasSearched,
-        search
+        search,
+        cartProducts
       });
     });
   });
@@ -54,6 +56,7 @@ var onFilter = (req, res) => {
   var categoryId = req.query.product.categoryId;
   var products, categories;
   var hasFiltered = true;
+  var cartProducts = req.session.shoppingCart;
 
   !minPrice ? (minPrice = 0) : minPrice;
   !maxPrice ? (maxPrice = 9999) : maxPrice;
@@ -73,13 +76,14 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render('products/index', {
+        res.render("products/index", {
           products,
           categories,
           hasFiltered,
           minPrice,
           maxPrice,
-          categoryId
+          categoryId,
+          cartProducts
         });
       });
     });
@@ -94,12 +98,13 @@ var onFilter = (req, res) => {
       products = product;
       Category.findAll().then(category => {
         categories = category;
-        res.render('products/index', {
+        res.render("products/index", {
           products,
           categories,
           hasFiltered,
           minPrice,
-          maxPrice
+          maxPrice,
+          cartProducts
         });
       });
     });
@@ -109,6 +114,7 @@ var onFilter = (req, res) => {
 var onOrder = (req, res) => {
   var products, categories;
   var orderBy = req.query.orderBy;
+  var cartProducts = req.session.shoppingCart;
 
   Product.findAll({
     include: [{ model: Category, required: true }],
@@ -118,15 +124,15 @@ var onOrder = (req, res) => {
     products = product;
     Category.findAll().then(category => {
       categories = category;
-      res.render('products/index', { products, categories });
+      res.render("products/index", { products, categories, cartProducts });
     });
   });
 };
 
-router.get('/', onIndex);
-router.get('/search', onSearch);
-router.get('/filter', onFilter);
-router.get('/order', onOrder);
+router.get("/", onIndex);
+router.get("/search", onSearch);
+router.get("/filter", onFilter);
+router.get("/order", onOrder);
 
 var onAdd = (req, res) => {
   var productId = req.body.productId;
@@ -140,11 +146,11 @@ var onAdd = (req, res) => {
       req.session.shoppingCart.push(product);
     })
     .then(() => {
-      res.redirect('/');
+      res.redirect("/");
     });
 };
 
-router.post('/addToCart', onAdd);
+router.post("/addToCart", onAdd);
 
 var onShow = (req, res) => {
   var products, currentProduct;
@@ -159,11 +165,11 @@ var onShow = (req, res) => {
       limit: 30
     }).then(result => {
       products = result;
-      res.render('products/show', { products, currentProduct, cartProducts });
+      res.render("products/show", { products, currentProduct, cartProducts });
     });
   });
 };
 
-router.get('/products/:id', onShow);
+router.get("/products/:id", onShow);
 
 module.exports = router;

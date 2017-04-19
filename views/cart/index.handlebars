@@ -19,7 +19,7 @@
         <input type="text" name="productQuantity" value="{{product.quantity}}">
   </div>
   <div class="col-xs-3">
-    <button type="submit" class="btn btn-primary">Set Quantity</button>
+    <button type="submit" class="btn btn-success">Set Quantity</button>
     </form>
     <form action="/cart/remove" method="POST">
       <input type="hidden" name="productId" value="{{product.id}}">
@@ -29,6 +29,14 @@
 </div>
 {{/each}}
 
+<div>
+  <h3>Total: $ {{total}}.00</h3>
+</div>
+
 <form action="/cart/clear" method="POST">
   <button type="submit" class="btn btn-danger">Clear Cart</button>
+</form>
+
+<form action="/checkout" method="POST">
+  <button type="submit" class="btn btn-primary">CheckOut</button>
 </form>

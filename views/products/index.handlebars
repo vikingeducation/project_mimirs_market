@@ -62,6 +62,8 @@
           <p><a href="/products/{{product.id}}">{{product.name}}</a></p>
           <p>{{product.price}}</p>
           <p>{{product.Category.name}}</p>
+          {{#if isInCart product.id cartProducts}}
+            <button type="submit" class="btn btn-success">Edit Cart</button>
           <button type="submit" class="btn btn-primary">Add to Cart</button>
         </form>
       </div>

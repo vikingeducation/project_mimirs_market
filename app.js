@@ -95,7 +95,17 @@ var expressHandlebars = require("express-handlebars");
 
 var hbs = expressHandlebars.create({
   partialsDir: "views/",
-  defaultLayout: "main"
+  defaultLayout: "main",
+  helpers: {
+    isInCart: function(productId, shoppingCart) {
+      shoppingCart.forEach(product => {
+        if (product.id === productId) {
+          return true;
+        }
+      });
+      return false;
+    }
+  }
 });
 
 app.engine("handlebars", hbs.engine);
