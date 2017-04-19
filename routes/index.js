@@ -9,6 +9,9 @@ var sequelize = models.sequelize;
 var onIndex = (req, res) => {
   var products, categories;
 
+  if (req.body.search_text) {
+  }
+
   Product.findAll({
     include: [{ model: Category, required: true }],
     limit: 30
@@ -44,13 +47,14 @@ var onSearch = (req, res) => {
   });
 };
 
+router.post('/products/search', onSearch);
+
 // var onFilter = (req, res) => {};
 //
 // var onSort = (req, res) => {};
 
 router.get('/', onIndex);
 
-router.get('/products/search', onSearch);
 // router.post('/products/filter', onfilter);
 // router.post('/products/sort', onSort);
 
