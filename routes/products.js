@@ -18,7 +18,11 @@ router.get("/", (req, res) => {
       return Category.findAll({});
     })
     .then(categories => {
-      res.render("products/index", { products, categories });
+      let cartIds = [];
+      if (req.cookies.cart) {
+        cardIds = Object.keys(req.cookies.cart);
+      }
+      res.render("products/index", { cartIds, products, categories });
     })
     .catch(e => res.status(500).send(e.stack));
 });

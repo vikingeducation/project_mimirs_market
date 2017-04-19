@@ -9,10 +9,14 @@
       </a>
     <p class="card-text">{{ product.description }}</p>
   </div>
-  <form action="/cart" method="post">
-    <input type="hidden" name="id" value="{{ product.id }}">
-    <button type="submit" class="btn btn-primary">+ Cart</button>
-  </form>
+  {{#if alreadyInCart cartIds product.id}}
+    YEAHYEAHYEAHYEHYHYHHHEYHAHH
+  {{else}}
+    <form action="/cart" method="post">
+      <input type="hidden" name="id" value="{{ product.id }}">
+      <button type="submit" class="btn btn-primary">+ Cart</button>
+    </form>
+  {{/if}}
 </div>
 
 <h2 class="text-center">Related Products</h2>

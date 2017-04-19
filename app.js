@@ -63,6 +63,20 @@ app.use((req, res, next) => {
 });
 
 // ----------------------------------------
+// Cart Counter
+// ----------------------------------------
+app.use((req, res, next) => {
+  let quantity = 0;
+  if (req.cookies.cart) {
+    for (let id in req.cookies.cart) {
+      quantity += req.cookies.cart[id];
+    }
+  }
+  app.locals.cartQuantity = quantity;
+  next();
+});
+
+// ----------------------------------------
 // Routes
 // ----------------------------------------
 var indexRouter = require("./routes/index");
@@ -89,7 +103,12 @@ var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({
   //  helpers: helpers.registered,
   partialsDir: "views/",
-  defaultLayout: "main"
+  defaultLayout: "main",
+  helpers: {
+    alreadyInCart: function(cardIds, productId) {
+      return cardIds.includes(productId) ? true : false;
+    }
+  }
 });
 
 app.engine("handlebars", hbs.engine);
