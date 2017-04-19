@@ -15,13 +15,18 @@ module.exports = {
     ];
 
     for (let i = 1; i < 100; i++) {
-      let name = faker.commerce.color() + ' ' + faker.commerce.product();
+      let color = faker.commerce.color();
+      color = color[0].toUpperCase() + color.substring(1);
+      let name = color + ' ' + faker.commerce.product();
       let sku = faker.finance.account();
-      let description = faker.commerce.productAdjective() +
-        ' ' +
-        faker.commerce.productMaterial() +
-        ' ' +
-        name;
+
+      let adjective = faker.commerce.productAdjective();
+      adjective = adjective[0].toUpperCase() + adjective.substring(1);
+
+      let material = faker.commerce.productMaterial();
+      material = material[0].toLowerCase() + material.substring(1);
+
+      let description = adjective + ' ' + material + ' ' + name;
       let price = faker.commerce.price();
       let photo = photos[Math.floor(Math.random() * 6) + 0];
       let categoryId = Math.floor(Math.random() * 20) + 1;
