@@ -25,17 +25,16 @@
   </div>
 </form>
 
-<form>
+<form action="/order" method="GET">
   <div class="form-group">
-    <label for="sort">Sort By:</label>
-    <select name="sortBy" id="sort_by" class="form-control">
-      <option value="empty"></option>
-      <option value="nameAsc">By name ascending</option>
-      <option value="nameDesc">By name descending</option>
-      <option value="priceAsc">By price ascending</option>
-      <option value="priceDesc">By price ascending</option>
-      <option value="createdAsc">Oldest first</option>
-      <option value="createdDesc">Newest first</option>
+    <select name="orderBy" id="sort_by" class="form-control">
+      <option value="">Order By:</option>
+      <option value="&quot;name&quot;">By name ascending</option>
+      <option value="&quot;name&quot; DESC">By name descending</option>
+      <option value="&quot;price&quot;">By price ascending</option>
+      <option value="&quot;price&quot; DESC">By price ascending</option>
+      <option value="&quot;createdAt&quot;">Oldest first</option>
+      <option value="&quot;createdAt&quot; DESC">Newest first</option>
     </select>
     <button type="submit" class="btn btn-primary">Sort</button>
   </div>

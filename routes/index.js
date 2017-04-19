@@ -102,15 +102,27 @@ var onFilter = (req, res) => {
   }
 };
 
-router.get("/search", onSearch);
+var onOrder = (req, res) => {
+  var products, categories;
+  var orderBy = req.query.orderBy;
 
-// var onFilter = (req, res) => {};
-//
-// var onSort = (req, res) => {};
+  Product.findAll({
+    include: [{ model: Category, required: true }],
+    order: orderBy,
+    limit: 30
+  }).then(product => {
+    products = product;
+    Category.findAll().then(category => {
+      categories = category;
+      res.render("products/index", { products, categories });
+    });
+  });
+};
 
 router.get("/", onIndex);
+router.get("/search", onSearch);
 router.get("/filter", onFilter);
-// router.post('/products/sort', onSort);
+router.get("/order", onOrder);
 
 var onShow = (req, res) => {
   var products, currentProduct;
