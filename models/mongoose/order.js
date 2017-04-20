@@ -13,7 +13,8 @@ var OrderSchema = new Schema(
     shoppingCart: Array,
     description: String,
     stripeToken: String,
-    stripeTokenType: String
+    stripeTokenType: String,
+    totalUnits: Number
   },
   {
     timestamps: true
