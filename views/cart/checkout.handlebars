@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="row cart-body">
-                <form class="form-horizontal" method="post" action="">
+                <form class="form-horizontal" method="POST" action="/cart/charges">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
                     <!--REVIEW ORDER-->
                     <div class="panel panel-info">
@@ -43,8 +43,10 @@
                             </div>
 
                         </div>
-                        <form action="/charges" method="post">
                         </div>
+
+                        <form >
+                          <input type="hidden" value="{{total}}" name="amount">
                         <script
                           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                           data-key="{{ STRIPE_PK }}"
@@ -54,6 +56,7 @@
                           data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                           data-locale="auto"></script>
                       </form>
+
                     <!--REVIEW ORDER END-->
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">

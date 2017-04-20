@@ -1,7 +1,7 @@
-var url = require('url');
-const express = require('express');
+var url = require("url");
+const express = require("express");
 let router = express.Router();
-var models = require('./../models/sequelize');
+var models = require("./../models/sequelize");
 var Product = models.Product;
 var Category = models.Category;
 var sequelize = models.sequelize;
@@ -13,18 +13,23 @@ var {
   STRIPE_SK,
   STRIPE_PK
 } = process.env;
-var stripe = require('stripe')(STRIPE_SK);
+var stripe = require("stripe")(STRIPE_SK);
 
-router.get('/', (req, res) => {
-  var cartProducts = req.session.shoppingCart;
+var totalAmount = function(cartProducts) {
   var total = 0;
   cartProducts.forEach(product => {
     total += Number(product.price) * Number(product.quantity);
   });
-  res.render('cart/index', { cartProducts, total });
+  return total;
+};
+
+router.get("/", (req, res) => {
+  var cartProducts = req.session.shoppingCart;
+  var total = totalAmount(cartProducts);
+  res.render("cart/index", { cartProducts, total });
 });
 
-router.post('/updateQuantity', (req, res) => {
+router.post("/updateQuantity", (req, res) => {
   var quantity = req.body.productQuantity;
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
@@ -36,10 +41,10 @@ router.post('/updateQuantity', (req, res) => {
   });
 
   req.session.shoppingCart = shoppingCart;
-  res.redirect('back');
+  res.redirect("back");
 });
 
-router.post('/remove', (req, res) => {
+router.post("/remove", (req, res) => {
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
   var indexOfRemoval;
@@ -52,33 +57,35 @@ router.post('/remove', (req, res) => {
 
   shoppingCart.splice(indexOfRemoval, 1);
   req.session.shoppingCart = shoppingCart;
-  res.redirect('back');
+  res.redirect("back");
 });
 
-router.post('/clear', (req, res) => {
+router.post("/clear", (req, res) => {
   req.session.shoppingCart = [];
-  res.redirect('back');
+  res.redirect("back");
 });
 
-router.get('/checkout', (req, res) => {
+router.get("/checkout", (req, res) => {
   var cartProducts = req.session.shoppingCart;
-  //pass total to render
+  var total = totalAmount(cartProducts);
   //create description based off of products in cart to send to render?
-  res.render('cart/checkout', { cartProducts, STRIPE_PK });
+  res.render("cart/checkout", { cartProducts, STRIPE_PK, total });
 });
 
-router.post('/charges', (req, res) => {
+router.post("/charges", (req, res) => {
   var charge = req.body;
-  console.log(charge); //Gives token, email,
+  console.log("CHARGE", charge);
+  var total = req.body.amount;
   //Look at charge to pull out amount and description?
   stripe.charges
     .create({
-      amount: 0,
-      currency: 'usd',
-      description: 'something',
+      amount: Number(total),
+      currency: "usd",
+      description: "something",
       source: charge.stripeToken
     })
     .then(charge => {
+      console.log("INSIDE then", charge);
       //charge object is the larger object
       //create shallow object for useful charge data?
       // ... Save charge and session data
