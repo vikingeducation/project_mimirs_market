@@ -17,7 +17,7 @@
 {{#if product.Category.Products.length }}
   <div class="row">
     {{#each product.Category.Products as |related| }}
-      {{> products/_product product=related}}
+      {{> products/_product cartIds=../cartIds product=related}}
     {{/each }}
   </div>
 
