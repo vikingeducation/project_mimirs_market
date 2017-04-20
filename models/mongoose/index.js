@@ -4,13 +4,10 @@ var bluebird = require('bluebird');
 mongoose.Promise = bluebird;
 
 var models = {};
-
+models.OrderedProduct = require('./orderedProduct');
 models.Order = require('./order');
+
 // Load models and attach to models here
 // models.User = require('./user');
-// models.Ratable = require('./ratable');
-// models.Hotel = require('./hotel');
-// models.Motel = require('./motel');
-// models.Rating = require('./rating');
 
 module.exports = models;

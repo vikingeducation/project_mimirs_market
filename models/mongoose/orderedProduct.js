@@ -15,6 +15,6 @@ var OrderedProductSchema = new Schema({
   quantity: Number
 });
 
-var OrderedProduct = mongoose.model('OrderedProduct', OrderProduct);
+var OrderedProduct = mongoose.model('OrderedProduct', OrderedProductSchema);
 
 module.exports = OrderedProduct;

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var OrderedProduct = mongoose.model('OrderedProduct');
 
 var OrderSchema = new Schema(
   {
@@ -29,6 +30,7 @@ var OrderSchema = new Schema(
 
 OrderSchema.post('save', function(doc, next) {
   let shoppingCart = doc.shoppingCart;
+  // console.log(Order.find({}));
 
   OrderedProduct.create(shoppingCart).then(() => next());
 });

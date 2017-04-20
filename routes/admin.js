@@ -8,6 +8,7 @@ let router = express.Router();
 var mongoose = require('mongoose');
 var modelsMon = require('./../models/mongoose');
 var Order = mongoose.model('Order');
+var OrderedProduct = mongoose.model('OrderedProduct');
 
 router.get('/', (req, res) => {
   var cartProducts = req.session.shoppingCart;

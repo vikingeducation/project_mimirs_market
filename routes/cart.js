@@ -8,6 +8,7 @@ var sequelize = modelsSeq.sequelize;
 var mongoose = require('mongoose');
 var modelsMon = require('./../models/mongoose');
 var Order = mongoose.model('Order');
+var OrderedProduct = mongoose.model('OrderedProduct');
 
 // ----------------------------------------
 // STRIPE
