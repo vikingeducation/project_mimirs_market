@@ -1,0 +1,42 @@
+<h2 class="text-center">Admin Orders Index Page</h2>
+
+{{#if orders.length }}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Checkout Date</th>
+        <th>Revenue</th>
+        <th>Customer Email</th>
+        <th>Customer State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+        <tr>
+          <td>
+            <a href="/admin/{{ order.id }}">{{ order.id }}</a>
+          </td>
+          <td>
+            <a href="/admin/{{ order.id }}">{{ order.description }}</a>
+          </td>
+          <td>
+            <p>{{ order.createdAt }}</p>
+          </td>
+          <td>
+            <p>{{ order.charge.amount }}</p>
+          </td>
+          <td>
+            <p>{{ order.email }}</p>
+          </td>
+          <td>
+            <p>{{ order.state }}</p>
+          </td>
+        </tr>
+      {{/each }}
+    </tbody>
+  </table>
+{{else }}
+  <p class="text-danger">No orders</p>
+{{/if }}

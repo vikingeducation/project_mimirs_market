@@ -95,6 +95,9 @@ app.use('/', indexRoute);
 var cartRoute = require('./routes/cart');
 app.use('/cart', cartRoute);
 
+var adminRoute = require('./routes/admin');
+app.use('/admin', adminRoute);
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------

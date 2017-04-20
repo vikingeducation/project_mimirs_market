@@ -1,0 +1,137 @@
+<div class="container wrapper">
+  <div class="row cart-head">
+    <div class="container">
+      <div class="row">
+        </div>
+          <div class="row">
+            <p></p>
+          </div>
+        </div>
+    </div>
+    <!-- STUFF ON THE RIGHT -->
+            <div class="row cart-body">
+                <form class="form-horizontal" method="POST" action="/cart/charges">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+                    <!--REVIEW ORDER-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Review Order <div class="pull-right"><small><a class="afix-1" href="#">Edit Cart</a></small></div>
+                        </div>
+                        <div class="panel-body">
+
+                          {{#each cartProducts as |product|}}
+                            <div class="form-group">
+                                <div class="col-sm-3 col-xs-3">
+                                    <img class="img-responsive" src="/images/{{product.photo}}" />
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="col-xs-12">{{product.name}}</div>
+                                    <div class="col-xs-12"><small>Quantity:<span>{{product.quantity}}</span></small></div>
+                                </div>
+                                <div class="col-sm-3 col-xs-3 text-right">
+                                    <h6><span>$</span>{{subtotal product}}</h6>
+                                </div>
+                            </div>
+                            <div class="form-group"><hr /></div>
+                            {{/each}}
+
+                            <div class="form-group"><hr /></div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <strong>Order Total</strong>
+                                    <div class="pull-right"><span>$</span><span>{{total}}</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+
+                        <!-- <form > -->
+                          <input type="hidden" value="{{total}}" name="amount">
+                        <script
+                          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                          data-key="{{ STRIPE_PK }}"
+                          data-amount=
+                          data-name="Stripe Node Test"
+                          data-description="Widget"
+                          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                          data-locale="auto"></script>
+                      <!-- </form> -->
+
+                    <!--REVIEW ORDER END-->
+                </div>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+                <!-- STUFF on the LEFT -->
+                {{#each cartProduct as |product| }}
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td>
+                             Name
+                          </td>
+                          <td>
+                            {{ product.name }}</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Price
+                          </td>
+                          <td>
+                            {{ product.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            SKU
+                          </td>
+                          <td>
+                            {{ product.sku }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Description
+                        </td>
+                        <td>
+                          {{product.description}}
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Category
+                        </td>
+                        <td>
+                          {{product.Category.name}}
+                        </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Quantity
+                        </td>
+                        <td>
+                          {{product.quantity}}
+                        </td>
+                        </tr>
+
+                    </tbody>
+                  </table>
+                  <br>
+                  {{/each }}
+                </div>
+
+                    </div>
+
+                </div>
+              </form>
+          </div>
+        <div class="row cart-footer">
+      </div>
+    </div>

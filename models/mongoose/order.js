@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema(
@@ -10,13 +10,14 @@ var OrderSchema = new Schema(
     street: String,
     city: String,
     state: String,
-    shoppingCart: Array
+    shoppingCart: Array,
+    description: String
   },
   {
     timestamps: true
   }
 );
 
-var Order = mongoose.model("Order", OrderSchema);
+var Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;
