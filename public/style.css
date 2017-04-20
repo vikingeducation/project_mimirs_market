@@ -1,6 +1,14 @@
 
 body {
-  padding-top: 60px;
+  padding-top: 100px;
+}
+
+nav {
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+
+.navbar-brand {
+  font-size: 24px;
 }
 
 .main-image {
@@ -9,12 +17,21 @@ body {
   width: 100%;
 }
 
+.card-title {
+  font-size: 20px;
+}
+
 .gallery-image {
   object-fit: cover;
   height: 200px;
   width: 100%;
 }
 
-.card {
-  margin: 15px 0;
+.navbar-nav {
+  height: 60px;
+}
+
+.nav-image {
+  width: 40px;
+  height: 40px;
 }

@@ -1,5 +1,5 @@
 <header class="page-header">
-  <h1 class="my-4">Products</h1>
+  <h1 class="mb-4">Products</h1>
 
   <form action="/products" method="get">
     <div class="form-group row">
@@ -22,15 +22,13 @@
           {{/each}}
         </select>
       </div>
-      <label for="min" class="ml-2 col-form-label">Min price</label>
       <div class="col-sm-2">
-        <input type="number" class="form-control" min="0" name="min" id="min">
+        <input type="number" class="form-control" min="0" name="min" id="min" placeholder="Min price">
       </div>
-      <label for="max" class="ml-2 col-form-label">Max price</label>
       <div class="col-sm-2">
-        <input type="number" class="form-control" min="0" name="max" id="max">
+        <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary">Filter</button>
     </div>
   </form>
 
