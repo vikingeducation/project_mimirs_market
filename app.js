@@ -9,15 +9,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // ----------------------------------------
-// STRIPE
-// ----------------------------------------
-var {
-  STRIPE_SK,
-  STRIPE_PK
-} = process.env;
-var stripe = require('stripe')(STRIPE_SK);
-
-// ----------------------------------------
 // Body Parser
 // ----------------------------------------
 var bodyParser = require('body-parser');

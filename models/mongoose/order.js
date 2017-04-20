@@ -2,13 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema({
-  id: String
+  stripeData: {},
+  shoppingCart: [{}]
 });
 
 var Order = mongoose.model('Order', OrderSchema);
 
-module.exports = Hotel;
+module.exports = Order;
 
+//example response
 // {
 //   "id": "ch_1AAgMHKdj9ExRXOiQU0rQGYD",
 //   "object": "charge",
