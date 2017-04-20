@@ -3,6 +3,8 @@ const models = require("../../models/sequelize");
 const faker = require("faker");
 const request = require("sync-request");
 const jsonsafeparse = require("json-safe-parse");
+const shortid = require('shortid');
+
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -32,7 +34,7 @@ module.exports = {
 
       products.push({
         name: fakeName,
-        sku: faker.random.alphaNumeric(),
+        sku: shortid.generate(),
         description: faker.lorem.sentence(),
         price: Math.floor(Math.random() * 10000) / 100.0,
         categoryId: Math.floor(Math.random() * 10 + 1),

@@ -19,13 +19,15 @@
       {{#each orders as |order| }}
       <tr>
         <td>
-          <a href="/orders/{{ order.Profile.id }}">{{ order._id }}</a>
+          <a href="/analytics/{{ order._id }}">{{ order._id }}</a>
         </td>
         <td>
           <ul>
             {{#each order.products as |product|}}
               <li>
-                {{ product.name }}
+                <a href="/products/{{product.id}}">
+                  {{ product.name }}
+                </a>
               </li>
             {{/each}}
           </ul>
@@ -34,13 +36,13 @@
           {{ order.createdAt }}
         </td>
         <td>
-          {{ order.total }}
+          {{ currency order.total }}
         </td>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.Profile.Location.distance }}</a>
+          {{ order.email }}</a>
         </td>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.Profile.gender }}</a>
+          {{ order.state }}</a>
         </td>
       </tr>
       {{/each }}

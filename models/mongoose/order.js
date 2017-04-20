@@ -11,6 +11,7 @@ const OrderSchema = new Schema(
     state: String,
     total: Number,
     stripe: {},
+    stripeToken: String,
     products: {}
   },
   {

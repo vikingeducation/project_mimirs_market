@@ -73,7 +73,11 @@ router.post("/", (req, res, next) => {
           orderProducts.push(
             {
               id: product.id,
+              category: product.Category.name,
               name: product.name,
+              price: product.price,
+              description: product.description,
+              sku: product.sku,
               quantity: cart[product.id]
             }
           );
@@ -87,15 +91,17 @@ router.post("/", (req, res, next) => {
         });
       })
       .then(charge => {
+        let order = req.body.order;
         var newOrder = new Order({
-          fname: req.body.fname,
-          lname: req.body.lname,
-          email: req.body.email,
-          street: req.body.street,
-          city: req.body.city,
-          state: req.body.state,
+          fname: order.fname,
+          lname: order.lname,
+          email: order.email,
+          street: order.street,
+          city: order.city,
+          state: order.state,
           products: orderProducts,
           stripe: charge,
+          stripeToken: req.body.stripeToken,
           total: total
         });
         return newOrder.save();
