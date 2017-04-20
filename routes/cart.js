@@ -115,9 +115,9 @@ router.post("/charges", (req, res) => {
         city,
         state,
         shoppingCart,
+        description,
         stripeToken,
-        stripeTokenType,
-        description
+        stripeTokenType
       });
 
       newOrder.save();
