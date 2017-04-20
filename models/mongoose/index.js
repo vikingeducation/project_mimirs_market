@@ -5,7 +5,7 @@ mongoose.Promise = bluebird;
 
 var models = {};
 
-models.Charge = require('/order');
+models.Order = require('./order');
 // Load models and attach to models here
 // models.User = require('./user');
 // models.Ratable = require('./ratable');
