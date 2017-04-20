@@ -1,36 +1,70 @@
-/* navbar styles */
-.container {
-  width:auto;
+/*
+ * Start Bootstrap - Heroic Features (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.navbar {
-  margin-bottom:0;
-  background: #0B3948;
-  color: black;
+.hero-spacer {
+    margin-top: 50px;
 }
 
-.navbar .navbar-brand,
-.navbar .navbar-brand:hover,
-.navbar-default .navbar-nav>li>a,
-.navbar-default .navbar-nav>li>a:hover {
-  color: white;
-}
-
-.index-img {
-  margin:auto;
-  width:auto;
-  padding-bottom: 10px;
-}
-
-.product-container {
-  margin:auto;
-  width:auto;
-  padding:5%;
+.hero-feature {
+    margin-bottom: 30px;
 }
 
 
-/*img {
-  margin: auto;
-  width: 200px;
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
 }
-*/*/
+
+.thumbnail.show{
+    padding: 20px;
+}
+
+.thumbnail.show.caption-full {
+
+    color: #333;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+    width:20%;
+    display: inline !important;
+  }
+  .actions .btn{
+    width:36%;
+    margin:1.5em 0;
+  }
+  
+  .actions .btn-info{
+    float:left;
+  }
+  .actions .btn-danger{
+    float:right;
+  }
+  
+  table#cart thead { display: none; }
+  table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+  table#cart tbody tr td:first-child { background: #333; color: #fff; }
+  table#cart tbody td:before {
+    content: attr(data-th); font-weight: bold;
+    display: inline-block; width: 8rem;
+  }
+
+  table#cart tfoot td{display:block; }
+  table#cart tfoot td .btn{display:block;}
+  
+}
