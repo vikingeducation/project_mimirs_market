@@ -61,17 +61,23 @@ router.post("/", (req, res, next) => {
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
+    let total = 0;
+    let orderProducts = [];
 
     Product.findAll({
       include: [{ model: Category }],
       where: { id: { $in: keys } }
     })
       .then(products => {
-        let total = 0;
         products.forEach(product => {
-          product.quantity = cart[product.id];
-          product.subtotal = Number(cart[product.id]) * product.price;
-          total += product.subtotal;
+          orderProducts.push(
+            {
+              id: product.id,
+              name: product.name,
+              quantity: cart[product.id]
+            }
+          );
+          total += Number(cart[product.id]) * product.price;
         });
         return stripe.charges.create({
           amount: parseInt(total.toFixed(2) * 100),
@@ -88,8 +94,9 @@ router.post("/", (req, res, next) => {
           street: req.body.street,
           city: req.body.city,
           state: req.body.state,
-          products: req.cookies.cart,
-          stripe: charge
+          products: orderProducts,
+          stripe: charge,
+          total: total
         });
         return newOrder.save();
       })

@@ -1,10 +1,9 @@
 <header class="page-header">
-  <h1>Users</h1>
-  <a href="/users/new" class="btn btn-primary">+ New User</a>
+  <h1>Admin Orders Index</h1>
 </header>
 
 
-{{#if users.length }}
+{{#if orders.length }}
   <table class="table">
     <thead>
       <tr>
@@ -20,16 +19,22 @@
       {{#each orders as |order| }}
       <tr>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.fname }}</a>
+          <a href="/orders/{{ order.Profile.id }}">{{ order._id }}</a>
         </td>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.lname }}</a>
+          <ul>
+            {{#each order.products as |product|}}
+              <li>
+                {{ product.name }}
+              </li>
+            {{/each}}
+          </ul>
         </td>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.username }}</a>
+          {{ order.createdAt }}</a>
         </td>
         <td>
-          <a href="/users/{{ order.Profile.id }}">{{ order.email }}</a>
+          {{ order.total }}</a>
         </td>
         <td>
           <a href="/users/{{ order.Profile.id }}">{{ order.Profile.Location.distance }}</a>
@@ -42,5 +47,5 @@
     </tbody>
   </table>
 {{else }}
-  <p class="text-danger">No users</p>
+  <p class="text-danger">No orders</p>
 {{/if }}

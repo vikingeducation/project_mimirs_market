@@ -11,7 +11,10 @@ const mongoModels = require("./../models/mongoose");
 const Order = mongoose.model("Order");
 
 router.get("/", (req, res) => {
-  res.render("analytics/index");
+  Order.find({})
+    .then(orders => {
+      res.render("analytics/index", { orders });
+    });
 });
 
 module.exports = router;
