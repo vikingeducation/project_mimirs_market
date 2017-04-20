@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const sqlModels = require("./../models/sequelize");
-var mongoose = require("mongoose");
-const sequelize = sqlModels.sequelize;
-const mongoModels = require("./../models/mongoose");
 
-const Order = mongoose.model("Order");
+const sqlModels = require("./../models/sequelize");
+const sequelize = sqlModels.sequelize;
 
 const { Product, Category } = sqlModels;
+
+const mongoose = require("mongoose");
+const mongoModels = require("./../models/mongoose");
+const Order = mongoose.model("Order");
 
 // ----------------------------------------
 // Stripe
@@ -50,21 +51,14 @@ router.get("/", (req, res, next) => {
   }
 });
 
-router.post("/checkouts", (req, res, next) => {
+router.post("/", (req, res, next) => {
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
+
     Product.findAll({
-      include: [
-        {
-          model: Category
-        }
-      ],
-      where: {
-        id: {
-          $in: keys
-        }
-      }
+      include: [{ model: Category }],
+      where: { id: { $in: keys } }
     })
       .then(products => {
         let total = 0;
@@ -74,9 +68,9 @@ router.post("/checkouts", (req, res, next) => {
           total += product.subtotal;
         });
         return stripe.charges.create({
-          amount: total,
+          amount: parseInt(total.toFixed(2) * 100),
           currency: "usd",
-          description: "hello",
+          description: "purchase",
           source: req.body.stripeToken
         });
       })
@@ -94,7 +88,6 @@ router.post("/checkouts", (req, res, next) => {
         return newOrder.save();
       })
       .then(order => {
-        console.log(order);
         res.render("checkouts/show", order);
       })
       .catch();
