@@ -7,6 +7,8 @@ const jsonsafeparse = require("json-safe-parse");
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let products = [];
+    let imageWords = [];
+    let images = [];
     for (let i = 1; i <= 100; i++) {
       let fakeName = faker.commerce.productName();
       let nameArr = fakeName.split(" ");

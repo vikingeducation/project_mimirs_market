@@ -2,6 +2,13 @@ const express = require("express");
 const app = express();
 
 // ----------------------------------------
+// Dotenv
+// ----------------------------------------
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+// ----------------------------------------
 // Body Parser
 // ----------------------------------------
 const bodyParser = require("body-parser");
@@ -108,6 +115,9 @@ app.use("/products", productsRouter);
 
 const cartRouter = require("./routes/cart");
 app.use("/cart", cartRouter);
+
+const checkoutsRouter = require("./routes/checkouts");
+app.use("/checkouts", checkoutsRouter);
 
 // ----------------------------------------
 // Error Handler

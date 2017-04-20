@@ -4,12 +4,20 @@ A Viking eCommerce store for Thunder Gods that like to buy "Antique Wooden Pizza
 
 Jerry Gao and Will Whitworth
 
-1. Product
-  name
-  sku (just for realism)
-  description
-  price
-  categoryId
+### Sequelize
 
-2. Category
-  name
+1. Product  
+  name  
+  sku (just for realism)  
+  description  
+  price  
+  categoryId  
+
+2. Category  
+  name  
+
+### Mongo
+
+Order  
+  Customer  
+  Address  
