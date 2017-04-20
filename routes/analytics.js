@@ -10,18 +10,17 @@ var modelsMon = require('./../models/mongoose');
 var Order = mongoose.model('Order');
 
 router.get('/', (req, res) => {
-  var cartProducts = req.session.shoppingCart;
-  Order.find({}).then(orders => {
-    res.render('admin/index', { orders, cartProducts });
-  });
-});
-
-router.get('/:id', (req, res) => {
-  Order.findById(req.params.id).then(order => {
-    var cartProducts = req.session.shoppingCart;
-    var adminProducts = order.shoppingCart;
-    res.render('admin/show', { order, adminProducts, cartProducts });
-  });
+  Order.aggregate(
+    // Limit to relevant documents and potentially take advantage of an index
+    { $match: {} },
+    {
+      $project: {
+        _id: 0,
+        total: { $sum: { $add: '$charge.amount' } }
+      }
+    }
+  );
+  res.render('analytics/index', {});
 });
 
 module.exports = router;

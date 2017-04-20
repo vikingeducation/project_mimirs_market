@@ -1,13 +1,13 @@
-var url = require("url");
-const express = require("express");
+var url = require('url');
+const express = require('express');
 let router = express.Router();
-var modelsSeq = require("./../models/sequelize");
+var modelsSeq = require('./../models/sequelize');
 var Product = modelsSeq.Product;
 var Category = modelsSeq.Category;
 var sequelize = modelsSeq.sequelize;
-var mongoose = require("mongoose");
-var modelsMon = require("./../models/mongoose");
-var Order = mongoose.model("Order");
+var mongoose = require('mongoose');
+var modelsMon = require('./../models/mongoose');
+var Order = mongoose.model('Order');
 
 // ----------------------------------------
 // STRIPE
@@ -16,7 +16,7 @@ var {
   STRIPE_SK,
   STRIPE_PK
 } = process.env;
-var stripe = require("stripe")(STRIPE_SK);
+var stripe = require('stripe')(STRIPE_SK);
 
 var totalAmount = function(cartProducts) {
   var total = 0;
@@ -26,28 +26,36 @@ var totalAmount = function(cartProducts) {
   return total;
 };
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   var cartProducts = req.session.shoppingCart;
   var total = totalAmount(cartProducts);
-  res.render("cart/index", { cartProducts, total });
+  res.render('cart/index', { cartProducts, total });
 });
 
-router.post("/updateQuantity", (req, res) => {
-  var quantity = req.body.productQuantity;
+router.post('/updateQuantity', (req, res) => {
+  var quantity = Number(req.body.productQuantity);
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
+  var indexOfRemoval;
 
-  shoppingCart.forEach(product => {
+  shoppingCart.forEach((product, index) => {
     if (product.id === productId) {
       product.quantity = quantity;
+      if (product.quantity <= 0) {
+        indexOfRemoval = index;
+        console.log('Remove');
+      }
     }
   });
 
+  if (indexOfRemoval) shoppingCart.splice(indexOfRemoval, 1);
+  if (indexOfRemoval === 0) shoppingCart.shift();
+
   req.session.shoppingCart = shoppingCart;
-  res.redirect("back");
+  res.redirect('back');
 });
 
-router.post("/remove", (req, res) => {
+router.post('/remove', (req, res) => {
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
   var indexOfRemoval;
@@ -60,22 +68,22 @@ router.post("/remove", (req, res) => {
 
   shoppingCart.splice(indexOfRemoval, 1);
   req.session.shoppingCart = shoppingCart;
-  res.redirect("back");
+  res.redirect('back');
 });
 
-router.post("/clear", (req, res) => {
+router.post('/clear', (req, res) => {
   req.session.shoppingCart = [];
-  res.redirect("back");
+  res.redirect('back');
 });
 
-router.get("/checkout", (req, res) => {
+router.get('/checkout', (req, res) => {
   var cartProducts = req.session.shoppingCart;
   var total = totalAmount(cartProducts);
   //create description based off of products in cart to send to render?
-  res.render("cart/checkout", { cartProducts, STRIPE_PK, total });
+  res.render('cart/checkout', { cartProducts, STRIPE_PK, total });
 });
 
-router.post("/charges", (req, res) => {
+router.post('/charges', (req, res) => {
   var charge = req.body;
   var shoppingCart = req.session.shoppingCart;
   var total = charge.amount;
@@ -87,11 +95,11 @@ router.post("/charges", (req, res) => {
   var email = charge.stripeEmail;
   var stripeToken = charge.stripeToken;
   var stripeTokenType = charge.stripeTokenType;
-  var description = "";
+  var description = '';
 
   shoppingCart.forEach(function(product, index) {
     if (index != shoppingCart.length - 1) {
-      description += product.name + ", ";
+      description += product.name + ', ';
     } else {
       description += product.name;
     }
@@ -101,8 +109,8 @@ router.post("/charges", (req, res) => {
   stripe.charges
     .create({
       amount: Number(total),
-      currency: "usd",
-      description: "something",
+      currency: 'usd',
+      description: 'something',
       source: charge.stripeToken
     })
     .then(charge => {
@@ -124,7 +132,7 @@ router.post("/charges", (req, res) => {
     })
     .then(() => {
       req.session.shoppingCart = [];
-      res.redirect("/cart");
+      res.redirect('/cart');
     });
   //.catch(() => res.status(500).send(e.stack));
 });

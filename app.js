@@ -98,6 +98,9 @@ app.use('/cart', cartRoute);
 var adminRoute = require('./routes/admin');
 app.use('/admin', adminRoute);
 
+var analyticsRoute = require('./routes/analytics');
+app.use('/analytics', analyticsRoute);
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
