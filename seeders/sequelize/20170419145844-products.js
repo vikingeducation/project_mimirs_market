@@ -31,13 +31,16 @@ module.exports = {
       let photo = photos[Math.floor(Math.random() * 6) + 0];
       let categoryId = Math.floor(Math.random() * 20) + 1;
 
+      let unitsSold = 0;
+
       products.push({
         name,
         sku,
         description,
         price,
         photo,
-        categoryId
+        categoryId,
+        unitsSold
       });
     }
     return queryInterface.bulkInsert('Products', products);
