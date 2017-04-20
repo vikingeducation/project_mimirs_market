@@ -1,0 +1,20 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var OrderedProductSchema = new Schema({
+  name: String,
+  sku: Number,
+  description: String,
+  price: String,
+  photo: String,
+  unitsSold: Number,
+  categoryId: Number,
+  createdAt: String,
+  updatedAt: String,
+  Category: Schema.Types.Mixed,
+  quantity: Number
+});
+
+var OrderedProduct = mongoose.model('OrderedProduct', OrderProduct);
+
+module.exports = OrderedProduct;

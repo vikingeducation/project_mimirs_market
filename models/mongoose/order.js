@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var OrderSchema = new Schema(
@@ -14,13 +14,25 @@ var OrderSchema = new Schema(
     description: String,
     stripeToken: String,
     stripeTokenType: String,
-    totalUnits: Number
+    totalUnits: Number,
+    orderedProducts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'OrderedProduct'
+      }
+    ]
   },
   {
     timestamps: true
   }
 );
 
-var Order = mongoose.model("Order", OrderSchema);
+OrderSchema.post('save', function(doc, next) {
+  let shoppingCart = doc.shoppingCart;
+
+  OrderedProduct.create(shoppingCart).then(() => next());
+});
+
+var Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;

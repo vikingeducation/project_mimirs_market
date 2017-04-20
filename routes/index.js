@@ -7,6 +7,7 @@ var Category = models.Category;
 var sequelize = models.sequelize;
 
 var onIndex = (req, res) => {
+  console.log(req.session.shoppingCart);
   var products, categories;
   if (!req.session.shoppingCart) {
     req.session.shoppingCart = [];
