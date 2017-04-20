@@ -1,6 +1,6 @@
 
 {{#if products.length }}
-  <form action="/sessions/signup" method="post">
+  <form action="/checkouts" method="post">
     <h3>Billing Information</h3>
     <div class="form-group">
       <label for="fname">First Name</label>
@@ -85,39 +85,38 @@
 
     <div class="row">
       {{#each products as |product| }}
-      <div class="col-sm-offset-4 col-sm-8">
-        <div id="product{{product.id}}" class="card my-3">
-          <a href="/products/{{ product.id }}">
-            <img class="card-img-top gallery-image" src="{{product.img}}">
-          </a>
-          <div class="card-block">
-            <div class="float-right">
-              {{currency product.price}}
-            </div>
-            <h4 class="card-title">
-              <a href="/products/{{ product.id }}">
-                {{product.name}}
-              </a>
-            </h4>
-            <p class="card-text">
-              Quantity: {{product.quantity}}
-            </p>
-            <div>
-              Subtotal: {{currency product.subtotal}}
+        <div class="col-sm-offset-4 col-sm-8">
+          <div id="product{{product.id}}" class="card my-3">
+            <a href="/products/{{ product.id }}">
+              <img class="card-img-top gallery-image" src="{{product.img}}">
+            </a>
+            <div class="card-block">
+              <div class="float-right">
+                {{currency product.price}}
+              </div>
+              <h4 class="card-title">
+                <a href="/products/{{ product.id }}">
+                  {{product.name}}
+                </a>
+              </h4>
+              <p class="card-text">
+                Quantity: {{product.quantity}}
+              </p>
+              <div>
+                Subtotal: {{currency product.subtotal}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
       {{/each }}
     </div>
-
 
     <div>
       Total: {{currency total}}
     </div>
     <br>
     <p class="card-text">
-        <a href="/cart" class="btn btn-primary">Back to Cart</a>
+      <a href="/cart" class="btn btn-primary">Back to Cart</a>
     </p>
 
     <div class="form-group">

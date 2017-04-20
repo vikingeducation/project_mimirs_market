@@ -5,7 +5,17 @@ const sequelize = models.sequelize;
 
 const { Product, Category } = models;
 
-router.get("/", (req, res) => {
+// ----------------------------------------
+// Stripe
+// ----------------------------------------
+const {
+  STRIPE_SK,
+  STRIPE_PK
+} = process.env;
+const stripe = require('stripe')(STRIPE_SK);
+
+
+router.get("/", (req, res, next) => {
   let products;
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
@@ -21,7 +31,8 @@ router.get("/", (req, res) => {
           $in: keys
         }
       }
-    }).then(products => {
+    })
+    .then(products => {
       let total = 0;
       products.forEach(product => {
         product.quantity = cart[product.id];
@@ -29,10 +40,15 @@ router.get("/", (req, res) => {
         total += product.subtotal;
       });
       res.render("checkouts/new", { products, total });
-    });
+    })
+    .catch(next);
   } else {
     res.render("checkouts/new", { products });
   }
+});
+
+router.post('/checkouts', (req, res, next) => {
+  
 });
 
 module.exports = router;
