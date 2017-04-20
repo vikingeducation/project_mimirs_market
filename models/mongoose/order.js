@@ -9,6 +9,7 @@ const OrderSchema = new Schema(
     street: String,
     city: String,
     state: String,
+    total: Number,
     stripe: {},
     products: {}
   },
