@@ -2,6 +2,22 @@ var express = require('express');
 var app = express();
 
 // ----------------------------------------
+// dotenv
+// ----------------------------------------
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+// ----------------------------------------
+// STRIPE
+// ----------------------------------------
+var {
+  STRIPE_SK,
+  STRIPE_PK
+} = process.env;
+var stripe = require('stripe')(STRIPE_SK);
+
+// ----------------------------------------
 // Body Parser
 // ----------------------------------------
 var bodyParser = require('body-parser');
@@ -109,6 +125,9 @@ var hbs = expressHandlebars.create({
       }
 
       return inCart;
+    },
+    subtotal: function(product) {
+      return product.price * product.quantity;
     }
   }
 });

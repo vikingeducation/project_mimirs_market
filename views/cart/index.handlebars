@@ -36,7 +36,7 @@
           <form action="/cart/updateQuantity" method="POST">
           <input type="number" class="form-control text-center" name="productQuantity" value="{{product.quantity}}">
         </td>
-        <td data-th="Subtotal" class="text-center">CALC!!!</td>
+        <td data-th="Subtotal" class="text-center">${{subtotal product}}.00</td>
         <td class="actions" data-th="">
           <input type="hidden" name="productId" value="{{product.id}}">
           <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
@@ -80,4 +80,3 @@
 
 </div>
 <!-- /.container -->
-
