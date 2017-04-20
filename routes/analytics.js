@@ -1,22 +1,22 @@
-var url = require('url');
-const express = require('express');
+var url = require("url");
+const express = require("express");
 let router = express.Router();
-var modelsSeq = require('./../models/sequelize');
+var modelsSeq = require("./../models/sequelize");
 var Product = modelsSeq.Product;
 var Category = modelsSeq.Category;
 var sequelize = modelsSeq.sequelize;
-var mongoose = require('mongoose');
-var modelsMon = require('./../models/mongoose');
-var Order = mongoose.model('Order');
-var dbInfo = require('./../lib/dbInfo');
+var mongoose = require("mongoose");
+var modelsMon = require("./../models/mongoose");
+var Order = mongoose.model("Order");
+var dbInfo = require("./../lib/dbInfo");
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   let promiseArr = dbInfo.getTotals();
   promiseArr.push(dbInfo.statesRevenue());
-  promiseArr.push(dbInfo.revenueByCategory());
+  // promiseArr.push(dbInfo.revenueByCategory());
 
   Promise.all(promiseArr).then(result => {
-    console.log('RESULT', result);
+    console.log("RESULT", result);
 
     let totals = {
       totalRevenue: result[0][0].totalRevenue,
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
       totalStatesRevenue: result[5]
     };
 
-    res.render('analytics/index', { totals });
+    res.render("analytics/index", { totals });
   });
 });
 
