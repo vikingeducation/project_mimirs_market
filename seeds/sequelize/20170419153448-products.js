@@ -10,7 +10,7 @@ module.exports = {
         name: faker.commerce.productName(),
         sku: faker.random.alphaNumeric(),
         description: faker.lorem.sentence(),
-        price: faker.commerce.price(),
+        price: Math.floor(Math.random() * 9999) / 100.0,
         categoryId: Math.floor(Math.random() * 10 + 1)
       });
     }

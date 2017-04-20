@@ -1,53 +1,55 @@
 <header class="page-header">
-  <h1>Products</h1>
+  <h1 class="my-4">Products</h1>
 
-  <form class="form-inline" action="/products" method="get">
-    <div class="form-group">
-      <label for="search">Search</label>
-      <input type="text" class="form-control" name="search" id="search">
+  <form action="/products" method="get">
+    <div class="form-group row">
+      <label for="search" class="col-sm-1 col-form-label">Search</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" name="search" id="search" placeholder="Name of product">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
     </div>
-    <button type="submit" class="btn btn-primary">Search</button>
   </form>
 
-
-  <br>
-  <form class="form-inline" action="/products" method="get">
-    <div class="form-group">
-      <label for="sortSelect">Category</label>
-      <select class="form-control" name="category" id="sortSelect">
-        <option>All</option>
-        {{#each categories as |category|}}
-        <option value="{{category.id}}">{{category.name}}</option>
-        {{/each}}
-      </select>
+  <form action="/products" method="get">
+    <div class="form-group row">
+      <label for="sort" class="col-sm-1 col-form-label">Category</label>
+      <div class="col-sm-2">
+        <select class="form-control" name="category" id="sort">
+          <option>All</option>
+          {{#each categories as |category|}}
+          <option value="{{category.id}}">{{category.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <label for="min" class="ml-2 col-form-label">Min price</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" min="0" name="min" id="min">
+      </div>
+      <label for="max" class="ml-2 col-form-label">Max price</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" min="0" name="max" id="max">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
     </div>
-    <div class="form-group">
-      <label for="min">Min price</label>
-      <input type="number" class="form-control" min="0" name="min" id="min">
-    </div>
-    <div class="form-group">
-      <label for="max">Max price</label>
-      <input type="number" class="form-control" min="0" name="max" id="max">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Search</button>
   </form>
-  <br>
 
-  <form class="form-inline" action="/products" method="get">
-    <div class="form-group">
-      <label for="sortSelect">Sort by</label>
-      <select class="form-control" name="sort" id="sortSelect">
-        <option value="">Default</option>
-        <option value="price">Price Asc</option>
-        <option value="priceDesc">Price Desc</option>
-        <option value="name">Name Asc</option>
-        <option value="nameDesc">Name Desc</option>
-        <option value="created">Newest First</option>
-        <option value="createdDesc">Oldest First</option>
-      </select>
+  <form action="/products" method="get">
+    <div class="form-group row">
+      <label for="sortSelect" class="col-sm-1 col-form-label">Sort by</label>
+      <div class="col-sm-3">
+        <select class="form-control" name="sort" id="sortSelect">
+          <option value="">Default</option>
+          <option value="price">Least Expensive</option>
+          <option value="priceDesc">Most Expensive</option>
+          <option value="name">Alphabetical</option>
+          <option value="nameDesc">Reverse Alphabetical</option>
+          <option value="created">Newest</option>
+          <option value="createdDesc">Oldest</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-     <button type="submit" class="btn btn-primary">Submit</button>
    </form>
 </header>
 
@@ -56,7 +58,7 @@
 {{#if products.length }}
   <div class="row">
     {{#each products as |product| }}
-      {{> products/_product product=product}}
+      {{> products/_product cartIds=../cartIds product=product}}
     {{/each }}
   </div>
 

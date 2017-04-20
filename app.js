@@ -1,10 +1,10 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 
 // ----------------------------------------
 // Body Parser
 // ----------------------------------------
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ----------------------------------------
@@ -16,14 +16,37 @@ app.use(cookieParser());
 // ----------------------------------------
 // Flash Messages
 // ----------------------------------------
-var flash = require("express-flash-messages");
+const flash = require("express-flash-messages");
 app.use(flash());
+
+// ----------------------------------------
+// Template Engine
+// ----------------------------------------
+const expressHandlebars = require("express-handlebars");
+//const helpers = require('./helpers');
+
+const hbs = expressHandlebars.create({
+  //  helpers: helpers.registered,
+  partialsDir: "views/",
+  defaultLayout: "main",
+  helpers: {
+    alreadyInCart: (cartIds, productId) => {
+      if (cartIds) return cartIds.includes(productId);
+    },
+    currency: (number) => {
+      return '$' + number.toFixed(2);
+    }
+  }
+});
+
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
 // ----------------------------------------
 // Method Override
 // ----------------------------------------
 app.use((req, res, next) => {
-  var method;
+  let method;
   if (req.query._method) {
     method = req.query._method;
     delete req.query._method;
@@ -31,12 +54,10 @@ app.use((req, res, next) => {
     method = req.body._method;
     delete req.body._method;
   }
-
   if (method) {
     method = method.toUpperCase();
     req.method = method;
   }
-
   next();
 });
 
@@ -48,14 +69,14 @@ app.use(express.static(`${__dirname}/public`));
 // ----------------------------------------
 // Logging
 // ----------------------------------------
-var morgan = require("morgan");
+const morgan = require("morgan");
 app.use(morgan("tiny"));
 app.use((req, res, next) => {
   console.log();
   ["query", "params", "body"].forEach(key => {
     if (req[key]) {
-      var capKey = key[0].toUpperCase() + key.substr(1);
-      var value = JSON.stringify(req[key], null, 2);
+      const capKey = key[0].toUpperCase() + key.substr(1);
+      const value = JSON.stringify(req[key], null, 2);
       console.log(`${capKey}: ${value}`);
     }
   });
@@ -79,50 +100,29 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-var indexRouter = require("./routes/index");
+const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
-var productsRouter = require("./routes/products");
+const productsRouter = require("./routes/products");
 app.use("/products", productsRouter);
 
-var cartRouter = require("./routes/cart");
+const cartRouter = require("./routes/cart");
 app.use("/cart", cartRouter);
 
-// var usersRouter = require("./routers/users");
-// app.use("/users", usersRouter);
-//
-// var searchRouter = require("./routers/search");
-// app.use("/search", searchRouter);
-
 // ----------------------------------------
-// Template Engine
+// Error Handler
 // ----------------------------------------
-var expressHandlebars = require("express-handlebars");
-//var helpers = require('./helpers');
-
-var hbs = expressHandlebars.create({
-  //  helpers: helpers.registered,
-  partialsDir: "views/",
-  defaultLayout: "main",
-  helpers: {
-    alreadyInCart: function(cartIds, productId) {
-      console.log(cartIds);
-      console.log(productId);
-      return cartIds.includes(productId);
-    }
-  }
+app.use((err, req, res, next) => {
+  res.status(500).send(err.stack);
 });
-
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
 
 // ----------------------------------------
 // Server
 // ----------------------------------------
-var port = process.env.PORT || process.argv[2] || 3000;
-var host = "localhost";
+const port = process.env.PORT || process.argv[2] || 3000;
+const host = "localhost";
 
-var args;
+let args;
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 
 args.push(() => {
@@ -130,5 +130,3 @@ args.push(() => {
 });
 
 app.listen.apply(app, args);
-
-module.exports = app;

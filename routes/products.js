@@ -8,44 +8,40 @@ const { Product, Category } = models;
 // ----------------------------------------
 // Index
 // ----------------------------------------
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   const queryObj = _makeQuery(req.query);
 
   let products;
   Product.findAll(queryObj)
-    .then(prod => {
-      products = prod;
-      return Category.findAll({});
+    .then(allProducts => {
+      products = allProducts;
+      return Category.findAll();
     })
     .then(categories => {
       let cartIds = [];
       if (req.cookies.cart) {
-        cartIds = Object.keys(req.cookies.cart);
+        cartIds = Object.keys(req.cookies.cart).map(i => +i);
       }
-      res.render("products/index", { cartIds, products, categories });
+      res.render("products/index", { products, categories, cartIds });
     })
-    .catch(e => res.status(500).send(e.stack));
+    .catch(next);
 });
 
 // ----------------------------------------
 // Show
 // ----------------------------------------
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
   Product.findById(req.params.id, {
-    include: [
-      {
-        model: Category,
-        include: [
-          {
-            model: Product,
-            where: {
-              id: { $ne: req.params.id }
-            },
-            include: [{ model: Category }]
-          }
-        ]
-      }
-    ]
+    include: [{
+      model: Category,
+      include: [
+        {
+          model: Product,
+          include: [{ model: Category }],
+          where: { id: { $ne: req.params.id } },
+        }
+      ]
+    }]
   })
     .then(product => {
       if (product) {
@@ -58,7 +54,7 @@ router.get("/:id", (req, res) => {
         res.send(404);
       }
     })
-    .catch(e => res.status(500).send(e.stack));
+    .catch(next);
 });
 
 module.exports = router;
@@ -70,22 +66,16 @@ module.exports = router;
 //
 
 function _makeQuery(query) {
+  let queryObj = { include: [{ all: true }] };
   if (query.search) {
-    const searchQuery = query.search;
-    return {
-      include: [{ all: true }],
-      where: { name: { $iLike: `%${searchQuery}%` } }
-    };
+    queryObj.where = { name: { $iLike: `%${query.search}%` } };
   } else if (query.category) {
     let min = query.min || 0;
     let max = query.max || 1000;
     let category = query.category === "All"
       ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       : [query.category];
-    return {
-      include: [{ all: true }],
-      where: { price: { $gte: min, $lte: max }, categoryId: { $in: category } }
-    };
+    queryObj.where = { price: { $gte: min, $lte: max }, categoryId: { $in: category } };
   } else if (query.sort) {
     let orderParam;
     switch (query.sort) {
@@ -110,13 +100,7 @@ function _makeQuery(query) {
       default:
         orderParam = "";
     }
-    return {
-      include: [{ all: true }],
-      order: orderParam
-    };
-  } else {
-    return {
-      include: [{ all: true }]
-    };
+    queryObj.where = { order: orderParam };
   }
+  return queryObj;
 }

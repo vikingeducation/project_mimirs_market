@@ -2,13 +2,13 @@
   <div class="row">
     {{#each products as |product| }}
     <div class="col-sm-offset-4 col-sm-8">
-      <div class="card">
+      <div id="product{{product.id}}" class="card">
         <a href="/products/{{ product.id }}">
           <img class="card-img-top gallery-image" src="http://i.imgur.com/qK42fUu.jpg">
         </a>
         <div class="card-block">
           <div class="float-right">
-            ${{product.price}}
+            {{currency product.price}}
           </div>
           <h4 class="card-title">
             <a href="/products/{{ product.id }}">
@@ -30,7 +30,7 @@
             </form>
           </p>
           <div>
-            Subtotal: ${{product.subtotal}}
+            Subtotal: {{currency product.subtotal}}
           </div>
           <p class="card-text">
             <form action="cart/remove" method="post">
@@ -46,11 +46,11 @@
 
 
   <div>
-    Total: ${{total}}
+    Total: {{currency total}}
   </div>
   <p class="card-text">
     <form action="cart/removeAll" method="post">
-      <button type="submit" class="btn btn-primary">Destroy Everything</button>
+      <button type="submit" class="btn btn-danger">Destroy Everything</button>
     </form>
   </p>
 {{else }}

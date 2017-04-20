@@ -1,28 +1,18 @@
 <div class="card mb-3">
   <img class="card-img-top main-image" src="http://i.imgur.com/qK42fUu.jpg">
   <div class="card-block">
-    <p class="card-text float-right">${{ product.price }}</p>
+    <p class="card-text float-right">{{ currency product.price }}</p>
     <h4 class="card-title">{{ product.name }}</h4>
     <p class="card-text">in
       <a href="/categories/{{ product.Category.id }}">
         {{ product.Category.name }}</p>
       </a>
     <p class="card-text">{{ product.description }}</p>
+    {{> shared/_cartButton cartIds=cartIds productId=product.id}}
   </div>
-  {{#if (alreadyInCart cartIds product.id)}}
-
-    <a href="/cart" class="btn btn-warning">To the Cart!!!!</a>
-
-  {{else}}
-    <form action="/cart" method="post">
-      <input type="hidden" name="id" value="{{ product.id }}">
-      <button type="submit" class="btn btn-primary">+ Cart</button>
-    </form>
-  {{/if}}
 </div>
 
-<h2 class="text-center">Related Products</h2>
-
+<h2 class="text-center my-5">Related Products</h2>
 
 {{#if product.Category.Products.length }}
   <div class="row">
@@ -30,7 +20,6 @@
       {{> products/_product product=related}}
     {{/each }}
   </div>
-
 
 {{else }}
   <p class="text-danger">No related products</p>
