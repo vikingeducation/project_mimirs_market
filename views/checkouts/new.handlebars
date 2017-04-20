@@ -121,7 +121,7 @@
             <script
               src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="{{ STRIPE_PK }}"
-              data-amount="100"
+              data-amount="{{stripeTotal}}"
               data-name="Stripe Node Test"
               data-description="Widget"
               data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

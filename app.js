@@ -4,8 +4,8 @@ const app = express();
 // ----------------------------------------
 // Dotenv
 // ----------------------------------------
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
 // ----------------------------------------
@@ -40,8 +40,8 @@ const hbs = expressHandlebars.create({
     alreadyInCart: (cartIds, productId) => {
       if (cartIds) return cartIds.includes(productId);
     },
-    currency: (number) => {
-      return '$' + number.toFixed(2);
+    currency: number => {
+      return "$" + number.toFixed(2);
     }
   }
 });
@@ -49,6 +49,17 @@ const hbs = expressHandlebars.create({
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
+// ----------------------------------------
+// Mongoose
+// ----------------------------------------
+var mongoose = require("mongoose");
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require("./mongo")(req).then(() => next());
+  }
+});
 // ----------------------------------------
 // Method Override
 // ----------------------------------------
@@ -119,6 +130,8 @@ app.use("/cart", cartRouter);
 const checkoutsRouter = require("./routes/checkouts");
 app.use("/checkouts", checkoutsRouter);
 
+const analyticsRouter = require("./routes/analytics");
+app.use("/analytics", analyticsRouter);
 // ----------------------------------------
 // Error Handler
 // ----------------------------------------

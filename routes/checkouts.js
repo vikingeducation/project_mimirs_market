@@ -43,7 +43,13 @@ router.get("/", (req, res, next) => {
           product.subtotal = Number(cart[product.id]) * product.price;
           total += product.subtotal;
         });
-        res.render("checkouts/new", { products, total, STRIPE_PK });
+        let stripeTotal = parseInt(total * 100);
+        res.render("checkouts/new", {
+          products,
+          total,
+          STRIPE_PK,
+          stripeTotal
+        });
       })
       .catch(next);
   } else {
@@ -88,7 +94,8 @@ router.post("/", (req, res, next) => {
         return newOrder.save();
       })
       .then(order => {
-        res.render("checkouts/show", order);
+        res.cookie("cart", {});
+        res.render("checkouts/show");
       })
       .catch();
   }

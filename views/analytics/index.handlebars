@@ -1,0 +1,46 @@
+<header class="page-header">
+  <h1>Users</h1>
+  <a href="/users/new" class="btn btn-primary">+ New User</a>
+</header>
+
+
+{{#if users.length }}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order Id</th>
+        <th>Products</th>
+        <th>Date</th>
+        <th>Revenue</th>
+        <th>Email</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+      <tr>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.fname }}</a>
+        </td>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.lname }}</a>
+        </td>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.username }}</a>
+        </td>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.email }}</a>
+        </td>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.Profile.Location.distance }}</a>
+        </td>
+        <td>
+          <a href="/users/{{ order.Profile.id }}">{{ order.Profile.gender }}</a>
+        </td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+{{else }}
+  <p class="text-danger">No users</p>
+{{/if }}
