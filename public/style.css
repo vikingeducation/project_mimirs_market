@@ -21,8 +21,9 @@ nav {
   font-size: 20px;
 }
 .thumb-height {
-  height:520px;
+  height:440px;
 }
+
 .gallery-image {
   object-fit: cover;
   height: 200px;
