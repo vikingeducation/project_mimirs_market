@@ -13,8 +13,7 @@ router.get("/", (req, res) => {
     Product.findAll({
       include: [{ model: Category }],
       where: { id: { $in: keys } }
-    })
-    .then(products => {
+    }).then(products => {
       let total = 0;
       products.forEach(product => {
         product.quantity = req.cart[product.id];
@@ -33,9 +32,9 @@ router.get("/", (req, res) => {
 // ----------------------------------------
 router.post("/", (req, res) => {
   const id = req.body.id;
-  req.cart[id] ? req.cart[id] += 1 : req.cart[id] = 1;
+  req.cart[id] ? (req.cart[id] += 1) : (req.cart[id] = 1);
   res.cookie("cart", req.cart);
-  req.flash('success', 'Item added to cart.');
+  req.flash("success", "Item added to cart.");
   res.redirect("back");
 });
 
@@ -45,9 +44,14 @@ router.post("/", (req, res) => {
 router.post("/edit", (req, res) => {
   const quant = +req.body.quantity;
   const id = req.body.id;
-  quant <= 0 ? delete req.cart[id] : req.cart[id] = quant;
+  if (quant <= 0) {
+    delete req.cart[id];
+    req.flash("success", "Item removed from cart.");
+  } else {
+    req.cart[id] = quant;
+    req.flash("success", "Updated cart.");
+  }
   res.cookie("cart", req.cart);
-  req.flash('success', 'Updated cart.');
   res.redirect("back");
 });
 
@@ -58,7 +62,7 @@ router.post("/remove", (req, res) => {
   const id = req.body.id;
   if (req.cart) delete req.cart[id];
   res.cookie("cart", req.cart);
-  req.flash('success', 'Item removed from cart.');
+  req.flash("success", "Item removed from cart.");
   res.redirect("back");
 });
 
@@ -67,7 +71,7 @@ router.post("/remove", (req, res) => {
 // ----------------------------------------
 function _clearCart(req, res) {
   res.cookie("cart", {});
-  req.flash('success', 'Cart items removed.');
+  req.flash("success", "Cart items removed.");
   res.redirect("back");
 }
 router.get("/clear", _clearCart);

@@ -1,4 +1,4 @@
-{{#if products.length }}
+{{#if products.length}}
 
 <header class="page-header">
   <h1 class="">Your Cart</h1>
@@ -6,25 +6,25 @@
 
   <div class="row">
 
-    {{#each products as |product| }}
+    {{#each products as |product|}}
     <div class="col-sm-offset-4 col-sm-8">
       <div id="product{{product.id}}" class="card my-3">
         <div class="product-image-container">
-          <a href="/products/{{ product.id }}">
+          <a href="{{ productPath product.id }}">
             <img class="card-img-top gallery-image" src="{{product.img}}">
           </a>
-          <div class="product-price">{{currency product.price}}</div>
+          <div class="product-price">{{ currency product.price }}</div>
         </div>
         <div class="card-block">
           <h4 class="card-title mt-2">
-            <a href="/products/{{ product.id }}">
-              {{product.name}}
+            <a href="{{ productPath product.id }}">
+              {{ product.name }}
             </a>
           </h4>
           <p class="card-text">
             in
-            <a href="/categories/{{ product.Category.id }}">
-              {{product.Category.name}}
+            <a href="/products?category={{ product.Category.id }}">
+              {{ product.Category.name }}
             </a>
           </p>
           <p class="card-text">
@@ -36,7 +36,7 @@
             </form>
           </p>
           <div>
-            Subtotal: {{currency product.subtotal}}
+            Subtotal: {{ currency product.subtotal }}
           </div>
           <p class="card-text">
             <form action="cart/remove" method="post">
@@ -47,12 +47,12 @@
         </div>
       </div>
     </div>
-    {{/each }}
+    {{/each}}
 
   </div>
 
   <div>
-    Total: {{currency total}}
+    Total: {{ currency total }}
   </div>
 
   <p class="card-text">
@@ -61,6 +61,6 @@
     </form>
   </p>
 
-{{else }}
+{{else}}
   <p class="text-danger text-center">There are no items in your shopping cart.</p>
-{{/if }}
+{{/if}}

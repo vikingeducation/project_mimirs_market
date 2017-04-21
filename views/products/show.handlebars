@@ -6,7 +6,7 @@
   <div class="card-block">
     <h4 class="card-title mt-1">{{ product.name }}</h4>
     <p class="card-text">in
-      <a href="/categories/{{ product.Category.id }}">
+      <a href="/products?category={{ product.Category.id }}">
         {{ product.Category.name }}</p>
       </a>
     <p class="card-text">{{ product.description }}</p>

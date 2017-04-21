@@ -1,7 +1,7 @@
 {{#if (alreadyInCart cartIds productId)}}
-  <a href="/cart#product{{product.id}}" type="submit" class="btn btn-success">View in Cart</a>
+  <a href="{{ cartPath }}#product{{product.id}}" type="submit" class="btn btn-success">View in Cart</a>
 {{else}}
-  <form action="/cart" method="post">
+  <form action="{{ cartPath }}" method="post">
     <input type="hidden" name="id" value="{{ product.id }}">
     <button type="submit" class="btn btn-primary btn-thin"><i class="fa fa-shopping-cart" aria-hidden="true"></i> +</button>
   </form>

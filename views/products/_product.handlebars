@@ -1,20 +1,20 @@
 <div class="col-sm-3">
   <div class="card my-3">
     <div class="product-image-container">
-      <a href="/products/{{ product.id }}">
+      <a href="{{ productPath product.id }}">
         <img class="card-img-top gallery-image" src="{{product.img}}">
       </a>
       <div class="product-price">{{ currency product.price }}</div>
     </div>
     <div class="card-block">
       <h4 class="card-title">
-        <a href="/products/{{ product.id }}">
+        <a href="{{ productPath product.id }}">
           {{ product.name }}
         </a>
       </h4>
       <p class="card-text">
         in
-        <a href="/categories/{{ product.Category.id }}">
+        <a href="/products?category={{ product.Category.id }}">
           {{ product.Category.name }}
         </a>
       </p>
