@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const Promise = require('bluebird');
 
 const analytics = require("../lib/analytics");
 
+// Sample Order document
+//
 // { __v: 0,
 //   updatedAt: 2017-04-21T15:32:06.696Z,
 //   createdAt: 2017-04-21T15:32:06.696Z,
@@ -106,9 +109,82 @@ const analytics = require("../lib/analytics");
 //   _id: 58fa25f6f9711f374a49890b }
 
 
-router.get('/', (req, res, next) => {
+// router.get('/', (req, res, next) => {
+//   let total,
+//       productRevenues,
+//       stateRevenues,
+//       categoryRevenues;
+//
+//   Promise.all([
+//     analytics.overview(),
+//     analytics.customerCount(),
+//     analytics.productCount(),
+//     analytics.categoryCount(),
+//     analytics.stateCount()
+//   ])
+//   .spread((overview, customerCount, productCount, categoryCount, stateCount) => {
+//
+//       // [ { revenue: 742.1299999999999, quantity: 11, transactions: 2 } ],
+//       // 2,
+//       // 100,
+//       // 10,
+//       // 2
+//
+//     overview = overview[0];
+//     total = {
+//       revenue: overview.revenue,
+//       quantity: overview.quantity,
+//       transactions: overview.transactions,
+//       customerCount,
+//       productCount,
+//       categoryCount,
+//       stateCount
+//     };
+//
+//     return analytics.revenueByProduct();
+//   }).then(results => {
+//     productRevenues = results;
+//     return analytics.revenueByState();
+//   }).then(results => {
+//     stateRevenues = results;
+//     return analytics.revenueByCategory();
+//   }).then(results => {
+//     categoryRevenues = results;
+//     res.render('analytics/index', { total, productRevenues, stateRevenues });
+//   })
+//   .catch(next);
+// });
 
-  res.render('analytics/index');
+// Results from await async
+//
+// { overview: { revenue: 742.1299999999999, quantity: 11, transactions: 2 },
+//   customerCount: 2,
+//   productCount: 100,
+//   categoryCount: 10,
+//   stateCount: 2,
+//   revenueByProduct:
+//    [ { name: 'Generic Granite Pizza', revenue: 499.54999999999995 },
+//      { name: 'Practical Cotton Keyboard', revenue: 18.78 },
+//      { name: 'Practical Plastic Chair', revenue: 70.42 },
+//      { name: 'Awesome Cotton Gloves', revenue: 52.75 },
+//      { name: 'Sleek Frozen Pizza', revenue: 44.79 },
+//      { name: 'Intelligent Metal Pizza', revenue: 55.84 } ],
+//   revenueByState:
+//    [ { name: 'DC', revenue: 600.18 },
+//      { name: 'AL', revenue: 141.95 } ],
+//   revenueByCategory:
+//    [ { name: 'Jewelery', revenue: 115.21000000000001 },
+//      { name: 'Tools', revenue: 55.84 },
+//      { name: 'Home', revenue: 18.78 },
+//      { name: 'Kids', revenue: 552.3 } ] }
+
+
+router.get('/', (req, res, next) => {
+  analytics.getAll()
+    .then(results => {
+      res.render('analytics/index', { results })
+    })
+    .catch(next);
 });
 
 module.exports = router;

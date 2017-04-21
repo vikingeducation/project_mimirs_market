@@ -1,5 +1,9 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto, Arial, sans-serif;
+}
 
 body {
+  font-family: "Source Sans Pro", Arial, sans-serif;
   padding: 100px 0 50px 0;
 }
 
@@ -8,6 +12,7 @@ nav {
 }
 
 .navbar-brand {
+  font-weight: 800;
   font-size: 24px;
 }
 

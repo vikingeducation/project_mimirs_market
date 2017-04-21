@@ -4,89 +4,75 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <h3 class="text-center mb-4">Totals</h3>
-    {{#each totals as |total|}}
+    <h3 class="text-center my-4">Totals</h3>
     <table class="table table-bordered">
       <tbody>
         <tr>
           <td>Total Revenue</td>
-          <td>{{  }}</td>
+          <td>{{ currency results.overview.revenue }}</td>
         </tr>
         <tr>
           <td>Units Sold</td>
-          <td>{{  }}</td>
+          <td>{{ results.overview.quantity }}</td>
         </tr>
         <tr>
           <td>Transactions</td>
-          <td>{{  }}</td>
+          <td>{{ results.overview.transactions }}</td>
         </tr>
         <tr>
           <td>Customers</td>
-          <td>{{ }}</td>
+          <td>{{ results.customerCount }}</td>
         </tr>
         <tr>
-          <td>Products</td>
-          <td>{{  }}</td>
+          <td>Product Count</td>
+          <td>{{ results.productCount }}</td>
         </tr>
         <tr>
-          <td>Categories</td>
-          <td>{{  }}</td>
+          <td>Category Count</td>
+          <td>{{ results.categoryCount }}</td>
         </tr>
         <tr>
-          <td>States</td>
-          <td>{{  }}</td>
+          <td>States Sold To</td>
+          <td>{{ results.stateCount }}</td>
         </tr>
       </tbody>
     </table>
-    {{/each}}
+
+    <h3 class="text-center my-4">Revenue by Product</h3>
+    <table class="table table-bordered">
+      <tbody>
+        {{#each results.productRevenues as |product|}}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ currency product.revenue }}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 
   <div class="col-sm-6">
-    <h3 class="text-center mb-4">Customer Info</h3>
+    <h3 class="text-center my-4">Revenue by State</h3>
     <table class="table table-bordered">
       <tbody>
-        <tr>
-          <td>First Name</td>
-          <td>{{ order.fname }}</td>
-        </tr>
-        <tr>
-          <td>Last Name</td>
-          <td>{{ order.lname }}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{ order.email }}</td>
-        </tr>
-        <tr>
-          <td>Street</td>
-          <td>{{ order.street }}</td>
-        </tr>
-        <tr>
-          <td>City</td>
-          <td>{{ order.city }}</td>
-        </tr>
-        <tr>
-          <td>State</td>
-          <td>{{ order.state }}</td>
-        </tr>
+        {{#each results.stateRevenues as |state|}}
+          <tr>
+            <td>{{ state.name }}</td>
+            <td>{{ currency state.revenue }}</td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
 
-    <h3 class="text-center mb-4">Order Info</h3>
+    <h3 class="text-center my-4">Revenue by Category</h3>
     <table class="table table-bordered">
       <tbody>
+        {{#each results.categoryRevenues as |category|}}
         <tr>
-          <td>Checkout Date</td>
-          <td>{{ order.createdAt }}</td>
+          <td>{{ category.name }}</td>
+          <td>{{ currency category.revenue }}</td>
         </tr>
-        <tr>
-          <td>Stripe Token</td>
-          <td>{{ order.stripeToken }}</td>
-        </tr>
-        <tr>
-          <td>Card Type</td>
-          <td>Visa</td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>
