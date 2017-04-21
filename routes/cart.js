@@ -16,7 +16,8 @@ var {
   STRIPE_SK,
   STRIPE_PK
 } = process.env;
-var stripe = require("stripe")(STRIPE_SK);
+var STRIPE_PK = "pk_test_ZL6FzrDFbJ0xkaYGDkgb1Ti0";
+var stripe = require("stripe")(STRIPE_PK);
 
 // --------------------------------------
 // TOTAL AMOUNT
