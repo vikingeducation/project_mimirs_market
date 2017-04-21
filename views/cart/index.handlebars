@@ -28,7 +28,7 @@
             </a>
           </p>
           <p class="card-text">
-            <form class="form-inline" action="cart/edit" method="post">
+            <form class="form-inline" action="{{ editCartPath }}" method="post">
               <label class="mr-sm-2" for="quantity">Quantity</label>
               <input type="hidden" name="id" value="{{product.id}}">
               <input type="number" id="quantity" class="form-control mr-2" name="quantity" min="0" value="{{product.quantity}}">
@@ -39,7 +39,7 @@
             Subtotal: {{ currency product.subtotal }}
           </div>
           <p class="card-text">
-            <form action="cart/remove" method="post">
+            <form action="{{ removeCartPath }}" method="post">
               <input type="hidden" name="id" value="{{product.id}}">
               <button type="submit" class="btn btn-primary">Remove</button>
             </form>
@@ -56,9 +56,10 @@
   </div>
 
   <p class="card-text">
-    <form action="cart/clear" method="post">
+    <form action="{{ destroyCartPath }}" method="post">
       <button type="submit" class="btn btn-danger">Remove All Items</button>
     </form>
+    <form action=""
   </p>
 
 {{else}}

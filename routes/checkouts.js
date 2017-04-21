@@ -103,19 +103,18 @@ router.post("/", (req, res, next) => {
         return newOrder.save();
       })
       .then(order => {
-        console.log(order);
         res.cookie("cart", {});
-        res.redirect("checkouts/show");
+        res.render("checkouts/show", { order });
       })
       .catch();
   }
 });
 
 // ----------------------------------------
-// Order Confirmation
+// Protect order confirmation page
 // ----------------------------------------
 router.get("/show", (req, res) => {
-  res.render("checkouts/show");
+  res.redirect("/products");
 });
 
 module.exports = router;
