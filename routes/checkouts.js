@@ -25,16 +25,8 @@ router.get("/", (req, res, next) => {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
     Product.findAll({
-      include: [
-        {
-          model: Category
-        }
-      ],
-      where: {
-        id: {
-          $in: keys
-        }
-      }
+      include: [{ model: Category }],
+      where: { id: { $in: keys } }
     })
       .then(products => {
         let total = 0;
@@ -91,8 +83,7 @@ router.post("/", (req, res, next) => {
         });
       })
       .then(charge => {
-        let order = req.body.order;
-        var newOrder = new Order({
+        const newOrder = new Order({
           fname: order.fname,
           lname: order.lname,
           email: order.email,
@@ -107,11 +98,16 @@ router.post("/", (req, res, next) => {
         return newOrder.save();
       })
       .then(order => {
+        console.log(order);
         res.cookie("cart", {});
-        res.render("checkouts/show");
+        res.redirect("checkouts/show");
       })
       .catch();
   }
+});
+
+router.get('/show', (req, res) => {
+  res.render('checkouts/show');
 });
 
 module.exports = router;

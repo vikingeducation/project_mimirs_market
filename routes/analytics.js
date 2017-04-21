@@ -1,34 +1,114 @@
 const express = require("express");
 const router = express.Router();
 
-const sqlModels = require("./../models/sequelize");
-const sequelize = sqlModels.sequelize;
-
-const { Product, Category } = sqlModels;
-
 const mongoose = require("mongoose");
 const mongoModels = require("./../models/mongoose");
 const Order = mongoose.model("Order");
 
-router.get("/", (req, res, next) => {
-  Order.find({})
-    .then(orders => {
-      res.render("analytics/index", { orders });
-    })
-    .catch(next);
-});
+// { __v: 0,
+//   updatedAt: 2017-04-21T14:33:17.494Z,
+//   createdAt: 2017-04-21T14:33:17.494Z,
+//   fname: 'Mark',
+//   lname: 'Zuckerberg',
+//   email: 'yougotzuckerberged@facebook.com',
+//   street: '666 Silicon Valley Lane',
+//   city: 'Menlo Park',
+//   state: 'CA',
+//   products:
+//    [ { quantity: 1,
+//        sku: 'SJbGY45wAx',
+//        description: 'Assumenda similique beatae ut doloribus omnis illum consequatur sunt.',
+//        price: 74.62,
+//        name: 'Fantastic Frozen Hat',
+//        category: 'Home',
+//        id: 91 },
+//      { quantity: 4,
+//        sku: 'Bk_GtNcw0g',
+//        description: 'Animi modi tenetur commodi velit officiis aut.',
+//        price: 99.81,
+//        name: 'Intelligent Metal Bacon',
+//        category: 'Sports',
+//        id: 98 },
+//      { quantity: 1,
+//        sku: 'ryoZK45vRe',
+//        description: 'Dolorem repellat est aut ullam non corrupti beatae voluptates voluptas.',
+//        price: 70.16,
+//        name: 'Awesome Rubber Soap',
+//        category: 'Sports',
+//        id: 76 } ],
+//   stripe:
+//    { transfer_group: null,
+//      status: 'succeeded',
+//      statement_descriptor: null,
+//      source_transfer: null,
+//      source:
+//       { tokenization_method: null,
+//         name: 'yougotzuckerberged@facebook.com',
+//         last4: '4242',
+//         funding: 'credit',
+//         fingerprint: 'euTAzKCyxMcMSGC9',
+//         exp_year: 2018,
+//         exp_month: 1,
+//         dynamic_last4: null,
+//         cvc_check: 'pass',
+//         customer: null,
+//         country: 'US',
+//         brand: 'Visa',
+//         address_zip_check: null,
+//         address_zip: null,
+//         address_state: null,
+//         address_line2: null,
+//         address_line1_check: null,
+//         address_line1: null,
+//         address_country: null,
+//         address_city: null,
+//         object: 'card',
+//         id: 'card_1AB2owGnwiXPkfuYyb8FoLjD' },
+//      shipping: null,
+//      review: null,
+//      refunds:
+//       { url: '/v1/charges/ch_1AB2ozGnwiXPkfuYBRPPNr4k/refunds',
+//         total_count: 0,
+//         has_more: false,
+//         data: [],
+//         object: 'list' },
+//      refunded: false,
+//      receipt_number: null,
+//      receipt_email: null,
+//      paid: true,
+//      outcome:
+//       { type: 'authorized',
+//         seller_message: 'Payment complete.',
+//         risk_level: 'normal',
+//         reason: null,
+//         network_status: 'approved_by_network' },
+//      order: null,
+//      on_behalf_of: null,
+//      livemode: false,
+//      invoice: null,
+//      failure_message: null,
+//      failure_code: null,
+//      dispute: null,
+//      destination: null,
+//      description: 'purchase',
+//      customer: null,
+//      currency: 'usd',
+//      created: 1492785197,
+//      captured: true,
+//      balance_transaction: 'txn_1AB2ozGnwiXPkfuYYBRMYWZR',
+//      application_fee: null,
+//      application: null,
+//      amount_refunded: 0,
+//      amount: 54402,
+//      object: 'charge',
+//      id: 'ch_1AB2ozGnwiXPkfuYBRPPNr4k' },
+//   stripeToken: 'tok_1AB2owGnwiXPkfuYQR6GEFdA',
+//   total: 544.02,
+//   _id: 58fa182d2c52da2263b11d57 }
 
-router.get('/:id', (req, res, next) => {
-  Order.findById(req.params.id)
-    .then(order => {
-      console.log(order);
-      res.render('analytics/show', { order });
-    })
-    .catch(next);
-});
-
-router.get('/revenue', (req, res, next) => {
-  res.render('analytics/revenue');
+router.get('/', (req, res, next) => {
+  Order.findAll()
+  res.render('analytics/index');
 });
 
 module.exports = router;

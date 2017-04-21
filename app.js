@@ -130,6 +130,9 @@ app.use("/cart", cartRouter);
 const checkoutsRouter = require("./routes/checkouts");
 app.use("/checkouts", checkoutsRouter);
 
+const ordersRouter = require("./routes/orders");
+app.use("/orders", ordersRouter);
+
 const analyticsRouter = require("./routes/analytics");
 app.use("/analytics", analyticsRouter);
 // ----------------------------------------

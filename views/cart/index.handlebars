@@ -1,5 +1,7 @@
 {{#if products.length }}
+
   <div class="row">
+
     {{#each products as |product| }}
     <div class="col-sm-offset-4 col-sm-8">
       <div id="product{{product.id}}" class="card my-3">
@@ -42,17 +44,19 @@
       </div>
     </div>
     {{/each }}
+    
   </div>
-
 
   <div>
     Total: {{currency total}}
   </div>
+
   <p class="card-text">
-    <form action="cart/removeAll" method="post">
-      <button type="submit" class="btn btn-danger">Remove All</button>
+    <form action="cart/clear" method="post">
+      <button type="submit" class="btn btn-danger">Remove All Items</button>
     </form>
   </p>
+
 {{else }}
   <p class="text-danger">No products</p>
 {{/if }}

@@ -70,9 +70,11 @@ router.post("/remove", (req, res) => {
   res.redirect("back");
 });
 
-router.post("/removeAll", (req, res) => {
+function clearCart(req, res) {
   res.cookie("cart", {});
   res.redirect("back");
-});
+}
+router.get("/clear", clearCart);
+router.post("/clear", clearCart);
 
 module.exports = router;
