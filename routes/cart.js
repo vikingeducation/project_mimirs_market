@@ -1,6 +1,5 @@
-var url = require("url");
 const express = require("express");
-let router = express.Router();
+const router = express.Router();
 var modelsSeq = require("./../models/sequelize");
 var Product = modelsSeq.Product;
 var Category = modelsSeq.Category;
@@ -19,22 +18,35 @@ var {
 } = process.env;
 var stripe = require("stripe")(STRIPE_SK);
 
+// --------------------------------------
+// TOTAL AMOUNT
+// --------------------------------------
 var totalAmount = function(cartProducts) {
   var total = 0;
   cartProducts.forEach(product => {
-    total += Number(product.price) * Number(product.quantity);
+    total += product.price * product.quantity;
   });
   return total;
 };
 
-router.get("/", (req, res) => {
+// ----------------------------------------
+// ROUTER FUNCTIONS
+// ----------------------------------------
+
+var onCart = (req, res) => {
   var cartProducts = req.session.shoppingCart;
   var total = totalAmount(cartProducts);
   res.render("cart/index", { cartProducts, total });
-});
+};
 
-router.post("/updateQuantity", (req, res) => {
-  var quantity = Number(req.body.productQuantity);
+var onCheckout = (req, res) => {
+  var cartProducts = req.session.shoppingCart;
+  var total = totalAmount(cartProducts);
+  res.render("cart/checkout", { cartProducts, STRIPE_PK, total });
+};
+
+var onUpdate = (req, res) => {
+  var quantity = req.body.productQuantity;
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
   var indexOfRemoval;
@@ -44,19 +56,17 @@ router.post("/updateQuantity", (req, res) => {
       product.quantity = quantity;
       if (product.quantity <= 0) {
         indexOfRemoval = index;
-        console.log("Remove");
       }
     }
   });
-
-  if (indexOfRemoval) shoppingCart.splice(indexOfRemoval, 1);
-  if (indexOfRemoval === 0) shoppingCart.shift();
+  if (indexOfRemoval >= 0) shoppingCart.splice(indexOfRemoval, 1);
 
   req.session.shoppingCart = shoppingCart;
+  req.flash("success", "Succesfully updated!");
   res.redirect("back");
-});
+};
 
-router.post("/remove", (req, res) => {
+var onRemove = (req, res) => {
   var productId = Number(req.body.productId);
   var shoppingCart = req.session.shoppingCart;
   var indexOfRemoval;
@@ -69,25 +79,20 @@ router.post("/remove", (req, res) => {
 
   shoppingCart.splice(indexOfRemoval, 1);
   req.session.shoppingCart = shoppingCart;
+  req.flash("success", "Item removed!");
   res.redirect("back");
-});
+};
 
-router.post("/clear", (req, res) => {
+var onClear = (req, res) => {
   req.session.shoppingCart = [];
+  req.flash("success", "Cart is empty!");
   res.redirect("back");
-});
+};
 
-router.get("/checkout", (req, res) => {
-  var cartProducts = req.session.shoppingCart;
-  var total = totalAmount(cartProducts);
-  //create description based off of products in cart to send to render?
-  res.render("cart/checkout", { cartProducts, STRIPE_PK, total });
-});
-
-router.post("/charges", (req, res) => {
+var onCharges = (req, res) => {
   var charge = req.body;
   var shoppingCart = req.session.shoppingCart;
-  var total = charge.amount;
+  var total = Number(charge.amount);
   var firstName = charge.first_name;
   var lastName = charge.last_name;
   var street = charge.street;
@@ -105,16 +110,12 @@ router.post("/charges", (req, res) => {
     } else {
       description += product.name;
     }
-
-    //for each product, add quantity to that product's unitsSold?
-
     totalUnits += Number(product.quantity);
   });
 
-  //Look at charge to pull out amount and description?
   stripe.charges
     .create({
-      amount: parseInt(Number(total) * 100),
+      amount: parseInt(total * 100),
       currency: "usd",
       description: "something",
       source: charge.stripeToken
@@ -132,18 +133,25 @@ router.post("/charges", (req, res) => {
         description,
         stripeToken,
         stripeTokenType,
-        totalUnits
+        totalUnits,
+        total
       });
 
       newOrder.save();
     })
     .then(() => {
-      // Add hook to update mongoose orderedProduct
-
       req.session.shoppingCart = [];
+      req.flash("success", "Your order is submitted!");
       res.redirect("/cart");
-    });
-});
-//.catch(() => res.status(500).send(e.stack));
+    })
+    .catch(() => res.status(500).send(e.stack));
+};
+
+router.get("/", onCart);
+router.get("/checkout", onCheckout);
+router.post("/updateQuantity", onUpdate);
+router.post("/remove", onRemove);
+router.post("/clear", onClear);
+router.post("/charges", onCharges);
 
 module.exports = router;

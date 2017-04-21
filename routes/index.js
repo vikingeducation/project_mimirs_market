@@ -1,4 +1,3 @@
-var url = require("url");
 const express = require("express");
 let router = express.Router();
 var models = require("./../models/sequelize");
@@ -7,137 +6,96 @@ var Category = models.Category;
 var sequelize = models.sequelize;
 
 var onIndex = (req, res) => {
-  var products, categories;
+  var products;
   if (!req.session.shoppingCart) {
     req.session.shoppingCart = [];
   }
   var cartProducts = req.session.shoppingCart;
-
   Product.findAll({
     include: [{ model: Category, required: true }],
-    limit: 30
-  }).then(product => {
-    products = product;
-    Category.findAll().then(category => {
-      categories = category;
-      res.render("products/index", { products, categories, cartProducts });
-    });
-  });
+    limit: 32
+  })
+    .then(result => {
+      products = result;
+      Category.findAll().then(categories => {
+        res.render("products/index", { products, categories, cartProducts });
+      });
+    })
+    .catch(() => res.status(500).send(e.stack));
 };
 
 var onSearch = (req, res) => {
+  var products;
   var search = req.query.searchText;
-  var products, categories;
-  var hasSearched = true;
   var cartProducts = req.session.shoppingCart;
-
-  Product.findAll({
-    where: {
-      $or: [
-        { name: { $iLike: `%${search}%` } },
-        { description: { $iLike: `%${search}%` } }
-      ]
-    },
-    include: [{ model: Category, required: true }],
-    limit: 30
-  }).then(product => {
-    products = product;
-    Category.findAll().then(category => {
-      categories = category;
-      res.render("products/index", {
-        products,
-        categories,
-        hasSearched,
-        search,
-        cartProducts
-      });
-    });
-  });
-};
-
-var onFilter = (req, res) => {
   var minPrice = req.query.minPrice;
   var maxPrice = req.query.maxPrice;
   var categoryId = req.query.product.categoryId;
-  var products, categories;
-  var hasFiltered = true;
-  var cartProducts = req.session.shoppingCart;
+  var orderBy = req.query.orderBy;
 
-  !minPrice ? (minPrice = 0) : minPrice;
-  !maxPrice ? (maxPrice = 9999) : maxPrice;
-
+  var whereAnd = [];
+  if (minPrice) {
+    whereAnd.push({ price: { $gte: minPrice } });
+  }
+  if (maxPrice) {
+    whereAnd.push({ price: { $lte: maxPrice } });
+  }
   if (categoryId) {
-    Product.findAll({
-      where: {
-        $and: [
-          { price: { $gte: minPrice } },
-          { price: { $lte: maxPrice } },
-          { categoryId }
-        ]
-      },
-      include: [{ model: Category, required: true }],
-      limit: 30
-    }).then(product => {
-      products = product;
-      Category.findAll().then(category => {
-        categories = category;
+    whereAnd.push({ categoryId });
+  }
+  if (search) {
+    whereAnd.push({ description: { $iLike: `%${search}%` } });
+  }
+
+  Product.findAll({
+    where: {
+      $and: whereAnd
+    },
+    include: [{ model: Category, required: true }],
+    order: orderBy,
+    limit: 32
+  })
+    .then(result => {
+      products = result;
+      Category.findAll().then(categories => {
+        req.flash("success", "Your Search Results");
         res.render("products/index", {
           products,
           categories,
-          hasFiltered,
+          search,
           minPrice,
           maxPrice,
           categoryId,
           cartProducts
         });
       });
-    });
-  } else {
-    Product.findAll({
-      where: {
-        $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
-      },
-      include: [{ model: Category, required: true }],
-      limit: 30
-    }).then(product => {
-      products = product;
-      Category.findAll().then(category => {
-        categories = category;
-        res.render("products/index", {
-          products,
-          categories,
-          hasFiltered,
-          minPrice,
-          maxPrice,
-          cartProducts
-        });
-      });
-    });
-  }
+    })
+    .catch(() => res.status(500).send(e.stack));
 };
 
-var onOrder = (req, res) => {
-  var products, categories;
-  var orderBy = req.query.orderBy;
+var onShow = (req, res) => {
+  var currentProduct;
   var cartProducts = req.session.shoppingCart;
 
-  Product.findAll({
-    include: [{ model: Category, required: true }],
-    order: orderBy,
-    limit: 30
-  }).then(product => {
-    products = product;
-    Category.findAll().then(category => {
-      categories = category;
-      res.render("products/index", { products, categories, cartProducts });
-    });
-  });
+  Product.findById(req.params.id, {
+    include: [{ model: Category, required: true }]
+  })
+    .then(product => {
+      currentProduct = product;
+      Product.findAll({
+        where: {
+          $and: [
+            { categoryId: currentProduct.categoryId },
+            { id: { $ne: currentProduct.id } }
+          ]
+        },
+        limit: 32
+      }).then(products => {
+        res.render("products/show", { products, currentProduct, cartProducts });
+      });
+    })
+    .catch(() => res.status(500).send(e.stack));
 };
-
-router.get("/", onIndex);
-router.get("/search", onSearch);
-router.get("/filter", onFilter);
-router.get("/order", onOrder);
 
 var onAdd = (req, res) => {
   var productId = req.body.productId;
@@ -150,35 +108,15 @@ var onAdd = (req, res) => {
       req.session.shoppingCart.push(product);
     })
     .then(() => {
-      res.redirect("/");
-    });
+      req.flash("success", "Item added to the cart!");
+      res.redirect("back");
+    })
+    .catch(() => res.status(500).send(e.stack));
 };
 
-router.post("/addToCart", onAdd);
-
-var onShow = (req, res) => {
-  var products, currentProduct;
-  var cartProducts = req.session.shoppingCart;
-
-  Product.findById(req.params.id, {
-    include: [{ model: Category, required: true }]
-  }).then(product => {
-    currentProduct = product;
-    Product.findAll({
-      where: {
-        $and: [
-          { categoryId: currentProduct.categoryId },
-          { id: { $ne: currentProduct.id } }
-        ]
-      },
-      limit: 30
-    }).then(result => {
-      products = result;
-      res.render("products/show", { products, currentProduct, cartProducts });
-    });
-  });
-};
-
+router.get("/", onIndex);
+router.get("/search", onSearch);
 router.get("/products/:id", onShow);
+router.post("/addToCart", onAdd);
 
 module.exports = router;

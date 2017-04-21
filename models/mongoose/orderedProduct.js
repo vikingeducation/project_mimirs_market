@@ -7,7 +7,6 @@ var OrderedProductSchema = new Schema({
   description: String,
   price: Number,
   photo: String,
-  unitsSold: Number,
   categoryId: Number,
   createdAt: String,
   updatedAt: String,

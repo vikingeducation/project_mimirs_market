@@ -23,8 +23,10 @@
   </head>
   <body>
     {{> shared/_nav }}
-
+    <div class="container wrapper">
+      {{> shared/_flash}}
       {{{ body }}}
-
+      {{> shared/_footer}}
+    </div>
   </body>
 </html>

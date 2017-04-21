@@ -1,8 +1,14 @@
-<div class="container">
 
-<h2 class="text-center">Admin Orders Index Page</h2>
-<br>
+<!-- Jumbotron Header -->
+  <header class="jumbotron hero-spacer">
+    <h2>Admin Orders Index Page</h2>
+  </header>
+
+  <hr>
+
 {{#if orders.length }}
+ <div class="panel panel-info">
+  <div class="panel-body">
   <table class="table">
     <thead>
       <tr>
@@ -27,7 +33,7 @@
             <p>{{ formatDate order.createdAt }}</p>
           </td>
           <td>
-            <p>{{ formatCurrency order.charge.amount }}</p>
+            <p>{{ formatCurrency order.total}}</p>
           </td>
           <td>
             <p>{{ order.email }}</p>
@@ -39,7 +45,9 @@
       {{/each }}
     </tbody>
   </table>
+</div>
+</div>
 {{else }}
   <p class="text-danger">No orders</p>
 {{/if }}
-</div>
+

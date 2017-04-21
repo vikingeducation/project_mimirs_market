@@ -1,208 +1,186 @@
-<div class="container">
 
-<h2 class="text-center">Analytics</h2>
-<br>
-
-<div class="row cart-body">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
-
-    </div>
-
-<div class="container wrapper">
-  <div class="row cart-head">
-    <div class="container">
-      <div class="row">
-        </div>
-          <div class="row">
-            <p></p>
-          </div>
-        </div>
-    </div>
+  <h2 class="text-center">Admin Analytics</h2><br>
     <!-- STUFF ON THE RIGHT -->
-            <div class="row cart-body">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
-                    <!--REVENUE BY STATE INFO-->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                           Revenue by State <div class="pull-right"></div>
-                        </div>
-                        <div class="panel-body">
+    <div class="row cart-body">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+        <!--REVENUE BY STATE INFO-->
+        <div class="panel panel-info">
+          <div class="panel-heading">
+             Revenue by State <div class="pull-right"></div>
+          </div>
+          <div class="panel-body">
 
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Field</th>
-                                <th>Value</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {{#each totals.totalStatesRevenue as |state|}}
-                                <tr>
-                                  <td>
-                                     {{state._id}}
-                                  </td>
-                                  <td>
-                                    {{ formatCurrency state.revenueForState }}</a>
-                                  </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                          </table>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each totals.totalStatesRevenue as |state|}}
+                <tr>
+                  <td>
+                     {{state._id}}
+                  </td>
+                  <td>
+                    {{ formatCurrency state.revenueForState }}</a>
+                  </td>
+                </tr>
+                {{/each}}
+                </tbody>
+              </table>
 
-                        </div>
-                      </div>
+            </div>
+          </div>
+        <!--REVENUE BY STATE END-->
 
-
-                    <!--REVENUE BY STATE END-->
        <!--REVENUE BY CATEGORY-->
-                  <div class="panel panel-info">
-                        <div class="panel-heading">
-                           Revenue by Category <div class="pull-right"></div>
-                        </div>
-                        <div class="panel-body">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+               Revenue by Category <div class="pull-right"></div>
+            </div>
+            <div class="panel-body">
 
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Field</th>
-                                <th>Value</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {{#each totals.totalCategoriesRevenue as |category|}}
-                                <tr>
-                                  <td>
-                                     {{category._id}}
-                                  </td>
-                                  <td>
-                                    {{ formatCurrency category.revenueForCategory }}</a>
-                                  </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                          </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each totals.totalCategoriesRevenue as |category|}}
+                  <tr>
+                    <td>
+                     {{category._id}}
+                    </td>
+                    <td>
+                      {{ formatCurrency category.revenueForCategory }}</a>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
 
-                        </div>
-                      </div>
-                </div>
+            </div>
+          </div>
 
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
-                <!-- STUFF on the LEFT -->
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                       Totals <div class="pull-right"></div>
-                    </div>
-                    <div class="panel-body">
+        </div>
 
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Field</th>
-                            <th>Value</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                              <td>
-                                 Total Revenue
-                              </td>
-                              <td>
-                                {{ formatCurrency totals.totalRevenue}}</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Total Units Sold
-                              </td>
-                              <td>
-                                {{ totals.totalUnitsEver}}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Total Transactions
-                              </td>
-                              <td>
-                                {{ totals.totalTransactions }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Total Customers
-                            </td>
-                            <td>
-                              {{totals.totalUsers}}
-                            </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Total Products
-                            </td>
-                            <td>
-                              {{totals.totalProducts}}
-                            </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                Total Categories
-                            </td>
-                            <td>
-                              {{totals.totalCategories}}
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>
-                              Total States Sold To
-                          </td>
-                          <td>
-                            {{totals.totalStates}}
-                          </td>
-                          </tr>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+          <!-- STUFF on the LEFT -->
+          <div class="panel panel-info">
+              <div class="panel-heading">
+                 Totals <div class="pull-right"></div>
+              </div>
+              <div class="panel-body">
 
-                        </tbody>
-                      </table>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        Total Revenue
+                      </td>
+                      <td>
+                        {{ formatCurrency totals.totalRevenue}}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Units Sold
+                      </td>
+                      <td>
+                        {{ totals.totalUnitsEver}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Transactions
+                      </td>
+                      <td>
+                        {{ totals.totalTransactions }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Customers
+                      </td>
+                      <td>
+                        {{totals.totalUsers}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Products
+                      </td>
+                      <td>
+                        {{totals.totalProducts}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Categories
+                      </td>
+                      <td>
+                        {{totals.totalCategories}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total States Sold To
+                      </td>
+                      <td>
+                        {{totals.totalStates}}
+                      </td>
+                    </tr>
 
-                    </div>
-                  </div>
-       <!--REVENUE BY PRODUCT-->
-                  <div class="panel panel-info">
-                        <div class="panel-heading">
-                           Revenue by Product <div class="pull-right"></div>
-                        </div>
-                        <div class="panel-body">
-
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th>Field</th>
-                                <th>Value</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {{#each totals.totalProductsRevenue as |product|}}
-                                <tr>
-                                  <td>
-                                     {{product._id}}
-                                  </td>
-                                  <td>
-                                    {{ formatCurrency product.revenueForProduct }}</a>
-                                  </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                          </table>
-
-                        </div>
-                      </div>
-           
+                  </tbody>
+                </table>
 
               </div>
+            </div>
 
-                    </div>
+      <!--REVENUE BY PRODUCT-->
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                 Revenue by Product <div class="pull-right"></div>
+              </div>
+              <div class="panel-body">
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each totals.totalProductsRevenue as |product|}}
+                      <tr>
+                        <td>
+                           {{product._id}}
+                        </td>
+                        <td>
+                          {{ formatCurrency product.revenueForProduct }}</a>
+                        </td>
+                      </tr>
+                      {{/each}}
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
 
 
 
-        <div class="row cart-footer">
-      </div>
-
-  </div>
+      <div class="row cart-footer"></div>
