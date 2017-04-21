@@ -21,7 +21,7 @@
     <!-- STUFF ON THE RIGHT -->
             <div class="row cart-body">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
-                    <!--CUSTOMER INFO-->
+                    <!--REVENUE BY STATE INFO-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
                            Revenue by State <div class="pull-right"></div>
@@ -42,7 +42,7 @@
                                      {{state._id}}
                                   </td>
                                   <td>
-                                    {{ state.revenueForState }}</a>
+                                    {{ formatCurrency state.revenueForState }}</a>
                                   </td>
                                 </tr>
                                 {{/each}}
@@ -53,11 +53,11 @@
                       </div>
 
 
-                    <!--CUSTOMER INFO END-->
-                    <!-- ORDER INFO -->
-                    <div class="panel panel-info">
+                    <!--REVENUE BY STATE END-->
+       <!--REVENUE BY CATEGORY-->
+                  <div class="panel panel-info">
                         <div class="panel-heading">
-                           Order Info <div class="pull-right"></div>
+                           Revenue by Category <div class="pull-right"></div>
                         </div>
                         <div class="panel-body">
 
@@ -69,37 +69,21 @@
                               </tr>
                             </thead>
                             <tbody>
+                              {{#each totals.totalCategoriesRevenue as |category|}}
                                 <tr>
                                   <td>
-                                     Checkout Date
+                                     {{category._id}}
                                   </td>
                                   <td>
-                                    {{ order.createdAt }}</a>
+                                    {{ formatCurrency category.revenueForCategory }}</a>
                                   </td>
                                 </tr>
-                                <tr>
-                                  <td>
-                                    Stripe Token
-                                  </td>
-                                  <td>
-                                    {{ order.stripeToken}}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    Card Type
-                                  </td>
-                                  <td>
-                                    {{ order.stripeTokenType }}
-                                  </td>
-                                </tr>
-
+                                {{/each}}
                             </tbody>
                           </table>
 
                         </div>
                       </div>
-                     <!--  ORDER INFO END -->
                 </div>
 
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
@@ -123,7 +107,7 @@
                                  Total Revenue
                               </td>
                               <td>
-                                {{ totals.totalRevenue}}</a>
+                                {{ formatCurrency totals.totalRevenue}}</a>
                               </td>
                             </tr>
                             <tr>
@@ -180,6 +164,37 @@
 
                     </div>
                   </div>
+       <!--REVENUE BY PRODUCT-->
+                  <div class="panel panel-info">
+                        <div class="panel-heading">
+                           Revenue by Product <div class="pull-right"></div>
+                        </div>
+                        <div class="panel-body">
+
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {{#each totals.totalProductsRevenue as |product|}}
+                                <tr>
+                                  <td>
+                                     {{product._id}}
+                                  </td>
+                                  <td>
+                                    {{ formatCurrency product.revenueForProduct }}</a>
+                                  </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                          </table>
+
+                        </div>
+                      </div>
+           
 
               </div>
 

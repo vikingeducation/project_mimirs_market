@@ -11,9 +11,11 @@ var Order = mongoose.model("Order");
 var dbInfo = require("./../lib/dbInfo");
 
 router.get("/", (req, res) => {
+  let cartProducts = req.session.cartProducts;
   let promiseArr = dbInfo.getTotals();
   promiseArr.push(dbInfo.statesRevenue());
-  // promiseArr.push(dbInfo.revenueByCategory());
+  promiseArr.push(dbInfo.revenueByCategory());
+  promiseArr.push(dbInfo.revenueByProduct());
 
   Promise.all(promiseArr).then(result => {
     console.log("RESULT", result);
@@ -26,10 +28,12 @@ router.get("/", (req, res) => {
       totalProducts: result[2],
       totalCategories: result[3],
       totalStates: result[4][0].totalStates,
-      totalStatesRevenue: result[5]
+      totalStatesRevenue: result[5],
+      totalCategoriesRevenue: result[6],
+      totalProductsRevenue: result[7]
     };
 
-    res.render("analytics/index", { totals });
+    res.render("analytics/index", { totals, cartProducts });
   });
 });
 

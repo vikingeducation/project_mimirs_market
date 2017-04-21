@@ -103,7 +103,7 @@
                                      Checkout Date
                                   </td>
                                   <td>
-                                    {{ order.createdAt }}</a>
+                                    {{ formatDate order.createdAt }}</a>
                                   </td>
                                 </tr>
                                 <tr>
@@ -156,7 +156,7 @@
                             Price
                           </td>
                           <td>
-                            {{ product.price}}
+                            {{ formatCurrency product.price}}
                           </td>
                         </tr>
                         <tr>

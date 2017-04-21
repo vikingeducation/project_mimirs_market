@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Products', {
+    return queryInterface.createTable("Products", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -26,22 +26,19 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER
       },
-      unitsSold: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn("NOW")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn("NOW")
       }
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Products');
+    return queryInterface.dropTable("Products");
   }
 };

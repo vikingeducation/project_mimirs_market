@@ -1,17 +1,17 @@
-var express = require('express');
+var express = require("express");
 var app = express();
 
 // ----------------------------------------
 // dotenv
 // ----------------------------------------
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
 // ----------------------------------------
 // Body Parser
 // ----------------------------------------
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ----------------------------------------
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   if (req.query._method) {
     method = req.query._method;
     delete req.query._method;
-  } else if (typeof req.body === 'object' && req.body._method) {
+  } else if (typeof req.body === "object" && req.body._method) {
     method = req.body._method;
     delete req.body._method;
   }
@@ -43,10 +43,10 @@ app.use(express.static(`${__dirname}/public`));
 // ----------------------------------------
 // Logging
 // ----------------------------------------
-var morgan = require('morgan');
-app.use(morgan('tiny'));
+var morgan = require("morgan");
+app.use(morgan("tiny"));
 app.use((req, res, next) => {
-  ['query', 'params', 'body'].forEach(key => {
+  ["query", "params", "body"].forEach(key => {
     if (req[key]) {
       var capKey = key[0].toUpperCase() + key.substr(1);
       var value = JSON.stringify(req[key], null, 2);
@@ -59,87 +59,70 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Sessions/Cookies
 // ----------------------------------------
-var cookieSession = require('cookie-session');
+var cookieSession = require("cookie-session");
 
 app.use(
   cookieSession({
-    name: 'session',
-    keys: ['asdf1234567890qwer']
+    name: "session",
+    keys: ["asdf1234567890qwer"]
   })
 );
 
 // ----------------------------------------
 // Flash Messages
 // ----------------------------------------
-var flash = require('express-flash-messages');
+var flash = require("express-flash-messages");
 app.use(flash());
 
 // ----------------------------------------
 // Mongoose
 // ----------------------------------------
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 app.use((req, res, next) => {
   if (mongoose.connection.readyState) {
     next();
   } else {
-    require('./mongo')(req).then(() => next());
+    require("./mongo")(req).then(() => next());
   }
 });
 
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-var indexRoute = require('./routes/index');
-app.use('/', indexRoute);
+var indexRoute = require("./routes/index");
+app.use("/", indexRoute);
 
-var cartRoute = require('./routes/cart');
-app.use('/cart', cartRoute);
+var cartRoute = require("./routes/cart");
+app.use("/cart", cartRoute);
 
-var adminRoute = require('./routes/admin');
-app.use('/admin', adminRoute);
+var adminRoute = require("./routes/admin");
+app.use("/admin", adminRoute);
 
-var analyticsRoute = require('./routes/analytics');
-app.use('/analytics', analyticsRoute);
+var analyticsRoute = require("./routes/analytics");
+app.use("/analytics", analyticsRoute);
 
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
-var expressHandlebars = require('express-handlebars');
-
+var expressHandlebars = require("express-handlebars");
+var helpers = require("./helpers");
 var hbs = expressHandlebars.create({
-  partialsDir: 'views/',
-  defaultLayout: 'main',
-  helpers: {
-    isInCart: function(productId, shoppingCart) {
-      let inCart = false;
-
-      for (let i = 0; i < shoppingCart.length; i++) {
-        let product = shoppingCart[i];
-        if (productId === product.id) {
-          inCart = true;
-          break;
-        }
-      }
-
-      return inCart;
-    },
-    subtotal: function(product) {
-      return product.price * product.quantity;
-    }
-  }
+  partialsDir: "views/",
+  defaultLayout: "main",
+  helpers: helpers.registered
 });
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
 // ----------------------------------------
 // Server
 // ----------------------------------------
 var port = process.env.PORT || process.argv[2] || 3000;
-var host = 'localhost';
+var host = "localhost";
 
 var args;
-process.env.NODE_ENV === 'production' ? (args = [port]) : (args = [port, host]);
+process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 
 args.push(() => {
   console.log(`Listening: http://${host}:${port}`);
