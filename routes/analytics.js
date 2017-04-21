@@ -3,7 +3,7 @@ const router = express.Router();
 var getDbInfo = require("./../lib/dbInfo");
 
 router.get("/", (req, res) => {
-  let cartProducts = req.session.cartProducts;
+  let cartProducts = req.session.shoppingCart;
   let promiseArr = getDbInfo();
 
   Promise.all(promiseArr)
