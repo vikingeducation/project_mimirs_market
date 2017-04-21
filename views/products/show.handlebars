@@ -8,6 +8,8 @@
         {{ product.Category.name }}</p>
       </a>
     <p class="card-text">{{ product.description }}</p>
+  </div>
+  <div class="card-footer">
     {{> shared/_cartButton cartIds=cartIds productId=product.id}}
   </div>
 </div>
@@ -15,7 +17,7 @@
 <h2 class="text-center my-5">Related Products</h2>
 
 {{#if product.Category.Products.length }}
-  <div class="row">
+  <div class="card-deck">
     {{#each product.Category.Products as |related| }}
       {{> products/_product cartIds=../cartIds product=related}}
     {{/each }}

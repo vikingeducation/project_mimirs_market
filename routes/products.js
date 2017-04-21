@@ -19,9 +19,7 @@ router.get("/", (req, res, next) => {
     })
     .then(categories => {
       let cartIds = [];
-      if (req.cookies.cart) {
-        cartIds = Object.keys(req.cookies.cart).map(i => +i);
-      }
+      if (req.cookies.cart) cartIds = Object.keys(req.cookies.cart).map(i => +i);
       res.render("products/index", { products, categories, cartIds });
     })
     .catch(next);
@@ -46,9 +44,7 @@ router.get("/:id", (req, res, next) => {
     .then(product => {
       if (product) {
         let cartIds = [];
-        if (req.cookies.cart) {
-          cartIds = Object.keys(req.cookies.cart).map(i => +i);
-        }
+        if (req.cookies.cart) cartIds = Object.keys(req.cookies.cart).map(i => +i);
         res.render("products/show", { product, cartIds });
       } else {
         res.send(404);
@@ -100,7 +96,7 @@ function _makeQuery(query) {
       default:
         orderParam = "";
     }
-    queryObj.where = { order: orderParam };
+    queryObj.order = `${ orderParam }`;
   }
   return queryObj;
 }

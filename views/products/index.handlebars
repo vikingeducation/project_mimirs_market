@@ -18,7 +18,7 @@
         <select class="form-control" name="category" id="sort">
           <option>All</option>
           {{#each categories as |category|}}
-          <option value="{{category.id}}">{{category.name}}</option>
+            <option value="{{category.id}}">{{category.name}}</option>
           {{/each}}
         </select>
       </div>
@@ -51,10 +51,8 @@
    </form>
 </header>
 
-<br>
-
 {{#if products.length }}
-  <div class="row">
+  <div class="card-deck row">
     {{#each products as |product| }}
       {{> products/_product cartIds=../cartIds product=product}}
     {{/each }}

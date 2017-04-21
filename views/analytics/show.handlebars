@@ -1,180 +1,92 @@
 <header class="page-header">
-  <h1 class="text-center mb-5">Admin Orders Show</h1>
+  <h1 class="text-center mb-5">Admin Order Details</h1>
 </header>
 
 <div class="row">
   <div class="col-sm-6">
-    <h3>Products</h3>
+    <h3 class="text-center mb-4">Products</h3>
     {{#each order.products as |product|}}
     <table class="table table-bordered">
-      <thead>
+      <thead class="thead-default">
         <tr>
-          <th>
-            Field
-          </th>
-          <th>
-            Value
+          <th colspan="2">
+            {{ product.name }}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>
-            Name
-          </td>
-          <td>
-            {{ product.name }}
-          </td>
+          <td>Price</td>
+          <td>{{ currency product.price }}</td>
         </tr>
         <tr>
-          <td>
-            Price
-          </td>
-          <td>
-            {{ currency product.price }}
-          </td>
+          <td>Quantity</td>
+          <td>{{ product.quantity }}</td>
         </tr>
         <tr>
-          <td>
-            SKU
-          </td>
-          <td>
-            {{ product.sku }}
-          </td>
+          <td>SKU</td>
+          <td>{{ product.sku }}</td>
         </tr>
         <tr>
-          <td>
-            Description
-          </td>
-          <td>
-            {{ product.description }}
-          </td>
+          <td>Description</td>
+          <td>{{ product.description }}</td>
         </tr>
         <tr>
-          <td>
-            Category
-          </td>
-          <td>
-            {{ product.category }}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Quantity
-          </td>
-          <td>
-            {{ product.quantity }}
-          </td>
+          <td>Category</td>
+          <td>{{ product.category }}</td>
         </tr>
       </tbody>
     </table>
     {{/each}}
   </div>
 
-  <h3>Customer Info</h3>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>
-          Field
-        </th>
-        <th>
-          Value
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          First Name
-        </td>
-        <td>
-          {{ order.fname }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Last Name
-        </td>
-        <td>
-          {{ order.lname }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Email
-        </td>
-        <td>
-          {{ order.email }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Street
-        </td>
-        <td>
-          {{ order.street }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          City
-        </td>
-        <td>
-          {{ order.city }}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          State
-        </td>
-        <td>
-          {{ order.state }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
   <div class="col-sm-6">
-    <h3>Order Info</h3>
+    <h3 class="text-center mb-4">Customer Info</h3>
     <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>
-            Field
-          </th>
-          <th>
-            Value
-          </th>
-        </tr>
-      </thead>
       <tbody>
         <tr>
-          <td>
-            Checkout Date
-          </td>
-          <td>
-            {{ order.createdAt }}
-          </td>
+          <td>First Name</td>
+          <td>{{ order.fname }}</td>
         </tr>
         <tr>
-          <td>
-            Stripe Token
-          </td>
-          <td>
-            {{ order.stripeToken }}
-          </td>
+          <td>Last Name</td>
+          <td>{{ order.lname }}</td>
         </tr>
         <tr>
-          <td>
-            Card Type
-          </td>
-          <td>
-            Visa
-          </td>
+          <td>Email</td>
+          <td>{{ order.email }}</td>
+        </tr>
+        <tr>
+          <td>Street</td>
+          <td>{{ order.street }}</td>
+        </tr>
+        <tr>
+          <td>City</td>
+          <td>{{ order.city }}</td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td>{{ order.state }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-center mb-4">Order Info</h3>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>Checkout Date</td>
+          <td>{{ order.createdAt }}</td>
+        </tr>
+        <tr>
+          <td>Stripe Token</td>
+          <td>{{ order.stripeToken }}</td>
+        </tr>
+        <tr>
+          <td>Card Type</td>
+          <td>Visa</td>
         </tr>
       </tbody>
     </table>
   </div>
-
 </div>
