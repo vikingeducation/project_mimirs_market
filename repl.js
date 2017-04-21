@@ -1,10 +1,12 @@
-var mongoose = require("mongoose");
-var repl = require("repl").start({});
-var models = {
+const repl = require("repl").start({});
+
+const mongoose = require("mongoose");
+const models = {
   mongoose: require("./models/mongoose"),
   sequelize: require("./models/sequelize")
 };
-var helpers = require("./helpers");
+
+const helpers = require("./helpers");
 
 require("./mongo")().then(() => {
   repl.context.models = models;

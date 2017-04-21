@@ -1,41 +1,39 @@
 const express = require("express");
 const router = express.Router();
 
-const mongoose = require("mongoose");
-const mongoModels = require("./../models/mongoose");
-const Order = mongoose.model("Order");
+const analytics = require("../lib/analytics");
 
 // { __v: 0,
-//   updatedAt: 2017-04-21T14:33:17.494Z,
-//   createdAt: 2017-04-21T14:33:17.494Z,
-//   fname: 'Mark',
-//   lname: 'Zuckerberg',
-//   email: 'yougotzuckerberged@facebook.com',
-//   street: '666 Silicon Valley Lane',
-//   city: 'Menlo Park',
-//   state: 'CA',
+//   updatedAt: 2017-04-21T15:32:06.696Z,
+//   createdAt: 2017-04-21T15:32:06.696Z,
+//   fname: 'Donald',
+//   lname: 'Trump',
+//   email: 'thedonald@yuge.com',
+//   street: '1600 Pennsylvania Avenue',
+//   city: 'Washington, D.C.',
+//   state: 'DC',
 //   products:
-//    [ { quantity: 1,
-//        sku: 'SJbGY45wAx',
-//        description: 'Assumenda similique beatae ut doloribus omnis illum consequatur sunt.',
-//        price: 74.62,
-//        name: 'Fantastic Frozen Hat',
-//        category: 'Home',
-//        id: 91 },
-//      { quantity: 4,
-//        sku: 'Bk_GtNcw0g',
-//        description: 'Animi modi tenetur commodi velit officiis aut.',
-//        price: 99.81,
-//        name: 'Intelligent Metal Bacon',
-//        category: 'Sports',
-//        id: 98 },
+//    [ { quantity: 2,
+//        sku: 'B1YbtEqwCg',
+//        description: 'Ut molestiae odit ut.',
+//        price: 27.92,
+//        name: 'Intelligent Metal Pizza',
+//        category: 'Tools',
+//        id: 74 },
 //      { quantity: 1,
-//        sku: 'ryoZK45vRe',
-//        description: 'Dolorem repellat est aut ullam non corrupti beatae voluptates voluptas.',
-//        price: 70.16,
-//        name: 'Awesome Rubber Soap',
-//        category: 'Sports',
-//        id: 76 } ],
+//        sku: 'HJl_4qP0x',
+//        description: 'Eos minus in labore.',
+//        price: 44.79,
+//        name: 'Sleek Frozen Pizza',
+//        category: 'Jewelery',
+//        id: 2 },
+//      { quantity: 5,
+//        sku: 'Ske-OE9DRg',
+//        description: 'Officiis consequatur quam nihil ut rerum odio et odio iste.',
+//        price: 99.91,
+//        name: 'Generic Granite Pizza',
+//        category: 'Kids',
+//        id: 5 } ],
 //   stripe:
 //    { transfer_group: null,
 //      status: 'succeeded',
@@ -43,7 +41,7 @@ const Order = mongoose.model("Order");
 //      source_transfer: null,
 //      source:
 //       { tokenization_method: null,
-//         name: 'yougotzuckerberged@facebook.com',
+//         name: 'thedonald@yuge.com',
 //         last4: '4242',
 //         funding: 'credit',
 //         fingerprint: 'euTAzKCyxMcMSGC9',
@@ -63,11 +61,11 @@ const Order = mongoose.model("Order");
 //         address_country: null,
 //         address_city: null,
 //         object: 'card',
-//         id: 'card_1AB2owGnwiXPkfuYyb8FoLjD' },
+//         id: 'card_1AB3jrGnwiXPkfuYoxtFhSlF' },
 //      shipping: null,
 //      review: null,
 //      refunds:
-//       { url: '/v1/charges/ch_1AB2ozGnwiXPkfuYBRPPNr4k/refunds',
+//       { url: '/v1/charges/ch_1AB3juGnwiXPkfuY16Oduq90/refunds',
 //         total_count: 0,
 //         has_more: false,
 //         data: [],
@@ -93,21 +91,23 @@ const Order = mongoose.model("Order");
 //      description: 'purchase',
 //      customer: null,
 //      currency: 'usd',
-//      created: 1492785197,
+//      created: 1492788726,
 //      captured: true,
-//      balance_transaction: 'txn_1AB2ozGnwiXPkfuYYBRMYWZR',
+//      balance_transaction: 'txn_1AB3juGnwiXPkfuYFxU0Iedw',
 //      application_fee: null,
 //      application: null,
 //      amount_refunded: 0,
-//      amount: 54402,
+//      amount: 60017,
 //      object: 'charge',
-//      id: 'ch_1AB2ozGnwiXPkfuYBRPPNr4k' },
-//   stripeToken: 'tok_1AB2owGnwiXPkfuYQR6GEFdA',
-//   total: 544.02,
-//   _id: 58fa182d2c52da2263b11d57 }
+//      id: 'ch_1AB3juGnwiXPkfuY16Oduq90' },
+//   stripeToken: 'tok_1AB3jrGnwiXPkfuYo8DabuQD',
+//   revenue: 600.18,
+//   quantity: 8,
+//   _id: 58fa25f6f9711f374a49890b }
+
 
 router.get('/', (req, res, next) => {
-  Order.findAll()
+
   res.render('analytics/index');
 });
 

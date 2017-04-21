@@ -53,7 +53,8 @@ router.post("/", (req, res, next) => {
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
-    let total = 0;
+    let totalRevenue = 0;
+    let totalQuantity = 0;
     let orderProducts = [];
 
     Product.findAll({
@@ -62,27 +63,27 @@ router.post("/", (req, res, next) => {
     })
       .then(products => {
         products.forEach(product => {
-          orderProducts.push(
-            {
-              id: product.id,
-              category: product.Category.name,
-              name: product.name,
-              price: product.price,
-              description: product.description,
-              sku: product.sku,
-              quantity: cart[product.id]
-            }
-          );
-          total += Number(cart[product.id]) * product.price;
+          orderProducts.push({
+            id: product.id,
+            category: product.Category.name,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            sku: product.sku,
+            quantity: cart[product.id]
+          });
+          totalRevenue += Number(cart[product.id]) * product.price;
+          totalQuantity += cart[product.id];
         });
         return stripe.charges.create({
-          amount: parseInt(total.toFixed(2) * 100),
+          amount: parseInt(totalRevenue.toFixed(2) * 100),
           currency: "usd",
           description: "purchase",
           source: req.body.stripeToken
         });
       })
       .then(charge => {
+        let order = req.body.order;
         const newOrder = new Order({
           fname: order.fname,
           lname: order.lname,
@@ -93,7 +94,8 @@ router.post("/", (req, res, next) => {
           products: orderProducts,
           stripe: charge,
           stripeToken: req.body.stripeToken,
-          total: total
+          revenue: totalRevenue,
+          quantity: totalQuantity
         });
         return newOrder.save();
       })
@@ -106,8 +108,8 @@ router.post("/", (req, res, next) => {
   }
 });
 
-router.get('/show', (req, res) => {
-  res.render('checkouts/show');
+router.get("/show", (req, res) => {
+  res.render("checkouts/show");
 });
 
 module.exports = router;
