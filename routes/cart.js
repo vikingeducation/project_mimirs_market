@@ -35,11 +35,7 @@ router.get("/", (req, res) => {
 // ----------------------------------------
 router.post("/", (req, res) => {
   const id = req.body.id;
-  if (req.cart[id]) {
-    req.cart[id] += 1;
-  } else {
-    req.cart[id] = 1;
-  }
+  req.cart[id] ? req.cart[id] += 1 : req.cart[id] = 1;
   res.cookie("cart", req.cart);
   res.redirect("back");
 });
@@ -47,11 +43,7 @@ router.post("/", (req, res) => {
 router.post("/edit", (req, res) => {
   const quant = +req.body.quantity;
   const id = req.body.id;
-  if (quant <= 0) {
-    delete req.cart[id];
-  } else {
-    req.cart[id] = quant;
-  }
+  quant <= 0 ? delete req.cart[id] : req.cart[id] = quant;
   res.cookie("cart", req.cart);
   res.redirect("back");
 });
