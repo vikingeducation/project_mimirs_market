@@ -20,7 +20,9 @@ nav {
 .card-title {
   font-size: 20px;
 }
-
+.thumb-height {
+  height:450px;
+}
 .gallery-image {
   object-fit: cover;
   height: 200px;

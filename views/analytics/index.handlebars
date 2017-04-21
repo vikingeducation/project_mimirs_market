@@ -22,15 +22,16 @@
           <a href="/analytics/{{ order._id }}">{{ order._id }}</a>
         </td>
         <td>
-          <ul>
+          <p>
+
             {{#each order.products as |product|}}
-              <li>
+
                 <a href="/products/{{product.id}}">
                   {{ product.name }}
                 </a>
-              </li>
+
             {{/each}}
-          </ul>
+          </p>
         </td>
         <td>
           {{ order.createdAt }}
