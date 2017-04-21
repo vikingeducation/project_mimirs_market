@@ -4,8 +4,14 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <h3 class="text-center my-4">Totals</h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Totals
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td>Total Revenue</td>
@@ -38,8 +44,14 @@
       </tbody>
     </table>
 
-    <h3 class="text-center my-4">Revenue by Product</h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by Product
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {{#each results.productRevenues as |product|}}
         <tr>
@@ -52,8 +64,14 @@
   </div>
 
   <div class="col-sm-6">
-    <h3 class="text-center my-4">Revenue by State</h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by State
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {{#each results.stateRevenues as |state|}}
           <tr>
@@ -64,8 +82,14 @@
       </tbody>
     </table>
 
-    <h3 class="text-center my-4">Revenue by Category</h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by Category
+          </th>
+        </tr>
+      </thead>
       <tbody>
         {{#each results.categoryRevenues as |category|}}
         <tr>

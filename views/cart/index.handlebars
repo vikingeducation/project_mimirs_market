@@ -1,5 +1,9 @@
 {{#if products.length }}
 
+<header class="page-header">
+  <h1 class="">Your Cart</h1>
+</header>
+
   <div class="row">
 
     {{#each products as |product| }}
@@ -44,7 +48,7 @@
       </div>
     </div>
     {{/each }}
-    
+
   </div>
 
   <div>
@@ -58,5 +62,5 @@
   </p>
 
 {{else }}
-  <p class="text-danger">No products</p>
+  <p class="text-danger text-center">There are no items in your shopping cart.</p>
 {{/if }}

@@ -3,15 +3,15 @@
 </header>
 
 {{#if orders.length }}
-  <table class="table">
+  <table class="table table-striped">
     <thead>
-      <tr>
-        <th>Order Id</th>
-        <th>Products</th>
-        <th>Date</th>
-        <th>Revenue</th>
-        <th>Email</th>
-        <th>State</th>
+      <tr class="bg-danger">
+        <th class="text-white">Order Id</th>
+        <th class="text-white">Products</th>
+        <th class="text-white">Date</th>
+        <th class="text-white">Revenue</th>
+        <th class="text-white">Email</th>
+        <th class="text-white">State</th>
       </tr>
     </thead>
     <tbody>
@@ -48,5 +48,5 @@
     </tbody>
   </table>
 {{else }}
-  <p class="text-danger">No orders</p>
+  <p class="text-danger text-center">There are no orders in the database.</p>
 {{/if }}
