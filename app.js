@@ -18,6 +18,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sessions/Cookies
 // ----------------------------------------
 const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
+app.use(cookieSession({
+  name: 'session',
+  keys: ['aSg89Tc6lMpn8xwW1']
+}));
 app.use(cookieParser());
 
 // ----------------------------------------
@@ -30,20 +35,13 @@ app.use(flash());
 // Template Engine
 // ----------------------------------------
 const expressHandlebars = require("express-handlebars");
-//const helpers = require('./helpers');
+const helpers = require('./helpers');
 
 const hbs = expressHandlebars.create({
   //  helpers: helpers.registered,
   partialsDir: "views/",
   defaultLayout: "main",
-  helpers: {
-    alreadyInCart: (cartIds, productId) => {
-      if (cartIds) return cartIds.includes(productId);
-    },
-    currency: number => {
-      return "$" + number.toFixed(2);
-    }
-  }
+  helpers: helpers.registered
 });
 
 app.engine("handlebars", hbs.engine);

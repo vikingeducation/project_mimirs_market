@@ -46,7 +46,8 @@ router.get("/:id", (req, res, next) => {
         if (req.cookies.cart) cartIds = Object.keys(req.cookies.cart).map(i => +i);
         res.render("products/show", { product, cartIds });
       } else {
-        res.send(404);
+        req.flash('error', 'Product not found.');
+        res.status(404).redirect('/products');
       }
     })
     .catch(next);

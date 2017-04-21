@@ -15,7 +15,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img class="nav-image" src="/images/cart.svg">
-            <span class="ml-1">({{ cartQuantity }})</span>
+            {{#if cartQuantity}}
+              <span class="ml-1">({{ cartQuantity }})</span>
+            {{/if}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="/cart">View Cart</a>

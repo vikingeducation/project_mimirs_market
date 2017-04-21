@@ -1,26 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const models = require("./../models/sequelize");
-const sequelize = models.sequelize;
 
-const { Product, Category } = models;
+const { Product, Category } = require("../models/sequelize");
 
 // ----------------------------------------
 // Index
 // ----------------------------------------
 router.get("/", (req, res) => {
   let products;
-  if (req.cookies.cart) {
-    let cart = req.cookies.cart;
-    let keys = Object.keys(cart);
+  let keys = Object.keys(req.cart);
+  if (keys.length) {
     Product.findAll({
       include: [{ model: Category }],
       where: { id: { $in: keys } }
-    }).then(products => {
+    })
+    .then(products => {
       let total = 0;
       products.forEach(product => {
-        product.quantity = cart[product.id];
-        product.subtotal = Number(cart[product.id]) * product.price;
+        product.quantity = req.cart[product.id];
+        product.subtotal = Number(req.cart[product.id]) * product.price;
         total += product.subtotal;
       });
       res.render("cart/index", { products, total });
@@ -37,14 +35,19 @@ router.post("/", (req, res) => {
   const id = req.body.id;
   req.cart[id] ? req.cart[id] += 1 : req.cart[id] = 1;
   res.cookie("cart", req.cart);
+  req.flash('success', 'Item added to cart.');
   res.redirect("back");
 });
 
+// ----------------------------------------
+// Modify Quantity
+// ----------------------------------------
 router.post("/edit", (req, res) => {
   const quant = +req.body.quantity;
   const id = req.body.id;
   quant <= 0 ? delete req.cart[id] : req.cart[id] = quant;
   res.cookie("cart", req.cart);
+  req.flash('success', 'Updated cart.');
   res.redirect("back");
 });
 
@@ -55,17 +58,19 @@ router.post("/remove", (req, res) => {
   const id = req.body.id;
   if (req.cart) delete req.cart[id];
   res.cookie("cart", req.cart);
+  req.flash('success', 'Item removed from cart.');
   res.redirect("back");
 });
 
 // ----------------------------------------
 // Clear Cart
 // ----------------------------------------
-function clearCart(req, res) {
+function _clearCart(req, res) {
   res.cookie("cart", {});
+  req.flash('success', 'Cart items removed.');
   res.redirect("back");
 }
-router.get("/clear", clearCart);
-router.post("/clear", clearCart);
+router.get("/clear", _clearCart);
+router.post("/clear", _clearCart);
 
 module.exports = router;

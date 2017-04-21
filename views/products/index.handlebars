@@ -21,7 +21,7 @@
     <option value="created">Newest</option>
     <option value="created DESC">Oldest</option>
   </select>
-  <input type="submit" class="btn btn-primary mx-1 my-2" value="Search">
+  <input type="submit" class="btn btn-danger mx-1 my-2" value="Search">
 </form>
 
 {{#if products.length }}
@@ -30,8 +30,6 @@
       {{> products/_product cartIds=../cartIds product=product}}
     {{/each }}
   </div>
-
-
 {{else }}
   <p class="text-danger text-center">There are no products in the database.</p>
 {{/if }}
