@@ -1,55 +1,28 @@
 <header class="page-header">
   <h1 class="mb-4">Products</h1>
-
-  <form action="/products" method="get">
-    <div class="form-group row">
-      <label for="search" class="col-sm-1 col-form-label">Search</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="search" id="search" placeholder="Name of product">
-      </div>
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-  </form>
-
-  <form action="/products" method="get">
-    <div class="form-group row">
-      <label for="sort" class="col-sm-1 col-form-label">Category</label>
-      <div class="col-sm-2">
-        <select class="form-control" name="category" id="sort">
-          <option>All</option>
-          {{#each categories as |category|}}
-            <option value="{{category.id}}">{{category.name}}</option>
-          {{/each}}
-        </select>
-      </div>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" min="0" name="min" id="min" placeholder="Min price">
-      </div>
-      <div class="col-sm-2">
-        <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
-      </div>
-      <button type="submit" class="btn btn-primary">Filter</button>
-    </div>
-  </form>
-
-  <form action="/products" method="get">
-    <div class="form-group row">
-      <label for="sortSelect" class="col-sm-1 col-form-label">Sort by</label>
-      <div class="col-sm-3">
-        <select class="form-control" name="sort" id="sortSelect">
-          <option value="">Default</option>
-          <option value="price">Least Expensive</option>
-          <option value="priceDesc">Most Expensive</option>
-          <option value="name">Alphabetical</option>
-          <option value="nameDesc">Reverse Alphabetical</option>
-          <option value="created">Newest</option>
-          <option value="createdDesc">Oldest</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-   </form>
 </header>
+
+<form class="form-inline mb-3" action="/products" method="get">
+  <input type="text" class="form-control mx-1 my-2" name="search" id="search" placeholder="Name of product">
+  <select class="form-control mx-1 my-2" name="category" id="category">
+    <option value="">Category</option>
+    {{#each categories as |category|}}
+      <option value="{{category.id}}">{{category.name}}</option>
+    {{/each}}
+  </select>
+  <input type="number" class="form-control mx-1 my-2" min="0" name="min" id="min" placeholder="Min price">
+  <input type="number" class="form-control mx-1 my-2" min="0" name="max" id="max" placeholder="Max price">
+  <select class="form-control mx-1 my-2" name="sort" id="sort">
+    <option value="">Order</option>
+    <option value="price">Least Expensive</option>
+    <option value="price DESC">Most Expensive</option>
+    <option value="name">Alphabetical</option>
+    <option value="name DESC">Reverse Alphabetical</option>
+    <option value="created">Newest</option>
+    <option value="created DESC">Oldest</option>
+  </select>
+  <input type="submit" class="btn btn-primary mx-1 my-2" value="Search">
+</form>
 
 {{#if products.length }}
   <div class="row">

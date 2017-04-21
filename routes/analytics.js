@@ -26,6 +26,9 @@ const analytics = require("../lib/analytics");
 //      { name: 'Home', revenue: 18.78 },
 //      { name: 'Kids', revenue: 552.3 } ] }
 
+// ----------------------------------------
+// Index
+// ----------------------------------------
 router.get('/', (req, res, next) => {
   analytics.getAll()
     .then(results => {

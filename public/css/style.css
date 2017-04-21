@@ -2,6 +2,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Roboto, Arial, sans-serif;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 h1 {
   font-size: 2rem;
   letter-spacing: 1.25px;
@@ -11,7 +15,7 @@ h1 {
 
 body {
   font-family: "Source Sans Pro", Arial, sans-serif;
-  padding: 110px 0 50px 0;
+  padding: 120px 0 50px 0;
   background-color: #f3f3f3;
 }
 

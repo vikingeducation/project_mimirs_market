@@ -5,6 +5,9 @@ const sequelize = models.sequelize;
 
 const { Product, Category } = models;
 
+// ----------------------------------------
+// Index
+// ----------------------------------------
 router.get("/", (req, res) => {
   let products;
   if (req.cookies.cart) {
@@ -35,6 +38,9 @@ router.get("/", (req, res) => {
   }
 });
 
+// ----------------------------------------
+// Add to Cart
+// ----------------------------------------
 router.post("/", (req, res) => {
   let cart = req.cookies.cart || {};
   const id = req.body.id;
@@ -60,6 +66,9 @@ router.post("/edit", (req, res) => {
   res.redirect("back");
 });
 
+// ----------------------------------------
+// Remove Item
+// ----------------------------------------
 router.post("/remove", (req, res) => {
   let cart = req.cookies.cart || {};
   const id = req.body.id;
@@ -70,6 +79,9 @@ router.post("/remove", (req, res) => {
   res.redirect("back");
 });
 
+// ----------------------------------------
+// Clear Cart
+// ----------------------------------------
 function clearCart(req, res) {
   res.cookie("cart", {});
   res.redirect("back");

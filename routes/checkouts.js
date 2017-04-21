@@ -1,17 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const sqlModels = require("./../models/sequelize");
-const sequelize = sqlModels.sequelize;
-
-const { Product, Category } = sqlModels;
+const { Product, Category } = require("../models/sequelize");
 
 const mongoose = require("mongoose");
-const mongoModels = require("./../models/mongoose");
+const mongoModels = require("../models/mongoose");
 const Order = mongoose.model("Order");
 
 // ----------------------------------------
-// Stripe
+// Stripe Config
 // ----------------------------------------
 const {
   STRIPE_SK,
@@ -19,6 +16,9 @@ const {
 } = process.env;
 const stripe = require("stripe")(STRIPE_SK);
 
+// ----------------------------------------
+// New
+// ----------------------------------------
 router.get("/", (req, res, next) => {
   let products;
   if (req.cookies.cart) {
@@ -49,6 +49,9 @@ router.get("/", (req, res, next) => {
   }
 });
 
+// ----------------------------------------
+// Payment Submission
+// ----------------------------------------
 router.post("/", (req, res, next) => {
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
@@ -108,6 +111,9 @@ router.post("/", (req, res, next) => {
   }
 });
 
+// ----------------------------------------
+// Order Confirmation
+// ----------------------------------------
 router.get("/show", (req, res) => {
   res.render("checkouts/show");
 });
