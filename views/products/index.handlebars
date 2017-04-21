@@ -3,20 +3,20 @@
 
   <form action="/products" method="get">
     <div class="form-group row">
-      <label for="search" class="col-sm-1 col-form-label">Search</label>
-      <div class="col-sm-4">
+      <label for="search"></label>
+      <div class="col-sm-3">
         <input type="text" class="form-control" name="search" id="search" placeholder="Name of product">
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-  </form>
+      <!-- <button type="submit" class="btn btn-primary">Search</button> -->
 
-  <form action="/products" method="get">
-    <div class="form-group row">
-      <label for="sort" class="col-sm-1 col-form-label">Category</label>
+  <!-- </form> -->
+
+  <!-- <form action="/products" method="get"> -->
+
+      <label for="sort"></label>
       <div class="col-sm-2">
         <select class="form-control" name="category" id="sort">
-          <option>All</option>
+          <option value="All">Categories</option>
           {{#each categories as |category|}}
           <option value="{{category.id}}">{{category.name}}</option>
           {{/each}}
@@ -28,16 +28,16 @@
       <div class="col-sm-2">
         <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
       </div>
-      <button type="submit" class="btn btn-primary">Filter</button>
-    </div>
-  </form>
+      <!-- <button type="submit" class="btn btn-primary">Filter</button> -->
 
-  <form action="/products" method="get">
-    <div class="form-group row">
-      <label for="sortSelect" class="col-sm-1 col-form-label">Sort by</label>
-      <div class="col-sm-3">
+  <!-- </form> -->
+
+  <!-- <form action="/products" method="get"> -->
+
+      <label for="sortSelect" ></label>
+      <div class="col-sm-2">
         <select class="form-control" name="sort" id="sortSelect">
-          <option value="">Default</option>
+          <option value="">Order By</option>
           <option value="price">Least Expensive</option>
           <option value="priceDesc">Most Expensive</option>
           <option value="name">Alphabetical</option>
@@ -45,9 +45,11 @@
           <option value="created">Newest</option>
           <option value="createdDesc">Oldest</option>
         </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+
     </div>
+    <button type="submit" class="btn btn-primary col-sm-1">Search</button>
+  </div>
    </form>
 </header>
 

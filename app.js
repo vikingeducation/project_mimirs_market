@@ -41,7 +41,12 @@ const hbs = expressHandlebars.create({
       if (cartIds) return cartIds.includes(productId);
     },
     currency: number => {
-      return "$" + number.toFixed(2);
+      if (typeof number === "number") {
+        return "$" + number.toFixed(2);
+      } else {
+        let type = typeof number;
+        return `${number} is the type ${type}, and cannot be converted to a currency value`;
+      }
     }
   }
 });

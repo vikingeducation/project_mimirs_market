@@ -1,1 +1,153 @@
-hey
+<header class="page-header">
+  <h1 class="text-center mb-5">Admin Orders Show</h1>
+</header>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Totals</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            Field
+          </th>
+          <th>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Total Revenue
+          </td>
+          <td>
+            {{ currency totals.revenue }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Units Sold
+          </td>
+          <td>
+            {{  totals.units }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Orders
+          </td>
+          <td>
+            {{ totals.orders }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Products
+          </td>
+          <td>
+            {{ totals.products }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Categories
+          </td>
+          <td>
+            {{ totals.categories}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total States Sold To
+          </td>
+          <td>
+            {{ totals.states }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Revenue By Product</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            Field
+          </th>
+          <th>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products as |product|}}
+        <tr>
+          <td>
+            {{product._id}}
+          </td>
+          <td>
+            {{currency product.total }}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-sm-6">
+    <h3>Revenue By State</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            State
+          </th>
+          <th>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each states as |state|}}
+        <tr>
+          <td>
+            {{state._id}}
+          </td>
+          <td>
+            {{currency state.total }}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <h3>Revenue by Category</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            Category
+          </th>
+          <th>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each categories as |category|}}
+        <tr>
+          <td>
+            {{category._id}}
+          </td>
+          <td>
+            {{currency category.total }}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>

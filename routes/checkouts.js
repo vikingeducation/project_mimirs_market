@@ -70,17 +70,15 @@ router.post("/", (req, res, next) => {
     })
       .then(products => {
         products.forEach(product => {
-          orderProducts.push(
-            {
-              id: product.id,
-              category: product.Category.name,
-              name: product.name,
-              price: product.price,
-              description: product.description,
-              sku: product.sku,
-              quantity: cart[product.id]
-            }
-          );
+          orderProducts.push({
+            id: product.id,
+            category: product.Category.name,
+            name: product.name,
+            price: Number(product.price),
+            description: product.description,
+            sku: product.sku,
+            quantity: Number(cart[product.id])
+          });
           total += Number(cart[product.id]) * product.price;
         });
         return stripe.charges.create({
