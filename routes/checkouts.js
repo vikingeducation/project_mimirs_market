@@ -74,10 +74,10 @@ router.post("/", (req, res, next) => {
             id: product.id,
             category: product.Category.name,
             name: product.name,
-            price: Number(product.price),
+            price: product.price,
             description: product.description,
             sku: product.sku,
-            quantity: Number(cart[product.id])
+            quantity: cart[product.id]
           });
           total += Number(cart[product.id]) * product.price;
         });
@@ -106,10 +106,14 @@ router.post("/", (req, res, next) => {
       })
       .then(order => {
         res.cookie("cart", {});
-        res.render("checkouts/show");
+        res.redirect("checkouts/show");
       })
       .catch();
   }
+});
+
+router.get("/show", (req, res) => {
+  res.render("checkouts/show");
 });
 
 module.exports = router;
