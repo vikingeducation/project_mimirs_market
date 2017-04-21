@@ -14,16 +14,8 @@ router.get("/", (req, res) => {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
     Product.findAll({
-      include: [
-        {
-          model: Category
-        }
-      ],
-      where: {
-        id: {
-          $in: keys
-        }
-      }
+      include: [{ model: Category }],
+      where: { id: { $in: keys } }
     }).then(products => {
       let total = 0;
       products.forEach(product => {
@@ -42,27 +34,25 @@ router.get("/", (req, res) => {
 // Add to Cart
 // ----------------------------------------
 router.post("/", (req, res) => {
-  let cart = req.cookies.cart || {};
   const id = req.body.id;
-  if (cart[id]) {
-    cart[id] += 1;
+  if (req.cart[id]) {
+    req.cart[id] += 1;
   } else {
-    cart[id] = 1;
+    req.cart[id] = 1;
   }
-  res.cookie("cart", cart);
+  res.cookie("cart", req.cart);
   res.redirect("back");
 });
 
 router.post("/edit", (req, res) => {
-  let cart = req.cookies.cart || {};
   const quant = +req.body.quantity;
   const id = req.body.id;
   if (quant <= 0) {
-    delete cart[id];
+    delete req.cart[id];
   } else {
-    cart[id] = quant;
+    req.cart[id] = quant;
   }
-  res.cookie("cart", cart);
+  res.cookie("cart", req.cart);
   res.redirect("back");
 });
 
@@ -70,12 +60,9 @@ router.post("/edit", (req, res) => {
 // Remove Item
 // ----------------------------------------
 router.post("/remove", (req, res) => {
-  let cart = req.cookies.cart || {};
   const id = req.body.id;
-  if (cart) {
-    delete cart[id];
-  }
-  res.cookie("cart", cart);
+  if (req.cart) delete req.cart[id];
+  res.cookie("cart", req.cart);
   res.redirect("back");
 });
 

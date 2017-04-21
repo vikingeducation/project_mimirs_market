@@ -102,16 +102,19 @@ app.use((req, res, next) => {
 });
 
 // ----------------------------------------
-// Cart Counter
+// Shopping Cart
 // ----------------------------------------
 app.use((req, res, next) => {
+  let cart;
   let quantity = 0;
   if (req.cookies.cart) {
+    cart = req.cookies.cart;
     for (let id in req.cookies.cart) {
       quantity += req.cookies.cart[id];
     }
   }
   app.locals.cartQuantity = quantity;
+  req.cart = cart || {};
   next();
 });
 
