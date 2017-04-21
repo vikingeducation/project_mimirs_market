@@ -2,12 +2,14 @@
   <div class="row">
 
 
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       {{#each products as |product| }}
-        <div id="product{{product.id}}" class="checkout-item my-3">
-          <a href="/products/{{ product.id }}">
-            <img class="checkout-image" src="{{product.img}}">
-          </a>
+        <div class="checkout-item my-3">
+          <div class="checkout-image-container">
+            <a href="/products/{{ product.id }}">
+              <img class="checkout-image" src="{{ product.img }}">
+            </a>
+          </div>
           <div class="checkout-desc">
             <h4 class="card-title">
               <a href="/products/{{ product.id }}">
@@ -17,7 +19,7 @@
             <div>
               {{currency product.price}}<span class="mx-2">x</span> {{product.quantity}}
             </div>
-            <div class="mt-4">
+            <div class="mt-2">
               Subtotal: {{currency product.subtotal}}
             </div>
           </div>
@@ -29,7 +31,7 @@
       <span class="bigger">{{currency total}}</span>
     </div>
 
-    <div class="col-sm-6">
+    <div class="offset-sm-1 col-sm-6">
       <form action="/checkouts" method="post">
 
         <h3 class="my-3">Billing Information</h3>
@@ -125,7 +127,8 @@
               data-name="Stripe Node Test"
               data-description="Widget"
               data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-              data-locale="auto"></script>
+              data-locale="auto">
+            </script>
           </div>
 
           <p class="card-text">

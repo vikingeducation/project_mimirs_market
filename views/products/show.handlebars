@@ -1,8 +1,10 @@
 <div class="card mb-3">
-  <img class="card-img-top main-image" src="{{ product.img }}">
+  <div class="product-image-container">
+    <img class="card-img-top main-image" src="{{ product.img }}">
+    <div class="product-price">{{ currency product.price }}</div>
+  </div>
   <div class="card-block">
-    <p class="card-text float-right">{{ currency product.price }}</p>
-    <h4 class="card-title">{{ product.name }}</h4>
+    <h4 class="card-title mt-1">{{ product.name }}</h4>
     <p class="card-text">in
       <a href="/categories/{{ product.Category.id }}">
         {{ product.Category.name }}</p>
@@ -17,7 +19,7 @@
 <h2 class="text-center my-5">Related Products</h2>
 
 {{#if product.Category.Products.length }}
-  <div class="card-deck">
+  <div class="row">
     {{#each product.Category.Products as |related| }}
       {{> products/_product cartIds=../cartIds product=related}}
     {{/each }}

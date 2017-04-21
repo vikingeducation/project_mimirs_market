@@ -52,7 +52,7 @@
 </header>
 
 {{#if products.length }}
-  <div class="card-deck row">
+  <div class="row">
     {{#each products as |product| }}
       {{> products/_product cartIds=../cartIds product=product}}
     {{/each }}

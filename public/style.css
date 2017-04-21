@@ -62,14 +62,19 @@ nav {
   border: 1px solid #ddd;
   height: 140px;
   border-radius: 5px;
-  padding: 20px 20px;
+  padding: 10px 10px;
+}
+
+.checkout-image-container {
+  position: absolute;
+  height: 120px;
+  width: 146px;
+  overflow: hidden;
 }
 
 .checkout-image {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  height: 100px;
+  max-height: 100%;
+  min-width: 100%;
   object-fit: cover;
 }
 
@@ -85,7 +90,7 @@ nav {
 
 #total {
   display: inline-block;
-  margin-left: 186px;
+  margin-left: 176px;
   font-weight: 800;
 }
 
