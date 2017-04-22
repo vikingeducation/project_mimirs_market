@@ -7,46 +7,46 @@
   <div class="row">
 
     {{#each products as |product|}}
-    <div class="col-sm-offset-4 col-sm-8">
-      <div id="product{{product.id}}" class="card my-3">
-        <div class="product-image-container">
-          <a href="{{ productPath product.id }}">
-            <img class="card-img-top gallery-image" src="{{product.img}}">
-          </a>
-          <div class="product-price">{{ currency product.price }}</div>
-        </div>
-        <div class="card-block">
-          <h4 class="card-title mt-2">
+      <div class="col-sm-offset-4 col-sm-8">
+        <div id="product{{product.id}}" class="card my-3">
+          <div class="product-image-container">
             <a href="{{ productPath product.id }}">
-              {{ product.name }}
+              <img class="card-img-top gallery-image" src="{{product.img}}">
             </a>
-          </h4>
-          <p class="card-text">
-            in
-            <a href="/products?category={{ product.Category.id }}">
-              {{ product.Category.name }}
-            </a>
-          </p>
-          <p class="card-text">
-            <form class="form-inline" action="{{ editCartPath }}" method="post">
-              <label class="mr-sm-2" for="quantity">Quantity</label>
-              <input type="hidden" name="id" value="{{product.id}}">
-              <input type="number" id="quantity" class="form-control mr-2" name="quantity" min="0" value="{{product.quantity}}">
-              <button type="submit" class="btn btn-primary">Set Quantity</button>
-            </form>
-          </p>
-          <div>
-            Subtotal: {{ currency product.subtotal }}
+            <div class="product-price">{{ currency product.price }}</div>
           </div>
-          <p class="card-text">
-            <form action="{{ removeCartPath }}" method="post">
-              <input type="hidden" name="id" value="{{product.id}}">
-              <button type="submit" class="btn btn-primary">Remove</button>
-            </form>
-          </p>
+          <div class="card-block">
+            <h4 class="card-title mt-2">
+              <a href="{{ productPath product.id }}">
+                {{ product.name }}
+              </a>
+            </h4>
+            <p class="card-text">
+              in
+              <a href="/products?category={{ product.Category.id }}">
+                {{ product.Category.name }}
+              </a>
+            </p>
+            <p class="card-text">
+              <form class="form-inline" action="{{ editCartPath }}" method="post">
+                <label class="mr-sm-2" for="quantity">Quantity</label>
+                <input type="hidden" name="id" value="{{product.id}}">
+                <input type="number" id="quantity" class="form-control mr-2" name="quantity" min="0" value="{{product.quantity}}">
+                <button type="submit" class="btn btn-primary my-2">Set Quantity</button>
+              </form>
+            </p>
+            <div>
+              Subtotal: {{ currency product.subtotal }}
+            </div>
+            <p class="card-text">
+              <form action="{{ removeCartPath }}" method="post">
+                <input type="hidden" name="id" value="{{product.id}}">
+                <button type="submit" class="btn btn-primary">Remove</button>
+              </form>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     {{/each}}
 
   </div>

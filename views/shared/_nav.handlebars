@@ -12,17 +12,13 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ cartPath }}">
             <img class="nav-image" src="/images/cart.svg">
             {{#if cartQuantity}}
               <span class="ml-1">({{ cartQuantity }})</span>
             {{/if}}
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{{ cartPath }}">View Cart</a>
-            <a class="dropdown-item" href="{{ destroyCartPath }}">Remove All Items</a>
-          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/orders">

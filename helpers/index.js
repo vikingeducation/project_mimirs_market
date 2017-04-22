@@ -8,8 +8,7 @@ let Helpers = {};
 // Object to hold registered helpers
 Helpers.registered = {};
 
-// Register a single helper or
-// a module
+// Register a single helper or a module
 Helpers.register = function(key, fn) {
   if (typeof key === "object") {
     // Iterate through keys
@@ -20,8 +19,7 @@ Helpers.register = function(key, fn) {
       this.registered[key] = fn;
     }
   } else {
-    // Register a single helper
-    // function
+    // Register a single helper function
     this.registered[key] = fn;
   }
 };
@@ -31,8 +29,7 @@ const files = fs.readdirSync(__dirname);
 files.forEach(filename => {
   // If the file is not this file
   if (filename !== basename) {
-    // Require it and register its
-    // helpers
+    // Require it and register its helpers
     const helperModule = require(`./${filename}`);
     Helpers.register(helperModule);
   }

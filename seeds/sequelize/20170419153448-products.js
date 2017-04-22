@@ -12,23 +12,23 @@ module.exports = {
     let imageWords = [];
     let images = [];
     for (let i = 1; i <= 100; i++) {
-      let fakeName = faker.commerce.productName();
-      let nameArr = fakeName.split(" ");
+      const fakeName = faker.commerce.productName();
+      const nameArr = fakeName.split(" ");
       console.log(nameArr[2]);
       let pic;
       if (!imageWords.includes(nameArr[2])) {
-        let re = request(
+        const re = request(
           "GET",
           `https://pixabay.com/api/?key=5151824-2eedc1f8048f7fc6db3d00e57&q=${nameArr[2]}`
         );
-        let obj = jsonsafeparse(re.body.toString("utf-8") || "{}");
+        const obj = jsonsafeparse(re.body.toString("utf-8") || "{}");
         imageWords.push(nameArr[2]);
         images.push(obj.hits);
-        let index = Math.floor(Math.random() * obj.hits.length);
+        const index = Math.floor(Math.random() * obj.hits.length);
         pic = obj.hits[index].webformatURL;
       } else {
-        let index = imageWords.indexOf(nameArr[2]);
-        let random = Math.floor(Math.random() * images[index].length);
+        const index = imageWords.indexOf(nameArr[2]);
+        const random = Math.floor(Math.random() * images[index].length);
         pic = images[index][random].webformatURL;
       }
 

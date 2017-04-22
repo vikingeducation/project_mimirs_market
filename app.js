@@ -19,10 +19,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ----------------------------------------
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
-app.use(cookieSession({
-  name: 'session',
-  keys: ['aSg89Tc6lMpn8xwW1']
-}));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["aSg89Tc6lMpn8xwW1"]
+  })
+);
 app.use(cookieParser());
 
 // ----------------------------------------
@@ -35,7 +37,7 @@ app.use(flash());
 // Template Engine
 // ----------------------------------------
 const expressHandlebars = require("express-handlebars");
-const helpers = require('./helpers');
+const helpers = require("./helpers");
 
 const hbs = expressHandlebars.create({
   //  helpers: helpers.registered,
@@ -78,7 +80,7 @@ app.use((req, res, next) => {
 });
 
 // ----------------------------------------
-// Public
+// Serve /public
 // ----------------------------------------
 app.use(express.static(`${__dirname}/public`));
 
@@ -136,6 +138,7 @@ app.use("/orders", ordersRouter);
 
 const analyticsRouter = require("./routes/analytics");
 app.use("/analytics", analyticsRouter);
+
 // ----------------------------------------
 // Error Handler
 // ----------------------------------------

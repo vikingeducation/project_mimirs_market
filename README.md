@@ -4,7 +4,7 @@ A Viking eCommerce store for Thunder Gods that like to buy "Antique Wooden Pizza
 
 Jerry Gao and Will Whitworth
 
-Sample MonogDB document:
+Sample MongoDB document:
 
 ```
 { __v: 0,
