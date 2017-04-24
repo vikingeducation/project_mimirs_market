@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/William-Charles/project_mimirs_market.git"
+    "url": "git+https://github.com/blackwright/project_mimirs_market.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/William-Charles/project_mimirs_market/issues"
+    "url": "https://github.com/blackwright/project_mimirs_market/issues"
   },
-  "homepage": "https://github.com/William-Charles/project_mimirs_market#readme",
+  "homepage": "https://github.com/blackwright/project_mimirs_market#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
