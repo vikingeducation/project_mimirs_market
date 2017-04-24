@@ -40,7 +40,6 @@ const expressHandlebars = require("express-handlebars");
 const helpers = require("./helpers");
 
 const hbs = expressHandlebars.create({
-  //  helpers: helpers.registered,
   partialsDir: "views/",
   defaultLayout: "main",
   helpers: helpers.registered

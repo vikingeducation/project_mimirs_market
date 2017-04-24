@@ -8,10 +8,10 @@ const analytics = require("../lib/analytics");
 // ----------------------------------------
 router.get('/', (req, res, next) => {
   analytics.getAll()
-  .then(results => {
-    res.render('analytics/index', { results })
-  })
-  .catch(next);
+    .then(data => {
+      res.render('analytics/index', { data })
+    })
+    .catch(next);
 });
 
   // Sample result from analytics.getAll()

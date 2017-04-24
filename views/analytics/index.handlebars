@@ -15,31 +15,31 @@
       <tbody>
         <tr>
           <td>Total Revenue</td>
-          <td>{{ currency results.overview.revenue }}</td>
+          <td>{{ currency data.overview.revenue }}</td>
         </tr>
         <tr>
           <td>Units Sold</td>
-          <td>{{ results.overview.quantity }}</td>
+          <td>{{ data.overview.quantity }}</td>
         </tr>
         <tr>
           <td>Transactions</td>
-          <td>{{ results.overview.transactions }}</td>
+          <td>{{ data.overview.transactions }}</td>
         </tr>
         <tr>
           <td>Customers</td>
-          <td>{{ results.customerCount }}</td>
+          <td>{{ data.customerCount }}</td>
         </tr>
         <tr>
           <td>Product Count</td>
-          <td>{{ results.productCount }}</td>
+          <td>{{ data.productCount }}</td>
         </tr>
         <tr>
           <td>Category Count</td>
-          <td>{{ results.categoryCount }}</td>
+          <td>{{ data.categoryCount }}</td>
         </tr>
         <tr>
           <td>States Sold To</td>
-          <td>{{ results.stateCount }}</td>
+          <td>{{ data.stateCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -53,7 +53,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each results.productRevenues as |product|}}
+        {{#each data.productRevenues as |product|}}
         <tr>
           <td>{{ product.name }}</td>
           <td>{{ currency product.revenue }}</td>
@@ -73,7 +73,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each results.stateRevenues as |state|}}
+        {{#each data.stateRevenues as |state|}}
           <tr>
             <td>{{ state.name }}</td>
             <td>{{ currency state.revenue }}</td>
@@ -91,7 +91,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each results.categoryRevenues as |category|}}
+        {{#each data.categoryRevenues as |category|}}
         <tr>
           <td>{{ category.name }}</td>
           <td>{{ currency category.revenue }}</td>
