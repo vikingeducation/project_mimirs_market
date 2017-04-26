@@ -13,7 +13,7 @@ var onIndex = (req, res) => {
   var cartProducts = req.session.shoppingCart;
   Product.findAll({
     include: [{ model: Category, required: true }],
-    limit: 100
+    limit: 32
   })
     .then(result => {
       products = result;
