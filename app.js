@@ -112,7 +112,7 @@ app.use((req, res, next) => {
       quantity += req.cookies.cart[id];
     }
   }
-  app.locals.cartQuantity = quantity;
+  res.locals.cartQuantity = quantity;
   req.cart = cart || {};
   next();
 });
