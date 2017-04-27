@@ -1,38 +1,30 @@
 {{#if checkout.products.length }}
   <div class="row">
+    <div class="my-4 col-sm-4">
 
-    <div class="col-sm-5">
       {{#each checkout.products as |product| }}
-        <div class="checkout-item my-3">
-          <div class="checkout-image-container">
-            <a href="/products/{{ product.id }}">
-              <img class="checkout-image" src="{{ product.img }}">
-            </a>
-          </div>
-          <div class="checkout-desc">
-            <h4 class="card-title">
-              <a href="/products/{{ product.id }}">
-                {{product.name}}
-              </a>
-            </h4>
-            <div>
-              {{currency product.price}}<span class="mx-2">x</span> {{product.quantity}}
+        <div class="list-group">
+          <a class="list-group-item" href="/products/{{ product.id }}">
+            <img class="w-100" src="{{ product.img }}">
+            <div class="mt-2 d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ product.name }}</h5>
+              <small><span class="mr-1">x</span>{{product.quantity}}</small>
             </div>
-            <div class="mt-2">
-              Subtotal: {{currency product.subtotal}}
-            </div>
-          </div>
+            <p class="mb-1">Subtotal: {{ currency product.subtotal }}</p>
+          </a>
         </div>
       {{/each }}
-      <div id="total" class="bigger text-danger">
-        Total:
-      </div>
-      <span class="bigger text-danger">{{currency checkout.total}}</span>
+
     </div>
+    <div class="offset-sm-1 col-sm-7">
 
-    <div class="offset-sm-1 col-sm-6">
+      <div class="my-4 card card-inverse card-danger">
+        <div class="card-block text-white">
+          <h4>Order Total: {{currency checkout.total}}</h4>
+        </div>
+      </div>
+
       <form action="/checkouts" method="post">
-
         <h3 class="my-3">Billing Information</h3>
 
         <div class="form-group">
