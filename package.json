@@ -1,8 +1,8 @@
 {
   "name": "project_mimirs_market",
   "version": "1.0.0",
-  "description": "A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
-  "main": "index.js",
+  "description": "A Sample E-Commerce App",
+  "main": "app.js",
   "engines": {
     "node": ">= 7.6.0"
   },
@@ -39,7 +39,6 @@
     "express-flash-messages": "^0.1.1",
     "express-handlebars": "^3.0.0",
     "faker": "^4.1.0",
-    "json-safe-parse": "0.0.2",
     "mongoose": "^4.9.5",
     "morgan": "^1.8.1",
     "path": "^0.12.7",
@@ -48,7 +47,6 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "shortid": "^2.2.8",
-    "stripe": "^4.18.0",
-    "sync-request": "^4.0.2"
+    "stripe": "^4.18.0"
   }
 }

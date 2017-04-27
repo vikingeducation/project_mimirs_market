@@ -5,7 +5,7 @@ AppHelper.alreadyInCart = (cartIds, productId) => {
 };
 
 AppHelper.currency = number => {
-  return "$" + number.toFixed(2);
+  return '$' + Number(number).toFixed(2);
 };
 
 module.exports = AppHelper;

@@ -10,20 +10,16 @@ const Order = mongoose.model("Order");
 // ----------------------------------------
 // Stripe Config
 // ----------------------------------------
-const {
-  STRIPE_SK,
-  STRIPE_PK
-} = process.env;
+const { STRIPE_SK, STRIPE_PK } = process.env;
 const stripe = require("stripe")(STRIPE_SK);
 
 // ----------------------------------------
-// New
+// New Checkout
 // ----------------------------------------
 router.get("/", (req, res, next) => {
-  let products;
+  let checkout = { products: [] };
   if (req.cookies.cart) {
-    let cart = req.cookies.cart;
-    let keys = Object.keys(cart);
+    let keys = Object.keys(req.cart);
     Product.findAll({
       include: [{ model: Category }],
       where: { id: { $in: keys } }
@@ -31,21 +27,19 @@ router.get("/", (req, res, next) => {
       .then(products => {
         let total = 0;
         products.forEach(product => {
-          product.quantity = cart[product.id];
-          product.subtotal = Number(cart[product.id]) * product.price;
+          product.quantity = req.cart[product.id];
+          product.subtotal = Number((req.cart[product.id] * product.price).toFixed(2));
           total += product.subtotal;
         });
-        let stripeTotal = parseInt(total * 100);
-        res.render("checkouts/new", {
-          products,
-          total,
-          STRIPE_PK,
-          stripeTotal
-        });
+        checkout.products = products;
+        checkout.total = Number(total.toFixed(2));
+        checkout.stripeTotal = parseInt(total * 100);
+        checkout.STRIPE_PK = STRIPE_PK;
+        res.render("checkouts/new", { checkout });
       })
       .catch(next);
   } else {
-    res.render("checkouts/new", { products });
+    res.render("checkouts/new", { checkout });
   }
 });
 
@@ -56,9 +50,9 @@ router.post("/", (req, res, next) => {
   if (req.cookies.cart) {
     let cart = req.cookies.cart;
     let keys = Object.keys(cart);
-    let totalRevenue = 0;
-    let totalQuantity = 0;
-    let orderProducts = [];
+    let revenue = 0;
+    let quantity = 0;
+    let orderedProducts = [];
 
     Product.findAll({
       include: [{ model: Category }],
@@ -66,7 +60,7 @@ router.post("/", (req, res, next) => {
     })
       .then(products => {
         products.forEach(product => {
-          orderProducts.push({
+          orderedProducts.push({
             id: product.id,
             category: product.Category.name,
             name: product.name,
@@ -75,11 +69,11 @@ router.post("/", (req, res, next) => {
             sku: product.sku,
             quantity: cart[product.id]
           });
-          totalRevenue += Number(cart[product.id]) * product.price;
-          totalQuantity += cart[product.id];
+          revenue += Number((cart[product.id] * product.price).toFixed(2));
+          quantity += cart[product.id];
         });
         return stripe.charges.create({
-          amount: parseInt(totalRevenue.toFixed(2) * 100),
+          amount: parseInt(revenue * 100),
           currency: "usd",
           description: "purchase",
           source: req.body.stripeToken
@@ -94,11 +88,11 @@ router.post("/", (req, res, next) => {
           street: order.street,
           city: order.city,
           state: order.state,
-          products: orderProducts,
+          products: orderedProducts,
           stripe: charge,
           stripeToken: req.body.stripeToken,
-          revenue: totalRevenue,
-          quantity: totalQuantity
+          revenue: revenue,
+          quantity: quantity
         });
         return newOrder.save();
       })
@@ -106,7 +100,7 @@ router.post("/", (req, res, next) => {
         res.cookie("cart", {});
         res.render("checkouts/show", { order });
       })
-      .catch();
+      .catch(next);
   }
 });
 
