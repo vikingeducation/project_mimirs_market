@@ -1,10 +1,24 @@
 {{#if products.length}}
 
-<header class="page-header">
+<header class="page-header mb-4">
   <h1 class="">Your Cart</h1>
 </header>
 
   <div class="row">
+    <div class="col-sm-4">
+      <div class="list-group">
+        {{#each products as |product|}}
+          <a id="product{{product.id}}" class="list-group-item" href="/products/{{ product.id }}">
+            <img class="w-100" src="{{ product.img }}">
+            <div class="mt-3 d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{product.name}}</h5>
+              <small><span class="mr-1">x</span>{{product.quantity}}</small>
+            </div>
+            <p class="mb-1">Subtotal: {{currency product.subtotal}}</p>
+          </a>
+        {{/each}}
+      </div>
+    </div>
 
     {{#each products as |product|}}
       <div class="col-sm-offset-4 col-sm-8">

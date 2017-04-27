@@ -9,31 +9,31 @@
       <thead>
         <tr class="bg-danger">
           <th class="text-white" colspan="2">
-            {{ order.fname }} {{ order.lname }}
+            {{order.fname}} {{order.lname}}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Address</td>
-          <td>{{ order.street }}, {{ order.city }}, {{ order.state }}</td>
+          <td>{{order.street}}, {{order.city}}, {{order.state}}</td>
         </tr>
         {{#each order.products as |product|}}
           <tr class="bg-primary text-white">
-            <td colspan="2">{{ product.name }}</td>
+            <td colspan="2">{{product.name}}</td>
           </tr>
           <tr>
             <td>Price</td>
-            <td>{{ currency product.price }}</td>
+            <td>{{currency product.price}}</td>
           </tr>
           <tr>
             <td>Quantity</td>
-            <td>{{ product.quantity }}</td>
+            <td>{{product.quantity}}</td>
           </tr>
         {{/each}}
         <tr class="bg-danger text-white">
           <td>Total</td>
-          <td>{{ currency order.revenue }}</td>
+          <td>{{currency order.revenue}}</td>
         </tr>
       </tbody>
     </table>
