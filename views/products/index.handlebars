@@ -1,0 +1,35 @@
+<header class="page-header mb-4">
+  <h1>Products</h1>
+</header>
+
+<form class="form-inline mb-3" action="{{ productsPath }}" method="get">
+  <input type="text" class="form-control mx-1 my-2" name="search" id="search" placeholder="Name of product">
+  <select class="form-control mx-1 my-2" name="category" id="category">
+    <option value="">Category</option>
+    {{#each categories as |category|}}
+      <option value="{{category.id}}">{{category.name}}</option>
+    {{/each}}
+  </select>
+  <input type="number" class="form-control mx-1 my-2" min="0" name="min" id="min" placeholder="Min price">
+  <input type="number" class="form-control mx-1 my-2" min="0" name="max" id="max" placeholder="Max price">
+  <select class="form-control mx-1 my-2" name="sort" id="sort">
+    <option value="">Order</option>
+    <option value="price">Least Expensive</option>
+    <option value="price DESC">Most Expensive</option>
+    <option value="name">Alphabetical</option>
+    <option value="name DESC">Reverse Alphabetical</option>
+    <option value='"createdAt"'>Newest</option>
+    <option value='"createdAt" DESC'>Oldest</option>
+  </select>
+  <input type="submit" class="btn btn-danger mx-1 my-2" value="Search">
+</form>
+
+{{#if products.length }}
+  <div class="row">
+    {{#each products as |product| }}
+      {{> products/_product cartIds=../cartIds product=product}}
+    {{/each }}
+  </div>
+{{else }}
+  <p class="text-danger text-center">There are no products in the database.</p>
+{{/if }}

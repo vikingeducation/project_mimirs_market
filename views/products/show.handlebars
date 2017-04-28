@@ -1,0 +1,30 @@
+<div class="card mb-3">
+  <div class="product-image-container">
+    <img class="card-img-top main-image" src="{{ product.img }}">
+    <div class="product-price">{{ currency product.price }}</div>
+  </div>
+  <div class="card-block">
+    <h4 class="card-title mt-1">{{ product.name }}</h4>
+    <p class="card-text">in
+      <a href="/products?category={{ product.Category.id }}">
+        {{ product.Category.name }}</p>
+      </a>
+    <p class="card-text">{{ product.description }}</p>
+  </div>
+  <div class="card-footer">
+    {{> shared/_cartButton cartIds=cartIds productId=product.id}}
+  </div>
+</div>
+
+<h1 class="text-center my-5">Related Products</h2>
+
+{{#if product.Category.Products.length }}
+  <div class="row">
+    {{#each product.Category.Products as |related| }}
+      {{> products/_product cartIds=../cartIds product=related}}
+    {{/each }}
+  </div>
+
+{{else }}
+  <p class="text-danger text-center">There are no related products for this category.</p>
+{{/if }}

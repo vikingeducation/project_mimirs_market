@@ -1,0 +1,52 @@
+<header class="page-header">
+  <h1 class="text-center mb-5">Admin Orders</h1>
+</header>
+
+{{#if orders.length }}
+  <table class="table table-striped">
+    <thead>
+      <tr class="bg-danger">
+        <th class="text-white">Order Id</th>
+        <th class="text-white">Products</th>
+        <th class="text-white">Date</th>
+        <th class="text-white">Revenue</th>
+        <th class="text-white">Email</th>
+        <th class="text-white">State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+      <tr>
+        <td>
+          <a href="/orders/{{ order._id }}">{{ order._id }}</a>
+        </td>
+        <td>
+          <ul>
+            {{#each order.products as |product|}}
+              <li>
+                <a href="/products/{{product.id}}">
+                  {{ product.name }}
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        </td>
+        <td>
+          {{ order.createdAt }}
+        </td>
+        <td>
+          {{ currency order.revenue }}
+        </td>
+        <td>
+          {{ order.email }}</a>
+        </td>
+        <td>
+          {{ order.state }}</a>
+        </td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+{{else }}
+  <p class="text-danger text-center">There are no orders in the database.</p>
+{{/if }}

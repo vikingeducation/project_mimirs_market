@@ -1,0 +1,40 @@
+<header class="page-header mb-5">
+  <h4 class="mb-4">Your order has been successfully submitted.</h4>
+  <a href="/products"><h5>Back to the Market</h5></a>
+</header>
+
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-white" colspan="2">
+            {{order.fname}} {{order.lname}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Address</td>
+          <td>{{order.street}}, {{order.city}}, {{order.state}}</td>
+        </tr>
+        {{#each order.products as |product|}}
+          <tr class="bg-primary text-white">
+            <td colspan="2">{{product.name}}</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>{{currency product.price}}</td>
+          </tr>
+          <tr>
+            <td>Quantity</td>
+            <td>{{product.quantity}}</td>
+          </tr>
+        {{/each}}
+        <tr class="bg-danger text-white">
+          <td>Total</td>
+          <td>{{currency order.revenue}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

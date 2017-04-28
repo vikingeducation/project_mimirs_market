@@ -1,0 +1,103 @@
+<header class="page-header">
+  <h1 class="text-center mb-5">Admin Analytics</h1>
+</header>
+
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Totals
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Revenue</td>
+          <td>{{ currency data.overview.revenue }}</td>
+        </tr>
+        <tr>
+          <td>Units Sold</td>
+          <td>{{ data.overview.quantity }}</td>
+        </tr>
+        <tr>
+          <td>Transactions</td>
+          <td>{{ data.overview.transactions }}</td>
+        </tr>
+        <tr>
+          <td>Customers</td>
+          <td>{{ data.customerCount }}</td>
+        </tr>
+        <tr>
+          <td>Product Count</td>
+          <td>{{ data.productCount }}</td>
+        </tr>
+        <tr>
+          <td>Category Count</td>
+          <td>{{ data.categoryCount }}</td>
+        </tr>
+        <tr>
+          <td>States Sold To</td>
+          <td>{{ data.stateCount }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by Product
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.productRevenues as |product|}}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ currency product.revenue }}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-6">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by State
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.stateRevenues as |state|}}
+          <tr>
+            <td>{{ state.name }}</td>
+            <td>{{ currency state.revenue }}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="bg-danger">
+          <th class="text-center text-white" colspan="2">
+            Revenue by Category
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.categoryRevenues as |category|}}
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>{{ currency category.revenue }}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
