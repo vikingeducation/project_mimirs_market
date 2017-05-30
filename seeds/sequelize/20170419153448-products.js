@@ -3,8 +3,7 @@ const models = require("../../models/sequelize");
 const faker = require("faker");
 const request = require("sync-request");
 const jsonsafeparse = require("json-safe-parse");
-const shortid = require('shortid');
-
+const shortid = require("shortid");
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
