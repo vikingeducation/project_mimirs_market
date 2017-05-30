@@ -1,0 +1,49 @@
+{{#if orders.length }}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order Id</th>
+        <th>Products</th>
+        <th>Date</th>
+        <th>Revenue</th>
+        <th>Email</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+      <tr>
+        <td>
+          <a href="/analytics/{{ order._id }}">{{ order._id }}</a>
+        </td>
+        <td>
+          <p>
+
+            {{#each order.products as |product|}}
+
+                <a href="/products/{{product.id}}">
+                  {{ product.name }}
+                </a>
+
+            {{/each}}
+          </p>
+        </td>
+        <td>
+          {{ order.createdAt }}
+        </td>
+        <td>
+          {{ currency order.total }}
+        </td>
+        <td>
+          {{ order.email }}</a>
+        </td>
+        <td>
+          {{ order.state }}</a>
+        </td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+{{else }}
+  <p class="text-danger">No orders</p>
+{{/if }}

@@ -1,0 +1,24 @@
+<div class="col-sm-4">
+  <div class="card my-3 thumb-height">
+    <a href="/products/{{ product.id }}">
+      <img class="card-img-top gallery-image" src="{{product.img}}">
+    </a>
+    <div class="card-block">
+      <div class="float-right">
+        {{currency product.price}} 
+      </div>
+      <h4 class="card-title">
+        <a href="/products/{{ product.id }}">
+          {{product.name}}
+        </a>
+      </h4>
+      <p class="card-text">
+        in
+        <a href="/categories/{{ product.Category.id }}">
+          {{product.Category.name}}
+        </a>
+      </p>
+      {{> shared/_cartButton cartIds=cartIds productId=product.id}}
+    </div>
+  </div>
+</div>

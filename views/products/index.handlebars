@@ -1,0 +1,66 @@
+<header class="page-header">
+  <form action="/products" method="get">
+    <div class="form-group row">
+      <label for="search"></label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" name="search" id="search" placeholder="Name of product">
+      </div>
+      <!-- <button type="submit" class="btn btn-primary">Search</button> -->
+
+  <!-- </form> -->
+
+  <!-- <form action="/products" method="get"> -->
+
+      <label for="sort"></label>
+      <div class="col-sm-2">
+        <select class="form-control" name="category" id="sort">
+          <option value="All">Categories</option>
+          {{#each categories as |category|}}
+          <option value="{{category.id}}">{{category.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" min="0" name="min" id="min" placeholder="Min price">
+      </div>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
+      </div>
+      <!-- <button type="submit" class="btn btn-primary">Filter</button> -->
+
+  <!-- </form> -->
+
+  <!-- <form action="/products" method="get"> -->
+
+      <label for="sortSelect" ></label>
+      <div class="col-sm-2">
+        <select class="form-control" name="sort" id="sortSelect">
+          <option value="">Order By</option>
+          <option value="price">Least Expensive</option>
+          <option value="priceDesc">Most Expensive</option>
+          <option value="name">Alphabetical</option>
+          <option value="nameDesc">Reverse Alphabetical</option>
+          <option value="created">Newest</option>
+          <option value="createdDesc">Oldest</option>
+        </select>
+
+
+    </div>
+    <button type="submit" class="btn btn-primary col-sm-1">Find</button>
+  </div>
+   </form>
+</header>
+
+<br>
+
+{{#if products.length }}
+  <div class="row">
+    {{#each products as |product| }}
+      {{> products/_product cartIds=../cartIds product=product}}
+    {{/each }}
+  </div>
+
+
+{{else }}
+  <p class="text-danger">No products</p>
+{{/if }}

@@ -1,0 +1,9 @@
+{{#if (alreadyInCart cartIds productId)}}
+  <a href="/cart#product{{product.id}}" class="btn btn-success">View in Cart</a>
+{{else}}
+  <form action="/cart" method="post">
+    <input type="hidden" name="id" value="{{ product.id }}">
+    <button  type="submit" class="btn btn-primary">+ Cart</button>
+  </form>
+
+{{/if}}
