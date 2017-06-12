@@ -11,6 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sessions/Cookies
 // ----------------------------------------
 const cookieSession = require('cookie-session');
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 
 app.use(cookieSession({
   name: 'session',
@@ -19,10 +22,6 @@ app.use(cookieSession({
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
-  // res.locals.currentUser = req.session.currentUser;
-  // if (req.session.currentUser) {
-  //   res.locals.userid = req.session.currentUser.id;
-  // }
   next();
 });
 

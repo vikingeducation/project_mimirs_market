@@ -38,6 +38,9 @@ const setDefaults = search => {
 };
 
 // formats query appropriately for sequelize
+// as Javascript passes objects by reference,
+// we clone search query in order to have access to it later for
+// placeholder values in html form
 const formatQuery = search => {
   let results = _.cloneDeep(search);
   results.name = {

@@ -9,40 +9,33 @@ const {
   setDefaults,
   formatQuery
 } = require('./../helpers/search-helpers');
-// const h = require('./../helpers/path-helpers').registered;
+const h = require('./../helpers/path-helpers').registered;
 const sequelize = models.sequelize;
 
 router.get('/', (req, res) => {
 
-  // So here is what we need to do first
-  // There are multiple stages
-  // check if Object.hasKey sort of req query
-  // if yes, search is cookies last search 
-  // if no sort, we parse the query. EVEN IF IT'S EMPTY
-  // so basically let search = parseQuery(req.query);
-  //    this fills in blanks for all categories where none where provided
-  //    so something like Object.keys(req.query) if none then category="" or whatevs
-  // THEN we do search = setDefaultsWhereEmpty(search);
-  // then we begin our chain of querying sequelize
-  // voila
-
-  // search fields:
-  // category
-  // price min price max
-  // 
-  // console.log('#######')
-  // console.log(req.query.search.hasOwnProperty("name"));
-  // console.log('#######')
   let products;
   let categories;
-  let search = parseQuery(req.query.search);
-  search = setDefaults(search);
-  let formattedSearch = formatQuery(search);
+  let search;
+  let formattedSearch;
+  let sort;
+
+  if (req.query.sort) {
+    search = req.cookies.search;
+    formattedSearch = req.cookies.formattedSearch;
+    sort = req.query.sort;
+  } else {
+    search = parseQuery(req.query.search);
+    search = setDefaults(search);
+    formattedSearch = formatQuery(search);
+    sort = 'name ASC';
+  }
 
   sequelize.transaction(t => {
     return Product.findAll({
       where: formattedSearch,
       include: [{model: Category}],
+      order: sequelize.literal(sort),
       transaction: t
     })
       .then(results => {
@@ -53,6 +46,8 @@ router.get('/', (req, res) => {
       })
       .then(results => {
         categories = results;
+        res.cookie("search", search);
+        res.cookie("formattedSearch", formattedSearch);
         res.render('products/index', {
           products,
           categories,
