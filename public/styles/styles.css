@@ -1,0 +1,41 @@
+.navbar {
+  margin-bottom: 0px;
+  border-radius: 0px;
+}
+
+.navbar * {
+  color: white;
+}
+
+a.navbar-brand:hover {
+  color:black;
+}
+
+a:hover {
+  transition: color .5s ease, background-color .5s ease;
+}
+
+.products-view {
+  text-align: center;
+}
+
+.product-box {
+  border: solid 1px #666;
+  border-radius: 15px;
+  margin-bottom: 2em;
+}
+
+.product-box img {
+  max-height: 300px;
+  max-width: 200px;
+  border: solid 1px #AAA;
+  border-radius: 5px;
+  margin-top: 1.2em;
+  padding: 1.5em;
+}
+
+.search-query {
+  margin-top: 2em;
+  padding-bottom: 2em;
+  border-bottom: solid 2px #666;
+}

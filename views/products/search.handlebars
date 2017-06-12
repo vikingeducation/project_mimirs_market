@@ -1,0 +1,32 @@
+<div class="container search-query">
+  <div class="row">
+    <div class="col-md-6">
+      <form action="{{ productsPath }}" method="get">
+        <div class="form-group">
+          <label for="search_name">Name</label>
+          <input type="text" id="search_name" name="search[name]" class="form-control" value="{{ productName }}" placeholder="{{ productName}}">
+        </div>
+        <div class="form-group">
+          <label for="search_min_price">Min Price</label>
+          <input type="number" id="search_min_price" name="search[minPrice]" class="form-control" step="0.01" value="{{ minPrice }}">
+        </div>
+        <div class="form-group">
+          <label for="search_max_price">Max Price</label>
+          <input type="number" id="search_max_price" name="search[maxPrice]" class="form-control" step="0.01" value="{{ maxPrice }}">
+        </div>
+        <div class="form-group">
+          <label for="search_category">Filter by Category</label>
+          <select class="form-control" name="search[category]" id="search_category">
+            <option value="">Any</option>
+            {{#each categories as |category| }}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {{/each }}
+          </select>
+        </div>
+        <input type="submit" class="btn btn-primary btn-block">
+      </form>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+</div>
