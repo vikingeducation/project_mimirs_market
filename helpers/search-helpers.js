@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const defaults = {
   "name": "",
   "minPrice": "0.00",
@@ -9,6 +7,7 @@ const defaults = {
 
 const parseQuery = search => {
   let results = {};
+  
   if (!search) {
     results = {
       "name": "",
@@ -37,29 +36,21 @@ const setDefaults = search => {
   return results;
 };
 
-// formats query appropriately for sequelize
-// as Javascript passes objects by reference,
-// we clone search query in order to have access to it later for
-// placeholder values in html form
 const formatQuery = search => {
-  let results = _.cloneDeep(search);
+  let results = {};
+  
   results.name = {
-    $ilike: `%${ results.name }%`
+    $ilike: `%${ search.name }%`
   };
 
   results.price = {
-    $between: [results.minPrice, results.maxPrice]
+    $between: [search.minPrice, search.maxPrice]
   };
 
-  delete results.minPrice;
-  delete results.maxPrice;
-
-  if (!results.category) {
-    delete results.category;
-  } else {
-    results.categoryId = results.category;
-    delete results.category;
+  if (search.category) {
+    results.categoryId = search.category;
   }
+
   return results;
 };
 

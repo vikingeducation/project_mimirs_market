@@ -20,7 +20,7 @@ a:hover {
 }
 
 .product-box {
-  border: solid 1px #666;
+  border: solid 3px #666;
   border-radius: 15px;
   margin-bottom: 2em;
 }
@@ -37,5 +37,27 @@ a:hover {
 .search-query {
   margin-top: 2em;
   padding-bottom: 2em;
+  border-bottom: solid 2px #666;
+}
+
+button.add-to-cart{
+  margin-bottom: 1em;
+}
+
+.product-img {
+  padding: 1em;
+  border-radius: 5px;
+  border: solid 1px #AAA;
+}
+
+h1 {
+  margin-top: 1em;
+  padding-bottom: .5em;
+  margin-bottom: .5em;
+  border-bottom: solid 2px #666;
+}
+
+.product-details {
+  padding-bottom: 1em;
   border-bottom: solid 2px #666;
 }

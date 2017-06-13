@@ -13,7 +13,6 @@ const h = require('./../helpers/path-helpers').registered;
 const sequelize = models.sequelize;
 
 router.get('/', (req, res) => {
-
   let products;
   let categories;
   let search;
@@ -57,6 +56,29 @@ router.get('/', (req, res) => {
         });
       });
   });
+});
+
+router.get('/:id', (req, res) => {
+  let currentProduct;
+  let relatedProducts;
+  Product.findById(req.params.id, {
+    include: { model: Category }
+  })
+    .then(result => {
+      currentProduct = result;
+      return Product.findAll({
+        where: { categoryId: result.categoryId },
+        include: { model: Category },
+        limit: 6
+      });
+    })
+    .then(results => {
+      relatedProducts = results;
+      res.render('products/show', {
+        currentProduct,
+        relatedProducts
+      });
+    });
 });
 
 module.exports = router;

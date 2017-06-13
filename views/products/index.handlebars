@@ -1,7 +1,7 @@
 {{> products/search}}
 
 <div class="container">
-  <h3>Products Found:</h3>
+  <h2>Products Found:</h3>
   {{#if products.length }}
   <div class="row">
     {{#each products as |product| }}
@@ -11,6 +11,7 @@
           <h4><a href="{{ productPath product.id }}">{{ product.name }}</a></h4>
           <p>${{ product.price }}</p>
           <p>Department: {{ product.Category.name }}</p>
+          <button class="btn btn-primary add-to-cart">Add to Cart</button>
         </div>
       </div>
     {{/each}}
