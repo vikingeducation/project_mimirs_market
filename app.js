@@ -26,6 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // ----------------------------------------
 // Flash Messages
 // ----------------------------------------
@@ -95,9 +96,11 @@ app.set('view engine', 'handlebars');
 const products = require('./routes/products');
 const cart = require('./routes/cart');
 const checkout = require('./routes/checkout');
+const charges = require('./routes/charges');
 app.use('/products', products);
 app.use('/cart', cart);
 app.use('/checkout', checkout);
+app.use('/charges', charges);
 app.use('/', (req, res) => {
   res.redirect(h.productsPath());
 });

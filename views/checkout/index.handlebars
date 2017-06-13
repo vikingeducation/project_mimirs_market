@@ -2,9 +2,10 @@
   <h2 class="checkout">Checkout </h2>
   <div class="row">
     <div class="col-md-5">
-      <form action="" method="GET">
+      <form action="/charges" method="POST">
         <fieldset class="form-group">
           <legend>Personal</legend>
+          <input type="hidden" value={{ total }} name="checkout[total]">
           <div class="form-group">
             <label for="checkout_fname">First Name</label>
             <input type="text" id="checkout_fname" name="checkout[fname]" class="form-control">
@@ -37,6 +38,14 @@
             </select>
           </div>
         </fieldset>
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ STRIPE_PK }}"
+            data-amount="100"
+            data-name="Stripe Node Test"
+            data-description="Widget"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"></script>
       </form>
     </div>
     <div class="col-md-6 col-md-offset-1">
@@ -53,20 +62,9 @@
         </div>
       {{/each}}
       <h2>Total: ${{ total }}.00</h2>
-    </div>
+      <a href="{{ cartShowPath }}"><button class="btn btn-danger btn-block">Return to Cart</button></a>
   </div>
 
-
-    <div class="row cart-summary">
-      <div class="col-md-6">
-      </div>
-      <div class="col-md-3">
-        <a href="{{ cartShowPath }}"><button class="btn btn-danger btn-block">Return to Cart</button></a>
-      </div>
-      <div class="col-md-3">
-        <a href="#"><button class="btn btn-success btn-block">Submit Payment</button></a>
-      </div>
-    </div>
   {{else }}
   <div class="row">
     <h3>You haven't added anything to your cart yet!! Try adding something before checking out.</h3>

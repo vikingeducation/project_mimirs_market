@@ -6,6 +6,12 @@ const Category = models.Category;
 const State = models.State;
 const h = require('./../helpers/path-helpers').registered;
 const sequelize = models.sequelize;
+const {
+  STRIPE_SK,
+  STRIPE_PK
+} = process.env;
+const stripe = require('stripe')(STRIPE_SK);
+
 
 const getTotals = (cart, products) => {
   let total = 0;
@@ -34,7 +40,7 @@ router.get('/', (req, res) => {
     })
     .then(results => {
       let total = getTotals(cart.products, results);
-      res.render('checkout/index', { products: results, total, states });
+      res.render('checkout/index', { products: results, total, states, STRIPE_PK });
     })
     .catch(e => {
       if (e.errors) {
