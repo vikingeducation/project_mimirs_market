@@ -22,6 +22,7 @@ app.use(cookieSession({
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  req.session.cart = req.session.cart || {"products": {}};
   next();
 });
 
@@ -92,7 +93,9 @@ app.set('view engine', 'handlebars');
 // Routes
 // ----------------------------------------
 const products = require('./routes/products');
+const cart = require('./routes/cart');
 app.use('/products', products);
+app.use('/cart', cart);
 app.use('/', (req, res) => {
   res.redirect(h.productsPath());
 });

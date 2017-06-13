@@ -1,4 +1,3 @@
-const url = require('url');
 const express = require('express');
 const router = express.Router();
 const models = require('./../models/sequelize');
@@ -20,8 +19,8 @@ router.get('/', (req, res) => {
   let sort;
 
   if (req.query.sort) {
-    search = req.cookies.search;
-    formattedSearch = req.cookies.formattedSearch;
+    search = req.session.search;
+    formattedSearch = req.session.formattedSearch;
     sort = req.query.sort;
   } else {
     search = parseQuery(req.query.search);
@@ -45,8 +44,8 @@ router.get('/', (req, res) => {
       })
       .then(results => {
         categories = results;
-        res.cookie("search", search);
-        res.cookie("formattedSearch", formattedSearch);
+        req.session.search = search;
+        req.session.formattedSearch = formattedSearch;
         res.render('products/index', {
           products,
           categories,

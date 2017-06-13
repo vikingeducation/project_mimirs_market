@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>Shopping Cart</h2>
+  {{#if products.length }}
+    {{#each products as |product| }}
+      <div class="row cart-box">
+        <div class="col-md-3">
+          <img src="/images/placeholder.png" alt="Black checkmark">
+        </div>
+        <div class="col-md-7">
+          <h4><a href="{{ productPath product.id }}">{{ product.name }}</a></h4>
+          <p>Department: {{ product.Category.name }}</p>
+        </div>
+        <div class="col-md-2">
+          <p>${{ product.price }}</p>
+          <form action="{{ cartPath product.id }}" method="get">
+            <div class="form-group">
+              <label for="cart_quantity">Edit Quantity</label>
+              <input type="number" id="cart_quantity" name="quantity" class="form-control" step="1" value="{{ cartQuantity product.id @root.session.cart.products}}">
+            </div>
+            <button type="submit" class="btn btn-success btn-block" value="Submit">Edit Quantity</button>
+          </form>
+          <form action="{{ cartPath product.id }}" method="get">
+            <div class="form-group">
+              <input type="hidden" id="cart_quantity" name="quantity" class="form-control" step="1" value="0">
+            </div>
+            <button type="submit" class="btn btn-danger btn-block" value="Submit">Remove</button>
+          </form>
+        </div>
+      </div>
+    {{/each}}
+    <div class="row cart-summary">
+      <div class="col-md-6">
+        <h2>Total: ${{ total }}.00</h2>
+      </div>
+      <div class="col-md-3">
+        <a href="{{ cartShowPath }}?_method=delete"><button class="btn btn-danger btn-block">Clear Cart</button></a>
+      </div>
+      <div class="col-md-3">
+        <a href="#"><button class="btn btn-info btn-block">Check Out</button></a>
+      </div>
+    </div>
+  {{else }}
+  <div class="row">
+    <h3>You haven't added anything to your cart yet!! Try adding something.</h3>
+  </div>
+  {{/if }}
+</div>
