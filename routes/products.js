@@ -53,7 +53,15 @@ router.get('/', (req, res) => {
           minPrice: search.minPrice,
           maxPrice: search.maxPrice
         });
-      });
+      })
+      .catch(e => {
+      if (e.errors) {
+        e.errors.forEach((err) => req.flash('error', err.message));
+        res.redirect('back');
+      } else {
+        res.status(500).send(e.stack);
+      }
+    });
   });
 });
 
@@ -77,6 +85,14 @@ router.get('/:id', (req, res) => {
         currentProduct,
         relatedProducts
       });
+    })
+    .catch(e => {
+      if (e.errors) {
+        e.errors.forEach((err) => req.flash('error', err.message));
+        res.redirect('back');
+      } else {
+        res.status(500).send(e.stack);
+      }
     });
 });
 

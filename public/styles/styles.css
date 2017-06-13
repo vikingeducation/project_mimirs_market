@@ -83,6 +83,16 @@ h1 {
   padding: 1.5em;
 }
 
+.cart-summary {
+  margin-bottom: 5em;
+}
+
 .cart-summary button {
   margin-top: 1em;
+}
+
+h2.checkout {
+  padding-bottom: .4em;
+  margin-bottom: 1em;
+  border-bottom: solid 1px black;
 }

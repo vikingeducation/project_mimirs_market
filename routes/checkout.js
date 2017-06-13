@@ -3,6 +3,7 @@ const router = express.Router();
 const models = require('./../models/sequelize');
 const Product = models.Product;
 const Category = models.Category;
+const State = models.State;
 const h = require('./../helpers/path-helpers').registered;
 const sequelize = models.sequelize;
 
@@ -21,14 +22,19 @@ const getTotals = (cart, products) => {
 router.get('/', (req, res) => {
   let cart = req.session.cart;
   let products = Object.keys(cart.products);
+  let states;
 
-  Product.findAll({
-    where: {id: products},
-    include: [{model: Category}]
-  })
+  State.findAll()
+    .then(results => {
+      states = results;
+      return Product.findAll({
+        where: {id: products},
+        include: [{model: Category}]
+      });
+    })
     .then(results => {
       let total = getTotals(cart.products, results);
-      res.render('cart/index', { products: results, total });
+      res.render('checkout/index', { products: results, total, states });
     })
     .catch(e => {
       if (e.errors) {
@@ -38,30 +44,6 @@ router.get('/', (req, res) => {
         res.status(500).send(e.stack);
       }
     });
-});
-
-router.get('/:id', (req, res) => {
-  let cart = req.session.cart;
-  let quantity = req.query.quantity;
-
-  if (quantity <= 0) {
-    delete cart.products[req.params.id];
-    req.flash('success', 'Product successfully removed.');
-  } else {
-    cart.products[req.params.id] = quantity;
-    req.flash('success', 'Product successfully added/updated!');
-  }
-  let products = Object.keys(cart.products);
-  cart.size = products.length;
-
-  res.redirect('back');
-});
-
-router.delete('/', (req, res) => {
-  req.session.cart.products = {};
-  req.session.cart.size = "Empty";
-  req.method = 'GET';
-  res.redirect(h.cartShowPath());
 });
 
 module.exports = router;

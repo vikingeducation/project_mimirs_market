@@ -1,0 +1,75 @@
+<div class="container">
+  <h2 class="checkout">Checkout </h2>
+  <div class="row">
+    <div class="col-md-5">
+      <form action="" method="GET">
+        <fieldset class="form-group">
+          <legend>Personal</legend>
+          <div class="form-group">
+            <label for="checkout_fname">First Name</label>
+            <input type="text" id="checkout_fname" name="checkout[fname]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_lname">Last Name</label>
+            <input type="text" id="checkout_lname" name="checkout[lname]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_email">Email</label>
+            <input type="email" id="checkout_email" name="checkout[email]" class="form-control">
+          </div>
+        </fieldset>
+        <fieldset class="form-group">
+          <legend>Address</legend>
+          <div class="form-group">
+            <label for="checkout_street">Street</label>
+            <input type="text" id="checkout_street" name="checkout[street]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_city">City</label>
+            <input type="text" id="checkout_city" name="checkout[city]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_state">State</label>
+            <select class="form-control" name="checkout[state]" id="checkout_state">
+              {{#each states as |state| }}
+                <option value="{{ state.id }}">{{ state.name }}</option>
+              {{/each }}
+            </select>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-6 col-md-offset-1">
+    {{#if products.length }}
+      {{#each products as |product| }}
+        <div class="row cart-box">
+          <div class="col-md-6">
+            <img src="/images/placeholder.png" alt="Black checkmark">
+          </div>
+          <div class="col-md-6">
+            <h4><a href="{{ productPath product.id }}">{{ product.name }}</a></h4>
+            <p>${{ product.price }} * {{ cartQuantity product.id @root.session.cart.products}} = ${{ checkoutProductTotal product.id @root.session.cart.products product.price}}.00</p>
+          </div>
+        </div>
+      {{/each}}
+      <h2>Total: ${{ total }}.00</h2>
+    </div>
+  </div>
+
+
+    <div class="row cart-summary">
+      <div class="col-md-6">
+      </div>
+      <div class="col-md-3">
+        <a href="{{ cartShowPath }}"><button class="btn btn-danger btn-block">Return to Cart</button></a>
+      </div>
+      <div class="col-md-3">
+        <a href="#"><button class="btn btn-success btn-block">Submit Payment</button></a>
+      </div>
+    </div>
+  {{else }}
+  <div class="row">
+    <h3>You haven't added anything to your cart yet!! Try adding something before checking out.</h3>
+  </div>
+  {{/if }}
+</div>

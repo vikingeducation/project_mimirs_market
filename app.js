@@ -22,7 +22,7 @@ app.use(cookieSession({
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
-  req.session.cart = req.session.cart || {"products": {}};
+  req.session.cart = req.session.cart || {"products": {}, "size": "Empty"};
   next();
 });
 
@@ -94,8 +94,10 @@ app.set('view engine', 'handlebars');
 // ----------------------------------------
 const products = require('./routes/products');
 const cart = require('./routes/cart');
+const checkout = require('./routes/checkout');
 app.use('/products', products);
 app.use('/cart', cart);
+app.use('/checkout', checkout);
 app.use('/', (req, res) => {
   res.redirect(h.productsPath());
 });
