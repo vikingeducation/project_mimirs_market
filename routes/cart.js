@@ -52,7 +52,7 @@ router.get('/:id', (req, res) => {
     req.flash('success', 'Product successfully added/updated!');
   }
   let products = Object.keys(cart.products);
-  cart.size = products.length;
+  cart.size = products.length || "Empty";
 
   res.redirect('back');
 });

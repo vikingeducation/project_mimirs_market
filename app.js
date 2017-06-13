@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+
+
+
 // ----------------------------------------
 // Body Parser
 // ----------------------------------------
@@ -97,6 +100,9 @@ const products = require('./routes/products');
 const cart = require('./routes/cart');
 const checkout = require('./routes/checkout');
 const charges = require('./routes/charges');
+app.get('/favicon.ico', function(req, res) {
+    res.send(204);
+});
 app.use('/products', products);
 app.use('/cart', cart);
 app.use('/checkout', checkout);
