@@ -7,6 +7,7 @@ const OrderSchema = new Schema({
   revenue: Number,
   stripeToken: String,
   stripeId: String,
+  cardType: String,
   customer: {
     fname: String,
     lname: String,

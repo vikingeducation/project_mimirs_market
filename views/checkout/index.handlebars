@@ -43,6 +43,7 @@
             <input type="hidden" value="{{ cartQuantity product.id @root.session.cart.products }}" name="checkout[orderLine][{{@index}}][product][quantity]">
             <input type="hidden" value="{{ product.sku }}" name="checkout[orderLine][{{@index}}][product][sku]">
             <input type="hidden" value="{{ product.description }}" name="checkout[orderLine][{{@index}}][product][description]">
+            <input type="hidden" value="{{ product.Category.name }}" name="checkout[orderLine][{{@index}}][product][category]">
           {{/each }}
         </fieldset>
         <script

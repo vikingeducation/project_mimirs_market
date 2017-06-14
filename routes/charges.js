@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
         revenue: orderInfo.revenue,
         stripeToken: token,
         stripeId: charge.id,
+        cardType: charge.source.brand,
         customer: orderInfo.customer,
         address: orderInfo.address,
         orderLine: orderInfo.orderLine
@@ -33,7 +34,6 @@ router.post('/', (req, res) => {
       return order.save();
     })
     .then((order) => {
-      console.log(JSON.stringify(order, null, 2));
       req.flash('success', 'Thank you for your purchase');
       req.session.cart.products = {};
       req.session.cart.size = "Empty";

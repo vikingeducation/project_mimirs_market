@@ -96,3 +96,10 @@ h2.checkout {
   margin-bottom: 1em;
   border-bottom: solid 1px black;
 }
+table {
+  margin-top: 1em;
+}
+
+thead>tr {
+  border-bottom: solid 3px #AAA;
+}

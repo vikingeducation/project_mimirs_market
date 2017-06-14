@@ -111,6 +111,7 @@ const cart = require('./routes/cart');
 const checkout = require('./routes/checkout');
 const charges = require('./routes/charges');
 const admin = require('./routes/admin');
+const analytics = require('./routes/analytics');
 app.get('/favicon.ico', function(req, res) {
     res.send(204);
 });
@@ -119,6 +120,7 @@ app.use('/cart', cart);
 app.use('/checkout', checkout);
 app.use('/charges', charges);
 app.use('/admin', admin);
+app.use('/analytics', analytics);
 app.use('/', (req, res) => { 
   res.redirect(h.productsPath());
 });

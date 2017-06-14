@@ -39,6 +39,7 @@ router.get('/', (req, res) => {
       });
     })
     .then(results => {
+      console.log(JSON.stringify(results, null, 2));
       let total = getTotals(cart.products, results);
       res.render('checkout/index', { products: results, total, states, STRIPE_PK });
     })

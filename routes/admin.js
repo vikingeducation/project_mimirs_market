@@ -22,9 +22,6 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   Order.findById(req.params.id)
     .then(order => {
-      console.log('#######')
-      console.log(JSON.stringify(order, null, 2))
-      console.log('#######')
       res.render('admin/show', { order });
     });
 });
