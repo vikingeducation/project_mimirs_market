@@ -13,36 +13,7 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">
-          {{title}}
-        </a>
-      </div>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-text navbar-right navbar-padding"> <a href="/logout">Logout</a> </p>
-        </li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-text navbar-right navbar-padding"> <a href="/posts">Posts</a> </p>
-        </li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-text navbar-right navbar-padding"> <a href="/users">Users</a> </p>
-        </li>
-      </ul>
-
-
-
-
-    </div>
-
-    </nav>
-
+    {{> _nav}}
     <main class="container">
       {{{ body }}}
     </main>

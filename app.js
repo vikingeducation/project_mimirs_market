@@ -14,6 +14,7 @@ var helpers = require('./helpers')
   .registered;
 
 var index = require('./routes/index');
+var prodRoute = require('./routes/products');
 
 var app = express();
 
@@ -87,7 +88,7 @@ app.use(session({
 app.use(flash());
 
 app.use('/', index);
-// app.use('/users', users);
+app.use('/products', prodRoute);
 
 
 // catch 404 and forward to error handler

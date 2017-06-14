@@ -6,18 +6,15 @@ var User = mongoose.model('User');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.session.username) {
-    res.render('index', {
-      title: 'Mimirs Market',
-      user: req.session.username,
-      email: req.session.email
-    });
-  } else {
-    res.redirect('/login');
-  }
+
+  res.redirect('/products');
+
 
 });
 
+module.exports = router;
+
+/*
 router.get('/login', function(req, res, next) {
   if (req.session.username) {
     res.redirect('/');
@@ -59,6 +56,4 @@ router.get('/logout', function(req, res, next) {
   });
 
 });
-
-
-module.exports = router;
+*/
