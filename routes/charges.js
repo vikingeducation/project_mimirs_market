@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const models = require('./../models/sequelize');
-const Product = models.Product;
-const Category = models.Category;
-const State = models.State;
 const h = require('./../helpers/path-helpers').registered;
-const sequelize = models.sequelize;
+const mongoose = require('mongoose');
+const models = require('./../models/mongoose');
+const Order = mongoose.model('Order');
 const {
   STRIPE_SK,
   STRIPE_PK
@@ -13,20 +11,29 @@ const {
 const stripe = require('stripe')(STRIPE_SK);
 
 router.post('/', (req, res) => {
-  var charge = req.body;
+  var orderInfo = req.body.checkout;
+  let token = req.body.stripeToken;
   stripe.charges.create({
-    amount: req.body.checkout.total,
+    amount: orderInfo.revenue,
     currency: 'usd',
     description: "Test Charge",
-    source: charge.stripeToken
+    source: token
   })
     .then((charge) => {
-      console.log(charge);
-      // ... Save charge and session data
-      // from checkout and cart
-      // to MongoDB
+      let order = new Order({
+        orderDescription: "Test Charge",
+        revenue: orderInfo.revenue,
+        stripeToken: token,
+        stripeId: charge.id,
+        customer: orderInfo.customer,
+        address: orderInfo.address,
+        orderLine: orderInfo.orderLine
+      });
+
+      return order.save();
     })
-    .then(() => {
+    .then((order) => {
+      console.log(JSON.stringify(order, null, 2));
       req.flash('success', 'Thank you for your purchase');
       req.session.cart.products = {};
       req.session.cart.size = "Empty";

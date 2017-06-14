@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 
 
-
-
 // ----------------------------------------
 // Body Parser
 // ----------------------------------------
@@ -28,7 +26,6 @@ app.use((req, res, next) => {
   req.session.cart = req.session.cart || {"products": {}, "size": "Empty"};
   next();
 });
-
 
 // ----------------------------------------
 // Flash Messages
@@ -79,6 +76,19 @@ app.use((req, res, next) => {
 });
 
 // ----------------------------------------
+// Mongoose
+// ----------------------------------------
+const mongoose = require('mongoose');
+
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require('./mongo')().then(() => next());
+  }
+});
+
+// ----------------------------------------
 // Template Engine
 // ----------------------------------------
 const expressHandlebars = require('express-handlebars');
@@ -100,6 +110,7 @@ const products = require('./routes/products');
 const cart = require('./routes/cart');
 const checkout = require('./routes/checkout');
 const charges = require('./routes/charges');
+const admin = require('./routes/admin');
 app.get('/favicon.ico', function(req, res) {
     res.send(204);
 });
@@ -107,7 +118,8 @@ app.use('/products', products);
 app.use('/cart', cart);
 app.use('/checkout', checkout);
 app.use('/charges', charges);
-app.use('/', (req, res) => {
+app.use('/admin', admin);
+app.use('/', (req, res) => { 
   res.redirect(h.productsPath());
 });
 

@@ -30,4 +30,33 @@ Analytics will need following:
   -Revenue by Product
   -Revenue by Category
 
-Product.findAll({include: [{model: Category}]}).then(JSON.stringify(lg, null, 2))
+Order: {
+  "_id:" integer,
+  "orderDescription": string,
+  timestamps,
+  "revenue": decimal,
+  "stripeToken": string?
+  "customer": {
+    "fname": string,
+    "lname": string,
+    "email": string,
+  },
+  "address": {
+    "street": string,
+    "city": string,
+    "state": string,
+    "stateId": string
+  },
+  "orderLine": [{
+    "product": {
+      "name": string,
+      "price": decimal,
+      "quantity": integer,
+      "sku": string,
+      "description": text,
+      "category" string,
+    }
+  }]
+}
+
+Use $unwind for aggregating!

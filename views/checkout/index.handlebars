@@ -5,38 +5,45 @@
       <form action="/charges" method="POST">
         <fieldset class="form-group">
           <legend>Personal</legend>
-          <input type="hidden" value={{ total }} name="checkout[total]">
+          <input type="hidden" value={{ total }} name="checkout[revenue]">
           <div class="form-group">
             <label for="checkout_fname">First Name</label>
-            <input type="text" id="checkout_fname" name="checkout[fname]" class="form-control">
+            <input type="text" id="checkout_fname" name="checkout[customer][fname]" class="form-control">
           </div>
           <div class="form-group">
             <label for="checkout_lname">Last Name</label>
-            <input type="text" id="checkout_lname" name="checkout[lname]" class="form-control">
+            <input type="text" id="checkout_lname" name="checkout[customer][lname]" class="form-control">
           </div>
           <div class="form-group">
             <label for="checkout_email">Email</label>
-            <input type="email" id="checkout_email" name="checkout[email]" class="form-control">
+            <input type="email" id="checkout_email" name="checkout[customer][email]" class="form-control">
           </div>
         </fieldset>
         <fieldset class="form-group">
           <legend>Address</legend>
           <div class="form-group">
             <label for="checkout_street">Street</label>
-            <input type="text" id="checkout_street" name="checkout[street]" class="form-control">
+            <input type="text" id="checkout_street" name="checkout[address][street]" class="form-control">
           </div>
           <div class="form-group">
             <label for="checkout_city">City</label>
-            <input type="text" id="checkout_city" name="checkout[city]" class="form-control">
+            <input type="text" id="checkout_city" name="checkout[address][city]" class="form-control">
           </div>
           <div class="form-group">
             <label for="checkout_state">State</label>
-            <select class="form-control" name="checkout[state]" id="checkout_state">
+            <select class="form-control" name="checkout[address][state]" id="checkout_state">
               {{#each states as |state| }}
-                <option value="{{ state.id }}">{{ state.name }}</option>
+                <option value="{{ state.name }}">{{ state.name }}</option>
               {{/each }}
             </select>
           </div>
+          {{#each products as |product| }}
+            <input type="hidden" value="{{ product.name }}" name="checkout[orderLine][{{@index}}][product][name]">
+            <input type="hidden" value="{{ product.price }}" name="checkout[orderLine][{{@index}}][product][price]">
+            <input type="hidden" value="{{ cartQuantity product.id @root.session.cart.products }}" name="checkout[orderLine][{{@index}}][product][quantity]">
+            <input type="hidden" value="{{ product.sku }}" name="checkout[orderLine][{{@index}}][product][sku]">
+            <input type="hidden" value="{{ product.description }}" name="checkout[orderLine][{{@index}}][product][description]">
+          {{/each }}
         </fieldset>
         <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
