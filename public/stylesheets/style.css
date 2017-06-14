@@ -3,6 +3,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+main {
+  padding-top: 20px;
+}
+
 a {
   color: #00B7FF;
 }
@@ -22,4 +26,8 @@ a {
 
 .bottom-margin {
   margin-bottom: 20px;
+}
+
+.form-inline .form-group input {
+    width: 50%;
 }
