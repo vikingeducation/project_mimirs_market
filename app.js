@@ -10,8 +10,7 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('./config/mongo')[env];
 var hbs = require('express-hbs');
 var flash = require('express-flash-messages');
-var helpers = require('./helpers')
-  .registered;
+
 
 var index = require('./routes/index');
 var prodRoute = require('./routes/products');
@@ -25,7 +24,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 // view engine setup
 app.engine('hbs', hbs.express4({
-  helpers: helpers.registered,
   partialsDir: path.join(__dirname, '/views/shared'),
   defaultLayout: path.join(__dirname, '/views/layout')
 }));
