@@ -19,7 +19,9 @@ a {
   padding-top: 100px;
 }
 
-
+.center-form {
+  text-align: center;
+}
 
 .bottom-margin {
   margin-bottom: 20px;
