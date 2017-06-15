@@ -69,7 +69,8 @@
     <div class="panel-body" style="text-align: center;">
       <img src="{{product.image}}" alt="Image: {{product.name}}" class="img-rounded" style="width:150px;height:150px;">
       <h5>${{product.price}}</h5>
-      <h5>{{product.name}}</h5>
+      <a href="/products/detail/{{product.id}}"><h5>{{product.name}}</h5></a>
+
       <h6>{{product.Category.name}}</h6>
       <form class="" action="/products" method="post">
         <button type="submit" name="addToCart" class="btn btn-primary">Add to Cart</button>

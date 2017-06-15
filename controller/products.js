@@ -82,8 +82,6 @@ module.exports.productIndex = function(req, res, next) {
     }
   };
 
-  console.log(criteria);
-
   Product.findAll(criteria)
     .then((products) => {
       Category.findAll({
@@ -118,4 +116,30 @@ module.exports.productIndex = function(req, res, next) {
 
 module.exports.productDetail = function(req, res, next) {
 
+  let criteria = {
+    include: [{
+      model: Category
+    }]
+  };
+
+  Product.findById(req.params.productID, criteria)
+    .then((productDetail) => {
+      let categoryCriteria = {
+        where: {
+          '"categoryID"': productDetail.categoryID
+        },
+        include: [{
+          model: Category
+        }]
+      }
+      Product.findAll(categoryCriteria)
+        .then((related) => {
+          res.render('detail', {
+            title: "Mimir's Market",
+            product: productDetail,
+            related: related
+          });
+        })
+
+    })
 };
