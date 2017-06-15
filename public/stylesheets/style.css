@@ -23,6 +23,20 @@ a {
   text-align: center;
 }
 
+.right-form {
+  text-align: right;
+  padding-top: 20px;
+}
+
+.button-width {
+  width: 150px;
+}
+
+.button-layout {
+  float: right;
+  padding-left: 20px;
+}
+
 .bottom-margin {
   margin-bottom: 20px;
 }

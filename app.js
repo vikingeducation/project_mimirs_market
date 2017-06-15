@@ -14,6 +14,7 @@ var flash = require('express-flash-messages');
 
 var index = require('./routes/index');
 var prodRoute = require('./routes/products');
+var cartRoute = require('./routes/cart');
 
 var app = express();
 
@@ -87,6 +88,7 @@ app.use(flash());
 
 app.use('/', index);
 app.use('/products', prodRoute);
+app.use('/cart', cartRoute);
 
 
 // catch 404 and forward to error handler

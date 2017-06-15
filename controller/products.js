@@ -100,10 +100,11 @@ module.exports.productIndex = function(req, res, next) {
                       i));
                   }
                   prices.push(Math.ceil(max_price));
-                  res.render('index', {
+                  res.render('product/index', {
                     title: "Mimir's Market",
                     products: products,
                     categories: categories,
+                    cart_count: req.session.cart.length || 0,
                     prices: prices
                   });
                 })
@@ -134,9 +135,10 @@ module.exports.productDetail = function(req, res, next) {
       }
       Product.findAll(categoryCriteria)
         .then((related) => {
-          res.render('detail', {
+          res.render('product/detail', {
             title: "Mimir's Market",
             product: productDetail,
+            cart_count: req.session.cart.length || 0,
             related: related
           });
         })

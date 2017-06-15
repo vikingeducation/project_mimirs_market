@@ -65,7 +65,7 @@
 
 <div class="row">
   {{#each products as |product| }}
-  <div class="col-xs-3">
+  <div class="col-md-3 col-sm-4 col-xs-6">
   <div class="panel panel-default" style="width:250px;height:340px;">
     <div class="panel-heading" style="text-align: center;">
       {{product.name}}
@@ -76,8 +76,9 @@
       <a href="/products/detail/{{product.id}}"><h5>{{product.name}}</h5></a>
 
       <h6>{{product.Category.name}}</h6>
-      <form class="" action="/products" method="post">
-        <button type="submit" name="addToCart" class="btn btn-primary">Add to Cart</button>
+      <form class="" action="/cart/add/{{product.id}}" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
       </form>
     </div>
   </div>
