@@ -5,7 +5,7 @@ var Category = models.Category;
 
 let cartObj = {};
 
-let createCartList = function(req) {
+let _createCartList = function(req) {
   let cartItems = [];
 
   if (req.session.cart != undefined) {
@@ -16,13 +16,28 @@ let createCartList = function(req) {
       cartItems.push(item.id);
       cartObj[item.id] = item.quantity;
     });
-
-    return cartItems;
-
   }
+  return cartItems;
 };
 
-module.exports.cartItemsList = createCartList;
+let _itemInCart = function(req) {
+  let itemIndex = null;
+
+  if (req.session.cart != undefined) {
+    let cart = req.session.cart;
+    let itemID = req.params.productID;
+
+    cart.forEach(function(item, index, array) {
+      if (item.id === itemID) {
+        itemIndex = index;
+      }
+    });
+  }
+  return itemIndex;
+
+}
+
+module.exports.cartItemsList = _createCartList;
 
 module.exports.cartIndex = function(req, res, next) {
 
@@ -34,7 +49,7 @@ module.exports.cartIndex = function(req, res, next) {
       }],
       where: {
         id: {
-          $in: createCartList(req)
+          $in: _createCartList(req)
         }
       }
     };
@@ -77,42 +92,26 @@ module.exports.cartAdd = function(req, res, next) {
     req.session.cart.push(cartItem);
   } else {
     // check cart for existing item and increment quantity if already there
-    let cart = req.session.cart;
-    let itemID = req.params.productID;
-    let idxItem = null;
 
-    cart.forEach(function(item, index, array) {
-      if (item.id === itemID) {
-        idxItem = index;
-      }
-    });
+    let idxItem = _itemInCart(req);
 
     if (idxItem != null) {
       cart[idxItem].quantity++;
     } else {
       req.session.cart.push(cartItem);
     }
-
   }
-
-  console.log(req.session.cart);
 
   res.redirect(req.headers.referer);
 }
 
 module.exports.cartRemove = function(req, res, next) {
   // search cart for item and then delete it
-
   let cart = req.session.cart;
-  let itemID = req.params.productID;
-  let idxItem = null;
 
   if (cart != undefined) {
-    cart.forEach(function(item, index, array) {
-      if (item.id === itemID) {
-        idxItem = index;
-      }
-    });
+
+    let idxItem = _itemInCart(req);
 
     if (idxItem != null) {
       cart.splice(idxItem, 1);
@@ -125,18 +124,10 @@ module.exports.cartRemove = function(req, res, next) {
 }
 
 module.exports.cartUpdateItemQuantity = function(req, res, next) {
-
-
   let cart = req.session.cart;
-  let itemID = req.params.productID;
-  let idxItem = null;
-
   if (cart != undefined) {
-    cart.forEach(function(item, index, array) {
-      if (item.id === itemID) {
-        idxItem = index;
-      }
-    });
+
+    let idxItem = _itemInCart(req);
 
     if (idxItem != null) {
       cart[idxItem].quantity = req.body.newQuantity;
