@@ -2,8 +2,11 @@ var models = require('./../models/sequelize');
 var sequelize = models.sequelize;
 var Product = models.Product;
 var Category = models.Category;
+var Cart = require('./cart');
+
 
 module.exports.productIndex = function(req, res, next) {
+
   let criteria = {
     include: [{
       model: Category
@@ -25,15 +28,6 @@ module.exports.productIndex = function(req, res, next) {
           }
         ]
       };
-      /* This is not working.  I think it's something tied to using v4 of Sequelize
-      criteria.include = [{
-        model: Category,
-        through: {
-          where: {
-            'name': '%' + req.body.searchText + '%'
-          }
-        }
-      }]; */
     }
     if (req.body._action === 'FILTER') {
       criteria.where = {
@@ -84,6 +78,10 @@ module.exports.productIndex = function(req, res, next) {
 
   Product.findAll(criteria)
     .then((products) => {
+      let cartList = Cart.cartItemsList(req);
+      products.forEach(function(item, index, array) {
+        item.inCart = cartList.includes(item.id.toString());
+      });
       Category.findAll({
           order: sequelize.col('name')
         })
@@ -125,6 +123,10 @@ module.exports.productDetail = function(req, res, next) {
 
   Product.findById(req.params.productID, criteria)
     .then((productDetail) => {
+      let cartList = Cart.cartItemsList(req);
+
+      productDetail.inCart = cartList.includes(productDetail.id.toString());
+
       let categoryCriteria = {
         where: {
           '"categoryID"': productDetail.categoryID
@@ -135,6 +137,9 @@ module.exports.productDetail = function(req, res, next) {
       }
       Product.findAll(categoryCriteria)
         .then((related) => {
+          related.forEach(function(item, index, array) {
+            item.inCart = cartList.includes(item.id.toString());
+          });
           res.render('product/detail', {
             title: "Mimir's Market",
             product: productDetail,

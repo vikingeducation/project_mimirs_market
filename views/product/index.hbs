@@ -76,9 +76,17 @@
       <a href="/products/detail/{{product.id}}"><h5>{{product.name}}</h5></a>
 
       <h6>{{product.Category.name}}</h6>
-      <form class="" action="/cart/add/{{product.id}}" method="post">
-        <input type="hidden" name="_method" value="PUT">
-        <button type="submit" class="btn btn-primary">Add to Cart</button>
+
+
+
+        {{#if product.inCart}}
+          <form class="" action="/cart" method="get">
+            <button type="submit" class="btn btn-success">Edit Cart</button>
+        {{else}}
+          <form class="" action="/cart/add/{{product.id}}" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+        {{/if}}
       </form>
     </div>
   </div>

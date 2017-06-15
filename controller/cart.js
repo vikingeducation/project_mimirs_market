@@ -3,26 +3,38 @@ var sequelize = models.sequelize;
 var Product = models.Product;
 var Category = models.Category;
 
-module.exports.cartIndex = function(req, res, next) {
-  let cartObj = {};
-  let cartitems = [];
+let cartObj = {};
+
+let createCartList = function(req) {
+  let cartItems = [];
 
   if (req.session.cart != undefined) {
     let cart = req.session.cart;
 
     // build array of product ID's from the cart to use in query
     cart.forEach(function(item, index, array) {
-      cartitems.push(item.id);
+      cartItems.push(item.id);
       cartObj[item.id] = item.quantity;
     });
 
+    return cartItems;
+
+  }
+};
+
+module.exports.cartItemsList = createCartList;
+
+module.exports.cartIndex = function(req, res, next) {
+
+
+  if (req.session.cart != undefined) {
     let criteria = {
       include: [{
         model: Category
       }],
       where: {
         id: {
-          $in: cartitems
+          $in: createCartList(req)
         }
       }
     };
