@@ -13,8 +13,15 @@ var Transaction = mongoose.model('Transaction');
 
 // generates a summary list of orders
 module.exports.orderList = function(req, res, next) {
-  res.render('admin/orders', {
-    title: "Minmir's Market Analytics"
-  });
+  Transaction.find({})
+    .then((transactions) => {
+
+
+      res.render('admin/orders', {
+        title: "Minmir's Market Analytics",
+        transactions: transactions
+      });
+    })
+
 
 };
