@@ -83,6 +83,8 @@ let _cartDisplay = function(req, res, next, template) {
             .toFixed(2);
           total += item.price * item.quantityOrdered;
         });
+        // update session order with product data so we know what was ordered
+        req.session.order = products;
 
         res.render(template, {
           title: "Mimir's Market",
@@ -150,15 +152,15 @@ module.exports.captureCharge = function(req, res, next) {
 
       var transaction = new Transaction({
         stripeCharge: charge,
-        cartSession: req.session.cart,
-        customerSession: req.session.customer
+        cart: req.session.cart,
+        customer: req.session.customer,
+        order: req.session.order
       });
       transaction.save()
-        .then((result) => {
-          console.log(result);
-        })
+        .then()
     })
     .then(() => {
+      req.flash('success', 'Your order placed successfully!');
       res.redirect('/cart/delete?_method=delete');
     })
     .catch((e) => res.status(500)
@@ -186,7 +188,7 @@ module.exports.cartAdd = function(req, res, next) {
       req.session.cart.push(cartItem);
     }
   }
-
+  req.flash('success', 'Item added!');
   res.redirect(req.headers.referer);
 }
 
@@ -204,7 +206,7 @@ module.exports.cartRemove = function(req, res, next) {
 
     req.session.cart = cart;
   };
-
+  req.flash('alert', 'Item deleted!');
   res.redirect(req.headers.referer);
 }
 
@@ -223,11 +225,12 @@ module.exports.cartUpdateItemQuantity = function(req, res, next) {
 
     req.session.cart = cart;
   };
-
+  req.flash('success', 'Cart updated!');
   res.redirect('/cart');
 }
 
 module.exports.cartDelete = function(req, res, next) {
   req.session.cart = [];
+  req.flash('notice', 'Cart emptied!');
   res.redirect('/products');
 }

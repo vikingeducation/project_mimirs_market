@@ -5,8 +5,9 @@ var Schema = mongoose.Schema;
 // the user model
 var TransactionSchema = new Schema({
   stripeCharge: Object,
-  cartSession: Object,
-  customerSession: Object
+  cart: Object,
+  customer: Object,
+  order: Array
 }, {
   timestamps: true
 });

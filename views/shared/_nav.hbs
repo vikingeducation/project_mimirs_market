@@ -10,9 +10,31 @@
     <li><p class="navbar-text navbar-right navbar-padding"> <a href="/products"><span class="glyphicon glyphicon-th"></span></a> </p>
     </li>
   </ul>
-
+  {{#if cart_count}}
   <ul class="nav navbar-nav navbar-right">
     <li><p class="navbar-text navbar-right navbar-padding"> <a href="/cart"><span class="glyphicon glyphicon-shopping-cart">({{cart_count}})</span></a> </p>
+    </li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text navbar-right navbar-padding"> <a href="/cart/checkout"><span class="glyphicon glyphicon-usd"></span></a> </p>
+    </li>
+  </ul>
+  {{/if}}
+
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text navbar-right navbar-padding">  </p>
+    </li>
+  </ul>
+
+
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text navbar-right navbar-padding"> <a href="/admin/orders"><span class="glyphicon glyphicon-list-alt"></span></a> </p>
+    </li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text navbar-right navbar-padding"> <a href="/admin/analytics"><span class="glyphicon glyphicon-stats"></span></a> </p>
     </li>
   </ul>
 

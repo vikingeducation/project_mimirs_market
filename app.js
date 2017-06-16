@@ -8,13 +8,16 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/mongo')[env];
-var hbs = require('express-hbs');
+var expressHandlebars = require('express-handlebars');
 var flash = require('express-flash-messages');
+var helpers = require('./helpers');
 
 
+// load routes
 var index = require('./routes/index');
 var prodRoute = require('./routes/products');
 var cartRoute = require('./routes/cart');
+var adminRoute = require('./routes/admin');
 
 var app = express();
 
@@ -24,10 +27,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // view engine setup
-app.engine('hbs', hbs.express4({
+var hbs = expressHandlebars.create({
+  helpers: helpers.registered,
   partialsDir: path.join(__dirname, '/views/shared'),
-  defaultLayout: path.join(__dirname, '/views/layout')
-}));
+  defaultLayout: path.join(__dirname, '/views/layout'),
+  extname: ".hbs"
+});
+
+app.engine('hbs', hbs.engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -48,6 +55,7 @@ app.use((req, res, next) => {
       .then(() => next());
   }
 });
+//method overriding
 app.use((req, res, next) => {
   var method;
   // Allow method overriding in
@@ -70,6 +78,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+// session setup to use mongo as backing store
 app.use(session({
   secret: 'ajfbsd-fdsaf-44asd47-fdadfs',
   cookie: {
@@ -84,11 +93,13 @@ app.use(session({
     expire: 86400 // optional
   })
 }));
+// flash messages
 app.use(flash());
 
 app.use('/', index);
 app.use('/products', prodRoute);
 app.use('/cart', cartRoute);
+app.use('/admin', adminRoute);
 
 
 // catch 404 and forward to error handler
