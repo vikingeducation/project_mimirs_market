@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-xs-12 center-form">
+    <h1>Admin Order Details</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Order Details
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <td>Order ID:</td><td><a href="/admin/order/{{transaction._id}}">{{transaction._id}}</a></td>
+          </tr>
+          <tr>
+            <td>Checkout:</td><td>{{transaction.createdAt}}</td>
+          </tr>
+          <tr>
+            <td>Stripe Token:</td><td>{{transaction.stripeCharge.id}}</td>
+          </tr>
+          <tr>
+            <td>Card Type:</td><td>{{transaction.stripeCharge.source.brand}}</td>
+          </tr>
+          <tr>
+            <td>Order Total:</td><td>{{formatAsCurrency transaction.stripeCharge.amount}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Customer Details</a>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <td>First Name:</td><td>{{transaction.customer.firstName}}</td>
+          </tr>
+          <tr>
+            <td>Last Name:</td><td>{{transaction.customer.lastName}}</td>
+          </tr>
+          <tr>
+            <td>Email:</td><td>{{transaction.customer.email}}</td>
+          </tr>
+          <tr>
+            <td>Address:</td><td>{{transaction.customer.streetAddress}}<br>{{transaction.customer.cityAddress}}, {{transaction.customer.stateAddress}}</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<table class="table">
+  <tr>
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>SKU</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Quantity</th>
+  </tr>
+
+  {{#each transaction.order as |item|}}
+    <tr>
+      <td>{{item.name}}</td>
+      <td>${{item.price}}</td>
+      <td>{{item.SKU}}</td>
+      <td>{{item.description}}</td>
+      <td>{{item.Category.name}}</td>
+      <td>{{findQuantityinCart item.id ../transaction.cart}}</td>
+    </tr>
+
+  {{/each}}
+
+
+</table>

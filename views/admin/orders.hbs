@@ -11,7 +11,7 @@
   </tr>
   {{#each transactions as |transaction|}}
     <tr>
-      <td>{{transaction._id}}</td>
+      <td><a href="/admin/order/{{transaction._id}}">{{transaction._id}}</a> </td>
       <td>{{transaction.stripeCharge.description}}</td>
       <td>{{transaction.createdAt}}</td>
       <td>{{formatAsCurrency transaction.stripeCharge.amount}} </td>

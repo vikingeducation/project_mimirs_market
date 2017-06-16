@@ -15,13 +15,24 @@ var Transaction = mongoose.model('Transaction');
 module.exports.orderList = function(req, res, next) {
   Transaction.find({})
     .then((transactions) => {
-
-
       res.render('admin/orders', {
         title: "Minmir's Market Analytics",
         transactions: transactions
       });
     })
+    .catch((e) => res.status(500)
+      .send(e.stack));
+};
 
-
+// show a single order
+module.exports.order = function(req, res, next) {
+  Transaction.findById(req.params.orderID)
+    .then((transaction) => {
+      res.render('admin/order', {
+        title: "Minmir's Market Analytics",
+        transaction: transaction
+      });
+    })
+    .catch((e) => res.status(500)
+      .send(e.stack));
 };

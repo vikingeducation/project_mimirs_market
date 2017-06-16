@@ -72,6 +72,8 @@
     "object": "charge",
     "id": "ch_1AVNyeAOW0NF1YafKq8Nh4Z5"
   },
+
+
   "cart": [{
     "id": "4004",
     "quantity": 1
@@ -79,6 +81,9 @@
     "id": "4003",
     "quantity": 1
   }],
+
+
+
   "customer": {
     "firstName": "Richard",
     "lastName": "Bell",
@@ -87,6 +92,9 @@
     "cityAddress": "capital",
     "stateAddress": "CA"
   },
+
+
+
   "order": [{
     "Category": {
       "updatedAt": "2017-06-14T18:29:50.863Z",
@@ -122,8 +130,13 @@
     "name": "Gorgeous Fresh Computer",
     "id": 4004
   }],
+
+
   "__v": 0
-} {
+}
+
+
+{
   "_id": ObjectId("5944117670d1e20a7f41dd14"),
   "updatedAt": ISODate("2017-06-16T17:12:22.562Z"),
   "createdAt": ISODate("2017-06-16T17:12:22.562Z"),
@@ -197,6 +210,8 @@
     "object": "charge",
     "id": "ch_1AVNzeAOW0NF1YafTsnufohS"
   },
+
+
   "cart": [{
     "id": "4007",
     "quantity": 1
@@ -204,6 +219,9 @@
     "id": "4002",
     "quantity": 1
   }],
+
+
+
   "customer": {
     "firstName": "jenny",
     "lastName": "test",
