@@ -2,6 +2,25 @@ var models = require('./../models/sequelize');
 var sequelize = models.sequelize;
 var Product = models.Product;
 var Category = models.Category;
+var US = require('us');
+
+var mongoose = require('mongoose');
+var models = require('./../models/mongoose');
+var env = process.env.NODE_ENV || 'development';
+var config = require('./../config/mongo')[env];
+var Transaction = mongoose.model('Transaction');
+
+
+// import environment variables for stripe
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv')
+    .config();
+}
+var {
+  STRIPE_SK,
+  STRIPE_PK
+} = process.env;
+var stripe = require('stripe')(STRIPE_SK);
 
 let cartObj = {};
 
@@ -37,10 +56,9 @@ let _itemInCart = function(req) {
 
 }
 
-module.exports.cartItemsList = _createCartList;
 
-module.exports.cartIndex = function(req, res, next) {
-
+// same code used between both cart index and the checkout page due to common data
+let _cartDisplay = function(req, res, next, template) {
 
   if (req.session.cart != undefined) {
     let criteria = {
@@ -61,11 +79,14 @@ module.exports.cartIndex = function(req, res, next) {
         // now insert the quantity ordered into the return result
         products.forEach(function(item, index, array) {
           item.quantityOrdered = cartObj[item.id];
+          item.subTotal = (item.quantityOrdered * item.price)
+            .toFixed(2);
           total += item.price * item.quantityOrdered;
         });
 
-        res.render('cart/index', {
+        res.render(template, {
           title: "Mimir's Market",
+          states: US.STATES,
           cart: products,
           cart_count: req.session.cart.length || 0,
           total: total.toFixed(2)
@@ -76,9 +97,73 @@ module.exports.cartIndex = function(req, res, next) {
         .send(e.stack));
 
   }
+}
 
+// used to check if item is in cart by other modules
+module.exports.cartItemsList = _createCartList;
+
+// display the cart
+module.exports.cartIndex = function(req, res, next) {
+
+  _cartDisplay(req, res, next, 'cart/index');
 
 };
+
+// display the checkout page with cart details
+module.exports.cartCheckout = function(req, res, next) {
+
+  _cartDisplay(req, res, next, 'cart/checkout');
+
+}
+
+module.exports.cartPayment = function(req, res, next) {
+
+  let customer = {};
+  customer.firstName = req.body.firstName;
+  customer.lastName = req.body.lastName;
+  customer.email = req.body.userEmail;
+  customer.streetAddress = req.body.streetAddress;
+  customer.cityAddress = req.body.cityAddress;
+  customer.stateAddress = req.body.stateAddress;
+
+  req.session.customer = customer;
+
+  res.render('cart/payment', {
+    title: "Mimir's Market",
+    STRIPE_PK: STRIPE_PK,
+    transaction: req.body,
+    charge_total: req.body.total * 100,
+    cart_count: req.session.cart.length || 0
+
+  });
+}
+
+module.exports.captureCharge = function(req, res, next) {
+  var charge = req.body;
+  stripe.charges.create({
+      amount: parseFloat(req.body.total) * 100,
+      currency: 'usd',
+      description: req.body.transaction,
+      source: charge.stripeToken
+    })
+    .then((charge) => {
+
+      var transaction = new Transaction({
+        stripeCharge: charge,
+        cartSession: req.session.cart,
+        customerSession: req.session.customer
+      });
+      transaction.save()
+        .then((result) => {
+          console.log(result);
+        })
+    })
+    .then(() => {
+      res.redirect('/cart/delete?_method=delete');
+    })
+    .catch((e) => res.status(500)
+      .send(e.stack));
+}
 
 module.exports.cartAdd = function(req, res, next) {
   let cartItem = {

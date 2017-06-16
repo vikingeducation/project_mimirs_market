@@ -43,11 +43,6 @@
 </div>
 <hr>
 {{/each}}
-{{else}}
-<h2>No items in your cart!  Time to go shopping!</h2>
-<hr>
-{{/if}}
-
 <div class="row">
   <div class="col-sm-12">
 
@@ -57,8 +52,7 @@
 
 
   <div class="button-layout">
-    <form class="form-inline" action="/cart" method="post">
-      <input type="hidden" name="_method" value="get">
+    <form class="form-inline" action="/cart/checkout" method="get">
       <button type="submit" class="btn btn-primary button-width">Checkout</button>
     </form>
   </div>
@@ -76,3 +70,7 @@
 
 </div>
 </div>
+{{else}}
+<h2>No items in your cart!  Time to go shopping!</h2>
+<hr>
+{{/if}}

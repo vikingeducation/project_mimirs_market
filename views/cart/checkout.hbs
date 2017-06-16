@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-xs-12" style="text-align: center;">
+    <h1>Checkout</h1>
+      </div>
+      </div>
+
+{{#if cart.length}}
+  <div class="col-xs-12 col-sm-6">
+  <form class="" action="/cart/payment" method="post" id="addressData">
+      <h3 class="center-form">Personal</h3>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name">
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name">
+  </div>
+  <div class="form-group">
+    <label for="userEmail">Email Address</label>
+    <input type="email" class="form-control" name="userEmail" id="userEmail" placeholder="Email">
+  </div>
+  <h3 class="center-form">Address</h3>
+  <div class="form-group">
+    <label for="streetAddress">Street</label>
+    <input type="text" class="form-control" name="streetAddress" id="streetAddress" placeholder="Street">
+  </div>
+  <div class="form-group">
+    <label for="cityAddress">City</label>
+    <input type="text" class="form-control" name="cityAddress" id="cityAddress" placeholder="City">
+  </div>
+  <div class="form-group">
+    <label for="stateAddress">State</label>
+    <select class="form-control" name="stateAddress" id="stateAddress">
+      <option value="" disabled selected>State</option>
+      {{#each states as |state|}}
+        <option value="{{state.abbr}}">{{state.name}}</option>
+      {{/each}}
+    </select>
+  </div>
+      <input type="hidden" name="total" value="{{total}}">
+    
+    </form>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+        <h3 class="center-form">Shopping Cart</h3>
+        <br>
+    <table class="table">
+      {{#each cart as |product|}}
+      <tr>
+        <td><img src="{{product.image}}" alt="Image: {{product.name}}" class="img-rounded" style="width:50px;height:50px;"></td>
+        <td>{{product.name}}</td>
+        <td>${{product.price}} x {{product.quantityOrdered}}</td>
+        <td>=</td>
+        <td>${{product.subTotal}}</td>
+      </tr>
+      {{/each}}
+
+    </table>
+
+    <div class="pull-right">
+      <h2>Total: ${{total}}</h2>
+    </div>
+  </div>
+
+
+
+
+
+<hr>
+
+<div class="row">
+  <div class="col-sm-12">
+
+
+
+
+  <div class="button-layout">
+
+      <button type="submit" class="btn btn-primary button-width" form="addressData">Go To Payment</button>
+
+  </div>
+
+
+
+  <div class="button-layout">
+
+      <a href="/cart"><button class="btn btn-success button-width">Return to Cart</button></a>
+
+
+  </div>
+
+
+
+</div>
+</div>
+{{else}}
+<h2>No items in your cart!  Time to go shopping!</h2>
+<hr>
+{{/if}}
