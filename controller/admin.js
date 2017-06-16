@@ -36,3 +36,67 @@ module.exports.order = function(req, res, next) {
     .catch((e) => res.status(500)
       .send(e.stack));
 };
+
+// analytics summary view
+module.exports.analytics = function(req, res, next) {
+
+  Promise.all(_getPromises())
+    .then(results => {
+      let queryResults = _prepResults(results);
+
+      res.render('admin/analytics', {
+        title: "Minmir's Market Analytics",
+        totals: queryResults.totals,
+        revenueByState: queryResults.revenueByState,
+        revenueByProduct: queryResults.revenueByProduct,
+        revenueByCategory: queryResults.revenueByCategory
+      });
+
+    })
+    .catch((e) => res.status(500)
+      .send(e.stack));
+
+
+};
+
+// collect all the data query promises
+var _getPromises = function() {
+  let promises = [];
+
+  promises.push(Product.count({}));
+  promises.push(Category.count({}));
+  promises.push(Transaction.uniqueCustomers());
+  promises.push(Transaction.totalUnits());
+  promises.push(Transaction.totalRevenue());
+  promises.push(Transaction.count());
+  promises.push(Transaction.uniqueStates());
+  promises.push(Transaction.revenueByState());
+  promises.push(Transaction.revenueByProduct());
+  promises.push(Transaction.revenueByCategory());
+
+  return promises;
+};
+
+var _prepResults = function(results) {
+  let totalsObj = {};
+
+  let resultsObj = {};
+
+  totalsObj.product = results[0];
+  totalsObj.category = results[1];
+  totalsObj.customers = results[2].length;
+  totalsObj.unitsSold = results[3][0].value;
+  totalsObj.totalRevenue = results[4][0].value;
+  totalsObj.totalOrders = results[5];
+  totalsObj.statesSoldTo = results[6].length;
+  resultsObj.totals = totalsObj;
+
+  resultsObj.revenueByState = results[7];
+
+  resultsObj.revenueByProduct = results[8];
+
+  resultsObj.revenueByCategory = results[9];
+
+  return resultsObj;
+
+};

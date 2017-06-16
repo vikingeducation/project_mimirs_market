@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-xs-12 center-form">
+    <h1>Order Analytics</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="center-form">Summary Statistics</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <td>Total Revenue</td><td>{{formatAsCurrency totals.totalRevenue}}</td>
+          </tr>
+          <tr>
+            <td>Total Units</td><td>{{totals.unitsSold}}</td>
+          </tr>
+          <tr>
+            <td>Total Transactions</td><td>{{totals.totalOrders}}</td>
+          </tr>
+          <tr>
+            <td>Total Customers</td><td>{{totals.customers}}</td>
+          </tr>
+          <tr>
+            <td>Total Products</td><td>{{totals.product}}</td>
+          </tr>
+          <tr>
+            <td>Total Categories</td><td>{{totals.category}}</td>
+          </tr>
+          <tr>
+            <td>Total States Sold To</td><td>{{totals.statesSoldTo}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="center-form">Revenue by State</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <th>State</th>
+            <th>Revenue</th>
+          </tr>
+          {{#each revenueByState as |state|}}
+            <tr>
+              <td>{{state._id}}</td>
+              <td>{{formatAsCurrency state.revenue}}</td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="center-form">Revenue by Product</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <th>Product</th>
+            <th>Revenue</th>
+          </tr>
+          {{#each revenueByProduct as |item|}}
+            <tr>
+              <td>{{item._id}}</td>
+              <td>{{formatAsCurrency item.value}}</td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="center-form">Revenue by Category</h4>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <th>Category</th>
+            <th>Revenue</th>
+          </tr>
+          {{#each revenueByCategory as |item|}}
+            <tr>
+              <td>{{item._id}}</td>
+              <td>{{formatAsCurrency item.value}}</td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

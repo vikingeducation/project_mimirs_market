@@ -7,6 +7,10 @@ var ctrlAdmin = require('../controller/admin');
 router.get('/', ctrlAdmin.orderList);
 router.get('/orders', ctrlAdmin.orderList);
 
+// show individual order details
 router.get('/order/:orderID', ctrlAdmin.order);
+
+// show analytics summary page
+router.get('/analytics', ctrlAdmin.analytics);
 
 module.exports = router;
