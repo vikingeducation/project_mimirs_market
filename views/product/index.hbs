@@ -32,7 +32,7 @@
         <select class="form-control" name="minPriceFilter">
           <option value="" disabled selected>Min Price</option>
           {{#each prices as |price|}}
-            <option value="{{price}}">{{price}}</option>
+            <option value="{{price}}">${{price}}</option>
           {{/each}}
         </select>
       </div>
@@ -40,7 +40,7 @@
         <select class="form-control" name="maxPriceFilter">
           <option value="" disabled selected>Max Price</option>
           {{#each prices as |price|}}
-            <option value="{{price}}">{{price}}</option>
+            <option value="{{price}}">${{price}}</option>
           {{/each}}
         </select>
       </div>

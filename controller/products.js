@@ -76,6 +76,8 @@ module.exports.productIndex = function(req, res, next) {
     }
   };
 
+  if (req.session.cart === undefined) req.session.cart = [];
+
   Product.findAll(criteria)
     .then((products) => {
       let cartList = Cart.cartItemsList(req);
