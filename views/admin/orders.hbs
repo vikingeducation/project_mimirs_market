@@ -1,0 +1,22 @@
+<h1>Admin Orders Index</h1>
+
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+    <th>Checkout Date</th>
+    <th>Revenue</th>
+    <th>Customer Email</th>
+    <th>Customer State</th>
+  </tr>
+  {{#each transactions as |transaction|}}
+    <tr>
+      <td><a href="/admin/order/{{transaction._id}}">{{transaction._id}}</a> </td>
+      <td>{{transaction.stripeCharge.description}}</td>
+      <td>{{transaction.createdAt}}</td>
+      <td>{{formatAsCurrency transaction.stripeCharge.amount}} </td>
+      <td>{{transaction.stripeCharge.source.name}}</td>
+      <td>{{transaction.customer.stateAddress}}</td>
+    </tr>
+  {{/each}}
+</table>

@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-xs-12" style="text-align: center;">
+    <h1>Cart</h1>
+      </div>
+      </div>
+
+    {{#if cart.length}}
+
+
+  {{#each cart as |product|}}
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <img src="{{product.image}}" alt="Image: {{product.name}}" class="img-rounded" style="width:250px;height:250px;">
+    </div>
+    <div class="col-xs-12  col-sm-4">
+      <h3>{{product.name}}</h3>
+      <h4>{{product.Category.name}}</h4>
+      <h4>${{product.price}}</h4>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+
+<div class="right-form">
+
+
+
+      <form class="form-inline" action="/cart/update/{{product.id}}" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+          <input type="text" name="newQuantity" value="{{product.quantityOrdered}}" class="form-control">
+          <button type="submit" name="updateQuantityButton" class="btn btn-success button-width">Set Quantity</button>
+        </div>
+
+      </form>
+      </div>
+<div class="right-form">
+
+      <form class="form-inline" action="/cart/remove/{{product.id}}" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-danger button-width">Remove</button>
+        </form>
+</div>
+    </div>
+</div>
+<hr>
+{{/each}}
+<div class="row">
+  <div class="col-sm-12">
+
+  <div class="pull-left">
+    <h2>Total: ${{total}}</h2>
+  </div>
+
+
+  <div class="button-layout">
+    <form class="form-inline" action="/cart/checkout" method="get">
+      <button type="submit" class="btn btn-primary button-width">Checkout</button>
+    </form>
+  </div>
+
+
+
+  <div class="button-layout">
+    <form class="form-inline" action="/cart/delete" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button type="submit" class="btn btn-danger button-width">Clear Cart</button>
+    </form>
+  </div>
+
+
+
+</div>
+</div>
+{{else}}
+<h2>No items in your cart!  Time to go shopping!</h2>
+<hr>
+{{/if}}

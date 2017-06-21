@@ -1,0 +1,69 @@
+<div class="row">
+
+
+
+  <div class="col-xs-12" style="text-align: center;">
+    <h1>Product</h1>
+      </div>
+    <div class="col-xs-4">
+      <img src="{{product.image}}" alt="Image: {{product.name}}" class="img-rounded" style="width:250px;height:250px;">
+    </div>
+    <div class="col-xs-4">
+      <h3>{{product.name}}</h3>
+      <h4>{{product.Category.name}}</h4>
+      <h4>${{product.price}}</h4>
+    </div>
+    <div class="col-xs-4">
+      <br>
+      <p>{{product.description}}</p>
+      <br><br>
+      {{#if product.inCart}}
+        <form class="" action="/cart" method="get">
+          <button type="submit" class="btn btn-success">Edit Cart</button>
+      {{else}}
+        <form class="" action="/cart/add/{{product.id}}" method="post">
+          <input type="hidden" name="_method" value="PUT">
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+      {{/if}}
+      </form>
+    </div>
+
+
+</div>
+<hr>
+<div class="row">
+
+  <div class="col-xs-12" style="text-align: center;">
+    <h2>Related Products</h2>
+  </div>
+  <br><br>
+
+
+    {{#each related as |product| }}
+    <div class="col-md-3 col-sm-4 col-xs-6">
+    <div class="panel panel-default" style="width:250px;height:340px;">
+      <div class="panel-heading" style="text-align: center;">
+        {{product.name}}
+      </div>
+      <div class="panel-body" style="text-align: center;">
+        <img src="{{product.image}}" alt="Image: {{product.name}}" class="img-rounded" style="width:150px;height:150px;">
+        <h5>${{product.price}}</h5>
+        <a href="/products/detail/{{product.id}}"><h5>{{product.name}}</h5></a>
+
+        <h6>{{product.Category.name}}</h6>
+        {{#if product.inCart}}
+          <form class="" action="/cart" method="get">
+            <button type="submit" class="btn btn-success">Edit Cart</button>
+        {{else}}
+          <form class="" action="/cart/add/{{product.id}}" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+        {{/if}}
+        </form>
+      </div>
+    </div>
+  </div>
+    {{/each}}
+
+
+</div>
