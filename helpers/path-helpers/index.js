@@ -6,10 +6,8 @@ const basename = path.basename(__filename);
 
 const Helpers = {};
 
-
 // Object to hold registered helpers
 Helpers.registered = {};
-
 
 // Register a single helper or
 // a module
@@ -32,7 +30,6 @@ Helpers.register = function(key, fn) {
   }
 };
 
-
 // Register all helper files
 const files = fs.readdirSync(__dirname);
 files.forEach((filename) => {
@@ -46,6 +43,5 @@ files.forEach((filename) => {
     Helpers.register(helperModule);
   }
 });
-
 
 module.exports = Helpers;
