@@ -1,0 +1,46 @@
+<div class="container search-query">
+  <div class="row">
+    <div class="col-md-6">
+      <form action="{{ productsPath }}" method="get">
+        <div class="form-group">
+          <label for="search_name">Name</label>
+          <input type="text" id="search_name" name="search[name]" class="form-control" value="{{ productName }}" placeholder="{{ productName}}">
+        </div>
+        <div class="form-group">
+          <label for="search_min_price">Min Price</label>
+          <input type="number" id="search_min_price" name="search[minPrice]" class="form-control" step="0.01" value="{{ minPrice }}">
+        </div>
+        <div class="form-group">
+          <label for="search_max_price">Max Price</label>
+          <input type="number" id="search_max_price" name="search[maxPrice]" class="form-control" step="0.01" value="{{ maxPrice }}">
+        </div>
+        <div class="form-group">
+          <label for="search_category">Filter by Category</label>
+          <select class="form-control" name="search[category]" id="search_category">
+            <option value="">Any</option>
+            {{#each categories as |category| }}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {{/each }}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" value="Submit">Search</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form action="{{ productsPath }}" method="get">
+        <div class="form-group">
+          <label for="sort">Sort By:</label>
+          <select class="form-control" name="sort" id="sort">
+            <option value="name ASC">Name Ascending</option>
+            <option value="name DESC">Name Descending</option>
+            <option value="price ASC">Price Ascending</option>
+            <option value="price DESC">Price Descending</option>
+            <option value="&quot;updatedAt&quot; ASC">Newest Ascending</option>
+            <option value="&quot;updatedAt&quot; DESC">Newest Descending</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" value="Submit">Sort</button>
+      </form>
+    </div>
+  </div>
+</div>

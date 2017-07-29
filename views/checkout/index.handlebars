@@ -1,0 +1,81 @@
+<div class="container">
+  <h2 class="checkout">Checkout </h2>
+  <div class="row">
+    <div class="col-md-5">
+      <form action="/charges" method="POST">
+        <fieldset class="form-group">
+          <legend>Personal</legend>
+          <input type="hidden" value={{ total }} name="checkout[revenue]">
+          <div class="form-group">
+            <label for="checkout_fname">First Name</label>
+            <input type="text" id="checkout_fname" name="checkout[customer][fname]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_lname">Last Name</label>
+            <input type="text" id="checkout_lname" name="checkout[customer][lname]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_email">Email</label>
+            <input type="email" id="checkout_email" name="checkout[customer][email]" class="form-control">
+          </div>
+        </fieldset>
+        <fieldset class="form-group">
+          <legend>Address</legend>
+          <div class="form-group">
+            <label for="checkout_street">Street</label>
+            <input type="text" id="checkout_street" name="checkout[address][street]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_city">City</label>
+            <input type="text" id="checkout_city" name="checkout[address][city]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="checkout_state">State</label>
+            <select class="form-control" name="checkout[address][state]" id="checkout_state">
+              {{#each states as |state| }}
+                <option value="{{ state.name }}">{{ state.name }}</option>
+              {{/each }}
+            </select>
+          </div>
+          {{#each products as |product| }}
+            <input type="hidden" value="{{ product.name }}" name="checkout[orderLine][{{@index}}][product][name]">
+            <input type="hidden" value="{{ product.price }}" name="checkout[orderLine][{{@index}}][product][price]">
+            <input type="hidden" value="{{ cartQuantity product.id @root.session.cart.products }}" name="checkout[orderLine][{{@index}}][product][quantity]">
+            <input type="hidden" value="{{ product.sku }}" name="checkout[orderLine][{{@index}}][product][sku]">
+            <input type="hidden" value="{{ product.description }}" name="checkout[orderLine][{{@index}}][product][description]">
+            <input type="hidden" value="{{ product.Category.name }}" name="checkout[orderLine][{{@index}}][product][category]">
+          {{/each }}
+        </fieldset>
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ STRIPE_PK }}"
+            data-amount="100"
+            data-name="Stripe Node Test"
+            data-description="Widget"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"></script>
+      </form>
+    </div>
+    <div class="col-md-6 col-md-offset-1">
+    {{#if products.length }}
+      {{#each products as |product| }}
+        <div class="row cart-box">
+          <div class="col-md-6">
+            <img src="/images/placeholder.png" alt="Black checkmark">
+          </div>
+          <div class="col-md-6">
+            <h4><a href="{{ productPath product.id }}">{{ product.name }}</a></h4>
+            <p>${{ product.price }} * {{ cartQuantity product.id @root.session.cart.products}} = ${{ checkoutProductTotal product.id @root.session.cart.products product.price}}.00</p>
+          </div>
+        </div>
+      {{/each}}
+      <h2>Total: ${{ total }}.00</h2>
+      <a href="{{ cartShowPath }}"><button class="btn btn-danger btn-block">Return to Cart</button></a>
+  </div>
+
+  {{else }}
+  <div class="row">
+    <h3>You haven't added anything to your cart yet!! Try adding something before checking out.</h3>
+  </div>
+  {{/if }}
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+  <h2>Analytics</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-12">
+        <h3>Totals</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Revenue Ever</td>
+              <td>${{ data.totalRevenue.amount }}.00</td>
+            </tr>
+            <tr>
+              <td>Total Units Sold</td>
+              <td>{{ data.totalUnitsSold }}</td>
+            </tr>
+            <tr>
+              <td>Total Transactions</td>
+              <td>{{ data.totalTransactions }}</td>
+            </tr>
+            <tr>
+              <td>Total Customers</td>
+              <td>{{ data.totalCustomersSoldTo }}</td>
+            </tr>
+            <tr>
+              <td>Total Products</td>
+              <td>{{ data.totalProducts }}</td>
+            </tr>
+            <tr>
+              <td>Total Categories</td>
+              <td>{{ data.totalCategories }}</td>
+            </tr>
+            <tr>
+              <td>Total States Sold To</td>
+              <td>{{ data.totalStatesSoldTo }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12">
+        <h3>Revenue By Product</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each data.revenueByProduct as |product|}}
+              <tr>
+                <td>{{ product._id }}</td>
+                <td>${{ product.total }}.00</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12">
+        <h3>Revenue by State</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+              {{#each data.revenueByState as |state|}}
+                <tr>
+                  <td>{{ state._id }}</td>
+                  <td>${{ state.total }}.00</td>
+                </tr>
+              {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12">
+        <h3>Revenue By Category</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each data.revenueByCategory as |category|}}
+                <tr>
+                  <td>{{ category._id }}</td>
+                  <td>${{ category.total }}.00</td>
+                </tr>
+              {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

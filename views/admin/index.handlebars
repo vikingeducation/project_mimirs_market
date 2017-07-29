@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Orders</h2>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Checkout Date</th>
+        <th>Revenue</th>
+        <th>Customer Email</th>
+        <th>Customer State</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+          <tr>
+            
+              <td><a href="{{ adminOrderPath order._id }}">{{ order._id }}</a></td>
+              <td>{{ order.orderDescription }}</td>
+              <td>{{ order.createdAt }}</td>
+              <td>${{ order.revenue }}.00</td>
+              <td>{{ order.customer.email }}</td>
+              <td>{{ order.address.state }}</td>
+            
+          </tr>
+      {{/each }}
+    </tbody>
+  </table>
+</div>
