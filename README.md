@@ -1,5 +1,7 @@
 # Mimir's Market
 
+[![Mimir's Market](http://i.imgur.com/J8H3xe7.png)](https://nameless-stream-46232.herokuapp.com/)
+
 ## Introduction
 Mimir's Market is a full-fledged ecommerce website that leverages MongoDB, PostgreSQL, and Stripe to process and save orders.
 
