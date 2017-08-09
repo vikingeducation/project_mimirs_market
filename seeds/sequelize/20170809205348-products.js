@@ -1,21 +1,19 @@
-'use strict';
+"use strict";
 
-const faker = require('faker')
-const voca = require('voca')
+const faker = require("faker");
+const voca = require("voca");
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-  
-  let products = [];
-  for (let i = 0; i < 10; i++) {
-    products.push({
-      name: voca.titleCase(faker.commerce.productName());,
-      sku: faker.random.uuid();,
-      price: faker.commerce.price(1, 100, 2, '$');
+  up: function(queryInterface, Sequelize) {
+    let products = [];
+    for (let i = 0; i < 10; i++) {
+      products.push({
+        name: voca.titleCase(faker.commerce.productName()),
+        sku: faker.random.uuid(),
+        price: +faker.commerce.price(1, 100)
       });
     }
-    console.log(products)
-    return queryInterface.bulkInsert('Products', products);  
+    return queryInterface.bulkInsert("Products", products);
   },
 
   down: function(queryInterface, Sequelize) {
