@@ -1,54 +1,41 @@
-
-
 <header class="page-header">
   <h1>Products</h1>
 </header>
 
 
 {{#if products.length }}
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each products as |product| }}
-        <tr>
-          <td>
-            <a href="{{ productPath product.id }}">{{ product.name }}</a>
-          </td>
-          <td>
-            <a href="{{ productPath product.id }}">{{ product.category }}</a>
-          </td>
-          <td>
-            <a href="{{ productPath product.id }}">{{ product.price }}</a>
-          </td>
-      
-  
-          <td>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each products as |product| }}
+    <tr>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.price }}</a>
+      </td>
 
-            <a href="{{ addProductPath product.id }}">
+
+      <td>
+
+        <a href="{{ addProductPath product.id }}">
             <button class="btn btn-primary">Add to Cart</button></a>
-          </td>
-        </tr>
-      {{/each }}
-    </tbody>
-  </table>
+      </td>
+    </tr>
+    {{/each }}
+  </tbody>
+</table>
 {{else }}
-  <p class="text-danger">No products</p>
+<p class="text-danger">No products</p>
 {{/if }}
-
-
-
-
-
-
-
-
-
-
-

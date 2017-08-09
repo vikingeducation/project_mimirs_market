@@ -11,8 +11,9 @@
     "sql:seed": "npm run sql db:seed:all",
     "sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed",
     "mg:seed": "node seeds/mongoose",
+    "sql": "./node_modules/sequelize-cli/bin/sequelize",
     "console": "node repl.js",
-    "sql": "./node_modules/sequelize-cli/bin/sequelize"
+    "start": "which nodemon > /dev/null && nodemon app.js || node app.js"
   },
   "repository": {
     "type": "git",

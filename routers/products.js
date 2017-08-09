@@ -1,13 +1,13 @@
 var express = require("express");
 var router = express.Router();
 var models = require("./../models/sequelize");
-const Product = models.Product
+const Product = models.Product;
 
 // ----------------------------------------
 // Index
 // ----------------------------------------
 router.get("/", (req, res) => {
-  Product.find({})
+  Product.findAll({ include: ["Category"] })
     .then(products => {
       res.render("products/index", { products });
     })
@@ -21,7 +21,6 @@ router.get("/", (req, res) => {
 //   res.render("users/new");
 // });
 
-
 // ----------------------------------------
 // Show
 // ----------------------------------------
@@ -32,7 +31,5 @@ router.get("/", (req, res) => {
 //     })
 //     .catch(e => res.status(500).send(e.stack));
 // });
-
-
 
 module.exports = router;
