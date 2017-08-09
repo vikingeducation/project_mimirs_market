@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const mongooseeder = require("mongooseeder");
 const models = require("./../../models/mongoose");
 
-const mongodbUrl = "mongodb://localhost/your_db";
+const mongodbUrl = "mongodb://localhost/project_mimirs_market_development";
 
 mongooseeder.seed({
 	mongodbUrl: mongodbUrl,
@@ -11,11 +11,11 @@ mongooseeder.seed({
 	mongoose: mongoose,
 	seeds: () => {
 		// Run your seeds here
-		let email = [];
+		let users = [];
 		for (let i = 0; i < 10; i++) {
-			email.push({ email: `${i}@${i}.com` });
+			users.push({ email: `${i}@${i}.com` });
 		}
 		// Example:
-		return models.User.create({ email });
+		return models.User.create(users);
 	}
 });

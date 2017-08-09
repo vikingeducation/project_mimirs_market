@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const getPostSupport = require("express-method-override-get-post-support");
 const session = require("express-session");
+const mongooseModels = require("./models/mongoose");
 const sqlModels = require("./models/sequelize");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
@@ -53,7 +54,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-	//stuff
+	User.find().then(users => {
+		console.log(users);
+		res.render("testing", { users });
+	});
 });
 
 app.listen(3000, () => {

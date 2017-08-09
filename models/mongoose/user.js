@@ -4,12 +4,12 @@ var Schema = mongoose.Schema;
 // Create a new schema for
 // the user model
 var UserSchema = new Schema(
-  {
-    email: String
-  },
-  {
-    timestamps: true
-  }
+	{
+		email: String
+	},
+	{
+		timestamps: true
+	}
 );
 
 // Create the model with a defined schema
