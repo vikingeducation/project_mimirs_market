@@ -1,22 +1,27 @@
-Order: (document)
-    Product: (array)
-        Name:
-        Price:
-        SKU:
-        Description:
-        Categories:
-        Quantity:
+Order: (collection)
+
+    Product: [ productId, productId]
+
     Customer:
         fname:
         lname:
         email
-        Address:
-            street:
-            city:
-            state:
-            zip:
+        street:
+        city:
+        state:
+        zip:
+
     Metadata:
         dateTime:
         stripeToken:
         cardType:
         total:
+
+
+Product: (collection)
+    Name:
+    Price:
+    SKU:
+    Description:
+    Categories:
+    Quantity:

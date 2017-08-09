@@ -2,27 +2,16 @@
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface
-      .createTable("Products", {
+      .createTable("Categories", {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: Sequelize.INTEGER
         },
-        sku: {
-          type: Sequelize.STRING,
-          allowNull: false
-        },
         name: {
-          type: Sequelize.STRING,
-          allowNull: false
-        },
-        description: {
+          allowNull: false,
           type: Sequelize.STRING
-        },
-        price: {
-          type: Sequelize.INTEGER,
-          allowNull: false
         },
         createdAt: {
           allowNull: false,
@@ -36,10 +25,12 @@ module.exports = {
         }
       })
       .then(() => {
-        return queryInterface.addIndex("Products", ["id", "sku", "name"], {unique:true});
+        return queryInterface.addIndex("Categories", ["name"], {
+          unique: true
+        });
       });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable("Products");
+    return queryInterface.dropTable("Categories");
   }
 };

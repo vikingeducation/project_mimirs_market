@@ -1,7 +1,7 @@
 const path = require("path");
 
 const config = {
-  config: "./config/sequelize",
+  config: "./config/sequelize.js",
   "migrations-path": "./migrations/sequelize",
   "seeders-path": "./seeds/sequelize",
   "models-path": "./models/sequelize"
