@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sql-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
-    "seed": "npm run sql db:migrate:undo:all && npm run sql db:migrate && npm run sql db:seed:all",
+    "seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "sql": "node_modules/sequelize-cli/bin/sequelize"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.11.6",
+    "mongooseeder": "^2.0.5",
     "pg": "^7.1.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.4.2",
