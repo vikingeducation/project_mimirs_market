@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/IDHalverson/project_mimirs_market#readme",
   "dependencies": {
+    "Faker": "^0.7.2",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
@@ -35,6 +36,7 @@
     "express-handlebars": "^3.0.0",
     "express-method-override-get-post-support": "0.0.7",
     "express-session": "^1.15.5",
+    "faker": "^4.1.0",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.6",
     "mongoose-findorcreate": "^2.0.0",

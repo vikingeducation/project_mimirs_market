@@ -1,11 +1,25 @@
 "use strict";
+const model = require("../../models/sequelize");
+const Product = model.Product;
+let faker = require("Faker");
 
-const model = require("../../models");
+//
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    //stuff
-    return queryInterface.bulkInsert("Product", [], {});
+    let seeds = [];
+    for (var i = 0; i < 50; i++) {
+      let name = `${faker.random.catch_phrase_descriptor()} ${faker.random.bs_adjective()} ${faker.random.bs_noun()}`;
+      let p = {
+        name: name,
+        description: faker.Lorem.sentence(),
+        price: faker.random.number(5000),
+        sku: Math.random() * 122221,
+        categoryId: i
+      };
+      seeds.push(p);
+    }
+    return queryInterface.bulkInsert("Products", seeds, {});
   },
 
   down: function(queryInterface, Sequelize) {

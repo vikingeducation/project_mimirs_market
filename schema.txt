@@ -36,8 +36,6 @@ sequelize model:create --name Category --attributes "name:char"
 sequelize model:create --name Product --attributes "name:char description:char price:integer sku:integer categoryId:integer"
 
 
-mongod --dbpath=/Users/ericglover/data/<project>
-
 
 MONGODB
 
