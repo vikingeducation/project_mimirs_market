@@ -46,9 +46,12 @@ app.use((req, res, next) => {
 });
 
 // Routes
-// app.use("/posts", require("./routers/posts"));
-// app.all("/", (req, res) => res.redirect("/posts"));
+app.all("/", (req, res) => res.redirect("/products"));
+
+app.use("/products", require("./routers/products"));
+
 // app.use("/users", require("./routers/users"));
+
 // app.use("/comments", require("./routers/comments"));
 
 // Set up port/host
