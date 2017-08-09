@@ -1,0 +1,19 @@
+{
+  "name": "project_mimirs_market",
+  "version": "1.0.0",
+  "description": "A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaraThrash/project_mimirs_market.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KaraThrash/project_mimirs_market/issues"
+  },
+  "homepage": "https://github.com/KaraThrash/project_mimirs_market#readme"
+}

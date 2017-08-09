@@ -1,0 +1,76 @@
+Users:
+  username: varchar
+  isAdmin: bool
+  stored in order>>purchases
+  ..cart: not in database stored in session
+        HasMany:
+            Orders
+              which have many:products
+
+products:
+  name varchar
+  picture: key
+  price int
+  availableStock: 5 int
+  sku: set this as the product id varchar
+  category >> join to categories
+  description varchar
+  similar categories?
+
+    products have many:
+    pictures
+              categories
+              orders
+            belong to many
+              orders
+              categories
+categories:
+    name: varchar
+
+    have many
+        products
+
+
+Order:
+  shippedStatus: bool
+  shipState: varchar
+  shipCountry: varchar
+  shipCity: varchar
+  products: table
+  price: int
+  date: int
+  user: varchar
+    belongs to: user
+    orders have one
+        user
+        location
+    have many
+        products
+  belongs to many
+        products
+
+table of pictures:
+  location in database:
+
+ProductsOrder:
+  OrderId:
+  productId:
+
+productsCategories join
+  productsid:
+  categoriesid:
+
+
+>>> weapon, armor, not one of the things
+
+categories:
+weapons:
+armor:
+not one of those things.
+
+
+search categories for weapons
+ result
+
+ search products where category like weapons
+  result
