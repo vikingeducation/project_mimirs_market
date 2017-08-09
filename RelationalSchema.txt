@@ -1,39 +1,60 @@
 Product:
-  sku: VARCHAR
-  name: VARCHAR
+  sku: string
+  name: string
   description: TEXT
-  price: INTEGER
+  price: integer
+
+sequelize model:create --name Product --attributes "sku:string name:string description:string price:integer"
 
 User:
-  fname: VARCHAR
-  lname: VARCHAR
-  email: VARCHAR (?EMAIL?)
+  fname: string
+  lname: string
+  email: string
 
-Addresse:
-  fname: VARCHAR
-  lname: VARCHAR
-  street: VARCHAR
-  city: VARCHAR
-  StateId: INTEGER
-  zip: INTEGER
+sequelize model:create --name User --attributes "fname:string lname:string email:string"
+
+
+Address:
+  fname: string
+  lname: string
+  street: string
+  city: string
+  StateId: integer
+  zip: integer
+
+sequelize model:create --name Address --attributes "fname:string lname:string street:string city:string StateId:integer zip:integer"
+
 
 State:
-  name: VARCHAR
+  name: string
+
+sequelize model:create --name State --attributes "name:string"
+
 
 Join: UserAddress
-  name: VARCHAR
-  UserId: INTEGER
-  AddressId: INTEGER
+  name: string
+  UserId: integer
+  AddressId: integer
+
+sequelize model:create --name UserAddress --attributes "name:string UserId:integer AddressId:integer"
+
 
 Category:
-  name: VARCHAR
-  
+  name: string
+
+sequelize model:create --name Category --attributes "name:string"
+
+
 Join: ProductCategory:
-  CategoryId: INTEGER
-  ProductId: INTEGER
+  CategoryId: integer
+  ProductId: integer
+
+sequelize model:create --name ProductCategory --attributes "CategoryId:integer ProductId:integer"
+
 
 Join: ProductUser as Cart
-  ProductId: INTEGER
-  UserId: INTEGER
-  quantity: INTEGER
+  ProductId: integer
+  UserId: integer
+  quantity: integer
 
+sequelize model:create --name Cart --attributes "ProductId:integer UserId:integer quantity:integer"
