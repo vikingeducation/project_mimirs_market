@@ -1,47 +1,40 @@
-
-
 <header class="page-header">
-  <h1>User: {{ user.fname }} {{ user.lname }}</h1>
-  <a href="/users/{{ user.id }}/edit" class="btn btn-primary">Edit</a>
-  <a href="/users/{{ user.id }}?_method=delete" class="btn btn-danger">Delete</a>
+  <h1>Product: {{ product.name }}</h1>
+  Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
 </header>
 
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <p>{{ product.price }}</p>
+    <p>{{ product.description}}</p>
+    <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
+  </div>
+</div>
 
+<h2>Related Products</h2>
 <table class="table">
   <thead>
     <tr>
-      <th>Key</th>
-      <th>Value</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
+    {{#each relatedProducts as |product| }}
     <tr>
-      <td>First Name</td>
-      <td>{{ user.fname }}</td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.price }}</a>
+      </td>
+      <td>
+        <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
+      </td>
     </tr>
-    <tr>
-      <td>Last Name</td>
-      <td>{{ user.lname }}</td>
-    </tr>
-    <tr>
-      <td>Username</td>
-      <td>{{ user.username }}</td>
-    </tr>
-    <tr>
-      <td>Email</td>
-      <td>{{ user.email }}</td>
-    </tr>
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
+    {{/each }}

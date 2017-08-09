@@ -7,7 +7,7 @@ const Product = models.Product;
 // Index
 // ----------------------------------------
 router.get("/", (req, res) => {
-  Product.findAll({ include: ["Category"] })
+  Product.findAll({ include: models.Category })
     .then(products => {
       res.render("products/index", { products });
     })
@@ -24,12 +24,15 @@ router.get("/", (req, res) => {
 // ----------------------------------------
 // Show
 // ----------------------------------------
-// router.get("/:id", (req, res) => {
-//   User.findById(req.params.id)
-//     .then(user => {
-//       res.render("users/show", { user });
-//     })
-//     .catch(e => res.status(500).send(e.stack));
-// });
+router.get("/:id", (req, res) => {
+  Product.findById(req.params.id, {
+    include: { model: models.Category, include: { model: models.Product } }
+  })
+    .then(product => {
+      console.log(product);
+      res.render("products/single", { product });
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
 
 module.exports = router;
