@@ -1,10 +1,71 @@
 <div class="row">
+	<form>
+		<div class="form-group">
+			<label for="search">Search</label>
+			<input type="text" name="search" class="form-control">
+		</div>
+		<button class="btn btn-primary">Search</button>
+	</form>
+
+	<form>
+		<select name="category" class="form-control">
+			<option></option>
+			<option value="Food">Food</option>
+			<option value="Hardware">Hardware</option>
+			<option value="Automotive">Automotive</option>
+			<option value="Toys">Toys</option>
+			<option value="Beauty">Beauty</option>
+			<option value="Clothing">Clothing</option>
+			<option value="Electronic">Electronics</option>
+			<option value="Grocery">Grocery</option>
+			<option value="Furniture">Furniture</option>
+		</select>
+
+		<select name="minPrice" class="form-control">
+			<option></option>
+			<option value="0">$0</option>
+			<option value="100">$100</option>
+			<option value="200">$200</option>
+			<option value="300">$300</option>
+			<option value="400">$400</option>
+			<option value="500">$500</option>
+			<option value="600">$600</option>
+			<option value="700">$700</option>
+			<option value="800">$800</option>
+			<option value="900">$900</option>
+			<option value="1000">$1000</option>
+		</select>
+
+		<select name="maxPrice" class="form-control">
+			<option></option>
+			<option value="0">$0</option>
+			<option value="100">$100</option>
+			<option value="200">$200</option>
+			<option value="300">$300</option>
+			<option value="400">$400</option>
+			<option value="500">$500</option>
+			<option value="600">$600</option>
+			<option value="700">$700</option>
+			<option value="800">$800</option>
+			<option value="900">$900</option>
+			<option value="1000">$1000</option>
+		</select>
+
+		<button class="btn btn-primary">Submit Filter</button>
+	</form>
+	
+	<form>
+
+	</form>
+</div>
+
+<div class="row">
 	{{#each products as |product|}}
 		<div class="col-md-4">
 			<img src="image_{{product.sku}}">
-			<p>{{product.price}}</p>
+			<p>${{product.price}}.00</p>
 			<p>{{product.name}}</p>
-			<p>{{product.category}}</p>
+			<p>{{product.Category.name}}</p>
 		</div>
 	{{/each}}
 </div>

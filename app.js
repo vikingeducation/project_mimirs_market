@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 		.findAll({
 			include: [
 				{
-					model: Category
+					model: sqlModels.Category
 				}
 			]
 		})
