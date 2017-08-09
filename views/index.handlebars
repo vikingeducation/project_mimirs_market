@@ -1,63 +1,77 @@
 <div class="row">
 	<form>
-		<div class="form-group">
+		<div class="form-group col-md-6 col-md-offset-2">
 			<label for="search">Search</label>
 			<input type="text" name="search" class="form-control">
 		</div>
-		<button class="btn btn-primary">Search</button>
+
+		<div class="col-md-2">
+			<button class="btn btn-primary">Search</button>
+		</div>
 	</form>
+</div>
 
+<div class="row">
 	<form>
-		<select name="category" class="form-control">
-			<option></option>
-			<option value="Food">Food</option>
-			<option value="Hardware">Hardware</option>
-			<option value="Automotive">Automotive</option>
-			<option value="Toys">Toys</option>
-			<option value="Beauty">Beauty</option>
-			<option value="Clothing">Clothing</option>
-			<option value="Electronic">Electronics</option>
-			<option value="Grocery">Grocery</option>
-			<option value="Furniture">Furniture</option>
-		</select>
+		<div class="col-md-2 col-md-offset-2">
+			<select name="category" class="form-control">
+				<option>Select a Category</option>
+				<option value="Food">Food</option>
+				<option value="Hardware">Hardware</option>
+				<option value="Automotive">Automotive</option>
+				<option value="Toys">Toys</option>
+				<option value="Beauty">Beauty</option>
+				<option value="Clothing">Clothing</option>
+				<option value="Electronic">Electronics</option>
+				<option value="Grocery">Grocery</option>
+				<option value="Furniture">Furniture</option>
+			</select>
+		</div>
 
-		<select name="minPrice" class="form-control">
-			<option></option>
-			<option value="0">$0</option>
-			<option value="100">$100</option>
-			<option value="200">$200</option>
-			<option value="300">$300</option>
-			<option value="400">$400</option>
-			<option value="500">$500</option>
-			<option value="600">$600</option>
-			<option value="700">$700</option>
-			<option value="800">$800</option>
-			<option value="900">$900</option>
-			<option value="1000">$1000</option>
-		</select>
+		<div class="col-md-2">
+			<select name="minPrice" class="form-control">
+				<option>Minimum Price</option>
+				<option value="0">$0</option>
+				<option value="100">$100</option>
+				<option value="200">$200</option>
+				<option value="300">$300</option>
+				<option value="400">$400</option>
+				<option value="500">$500</option>
+				<option value="600">$600</option>
+				<option value="700">$700</option>
+				<option value="800">$800</option>
+				<option value="900">$900</option>
+				<option value="1000">$1000</option>
+			</select>
+		</div>
 
+		<div class="col-md-2">
 		<select name="maxPrice" class="form-control">
-			<option></option>
-			<option value="0">$0</option>
-			<option value="100">$100</option>
-			<option value="200">$200</option>
-			<option value="300">$300</option>
-			<option value="400">$400</option>
-			<option value="500">$500</option>
-			<option value="600">$600</option>
-			<option value="700">$700</option>
-			<option value="800">$800</option>
-			<option value="900">$900</option>
-			<option value="1000">$1000</option>
-		</select>
-
-		<button class="btn btn-primary">Submit Filter</button>
+				<option>Maximum Price</option>
+				<option value="0">$0</option>
+				<option value="100">$100</option>
+				<option value="200">$200</option>
+				<option value="300">$300</option>
+				<option value="400">$400</option>
+				<option value="500">$500</option>
+				<option value="600">$600</option>
+				<option value="700">$700</option>
+				<option value="800">$800</option>
+				<option value="900">$900</option>
+				<option value="1000">$1000</option>
+			</select>
+		</div>
+		<div class="col-md-2">
+			<button class="btn btn-primary">Submit Filter</button>
+		</div>
 	</form>
 	
 	<form>
 
 	</form>
 </div>
+
+<br><br><br>
 
 <div class="row">
 	{{#each products as |product|}}
