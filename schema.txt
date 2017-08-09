@@ -1,10 +1,5 @@
 SEQUELIZE
 
-User
-- id
-- name
-- email
-
 States
 - id
 - Name
@@ -27,7 +22,7 @@ Product belongs to one Category
 Category has many Products
 
 
---> SUBMITTING ORDER -->  userId, name, email, state, items(id, name, category, quantity)
+--> SUBMITTING ORDER -->  name, email, state, items(name, category, quantity)
 
 CREATE COMMANDS
 sequelize model:create --name State --attributes "name:char abbreviation:char"
@@ -44,9 +39,17 @@ Orders: [{
 - userId (Sequelize)
 - name
 - email
-- state
 - items: [{
-id (sequelize), name, category, quantity
+name, category, quantity
 }, {}, {}]
-
+- street address
+- city
+- state
+- checkoutDate
+- StripeToken
+- CardType
 }]
+
+OrderItems: [{
+name, category, quantity
+}, {}, {}]
