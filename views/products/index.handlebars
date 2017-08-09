@@ -12,36 +12,19 @@
   </div>
 </div>
 
-
-<header class="page-header">
+<!-- <header class="page-header">
   <h1>Products</h1>
   <a href="/products/new" class="btn btn-primary">+ New Product</a>
-</header>
-
-
-
+</header> -->
 
 {{#if products.length }}
-
-    {{#each products as |productGroup| }}
-      {{#each productGroup as |product|}}
-        <div class="row">
-          <div class="col-xs-4">
-            <a href="#" class="thumbnail">
-              <img data-src="{{product.img}}" alt="...">
-            </a>
-            <div class="caption">
-              <h3>{{product.title}}</h3>
-              <p>{{product.description}}</p>
-              <p><a href="#" class="btn btn-primary" role="button">Add to Cart</a></p>
-            </div>
-          </div>
-          
-        </div>
-      {{/each}}
-    {{/each }}
-
-
+  {{#each products as |productGroup| }}
+    <div class="row">
+    {{#each productGroup as |product|}}
+      {{>_product product=product}}
+    {{/each}}
+    </div>
+  {{/each }}
 {{else }}
   <p class="text-danger">No products</p>
 {{/if }}

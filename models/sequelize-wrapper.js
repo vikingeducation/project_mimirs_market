@@ -1,10 +1,10 @@
-const ModelWrapper = require("./model-wrapper");
-const MODEL_USER = "User";
-const MODEL_PRODUCT = "Product";
-const MODEL_ORDER = "Order";
-const MODEL_CATEGORY = "Category";
+const ModelWrapper = require('./model-wrapper');
+const MODEL_USER = 'User';
+const MODEL_PRODUCT = 'Product';
+const MODEL_ORDER = 'Order';
+const MODEL_CATEGORY = 'Category';
 
-const ORM_SEQUELIZE = "sequelize";
+const ORM_SEQUELIZE = 'sequelize';
 
 class SequelizeWrapper extends ModelWrapper {
 	constructor(db) {
@@ -28,6 +28,25 @@ class SequelizeWrapper extends ModelWrapper {
    */
 	findAllProducts(options) {
 		return this.findAll(MODEL_PRODUCT, options);
+	}
+
+	findAllProductsAndGroup(groupNum, options) {
+		return this.findAllProducts(options).then(rawProducts => {
+			let products = [];
+			let count = 0;
+
+			rawProducts.forEach((product, i) => {
+				if (!Array.isArray(products[count])) {
+					products[count] = [];
+				}
+				products[count][i % groupNum] = product;
+				if (i % groupNum === groupNum - 1) {
+					count++;
+				}
+			});
+
+			return products;
+		});
 	}
 
 	findProductById(id) {
