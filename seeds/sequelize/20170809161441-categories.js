@@ -1,26 +1,22 @@
 'use strict';
-
+const faker = require('faker');
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+	up: function(queryInterface, Sequelize) {
+		const categories = [];
+		for (let i = 0; i < 20; i++) {
+			categories.push({
+				name: faker.commerce.department()
+			});
+		}
+		return queryInterface.bulkInsert('Categories', categories);
+	},
 
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-  },
-
-  down: function (queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
-  }
+	down: function(queryInterface, Sequelize) {
+		return queryInterface.bulkDelete(
+			'Categories',
+			null,
+			{},
+			Sequelize.Category
+		);
+	}
 };

@@ -1,9 +1,9 @@
-const ModelWrapper = require("./model-wrapper");
-const MODEL_USER = "User";
-const MODEL_PRODUCT = "Product";
-const MODEL_ORDER = "Order";
+const ModelWrapper = require('./model-wrapper');
+const MODEL_USER = 'User';
+const MODEL_PRODUCT = 'Product';
+const MODEL_ORDER = 'Order';
 
-const ORM_SEQUELIZE = "sequelize";
+const ORM_SEQUELIZE = 'sequelize';
 
 class SequelizeWrapper extends ModelWrapper {
 	constructor(db) {
@@ -11,12 +11,26 @@ class SequelizeWrapper extends ModelWrapper {
 		this.type = ORM_SEQUELIZE;
 	}
 
-	findAllUsers(query, options) {
-		return this.findAll(MODEL_USER, query, options);
+	/******************************
+	 * USERS
+	 */
+	findAllUsers(options) {
+		return this.findAll(MODEL_USER, options);
 	}
 
 	findUserById(id) {
 		return this.findById(MODEL_USER, id);
+	}
+
+	/******************************
+	 * PRODUCTS
+	 */
+	findAllProducts(options) {
+		return this.findAll(MODEL_PRODUCT, options);
+	}
+
+	findProductById(id) {
+		return this.findById(MODEL_PRODUCT, id);
 	}
 }
 

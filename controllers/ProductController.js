@@ -1,4 +1,4 @@
-var ProductModel = require('../models/mongoose/product.js');
+const getModelWrapper = require('../models/index');
 
 /**
  * ProductController.js
@@ -10,15 +10,16 @@ module.exports = {
    * ProductController.index()
    */
 	index: function(req, res) {
-		ProductModel.find(function(err, Products) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when getting Product.',
-					error: err
-				});
-			}
-			return res.json(Products);
-		});
+		let wrapper = getModelWrapper();
+
+		wrapper
+			.findAllProducts()
+			.then(_renderProductsIndex)
+			.catch(_catchError.call(res, 'Error getting products from database.'));
+
+		function _renderProductsIndex(products) {
+			res.render('products/index', { products });
+		}
 	},
 
 	/**
@@ -119,4 +120,11 @@ module.exports = {
 			return res.status(204).json();
 		});
 	}
+};
+
+const _catchError = msg => err => {
+	return this.status(500).json({
+		message: msg,
+		error: err
+	});
 };
