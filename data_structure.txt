@@ -1,0 +1,31 @@
+// SQL
+
+User
+	firstName
+	lastName
+	email
+	password
+	street
+	city
+	state
+
+Product
+	name
+	sku
+	description
+	price
+	categoryId
+	inStock
+
+Category
+	name
+
+
+
+// MongoDB
+
+Order
+	productIds
+	dateOfTransaction
+	userId
+	transactionTotal
