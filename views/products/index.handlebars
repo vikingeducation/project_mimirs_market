@@ -1,20 +1,16 @@
-<div class="row">
-{{>_search}}
-</div>
-<div class="row">
-{{>_filter}}
-</div>
-<div class="row">
-{{>_sort}}
-</div>
 
-
-<form class="form">
-  <div class="form-group col-xs-6 col-xs-offset-3">
-    <input type="text" class="form-control" id="search" placeholder="Search for products...">
+<div class="well">
+  <h3 class="text-center">Refine your results</h3>
+  <div class="row">
+  {{>_search}}
   </div>
-  <button type="submit" class="btn btn-default"></span>Search &nbsp;<span class="glyphicon glyphicon-search"></button>
-</form>
+  <div class="row">
+  {{>_filter categories=categories}}
+  </div>
+  <div class="row">
+  {{>_sort}}
+  </div>
+</div>
 
 
 <header class="page-header">
@@ -23,49 +19,29 @@
 </header>
 
 
+
+
 {{#if products.length }}
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>SKU</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each products as |product| }}
+
+    {{#each products as |productGroup| }}
+      {{#each productGroup as |product|}}
+        <div class="row">
+          <div class="col-xs-4">
+            <a href="#" class="thumbnail">
+              <img data-src="{{product.img}}" alt="...">
+            </a>
+            <div class="caption">
+              <h3>{{product.title}}</h3>
+              <p>{{product.description}}</p>
+              <p><a href="#" class="btn btn-primary" role="button">Add to Cart</a></p>
+            </div>
+          </div>
+          
+        </div>
+      {{/each}}
+    {{/each }}
 
 
-        <tr>
-          <td>
-            <a href="/products/{{ product.id }}">{{ product.name }}</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}">{{ product.sku }}</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}">{{ product.desc }}</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}">{{ product.price }}</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}">{{ product.Category.name }}</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}/edit">Edit</a>
-          </td>
-          <td>
-            <a href="/products/{{ product.id }}?_method=delete" class="text-danger">Delete</a>
-          </td>
-        </tr>
-      {{/each }}
-    </tbody>
-  </table>
 {{else }}
   <p class="text-danger">No products</p>
 {{/if }}

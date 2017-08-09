@@ -1,19 +1,33 @@
-'use strict';
-const faker = require('faker');
+"use strict";
+const faker = require("faker");
 module.exports = {
 	up: function(queryInterface, Sequelize) {
-		const categories = [];
-		for (let i = 0; i < 20; i++) {
-			categories.push({
-				name: faker.commerce.department()
-			});
-		}
-		return queryInterface.bulkInsert('Categories', categories);
+		let categories = [
+			"abstract",
+			"animals",
+			"business",
+			"cats",
+			"city",
+			"food",
+			"nightlife",
+			"fashion",
+			"people",
+			"nature",
+			"sports",
+			"technics",
+			"transport"
+		];
+
+		categories = categories.map(category => {
+			return { name: category };
+		});
+
+		return queryInterface.bulkInsert("Categories", categories);
 	},
 
 	down: function(queryInterface, Sequelize) {
 		return queryInterface.bulkDelete(
-			'Categories',
+			"Categories",
 			null,
 			{},
 			Sequelize.Category

@@ -1,4 +1,4 @@
-const getModelWrapper = require('../models/index');
+const getModelWrapper = require("../models/index");
 
 /**
  * ProductController.js
@@ -12,13 +12,25 @@ module.exports = {
 	index: function(req, res) {
 		let wrapper = getModelWrapper();
 
-		wrapper
-			.findAllProducts()
+		Promise.all([wrapper.findAllProducts(), wrapper.findAllCategories()])
 			.then(_renderProductsIndex)
-			.catch(_catchError.call(res, 'Error getting products from database.'));
+			.catch(_catchError.call(res, "Error getting products from database."));
 
-		function _renderProductsIndex(products) {
-			res.render('products/index', { products });
+		function _renderProductsIndex(data) {
+			let [rawProducts, categories] = data;
+
+			let products = [];
+			let count = 0;
+
+			rawProducts.forEach((product, i) => {
+				products[count][i % 3] = product;
+
+				if (i % 3 === 0) {
+					count++;
+				}
+			});
+
+			res.render("products/index", { products, categories });
 		}
 	},
 
@@ -30,13 +42,13 @@ module.exports = {
 		ProductModel.findOne({ _id: id }, function(err, Product) {
 			if (err) {
 				return res.status(500).json({
-					message: 'Error when getting Product.',
+					message: "Error when getting Product.",
 					error: err
 				});
 			}
 			if (!Product) {
 				return res.status(404).json({
-					message: 'No such Product'
+					message: "No such Product"
 				});
 			}
 			return res.json(Product);
@@ -58,7 +70,7 @@ module.exports = {
 		Product.save(function(err, Product) {
 			if (err) {
 				return res.status(500).json({
-					message: 'Error when creating Product',
+					message: "Error when creating Product",
 					error: err
 				});
 			}
@@ -74,13 +86,13 @@ module.exports = {
 		ProductModel.findOne({ _id: id }, function(err, Product) {
 			if (err) {
 				return res.status(500).json({
-					message: 'Error when getting Product',
+					message: "Error when getting Product",
 					error: err
 				});
 			}
 			if (!Product) {
 				return res.status(404).json({
-					message: 'No such Product'
+					message: "No such Product"
 				});
 			}
 
@@ -95,7 +107,7 @@ module.exports = {
 			Product.save(function(err, Product) {
 				if (err) {
 					return res.status(500).json({
-						message: 'Error when updating Product.',
+						message: "Error when updating Product.",
 						error: err
 					});
 				}
@@ -113,7 +125,7 @@ module.exports = {
 		ProductModel.findByIdAndRemove(id, function(err, Product) {
 			if (err) {
 				return res.status(500).json({
-					message: 'Error when deleting the Product.',
+					message: "Error when deleting the Product.",
 					error: err
 				});
 			}
