@@ -8,7 +8,7 @@ module.exports = {
   up: function(queryInterface, Sequelize) {
     let seeds = [];
     for (var i = 0; i < 50; i++) {
-      let name = `${faker.random.catch_phrase_descriptor()} ${faker.random.bs_adjective()} ${faker.random.bs_noun()}`;
+      let name = `${faker.random.catch_phrase_descriptor()} ${faker.random.catch_phrase_descriptor()} ${faker.random.bs_noun()}`;
       let p = {
         name: name,
         description: faker.Lorem.sentence(),

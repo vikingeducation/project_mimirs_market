@@ -1,34 +1,29 @@
-<header class=“page-header”>
-  <h1>Vikings</h1>
+<header class="page-header">
+  <h1>Mimir's Market</h1>
 </header>
-<div class=“panel panel-info”>
-  <div class=“panel-heading”>
-    <h3 class=“panel-title”>Search</h3>
-  </div>
-  <div class=“panel-body”>
-    {{ products }}
-  </div>
-</div>
-<div class=“panel panel-primary”>
-  <div class=“panel-heading”>
-    <h3 class=“panel-title”>Select a user to view their profile</h3>
-    <form class=“form-inline sort-select”>
-      <div class=“form-group”>
-        <select class=“form-control” name=“user[sort_by]“>
-          <option value=“distance”>Distance</option>
-          <option value=“age”>Age</option>
-          <option value=“last_login”>Last Login</option>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <form class="form-inline sort-select">
+      <div class="form-group">
+        <select class="form-control" name="">
+          <option value="distance">Distance</option>
+          <option value="age">Age</option>
+          <option value="last_login">Last Login</option>
         </select>
       </div>
     </form>
   </div>
-  <div class=“panel-body”>
+  <div class="panel-body">
+    {{#each products as |prod|}}
+    <div style="height: 600px; border: 1px solid black;" class="col-xs-4">
+      <img style="width: 100%;" src="http://4.bp.blogspot.com/-1PPIpuTPnPY/UCudijf1DPI/AAAAAAAABgY/Ohzq0co9uyk/s1600/generic.jpg">
+      <h3>${{prod.price}}</h3>
+      <h3><a href="/products/show/{{prod.id}}">{{prod.name}}</a></h3>
+      <h5>{{prod.description}}</h5>
+      <button class="btn btn-primary">Add to Cart</button>
+    </div>
+    {{/each}}
+  </div>
 
-  </div>
-  <div class=“panel-footer”>
-    <ul class=“pagination”>
-      <li><a href=“#”>&laquo;</a></li>
-      <li><a href=“#”>&raquo;</a></li>
-    </ul>
-  </div>
 </div>

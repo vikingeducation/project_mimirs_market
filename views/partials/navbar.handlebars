@@ -9,6 +9,11 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
           <ul class="dropdown-menu">
             <!-- put cart items here later -->
+            {{#each products as |p|}}
+            <li>> {{p.name}}</li>
+            <li>${{p.price}}</li>
+            <li><hr></li>
+            {{/each}}
             <li><hr></li>
             <li><a href="/">Checkout</a></li>
           </ul>
