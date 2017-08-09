@@ -9,57 +9,60 @@ const mongooseModels = require("./models/mongoose");
 const sqlModels = require("./models/sequelize");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+const products = require("./routes/products");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
 
 const hbs = exphbs.create({
-	partialsDir: "views/partials",
-	defaultLayout: "main"
+  partialsDir: "views/partials",
+  defaultLayout: "main"
 });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 app.use(
-	session({
-		secret: "123456",
-		resave: false,
-		saveUninitialized: true
-	})
+  session({
+    secret: "123456",
+    resave: false,
+    saveUninitialized: true
+  })
 );
 
 app.use((req, res, next) => {
-	if (mongoose.connection.readyState) {
-		next();
-	} else {
-		require("./mongo")().then(() => next());
-	}
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require("./mongo")().then(() => next());
+  }
 });
 
+app.use("/products", products);
+
 app.get("/", (req, res) => {
-	sqlModels.Product
-		.findAll({
-			include: [
-				{
-					model: sqlModels.Category
-				}
-			],
-			limit: 18
-		})
-		.then(products => {
-			console.log(products);
-			console.log(products.imagePath);
-			res.render("index", { products });
-		});
+  sqlModels.Product
+    .findAll({
+      include: [
+        {
+          model: sqlModels.Category
+        }
+      ],
+      limit: 18
+    })
+    .then(products => {
+      console.log(products);
+      console.log(products.imagePath);
+      res.render("index", { products });
+    });
 });
 
 app.get("/test", (req, res) => {
-	User.find().then(users => {
-		console.log(users);
-		res.render("testing", { users });
-	});
+  User.find().then(users => {
+    console.log(users);
+    res.render("testing", { users });
+  });
 });
 
 app.listen(3000, () => {
-	console.log("Now listening...");
+  console.log("Now listening...");
 });
