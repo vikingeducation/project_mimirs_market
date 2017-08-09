@@ -12,10 +12,10 @@
 </div>
 
 <div class="row">
-	<form action="/" method="get">
+	<form action="/filter" method="get">
 		<div class="col-md-2 col-md-offset-2">
 			<select name="category" class="form-control">
-				<option>Select a Category</option>
+				<option value=''>Select a Category</option>
 				{{#each categories as |category|}}
 					<option value="{{category.id}}">{{category.name}}</option>
 				{{/each}}
@@ -24,7 +24,7 @@
 
 		<div class="col-md-2">
 			<select name="minPrice" class="form-control">
-				<option>Minimum Price</option>
+				<option value='0'>Minimum Price</option>
 				<option value="0">$0</option>
 				<option value="100">$100</option>
 				<option value="200">$200</option>
@@ -41,7 +41,7 @@
 
 		<div class="col-md-2">
 		<select name="maxPrice" class="form-control">
-				<option>Maximum Price</option>
+				<option value = '100000'>Maximum Price</option>
 				<option value="0">$0</option>
 				<option value="100">$100</option>
 				<option value="200">$200</option>

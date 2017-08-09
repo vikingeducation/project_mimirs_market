@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 app.use("/products", products);
 
 app.get("/", (req, res) => {
-  const params = parseParams(req.query);
+  // const params = parseParams(req.query);
 
   sqlModels.Product
     .findAll({
@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
           model: sqlModels.Category
         }
       ],
-      where: params,
+      // where: params,
       limit: 18
     })
     .then(products => {
@@ -66,36 +66,53 @@ app.get("/", (req, res) => {
 //   });
 // });
 
-// app.post("/filter", (req, res) => {
-//   let params = {
-//     categoryId: req.body.category
-//   };
-//   sqlModels.Product
-//     .findAll({
-//       include: [
-//         {
-//           model: sqlModels.Category
-//         }
-//       ],
-//       where: params,
-//       limit: 18
-//     })
-//     .then(products => {
-//       sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
-//         res.render("index", { products, categories });
-//       });
-//     });
-// });
+app.get("/filter", (req, res) => {
+  // let params = {
+  //   categoryId: req.query.category
+  //   minPrice: req.query.minPrice
+  //   maxPrice: req.query.maxPrice
+  // };
 
-function parseParams(params) {
-  parsedParams = {};
-
-  if (params) {
-    parsedParams["categoryId"] = params.category;
+  let findCategory;
+  if (req.query.category.length) {
+    findCategory = req.query.category;
+  } else {
+    findCategory = {
+      $gte: 0
+    };
   }
+  sqlModels.Product
+    .findAll({
+      include: [
+        {
+          model: sqlModels.Category
+        }
+      ],
+      where: {
+        categoryId: findCategory,
+        price: {
+          $gte: req.query.minPrice,
+          $lte: req.query.maxPrice
+        }
+      },
+      limit: 18
+    })
+    .then(products => {
+      sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
+        res.render("index", { products, categories });
+      });
+    });
+});
 
-  return parsedParams;
-}
+// function parseParams(params) {
+//   parsedParams = {};
+//
+//   if (params) {
+//     parsedParams["categoryId"] = params.category;
+//   }
+//
+//   return parsedParams;
+// }
 
 // {
 //   categoryId: 9,
