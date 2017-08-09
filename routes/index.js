@@ -1,8 +1,3 @@
-const router = require("./api");
-
-/* GET home page. */
-router.get("/", function(req, res, next) {
-	res.render("index", { title: "Express" });
-});
+const router = require('./api');
 
 module.exports = router;
