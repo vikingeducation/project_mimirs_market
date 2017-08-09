@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
 		.then(product => {
 			models.Product
 				.findAll({
-					where: { categoryId: product.categoryId },
+					where: { categoryId: product.categoryId, id: { $ne: product.id } },
 					limit: 6,
 					include: [
 						{
