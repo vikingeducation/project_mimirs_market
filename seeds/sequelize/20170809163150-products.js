@@ -23,6 +23,6 @@ module.exports = {
   },
 
   down: function(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Person", null, {}, model.Products);
+    return queryInterface.bulkDelete("Products", null, {}, model.Products);
   }
 };

@@ -30,6 +30,7 @@ require("./mongo")().then(() => {
   // ----------------------------------------
   Object.keys(models.sequelize).forEach(modelName => {
     repl.context[modelName] = models.sequelize[modelName];
+    console.log(modelName);
   });
 
   // ----------------------------------------
