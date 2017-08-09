@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sql-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
+    "sql-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "seed": "npm run sql db:migrate:undo:all && npm run sql db:migrate && npm run sql db:seed:all",
+    "sql": "node_modules/sequelize-cli/bin/sequelize"
   },
   "repository": {
     "type": "git",

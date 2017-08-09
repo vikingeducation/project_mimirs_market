@@ -1,7 +1,6 @@
+"use strict";
 const models = require("./../../models/sequelize");
 const faker = require("faker");
-
-("use strict");
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
@@ -15,21 +14,13 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    let products = [];
-    for (let i = 0; i < 100; i++) {
-      products.push({
-        sku: `FKP12345N${i}`,
-        name:
-          faker.commerce.productAdjective() +
-          faker.commerce.productMaterial() +
-          faker.commerce.productName(),
-        description: faker.lorem.sentences(),
-        price: faker.commerce.price(),
-        categoryId: Math.floor(Math.random() * 10 + 1),
-        inStock: Math.floor(Math.random() * 50 + 1)
+    let categories = [];
+    for (let i = 0; i < 10; i++) {
+      categories.push({
+        name: faker.commerce.department()
       });
     }
-    return queryInterface.bulkInsert("Products", products);
+    return queryInterface.bulkInsert("Categories", categories);
   },
 
   down: function(queryInterface, Sequelize) {
@@ -40,6 +31,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-    return queryInterface.bulkDelete("Products", null, {}, models.Products);
+    return queryInterface.bulkDelete("Categories", null, {}, models.Categories);
   }
 };
