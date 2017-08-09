@@ -10,8 +10,16 @@ module.exports = function(sequelize, DataTypes) {
   }
   Product.associate = function(models) {
 
+    Product.hasMany(models.ProductsCategory, { foreignKey: "productId" });
+
     Product.belongsToMany(
-      models.Categories,{ through: 'ProductsCategory'}
+      models.Category, {
+        through: {
+          model: models.ProductsCategory,
+          unique: false,
+        },
+        foreignKey: 'productId'
+      }
     )
   }
   });
