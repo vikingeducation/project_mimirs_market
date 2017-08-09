@@ -32,12 +32,18 @@ app.get("/", (req, res) => {
 				{
 					model: sqlModels.Category
 				}
-			]
+			],
+			limit: 18
 		})
 		.then(products => {
-			console.log(products[0]);
+			console.log(products);
+			console.log(products.imagePath);
 			res.render("index", { products });
 		});
+});
+
+app.get("/test", (req, res) => {
+	//stuff
 });
 
 app.listen(3000, () => {
