@@ -6,5 +6,11 @@ module.exports = function(sequelize, DataTypes) {
       name: DataTypes.STRING
     }
   );
+
+  Category.associate = function(models) {
+    Category.hasMany(models.Product, {
+      foreignKey: "categoryId"
+    });
+  };
   return Category;
 };

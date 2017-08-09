@@ -8,8 +8,8 @@ mongoose.Promise = bluebird;
 var models = {};
 
 // Load models and attach to models here
-models.User = require("./user");
-models.Post = require("./post");
-//... more models
+models.Order = require("./order");
+models.Charge = require("./charge");
+models.OrderItem = require("./orderItem");
 
 module.exports = models;
