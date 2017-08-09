@@ -1,3 +1,6 @@
+const models = require("./../sequelize");
+const Product = models.Product;
+
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Category = sequelize.define('Category', {
@@ -9,5 +12,10 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  Category.associate(models) {
+    Category.hasMany(Product, {foreignKey: "categoryId"});
+  }
+
   return Category;
 };
