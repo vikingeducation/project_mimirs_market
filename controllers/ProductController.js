@@ -1,4 +1,4 @@
-var ProductModel = require('../models/ProductModel.js');
+var ProductModel = require("../models/ProductModel.js");
 
 /**
  * ProductController.js
@@ -6,15 +6,14 @@ var ProductModel = require('../models/ProductModel.js');
  * @description :: Server-side logic for managing Products.
  */
 module.exports = {
-
     /**
-     * ProductController.list()
-     */
-    list: function (req, res) {
-        ProductModel.find(function (err, Products) {
+   * ProductController.index()
+   */
+    index: function(req, res) {
+        ProductModel.find(function(err, Products) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting Product.',
+                    message: "Error when getting Product.",
                     error: err
                 });
             }
@@ -23,20 +22,20 @@ module.exports = {
     },
 
     /**
-     * ProductController.show()
-     */
-    show: function (req, res) {
+   * ProductController.view()
+   */
+    view: function(req, res) {
         var id = req.params.id;
-        ProductModel.findOne({_id: id}, function (err, Product) {
+        ProductModel.findOne({ _id: id }, function(err, Product) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting Product.',
+                    message: "Error when getting Product.",
                     error: err
                 });
             }
             if (!Product) {
                 return res.status(404).json({
-                    message: 'No such Product'
+                    message: "No such Product"
                 });
             }
             return res.json(Product);
@@ -44,22 +43,21 @@ module.exports = {
     },
 
     /**
-     * ProductController.create()
-     */
-    create: function (req, res) {
+   * ProductController.create()
+   */
+    create: function(req, res) {
         var Product = new ProductModel({
-			name : req.body.name,
-			sku : req.body.sku,
-			desc : req.body.desc,
-			price : req.body.price,
-			categoryId : req.body.categoryId
-
+            name: req.body.name,
+            sku: req.body.sku,
+            desc: req.body.desc,
+            price: req.body.price,
+            categoryId: req.body.categoryId
         });
 
-        Product.save(function (err, Product) {
+        Product.save(function(err, Product) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when creating Product',
+                    message: "Error when creating Product",
                     error: err
                 });
             }
@@ -68,33 +66,35 @@ module.exports = {
     },
 
     /**
-     * ProductController.update()
-     */
-    update: function (req, res) {
+   * ProductController.update()
+   */
+    update: function(req, res) {
         var id = req.params.id;
-        ProductModel.findOne({_id: id}, function (err, Product) {
+        ProductModel.findOne({ _id: id }, function(err, Product) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting Product',
+                    message: "Error when getting Product",
                     error: err
                 });
             }
             if (!Product) {
                 return res.status(404).json({
-                    message: 'No such Product'
+                    message: "No such Product"
                 });
             }
 
             Product.name = req.body.name ? req.body.name : Product.name;
-			Product.sku = req.body.sku ? req.body.sku : Product.sku;
-			Product.desc = req.body.desc ? req.body.desc : Product.desc;
-			Product.price = req.body.price ? req.body.price : Product.price;
-			Product.categoryId = req.body.categoryId ? req.body.categoryId : Product.categoryId;
-			
-            Product.save(function (err, Product) {
+            Product.sku = req.body.sku ? req.body.sku : Product.sku;
+            Product.desc = req.body.desc ? req.body.desc : Product.desc;
+            Product.price = req.body.price ? req.body.price : Product.price;
+            Product.categoryId = req.body.categoryId
+                ? req.body.categoryId
+                : Product.categoryId;
+
+            Product.save(function(err, Product) {
                 if (err) {
                     return res.status(500).json({
-                        message: 'Error when updating Product.',
+                        message: "Error when updating Product.",
                         error: err
                     });
                 }
@@ -105,14 +105,14 @@ module.exports = {
     },
 
     /**
-     * ProductController.remove()
-     */
-    remove: function (req, res) {
+   * ProductController.remove()
+   */
+    remove: function(req, res) {
         var id = req.params.id;
-        ProductModel.findByIdAndRemove(id, function (err, Product) {
+        ProductModel.findByIdAndRemove(id, function(err, Product) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when deleting the Product.',
+                    message: "Error when deleting the Product.",
                     error: err
                 });
             }
