@@ -1,0 +1,59 @@
+Products:
+  id:
+  sku: STRING
+  name: STRING
+  description: TEXT
+  price: INTEGER
+  
+
+Users:
+  id:
+  fname: STRING
+  lname: STRING
+  email: STRING (?EMAIL?)
+  
+
+Addresses:
+  id:
+  fname: STRING
+  lname: STRING
+  street: STRING
+  city: STRING
+  StateId: INTEGER
+  zip: INTEGER
+
+Join: UsersAddresses
+  id:
+  name: STRING
+  UserId:
+  AddressId:
+
+Categories:
+  id:
+  name: STRING
+  
+
+Carts: (join user and product)
+  UserId:
+  ProductId:
+  quantity: INTEGER
+
+Join: ProductCategory:
+  CategoryId:
+  ProductId:
+
+Orders:
+  id:
+  UserId:
+  AddressId:
+
+Join: OrderProduct:
+  id:
+  OrderId:
+  ProductId:
+  price: INTEGER
+  quantity: INTEGER
+
+States:
+  id:
+  name: STRING
