@@ -1,0 +1,13 @@
+{
+  "development": {
+    "database": "Mimirs_Market_dev",
+    "host": "localhost"
+  },
+  "test": {
+    "database": "Mimirs_Market_test",
+    "host": "localhost"
+  },
+  "production": {
+    "use_env_variable": "MONGODB_URI"
+  }
+}
