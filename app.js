@@ -6,6 +6,8 @@ const methodOverride = require("method-override");
 const getPostSupport = require("express-method-override-get-post-support");
 const session = require("express-session");
 const sqlModels = require("./models/sequelize");
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -24,6 +26,14 @@ app.use(
 		saveUninitialized: true
 	})
 );
+
+app.use((req, res, next) => {
+	if (mongoose.connection.readyState) {
+		next();
+	} else {
+		require("./mongo")().then(() => next());
+	}
+});
 
 app.get("/", (req, res) => {
 	sqlModels.Product
