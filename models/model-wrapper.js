@@ -1,18 +1,11 @@
-const MODEL_USER = 'User';
-const MODEL_PRODUCT = 'Product';
-const MODEL_ORDER = 'Order';
-
-const ORM_SEQUELIZE = 'sequelize';
-const ODM_MONGOOSE = 'mongoose';
-
 const DB_MAP = {
-	ORM_SEQUELIZE: function(model) {
+	sequelize: function(model) {
 		return {
 			findAll: this.db[model].findAll,
 			findById: this.db[model].findById
 		};
 	},
-	ODM_MONGOOSE: function(model) {
+	mongoose: function(model) {
 		return {
 			findAll: this.db[model].find,
 			findById: this.db[model].findById
@@ -26,11 +19,15 @@ class ModelWrapper {
 	}
 
 	findAll(model, query, options) {
-		return DB_MAP[this.type](model)['findAll'](query, options);
+		let f = DB_MAP[this.type].bind(this)(model)["findAll"];
+
+		console.log(this.db.User.findAll(query));
+
+		return DB_MAP[this.type].bind(this)(model)["findAll"](query);
 	}
 
 	findById(model, id) {
-		return DB_MAP[this.type](model)['findById'](id);
+		return DB_MAP[this.type].bind(this)(model)["findById"](id);
 	}
 }
 

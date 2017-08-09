@@ -1,7 +1,7 @@
-const SequelizeWrapper = require('./sequelize-wrapper');
-const MongooseWrapper = require('./mongoose-wrapper');
+const SequelizeWrapper = require("./sequelize-wrapper");
+const MongooseWrapper = require("./mongoose-wrapper");
 
-module.exports = function(type = 'sequelize') {
+module.exports = function(type = "sequelize") {
 	const apis = {
 		sequelize: SequelizeWrapper,
 		mongoose: MongooseWrapper
