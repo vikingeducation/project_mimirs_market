@@ -5,9 +5,9 @@ let cats = ["weapons", "balloons", "chairs", "onions"];
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let categories = [];
-    cats.forEach(i => {
+    cats.forEach(ele => {
       categories.push({
-        name: cats[i]
+        name: ele
       });
     });
     return queryInterface.bulkInsert("Categories", categories);
