@@ -19,10 +19,7 @@ module.exports = {
     for (let i = 0; i < 100; i++) {
       products.push({
         sku: `FKP12345N${i}`,
-        name:
-          faker.commerce.productAdjective() +
-          faker.commerce.productMaterial() +
-          faker.commerce.productName(),
+        name: faker.commerce.productName(),
         description: faker.lorem.sentences(),
         price: faker.commerce.price(),
         categoryId: Math.floor(Math.random() * 10 + 1),

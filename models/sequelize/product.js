@@ -1,7 +1,6 @@
 const models = require("./../sequelize");
-const Category = models.Category;
 
-"use strict";
+("use strict");
 module.exports = function(sequelize, DataTypes) {
   var Product = sequelize.define("Product", {
     name: DataTypes.STRING,
@@ -12,8 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     inStock: DataTypes.INTEGER
   });
 
-  Product.associate(models) {
-    Product.belongsToOne(Category, {foreignKey: "categoryId"});
-  }
+  Product.associate = function(models) {
+    Product.belongsTo(models.Category, { foreignKey: "categoryId" });
+  };
   return Product;
 };

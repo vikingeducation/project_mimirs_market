@@ -1,0 +1,10 @@
+<div class="row">
+	{{#each products as |product|}}
+		<div class="col-md-4">
+			<img src="image_{{product.sku}}">
+			<p>{{product.price}}</p>
+			<p>{{product.name}}</p>
+			<p>{{product.category}}</p>
+		</div>
+	{{/each}}
+</div>

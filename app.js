@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const getPostSupport = require("express-method-override-get-post-support");
 const session = require("express-session");
+const sqlModels = require("./models/sequelize");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -23,6 +24,21 @@ app.use(
 		saveUninitialized: true
 	})
 );
+
+app.get("/", (req, res) => {
+	sqlModels.Product
+		.findAll({
+			include: [
+				{
+					model: Category
+				}
+			]
+		})
+		.then(products => {
+			console.log(products[0]);
+			res.render("index", { products });
+		});
+});
 
 app.listen(3000, () => {
 	console.log("Now listening...");
