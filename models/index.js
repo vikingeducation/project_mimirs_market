@@ -1,26 +1,11 @@
-class ModelWrapper {
-	constructor(db) {
-		this.db = db;
-	}
-}
-
-class SequelizeWrapper extends ModelWrapper {
-	findAllUsers(query, options) {
-		return this.db.User.findAll(query, options);
-	}
-}
-
-class MongooseWrapper extends ModelWrapper {
-	findAllUsers(query, options) {
-		return this.db.User.find(query, options);
-	}
-}
-
-const apis = {
-	sequelize: SequelizeWrapper,
-	mongoose: MongooseWrapper
-};
+const SequelizeWrapper = require('./sequelize-wrapper');
+const MongooseWrapper = require('./mongoose-wrapper');
 
 module.exports = function(type = 'sequelize') {
+	const apis = {
+		sequelize: SequelizeWrapper,
+		mongoose: MongooseWrapper
+	};
+
 	return new apis[type](require(`./${type}/index`));
 };

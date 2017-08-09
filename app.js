@@ -15,24 +15,25 @@ mongoose.Promise = Promise;
 var app = express();
 require('dotenv').config();
 
-// connect to mongoose
+//connect to mongoose
 // app.use((req, res, next) => {
-// 	if (moongoose.connection.readyState) {
-// 		next();
-// 	} else {
-// 		mongoose
-// 			.createConnection(process.env.DB_URL, {
-// 				useMongoClient: true
-// 			})
-// 			.then(db => {
-// 				console.log('DB CONNECTION SUCCESS');
-// 				next();
-// 			})
-// 			.catch(err => {
-// 				console.error(err);
-// 			});
-// 		next();
-// 	}
+// 	next();
+// 	// if (moongoose.connection.readyState) {
+// 	// 	next();
+// 	// } else {
+// 	// 	mongoose
+// 	// 		.createConnection(process.env.DB_URL, {
+// 	// 			useMongoClient: true
+// 	// 		})
+// 	// 		.then(db => {
+// 	// 			console.log('DB CONNECTION SUCCESS');
+// 	// 			next();
+// 	// 		})
+// 	// 		.catch(err => {
+// 	// 			console.error(err);
+// 	// 		});
+// 	// 	next();
+// 	// }
 // });
 
 // view engine setup
@@ -73,9 +74,5 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
-// app.listen(3000, () => {
-// 	console.log('listening');
-// });
 
 module.exports = app;

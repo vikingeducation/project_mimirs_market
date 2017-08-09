@@ -9,17 +9,14 @@ module.exports = {
    * UserController.index()
    */
 	index: function(req, res) {
-		let sequelizeWrapper = getModelWrapper();
-
-		sequelizeWrapper.findAllUsers().then(_renderUsersIndex).catch(err => {
-			return res.status(500).json({
-				message: 'Error when getting User.',
-				error: err
-			});
-		});
+		let wrapper = getModelWrapper();
+		wrapper
+			.findAllUsers()
+			.then(_renderUsersIndex)
+			.catch(_catchError.apply(res, 'Error getting users from database.'));
 
 		function _renderUsersIndex(users) {
-			res.render('users/index/', { users });
+			res.render('users/index', { users });
 		}
 	},
 
@@ -27,21 +24,22 @@ module.exports = {
    * UserController.view()
    */
 	view: function(req, res) {
-		var id = req.params.id;
-		User.findOne({ _id: id }, function(err, User) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when getting User.',
-					error: err
-				});
-			}
+		let wrapper = getModelWrapper();
+		const id = req.params.id;
+
+		wrapper
+			.findById(id)
+			.then(_renderUserView)
+			.catch(_catchError.apply(res, 'Error getting user from database.'));
+
+		function _renderUserView(user) {
 			if (!User) {
 				return res.status(404).json({
 					message: 'No such User'
 				});
 			}
-			return res.json(User);
-		});
+			res.render('users/view', { user });
+		}
 	},
 
 	/**
@@ -119,4 +117,11 @@ module.exports = {
 			return res.status(204).json();
 		});
 	}
+};
+
+const _catchError = msg => err => {
+	return this.status(500).json({
+		message: msg,
+		error: err
+	});
 };
