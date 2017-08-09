@@ -1,6 +1,34 @@
-Users:
+
+SEQUELIZE COMMANDS FOR SETTING UP MIGRATIONS AND MODELS
+User:
+  sequelize model:create --name User --attributes "username:string email:string isAdmin:boolean"
+
+Product:
+  sequelize model:create --name Product --attributes "name:string picture:integer price:integer stock:integer sku:string description:string"
+
+Category:
+  sequelize model:create --name Category --attributes "name:string"
+
+Order
+  sequelize model:create --name Order --attributes "shippedStatus:boolean shipState:integer shipCountry:string shipCity:string price:float date:date userId:integer"
+
+State
+  sequelize model:create --name State --attributes "abbr:string"
+
+ProductsOrder
+  sequelize model:create --name ProductsOrder --attributes "productId:integer orderId:integer"
+
+ProductsCategory:
+  sequelize model:create --name ProductsCategory --attributes "productId:integer categoryId:integer"
+
+
+
+
+
+User:
   username: varchar
-  isAdmin: bool
+  email: varchar
+  isAdmin: boolean
   stored in order>>purchases
   ..cart: not in database stored in session
         HasMany:
@@ -11,7 +39,7 @@ products:
   name varchar
   picture: key
   price int
-  availableStock: 5 int
+  stock: 5 int
   sku: set this as the product id varchar
   category >> join to categories
   description varchar
@@ -24,6 +52,8 @@ products:
             belong to many
               orders
               categories
+
+
 categories:
     name: varchar
 
@@ -33,13 +63,12 @@ categories:
 
 Order:
   shippedStatus: bool
-  shipState: varchar
+  shipState: integer >> look-up table in State
   shipCountry: varchar
   shipCity: varchar
-  products: table
   price: int
-  date: int
-  user: varchar
+  date: date
+  userId: integer
     belongs to: user
     orders have one
         user
@@ -51,6 +80,9 @@ Order:
 
 table of pictures:
   location in database:
+
+State:
+  abbr: varchar
 
 ProductsOrder:
   OrderId:
