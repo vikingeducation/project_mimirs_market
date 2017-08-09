@@ -7,12 +7,13 @@ module.exports = function(sequelize, DataTypes) {
     stock: DataTypes.INTEGER,
     sku: DataTypes.STRING,
     description: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+  }
+  Product.associate = function(models) {
+
+    Product.belongsToMany(
+      models.Categories,{ through: 'ProductsCategory'}
+    )
+  }
   });
   return Product;
 };

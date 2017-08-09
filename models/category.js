@@ -1,6 +1,5 @@
 'use strict';
-
-const models = require("../models");
+const models = require("./../models");
 
 module.exports = function(sequelize, DataTypes) {
   var Category = sequelize.define('Category', {
@@ -10,7 +9,10 @@ module.exports = function(sequelize, DataTypes) {
   Category.associate = function(models) {
     Category.belongsToMany(
       models.Products,
-      { through: 'ProductsCategory'}
+      { through: {
+        model:models.ProductsCategory,
+        foreignKey: 'categoryId'
+      }}
     )
   }
   });
