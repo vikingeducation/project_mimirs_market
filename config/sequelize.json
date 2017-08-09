@@ -1,20 +1,31 @@
 {
   "development": {
+<<<<<<< HEAD
     "username": "highdefinition",
     "password": null,
+=======
+    "username": "postgres",
+    "password": "password",
+>>>>>>> 4b4c8d1f52fd0c17d4de09bb8f5372088f2ceefd
     "database": "database_mimirs_market_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
+<<<<<<< HEAD
     "username": "highdefinition",
     "password": null,
     "database": "database_mimirs_market_development",
+=======
+    "username": "postgres",
+    "password": "password",
+    "database": "database_mimirs_market_test",
+>>>>>>> 4b4c8d1f52fd0c17d4de09bb8f5372088f2ceefd
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "highdefinition",
+    "username": "postgres",
     "password": null,
     "database": "database_mimirs_market_development",
     "host": "127.0.0.1",

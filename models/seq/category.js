@@ -4,8 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     "Category",
     {
       name: DataTypes.STRING
-    },
-    {}
+    }
   );
   return Category;
 };
