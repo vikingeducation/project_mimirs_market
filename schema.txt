@@ -30,9 +30,13 @@ sequelize model:create --name User --attributes "name:char email:char"
 sequelize model:create --name Category --attributes "name:char"
 sequelize model:create --name Product --attributes "name:char description:char price:integer sku:integer categoryId:integer"
 
+CREATE SEEDS
+sequelize seed:create --name categories
 
 
 MONGODB
+
+//possible Stripe
 
 Orders: [{
 - id

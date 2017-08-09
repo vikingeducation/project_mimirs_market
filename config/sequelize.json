@@ -1,19 +1,20 @@
 {
   "development": {
-    "username": "IanDavid",
+    "username": "ericglover",
     "password": null,
     "database": "mimirs_market_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "IanDavid",
+    "username": "ericglover",
     "password": null,
     "database": "mimirs_market_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "MONGO_URL"
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
   }
 }

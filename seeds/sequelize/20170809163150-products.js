@@ -1,6 +1,5 @@
 "use strict";
 const model = require("../../models/sequelize");
-const Product = model.Product;
 let faker = require("Faker");
 
 //
@@ -15,7 +14,7 @@ module.exports = {
         description: faker.Lorem.sentence(),
         price: faker.random.number(5000),
         sku: Math.random() * 122221,
-        categoryId: i
+        categoryId: i % 10
       };
       seeds.push(p);
     }

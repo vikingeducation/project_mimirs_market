@@ -10,6 +10,7 @@
     "sql:migrate": "npm run sql db:migrate",
     "sql:seed:undo": "npm run sql db:seed:undo:all",
     "sql:seed": "npm run sql db:seed:all",
+    "sql:reseed": "npm run sql:seed:undo && npm run sql:seed",
     "sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed",
     "mg:seed": "node seeds/mongoose",
     "console": "node repl.js",
