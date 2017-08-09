@@ -4,20 +4,25 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <form action='/products/search' method='POST' class="form-inline">
+    <form style="margin: 10px;" action='/products/search' method='POST' class="form-inline">
       <div class="form-group">
-        <input class='form-control' type='text' placeholder="search" name='search'>
+        Search: <input class='form-control' type='text' placeholder="search" name='search'>
         <button class="btn btn-info">GO!</button>
       </div>
     </form>
-    <form class="form-inline sort-select">
+    <form method="POST" action="/products/sort" style="margin: 10px;" class="form-inline sort-select">
       <div class="form-group">
-        <select class="form-control" name="">
-          <option value="distance">Distance</option>
-          <option value="age">Age</option>
-          <option value="last_login">Last Login</option>
+        Sort By:
+        <select class="form-control" name="sortOption">
+          <option value="nameA">Name Ascending</option>
+          <option value="nameD">Name Descending</option>
+          <option value="priceA">Price Ascending</option>
+          <option value="priceD">Price Descending</option>
+          <option value="dateD">Newest First</option>
+          <option value="dateA">Oldest First</option>
         </select>
       </div>
+      <button class="btn btn-info">GO!</button>
     </form>
   </div>
   <div class="panel-body">

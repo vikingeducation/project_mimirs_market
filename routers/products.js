@@ -16,7 +16,6 @@ router.get("/show/:productId", (req, res) => {
       where: { categoryId: product.categoryId, id: { $ne: product.id } },
       limit: 6
     }).then(relatedProducts => {
-      console.log(relatedProducts);
       res.render("products/show", { product, relatedProducts });
     });
   });
@@ -30,7 +29,18 @@ router.post("/search", (req, res) => {
       name: { $regexp: r }
     }
   }).then(products => {
-    console.log(`products = ${products}`);
+    res.render("products/index", { products });
+  });
+});
+
+router.post("/sort", (req, res) => {
+  let cascade;
+  let param = req.body.sortOption.slice(0, -1);
+  param === "date" ? (param = "createdAt") : (param = param);
+  /[name|price|date]A$/.test(req.body.sortOption)
+    ? (cascade = "ASC")
+    : (cascade = "DESC");
+  Product.findAll({ order: [param] }).then(products => {
     res.render("products/index", { products });
   });
 });
