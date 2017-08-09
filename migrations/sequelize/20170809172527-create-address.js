@@ -9,11 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: 'userAddress'
       },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: 'userAddress'
       },
       fname: {
         type: Sequelize.STRING
@@ -46,7 +49,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("NOW")
       }
-    });
+    }).then(() => {
+        return queryInterface.addIndex("Addresses", ["id", "name", "UserId"]);
+      });
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable("Addresses");

@@ -30,7 +30,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("NOW")
       }
-    });
+    }).then(() => {
+        return queryInterface.addIndex("Cart", ["id", "ProductId", "UserId"]);
+      });
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable("Carts");

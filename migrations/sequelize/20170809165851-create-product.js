@@ -36,7 +36,7 @@ module.exports = {
         }
       })
       .then(() => {
-        return queryInterface.addIndex("Products", ["sku", "name"]);
+        return queryInterface.addIndex("Products", ["id", "sku", "name"], {unique:true});
       });
   },
   down: function(queryInterface, Sequelize) {

@@ -4,5 +4,11 @@ module.exports = function(sequelize, DataTypes) {
     CategoryId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER
   });
+
+  ProductCategory.associate = function(models) {
+    ProductCategory.belongsTo(models.Category);
+    ProductCategory.belongsTo(models.Product);
+  }
+
   return ProductCategory;
 };

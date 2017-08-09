@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -21,7 +22,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("NOW")
       }
-    });
+    }).then(() => {
+        return queryInterface.addIndex("States", ["id", "sku", "name"], {unique:true});
+      })
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable("States");

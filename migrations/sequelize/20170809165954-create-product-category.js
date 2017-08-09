@@ -26,7 +26,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("NOW")
       }
-    });
+    }).then(() => {
+        return queryInterface.addIndex("ProductCategories", ["id", "CategoryId", "ProductId"]);
+      });
   },
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable("ProductCategories");

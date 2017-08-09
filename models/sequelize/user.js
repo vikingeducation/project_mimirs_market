@@ -4,5 +4,13 @@ module.exports = function(sequelize, DataTypes) {
     fname: DataTypes.STRING,
     lname: DataTypes.STRING,
    );
+  }
+
+  User.associate = function(models) {
+    User.hasMany(models.Address);
+    User.belongsToMany(models.Product, {through:models.Cart})
+    User.hasMany(models.Cart)
+  }
+
   return User;
 };

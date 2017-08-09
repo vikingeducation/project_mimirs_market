@@ -10,12 +10,15 @@ module.exports = {
           type: Sequelize.INTEGER
         },
         fname: {
+          allowNull: false,
           type: Sequelize.STRING
         },
         lname: {
+          allowNull: false,
           type: Sequelize.STRING
         },
         email: {
+          allowNull: false,
           type: Sequelize.STRING
         },
         createdAt: {
@@ -30,7 +33,7 @@ module.exports = {
         }
       })
       .then(() => {
-        return queryInterface.addIndex("Users", ["email", "id"]);
+        return queryInterface.addIndex("Users", ["email", "id"], {unique:true});
       });
   },
   down: function(queryInterface, Sequelize) {

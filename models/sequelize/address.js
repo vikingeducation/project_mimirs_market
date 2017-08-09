@@ -1,4 +1,5 @@
 "use strict";
+
 module.exports = function(sequelize, DataTypes) {
   var Address = sequelize.define("Address", {
     name: DataTypes.STRING,
@@ -10,5 +11,13 @@ module.exports = function(sequelize, DataTypes) {
     StateId: DataTypes.INTEGER,
     zip: DataTypes.INTEGER
   });
+
+  Address.associate = function(models) {
+    Address.belongsTo(models.User);
+    Address.belongsTo(models.State);
+  }
+
+
+
   return Address;
 };

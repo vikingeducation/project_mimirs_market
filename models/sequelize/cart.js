@@ -5,5 +5,11 @@ module.exports = function(sequelize, DataTypes) {
     UserId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER
   });
+
+  Cart.associate = function(models) {
+    Cart.belongsTo(models.User);
+    Cart.belongsTo(models.Product);
+  }
+
   return Cart;
 };
