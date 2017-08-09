@@ -1,0 +1,22 @@
+Order: (document)
+    Product: (array)
+        Name:
+        Price:
+        SKU:
+        Description:
+        Categories:
+        Quantity:
+    Customer:
+        fname:
+        lname:
+        email
+        Address:
+            street:
+            city:
+            state:
+            zip:
+    Metadata:
+        dateTime:
+        stripeToken:
+        cardType:
+        total:

@@ -1,0 +1,39 @@
+Product:
+  sku: VARCHAR
+  name: VARCHAR
+  description: TEXT
+  price: INTEGER
+
+User:
+  fname: VARCHAR
+  lname: VARCHAR
+  email: VARCHAR (?EMAIL?)
+
+Addresse:
+  fname: VARCHAR
+  lname: VARCHAR
+  street: VARCHAR
+  city: VARCHAR
+  StateId: INTEGER
+  zip: INTEGER
+
+State:
+  name: VARCHAR
+
+Join: UserAddress
+  name: VARCHAR
+  UserId: INTEGER
+  AddressId: INTEGER
+
+Category:
+  name: VARCHAR
+  
+Join: ProductCategory:
+  CategoryId: INTEGER
+  ProductId: INTEGER
+
+Join: ProductUser as Cart
+  ProductId: INTEGER
+  UserId: INTEGER
+  quantity: INTEGER
+
