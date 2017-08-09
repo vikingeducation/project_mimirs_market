@@ -40,6 +40,8 @@ app.use((req, res, next) => {
 app.use("/products", products);
 
 app.get("/", (req, res) => {
+  const params = parseParams(req.query);
+
   sqlModels.Product
     .findAll({
       include: [
@@ -47,21 +49,58 @@ app.get("/", (req, res) => {
           model: sqlModels.Category
         }
       ],
+      where: params,
       limit: 18
     })
     .then(products => {
-      console.log(products);
-      console.log(products.imagePath);
-      res.render("index", { products });
+      sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
+        res.render("index", { products, categories });
+      });
     });
 });
 
-app.get("/test", (req, res) => {
-  User.find().then(users => {
-    console.log(users);
-    res.render("testing", { users });
-  });
-});
+// app.get("/test", (req, res) => {
+//   User.find().then(users => {
+//     console.log(users);
+//     res.render("testing", { users });
+//   });
+// });
+
+// app.post("/filter", (req, res) => {
+//   let params = {
+//     categoryId: req.body.category
+//   };
+//   sqlModels.Product
+//     .findAll({
+//       include: [
+//         {
+//           model: sqlModels.Category
+//         }
+//       ],
+//       where: params,
+//       limit: 18
+//     })
+//     .then(products => {
+//       sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
+//         res.render("index", { products, categories });
+//       });
+//     });
+// });
+
+function parseParams(params) {
+  parsedParams = {};
+
+  if (params) {
+    parsedParams["categoryId"] = params.category;
+  }
+
+  return parsedParams;
+}
+
+// {
+//   categoryId: 9,
+//   price: {$and: [{$gte: 100}, {lte: 1000}]}
+// }
 
 app.listen(3000, () => {
   console.log("Now listening...");

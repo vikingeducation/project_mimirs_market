@@ -12,19 +12,13 @@
 </div>
 
 <div class="row">
-	<form>
+	<form action="/" method="get">
 		<div class="col-md-2 col-md-offset-2">
 			<select name="category" class="form-control">
 				<option>Select a Category</option>
-				<option value="Food">Food</option>
-				<option value="Hardware">Hardware</option>
-				<option value="Automotive">Automotive</option>
-				<option value="Toys">Toys</option>
-				<option value="Beauty">Beauty</option>
-				<option value="Clothing">Clothing</option>
-				<option value="Electronic">Electronics</option>
-				<option value="Grocery">Grocery</option>
-				<option value="Furniture">Furniture</option>
+				{{#each categories as |category|}}
+					<option value="{{category.id}}">{{category.name}}</option>
+				{{/each}}
 			</select>
 		</div>
 
@@ -91,10 +85,11 @@
 <div class="row">
 	{{#each products as |product|}}
 		<div class="col-md-4">
-			<img src="{{product.imagePath}}" height="100px" class="img-thumbnail">
+			<img src="{{product.imagePath}}" width="200px" class="img-thumbnail">
 			<p>${{product.price}}.00</p>
-			<p>{{product.name}}</p>
+			<a href="/products/{{product.id}}"><p>{{product.name}}</p></a>
 			<p>{{product.Category.name}}</p>
+			<button class="btn btn-large btn-primary">Add to Cart</button>
 		</div>
 	{{/each}}
 </div>
