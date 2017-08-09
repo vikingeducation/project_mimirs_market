@@ -38,11 +38,11 @@ app.use((req, res, next) => {
   }
 });
 
-// build routes here
-
 app.get("/", (req, res) => {
-  res.end("working");
+  res.redirect("/products");
 });
+var productsRouter = require("routers/products");
+app.use("/products");
 
 var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({

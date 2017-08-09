@@ -14,7 +14,7 @@ module.exports = {
         description: faker.Lorem.sentence(),
         price: faker.random.number(5000),
         sku: Math.random() * 122221,
-        categoryId: i % 10
+        categoryId: i % 10 + 1
       };
       seeds.push(p);
     }
