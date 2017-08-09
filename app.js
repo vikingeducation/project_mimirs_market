@@ -41,8 +41,8 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.redirect("/products");
 });
-var productsRouter = require("routers/products");
-app.use("/products");
+var productsRouter = require("./routers/products");
+app.use("/products", productsRouter);
 
 var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({

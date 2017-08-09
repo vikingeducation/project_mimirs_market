@@ -1,0 +1,34 @@
+<header class=“page-header”>
+  <h1>Vikings</h1>
+</header>
+<div class=“panel panel-info”>
+  <div class=“panel-heading”>
+    <h3 class=“panel-title”>Search</h3>
+  </div>
+  <div class=“panel-body”>
+    {{ products }}
+  </div>
+</div>
+<div class=“panel panel-primary”>
+  <div class=“panel-heading”>
+    <h3 class=“panel-title”>Select a user to view their profile</h3>
+    <form class=“form-inline sort-select”>
+      <div class=“form-group”>
+        <select class=“form-control” name=“user[sort_by]“>
+          <option value=“distance”>Distance</option>
+          <option value=“age”>Age</option>
+          <option value=“last_login”>Last Login</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class=“panel-body”>
+
+  </div>
+  <div class=“panel-footer”>
+    <ul class=“pagination”>
+      <li><a href=“#”>&laquo;</a></li>
+      <li><a href=“#”>&raquo;</a></li>
+    </ul>
+  </div>
+</div>
