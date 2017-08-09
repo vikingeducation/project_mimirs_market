@@ -15,6 +15,8 @@ sequelize model:create --name User --attributes "fname:string lname:string email
 
 
 Address:
+  name: string
+  UserId: integer
   fname: string
   lname: string
   street: string
@@ -22,7 +24,7 @@ Address:
   StateId: integer
   zip: integer
 
-sequelize model:create --name Address --attributes "fname:string lname:string street:string city:string StateId:integer zip:integer"
+sequelize model:create --name Address --attributes "name:string UserId:integer fname:string lname:string street:string city:string StateId:integer zip:integer"
 
 
 State:
@@ -30,13 +32,6 @@ State:
 
 sequelize model:create --name State --attributes "name:string"
 
-
-Join: UserAddress
-  name: string
-  UserId: integer
-  AddressId: integer
-
-sequelize model:create --name UserAddress --attributes "name:string UserId:integer AddressId:integer"
 
 
 Category:
