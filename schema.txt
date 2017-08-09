@@ -1,0 +1,40 @@
+SEQUELIZE
+
+User
+- id
+- name
+- email
+
+States
+- id
+- Name
+- Abbreviation
+
+Category
+- id
+- name
+
+Product
+- id
+- categoryId
+- name
+- description
+- price
+- SKU
+
+--> SUBMITTING ORDER -->  userId, name, email, state, items(id, name, categoryid, quantity)
+
+
+MONGODB
+
+Orders: [{
+- id
+- userId (Sequelize)
+- name
+- email
+- state
+- items: [{
+id (sequelize), name, categoryId (sequelize), quantity
+}, {}, {}]
+
+}]
