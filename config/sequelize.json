@@ -1,20 +1,23 @@
 {
   "development": {
-    "username": "ericglover",
+    "username": "root",
     "password": null,
-    "database": "mimirs_market_development",
+    "database": "database_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   },
   "test": {
-    "username": "ericglover",
+    "username": "root",
     "password": null,
-    "database": "mimirs_market_test",
+    "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres"
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

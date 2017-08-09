@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 var env = process.env.NODE_ENV || "development";
-var config = require("./config/mongo")[env];
+var config = require("./config/mongo");
 
 module.exports = () => {
   var envUrl = process.env[config.use_env_variable];
