@@ -33,6 +33,7 @@
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.11.6",
     "mongooseeder": "^2.0.5",
+    "morgan": "^1.8.2",
     "pg": "^7.1.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.4.2",
