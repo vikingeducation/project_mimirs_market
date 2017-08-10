@@ -1,16 +1,20 @@
 "use strict";
+const faker = require("faker");
+const { generate } = require("random-image-url");
+
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let products = [];
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 30; i++) {
       products.push({
-        name: `product${i}`,
-        sku: `sku${i}`,
-        description: "General description",
-        price: 85,
-        CategoryId: i + 1
+        name: faker.fake(`{{commerce.productName}}`),
+        sku: faker.fake(`{{finance.bitcoinAddress}}`),
+        description: faker.fake(`{{lorem.paragraph}}`),
+        price: Math.floor((Math.random() * 100)) + 1,
+        CategoryId: Math.floor((Math.random() * 10)) + 1,
+        imageUrl: generate()
       });
     }
     return queryInterface.bulkInsert("Products", products);

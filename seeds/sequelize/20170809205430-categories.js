@@ -1,15 +1,15 @@
 "use strict";
-
-let cats = ["weapons", "balloons", "chairs", "onions"];
+const faker = require("faker");
 
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let categories = [];
-    cats.forEach(ele => {
+    for(let i = 0; i < 10; i++) {
       categories.push({
-        name: ele
+        name: faker.fake(`{{commerce.department}}`)
       });
-    });
+    }
+
     return queryInterface.bulkInsert("Categories", categories);
   },
 

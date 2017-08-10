@@ -8,19 +8,29 @@
       <div class="form-group">
         <input type="submit" class="btn btn-primary" />
       </div>
-    </form>
+
+      <select name="cars">
+        {{#each categories as |category|}}
+          <option>{{category.name}}</option>
+        {{/each}}
+      </select>
+
   </div>
 </div>
 
 <div class="row">
+  <ul>
+
+  </ul>
+
   {{#each products as |product|}}
-  <div class="col-xs-4">
-    <section class="product-box">
-      <img src="/images/unicorn.jpg" class="img-responsive" align="middle"/>
-      <h3><strong>Price: </strong>${{ product.price }}.00</h3>
-      <h3><strong>Name: </strong>{{ product.name }}</h3>
-      <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
-    </section>
-  </div>
+    <div class="col-xs-4">
+      <section class="product-box">
+        <img src="{{product.imageUrl}}" class="img-responsive" align="middle" />
+        <h3><strong>Price: </strong>${{ product.price }}.00</h3>
+        <h3><strong>Name: </strong>{{ product.name }}</h3>
+        <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
+      </section>
+    </div>
   {{/each}}
 </div>

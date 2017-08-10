@@ -5,8 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     CategoryId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     sku: DataTypes.STRING,
-    description: DataTypes.STRING,
-    price: DataTypes.FLOAT
+    description: DataTypes.TEXT,
+    price: DataTypes.FLOAT,
+    imageUrl: DataTypes.STRING
   });
 
   // Product.associate = function(models) {
