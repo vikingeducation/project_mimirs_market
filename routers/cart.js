@@ -35,10 +35,12 @@ router.post("/add", (req, res) => {
   req.session.cart = req.session.cart || [];
   // req.session.cart = []; //used to refresh the cart
   //get the product
+  console.log(`item = ${req.body.addItem}`);
   Product.findAll({
     where: { id: req.body.addItem },
     include: { model: Category }
   }).then(result => {
+    console.log(`result = ${result}`);
     let product = result[0];
     //look for matching products already in cart
     let match = req.session.cart.find(item => {

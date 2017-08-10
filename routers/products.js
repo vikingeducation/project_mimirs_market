@@ -6,26 +6,47 @@ const { Product, Category } = require("../models/sequelize");
 //TODO: refactor some of the model handling code
 //TODO: change the routing / front end so that it uses params instead of different routes
 
+//return a new array of products{} with isInCart set correctly
+let isInCart = function(cart, products) {
+  console.log(`cart = ${cart}`);
+  console.log(`products = ${products}`);
+  debugger;
+  let p = products.map(product => {
+    let productFake = {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      img: product.img
+    };
+    productFake["isInCart"] = cart.some(item => {
+      return Number(item.id) === product.id;
+    });
+    return productFake;
+  });
+  console.log(`new products = ${p[isInCart]}`);
+  return p;
+};
+
 //index Route
 router.get("/", (req, res) => {
+  req.session.cart = req.session.cart || [];
   let cats = Category.findAll({ attributes: ["name"] });
   let products = Product.findAll({});
   Promise.all([cats, products])
     .then(results => {
-      console.log(`cateogires = ${results[0]}`);
       let categories = results[0].map(el => {
         return el.name.trim();
       });
-      // debugger;
-      console.log(`cateogires = ${categories}`);
+      let productsObj = isInCart(req.session.cart, results[1]);
       res.render("products/index", {
-        products: results[1],
+        products: productsObj,
         categories: categories,
         cart: req.session.cart
       });
     })
     .catch(error => {
-      res.setStatus(500).send(`error ${error}`);
+      res.status(500).send(`error ${error}`);
     });
 });
 
@@ -64,7 +85,6 @@ router.post("/search", (req, res) => {
 router.post("/filter", (req, res) => {
   //TODO: make the images work by changing the path here?
   let categories = Category.findAll({ attributes: ["name"] });
-  console.log(`filter = ${req.body.filterByCategory}`);
   Category.find({
     where: { name: req.body.filterByCategory }
   }).then(category => {
