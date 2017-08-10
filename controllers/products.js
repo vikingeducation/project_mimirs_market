@@ -49,6 +49,30 @@ module.exports = {
 						res.render("product", { product, relatedProducts });
 					});
 			});
+	},
+
+	showCart: (req, res) => {
+		let quantities = {};
+		let productIds = [];
+
+		if (req.session.cart) {
+			productIds = req.session.cart.map(item => {
+				quantities[item.id] = item.quantity;
+				return item.id;
+			});
+		}
+
+		models.Product
+			.findAll({ where: { id: { in: productIds } } })
+			.then(products => {
+				let sum = 0;
+				products.forEach(product => {
+					sum += product.price * quantities[product.id];
+					product.quantity = quantities[product.id];
+				});
+
+				res.render("cart", { products: products, sum: sum });
+			});
 	}
 };
 
@@ -62,7 +86,7 @@ function parseParams(params, query) {
 		];
 	}
 
-	if (query.category) {
+	if (query.category || query.minPrice || query.maxPrice) {
 		if (query.category.length) {
 			params.where["categoryId"] = query.category;
 		}
