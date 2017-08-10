@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
           max: step == selectedMax
         });
       }
-      return range;
+      return { min, max, range };
     });
   };
   return Product;

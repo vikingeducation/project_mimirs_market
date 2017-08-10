@@ -1,41 +1,40 @@
 const router = require("express").Router();
 const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
-const filterMap = {
-  category: id => {
-    if (id === undefined) return "CategoryId";
-    return { $eq: id };
-  },
-  min: value => {
-    if (value === undefined) return "price";
-    return { $gte: value };
-  },
-  max: value => {
-    if (value === undefined) return "price";
-    return { $lte: value };
-  }
-};
 
-router.get("/", (req, res) => {
-  let options = { include: Category, where: { $and: {} } };
-  Object.entries(req.query).forEach(([key, value]) => {
-    if (!value || !filterMap[key]) return;
-    options.where.$and[filterMap[key]()] = filterMap[key](value);
-  });
-  console.log(options);
-  Promise.all([
-    Product.findAll(options),
-    Product.priceRange(req.query.min, req.query.max),
-    Category.findAll()
-  ])
-    .then(([products, priceRange, categories]) => {
-      categories = categories.map(category => {
-        if (category.id == req.query.category) category["selected"] = true;
-        return category;
-      });
-      res.render("products/index", { products, categories, priceRange });
-    })
-    .catch(e => res.status(500).send(e.stack));
+function buildOptions(req, priceRange) {
+  let options = {
+    include: Category,
+    where: {
+      price: {
+        $between: [
+          req.query.min || priceRange.min,
+          req.query.max || priceRange.max
+        ]
+      }
+    }
+  };
+  if (!isNaN(req.query.category))
+    options.where["CategoryId"] = req.query.category;
+  return options;
+}
+
+router.get("/", async (req, res) => {
+  try {
+    const priceRange = await Product.priceRange(req.query.min, req.query.max);
+    const categories = (await Category.findAll()).map(category => {
+      if (category.id == req.query.category) category["selected"] = true;
+      return category;
+    });
+    const products = await Product.findAll(buildOptions(req, priceRange));
+    res.render("products/index", {
+      products,
+      categories,
+      priceRange: priceRange.range
+    });
+  } catch (e) {
+    res.status(500).send(e.stack);
+  }
 });
 
 // add to cart
