@@ -1,9 +1,8 @@
-let ProductHelper = {};
+module.exports = {
+  productsPath: () => "/products/",
+  productPath: id => `/products/${id}`,
+  addProductPath: id => `/products/${id}/add`
+};
 
-ProductHelper.productsPath = () => "/products/";
-ProductHelper.productPath = id => `/products/${id}`;
-ProductHelper.addProductPath = id => `/products/${id}/add`;
 // ProductHelper.editProductPath = (id) => `/products/${ id }/edit`;
 // ProductHelper.destroyProductPath = (id) => `/products/${ id }/?_method=delete`;
-
-module.exports = ProductHelper;

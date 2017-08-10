@@ -20,46 +20,64 @@ const sortNames = {
   newest: "Newest First"
 };
 
-function buildOptions(req, min, max) {
+function buildOptions(query, min, max) {
   let options = {
     include: Category,
     where: {
       price: {
-        $between: [+(req.query.min || min), +(req.query.max || max)]
+        $between: [+(query.min || min), +(query.max || max)]
       }
     }
   };
 
-  if (!isNaN(req.query.category))
-    options.where["CategoryId"] = req.query.category;
+  if (!isNaN(query.category)) options.where["CategoryId"] = query.category;
 
-  if (sortOpts[req.query.sort]) options["order"] = [sortOpts[req.query.sort]];
+  if (sortOpts[query.sort]) options["order"] = [sortOpts[query.sort]];
 
-  if (req.query.search) {
+  if (query.search) {
     options.where["$or"] = {
-      name: { $iLike: `%${req.query.search}%` },
-      description: { $iLike: `%${req.query.search}%` }
+      name: { $iLike: `%${query.search}%` },
+      description: { $iLike: `%${query.search}%` }
     };
   }
   return options;
 }
 
+function buildRange(query, min, max, steps) {
+  steps = steps || 30;
+  let increment = (max - min) / steps;
+  let range = [];
+  for (let i = 0; i <= steps; i++) {
+    let step = Math.round(min + i * increment);
+    range.push({
+      value: step,
+      pretty: step.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+      }),
+      min: step == query.min,
+      max: step == query.max
+    });
+  }
+  return range;
+}
+
 router.get("/", async (req, res) => {
+  const query = req.query;
   try {
-    const { min, max, range } = await Product.priceRange(
-      req.query.min,
-      req.query.max
-    );
-    const products = await Product.findAll(buildOptions(req, min, max));
+    const [min, max] = await Product.priceRange();
+    const range = buildRange(query, min, max);
+
+    const products = await Product.findAll(buildOptions(query, min, max));
 
     let categories = await Category.findAll();
     categories = categories.map(category => {
-      if (category.id == req.query.category) category["selected"] = true;
+      if (category.id == query.category) category["selected"] = true;
       return category;
     });
 
     const sorts = Object.entries(sortNames).map(([value, name]) => {
-      return { name, value, selected: value == req.query.sort };
+      return { name, value, selected: value == query.sort };
     });
 
     res.render("products/index", {
@@ -67,7 +85,7 @@ router.get("/", async (req, res) => {
       categories,
       range,
       sorts,
-      search: req.query.search
+      search: query.search
     });
   } catch (e) {
     res.status(500).send(e.stack);
