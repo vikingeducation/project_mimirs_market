@@ -23,12 +23,9 @@
         <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
       </td>
       <td>
-        <a href="{{ productPath product.id }}">{{ product.price }}</a>
+        <a href="{{ productPath product.id }}">{{ product.prettyPrice }}</a>
       </td>
-
-
       <td>
-
         <a class="btn btn-primary" href="{{ addProductPath product.id }}">
             Add to Cart</a>
       </td>

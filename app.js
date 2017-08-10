@@ -11,6 +11,9 @@ const hbs = expressHandlebars.create({
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
+// Static Files
+app.use(express.static(`${__dirname}/public`));
+
 // Post Data
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));

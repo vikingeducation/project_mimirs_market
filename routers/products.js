@@ -3,9 +3,6 @@ var router = express.Router();
 var models = require("./../models/sequelize");
 const Product = models.Product;
 
-// ----------------------------------------
-// Index
-// ----------------------------------------
 router.get("/", (req, res) => {
   Product.findAll({ include: models.Category })
     .then(products => {
@@ -21,12 +18,12 @@ router.get("/", (req, res) => {
 //   res.render("users/new");
 // });
 
-// ----------------------------------------
-// Show
-// ----------------------------------------
 router.get("/:id", (req, res) => {
   Product.findById(req.params.id, {
-    include: { model: models.Category, include: { model: models.Product } }
+    include: {
+      model: models.Category,
+      include: { model: models.Product, where: { id: { $ne: req.params.id } } }
+    }
   })
     .then(product => {
       console.log(product);

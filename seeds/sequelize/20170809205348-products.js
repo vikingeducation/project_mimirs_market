@@ -11,7 +11,8 @@ module.exports = {
         name: voca.titleCase(faker.commerce.productName()),
         sku: faker.random.uuid(),
         price: +faker.commerce.price(1, 100),
-        CategoryId: i % 10 + 1
+        CategoryId: i % 10 + 1,
+        description: faker.lorem.lines(4)
       });
     }
     return queryInterface.bulkInsert("Products", products);
