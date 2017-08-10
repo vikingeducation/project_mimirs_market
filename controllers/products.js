@@ -15,8 +15,6 @@ module.exports = {
 			params = parseParams(params, req.query);
 		}
 
-		console.log(params);
-
 		models.Product.findAll(params).then(products => {
 			models.Category.findAll({ order: ["id"] }).then(categories => {
 				res.render("index", { products, categories });
@@ -86,16 +84,14 @@ function parseParams(params, query) {
 		];
 	}
 
-	if (query.category || query.minPrice || query.maxPrice) {
-		if (query.category.length) {
-			params.where["categoryId"] = query.category;
-		}
-
-		params.where["price"] = {
-			$gte: query.minPrice,
-			$lte: query.maxPrice
-		};
+	if (query.category.length) {
+		params.where["categoryId"] = query.category;
 	}
+
+	params.where["price"] = {
+		$gte: query.minPrice,
+		$lte: query.maxPrice
+	};
 
 	if (query.sortBy) {
 		const sort = query.sortBy.split("-");

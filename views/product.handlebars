@@ -9,7 +9,9 @@
 	</div>
 	<div class="col-md-7">
 		<p>{{product.description}}</p>
-		<button class="btn btn-large btn-primary">Add to Cart</button>
+		<form action="/products/{{product.id}}" method="post">
+			<button class="btn btn-large btn-primary">Add to Cart</button>
+		</form>
 	</div>
 </div>
 
@@ -22,7 +24,9 @@
 			<p>${{rProduct.price}}.00</p>
 			<a href="/products/{{rProduct.id}}"><p>{{rProduct.name}}</p></a>
 			<p>{{rProduct.Category.name}}</p>
-			<button class="btn btn-large btn-primary">Add to Cart</button>
+			<form action="/products/{{rProduct.id}}" method="post">
+				<button class="btn btn-large btn-primary">Add to Cart</button>
+			</form>
 		</div>
 	{{/each}}
 </div>

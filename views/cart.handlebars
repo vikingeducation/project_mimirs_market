@@ -13,11 +13,15 @@
 					<p>${{product.price}}.00</p>
 				</div>
 				<div class="col-xs-6 col-sm-3">
-					<input type="text" class="form-control" value="{{product.quantity}}">
+					<form action="/cart/{{product.id}}/quantity" method="post">
+						<input type="text" class="form-control" name="quantity" value="{{product.quantity}}">
 				</div>
 				<div class="col-xs-6 col-sm-3">
-					<button class="btn btn-success">Set Quantity</button>
-					<button class="btn btn-danger">Remove</button>
+						<button class="btn btn-success">Set Quantity</button>
+					</form>
+					<form action="" method="post">
+						<button class="btn btn-danger">Remove</button>
+					</form>
 				</div>
 			</div>
 		{{/each}}

@@ -10,7 +10,9 @@ const sqlModels = require("./models/sequelize");
 const ProductsController = require("./controllers/products");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+
 const products = require("./routes/products");
+const cart = require("./routes/cart");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -41,10 +43,9 @@ app.use((req, res, next) => {
 });
 
 app.use("/products", products);
+app.use("/cart", cart);
 
 app.get("/", ProductsController.listProducts);
-
-app.get("/cart", ProductsController.showCart);
 
 app.listen(3000, () => {
   console.log("Now listening...");
