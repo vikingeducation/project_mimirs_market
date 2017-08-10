@@ -33,10 +33,16 @@ body.page-bg {
 }
 
 .page-nav {
+	border-bottom: 1px solid #444;
+}
+
+.page-nav-container {
 	z-index: 1;
 	position: fixed;
+	height: 65px;
 	left: 0;
 	right: 0;
+	background-color: #333;
 	box-shadow: 0 1px 2px #111;
 }
 
@@ -52,9 +58,9 @@ body.page-bg {
 	right: 0;
 	bottom: 0;
 	box-shadow: 0 -1px 2px #222;
-	border-top: 1px solid #111;
+	border-top: 1px solid #444;
 	background-color: #222;
-	height: 100px;
+	height: 45px;
 }
 
 a {
