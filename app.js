@@ -7,12 +7,15 @@ const getPostSupport = require("express-method-override-get-post-support");
 const session = require("express-session");
 const mongooseModels = require("./models/mongoose");
 const sqlModels = require("./models/sequelize");
+const ProductsController = require("./controllers/products");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const products = require("./routes/products");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
+
+app.use(express.static(__dirname + "/public"));
 
 const hbs = exphbs.create({
   partialsDir: "views/partials",
@@ -39,85 +42,7 @@ app.use((req, res, next) => {
 
 app.use("/products", products);
 
-app.get("/", (req, res) => {
-  // const params = parseParams(req.query);
-
-  sqlModels.Product
-    .findAll({
-      include: [
-        {
-          model: sqlModels.Category
-        }
-      ],
-      // where: params,
-      limit: 18
-    })
-    .then(products => {
-      sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
-        res.render("index", { products, categories });
-      });
-    });
-});
-
-// app.get("/test", (req, res) => {
-//   User.find().then(users => {
-//     console.log(users);
-//     res.render("testing", { users });
-//   });
-// });
-
-app.get("/filter", (req, res) => {
-  // let params = {
-  //   categoryId: req.query.category
-  //   minPrice: req.query.minPrice
-  //   maxPrice: req.query.maxPrice
-  // };
-
-  let findCategory;
-  if (req.query.category.length) {
-    findCategory = req.query.category;
-  } else {
-    findCategory = {
-      $gte: 0
-    };
-  }
-  sqlModels.Product
-    .findAll({
-      include: [
-        {
-          model: sqlModels.Category
-        }
-      ],
-      where: {
-        categoryId: findCategory,
-        price: {
-          $gte: req.query.minPrice,
-          $lte: req.query.maxPrice
-        }
-      },
-      limit: 18
-    })
-    .then(products => {
-      sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
-        res.render("index", { products, categories });
-      });
-    });
-});
-
-// function parseParams(params) {
-//   parsedParams = {};
-//
-//   if (params) {
-//     parsedParams["categoryId"] = params.category;
-//   }
-//
-//   return parsedParams;
-// }
-
-// {
-//   categoryId: 9,
-//   price: {$and: [{$gte: 100}, {lte: 1000}]}
-// }
+app.get("/", ProductsController.listProducts);
 
 app.listen(3000, () => {
   console.log("Now listening...");

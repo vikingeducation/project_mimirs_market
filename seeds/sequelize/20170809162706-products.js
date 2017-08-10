@@ -20,7 +20,7 @@ module.exports = {
       products.push({
         sku: `FKP12345N${i}`,
         name: faker.commerce.productName(),
-        imagePath: faker.image.image(),
+        imagePath: `image_${i % 10}.jpg`,
         description: faker.lorem.sentences(),
         price: faker.commerce.price(),
         categoryId: Math.floor(Math.random() * 10 + 1),

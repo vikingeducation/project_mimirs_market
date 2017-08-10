@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-	<form action="/filter" method="get">
+	<form action="/" method="get">
 		<div class="col-md-2 col-md-offset-2">
 			<select name="category" class="form-control">
 				<option value=''>Select a Category</option>
@@ -85,7 +85,7 @@
 <div class="row">
 	{{#each products as |product|}}
 		<div class="col-md-4">
-			<img src="{{product.imagePath}}" width="200px" class="img-thumbnail">
+			<img src="/images/{{product.imagePath}}" width="200px" class="img-thumbnail">
 			<p>${{product.price}}.00</p>
 			<a href="/products/{{product.id}}"><p>{{product.name}}</p></a>
 			<p>{{product.Category.name}}</p>
