@@ -28,7 +28,7 @@ CREATE COMMANDS
 sequelize model:create --name State --attributes "name:char abbreviation:char"
 sequelize model:create --name User --attributes "name:char email:char"
 sequelize model:create --name Category --attributes "name:char"
-sequelize model:create --name Product --attributes "name:char description:char price:integer sku:integer categoryId:integer"
+sequelize model:create --name Product --attributes "name:char description:char price:integer sku:integer img:char categoryId:integer"
 
 CREATE SEEDS
 sequelize seed:create --name categories

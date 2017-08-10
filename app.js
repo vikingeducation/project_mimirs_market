@@ -43,6 +43,8 @@ app.get("/", (req, res) => {
 });
 var productsRouter = require("./routers/products");
 app.use("/products", productsRouter);
+const cartRouter = require("./routers/cart");
+app.use("/cart", cartRouter);
 
 var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({

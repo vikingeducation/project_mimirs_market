@@ -2,6 +2,8 @@
 const model = require("../../models/sequelize");
 let faker = require("Faker");
 
+//TODO: make this automagically populate categories from
+//public/images/x where x becomes a category
 let categoriesName = [
   "Weapons",
   "Armor",

@@ -1,0 +1,8 @@
+DB-icon-weapon-Nordic_Bow.png
+DB-icon-weapon-Nordic_Dagger.png
+DB-icon-weapon-Nordic_Greatsword.png
+DB-icon-weapon-Nordic_Mace.png
+DB-icon-weapon-Nordic_Sword.png
+DB-icon-weapon-Nordic_War_Axe.png
+dwarven_sword.jpg
+war_axe.jpg

@@ -10,6 +10,19 @@
         <button class="btn btn-info">GO!</button>
       </div>
     </form>
+    <!-- sorting -->
+    <form method="POST" action="/products/filter" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Filter By Category: {{#if categoryName}} {{categoryName}} {{/if}}
+        <select class="form-control" name="filterByCategory">
+          {{#each categories as |category|}}
+            <option value={{category}}>{{category}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button class="btn btn-info">GO!</button>
+    </form>
+    <!-- sorting -->
     <form method="POST" action="/products/sort" style="margin: 10px;" class="form-inline sort-select">
       <div class="form-group">
         Sort By:
@@ -26,12 +39,12 @@
     </form>
   </div>
   <div class="panel-body">
-    {{#each products as |prod|}}
-    <div style="height: 600px; border: 1px solid black;" class="col-xs-4">
-      <img style="width: 100%;" src="http://4.bp.blogspot.com/-1PPIpuTPnPY/UCudijf1DPI/AAAAAAAABgY/Ohzq0co9uyk/s1600/generic.jpg">
-      <h3>${{prod.price}}</h3>
-      <h3><a href="/products/show/{{prod.id}}">{{prod.name}}</a></h3>
-      <h5>{{prod.description}}</h5>
+    {{#each products as |product|}}
+    <div class="col-xs-4">
+      <img src='./{{product.img}}' class='smallImg'>
+      <h3>${{product.price}}</h3>
+      <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+      <h5>{{product.description}}</h5>
       <button class="btn btn-primary">Add to Cart</button>
     </div>
     {{/each}}
