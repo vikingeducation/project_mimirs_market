@@ -3,41 +3,45 @@
 </header>
 
 <form class="form-inline" action="{{ productsPath }}">
-  <section class="form-group">
-    <select name="category" id="category" class="form-control">
+  <fieldset>
+    <section class="form-group">
+      <select name="category" id="category" class="form-control">
       <option value="all">Category</option>
       {{#each categories as |category|}}
       <option value="{{ category.id }}" {{#if category.selected }}selected{{/if}}>{{ category.name }}</option>
       {{/each}}
     </select>
-  </section>
-  <section class="form-group">
-    <select name="min" id="category" class="form-control">
+    </section>
+    <section class="form-group">
+      <select name="min" id="category" class="form-control">
       <option value="">Minimum</option>
       {{#each range as |price|}}
       <option value="{{ price.value }}" {{#if price.min }}selected{{/if}}>{{ price.pretty }}</option>
       {{/each}}
     </select>
-  </section>
-  <section class="form-group">
-    <select name="max" id="category" class="form-control">
+    </section>
+    <section class="form-group">
+      <select name="max" id="category" class="form-control">
       <option value="">Maximum</option>
       {{#each range as |price|}}
       <option value="{{ price.value }}" {{#if price.max }}selected{{/if}}>{{ price.pretty }}</option>
       {{/each}}
     </select>
-  </section>
-  <section class="form-group">
-    <select name="sort" id="category" class="form-control">
+    </section>
+    <section class="form-group">
+      <select name="sort" id="category" class="form-control">
       <option value="">Sort</option>
       {{#each sorts as |sort|}}
       <option value="{{ sort.value }}" {{#if sort.selected }}selected{{/if}}>{{ sort.name }}</option>
       {{/each}}
     </select>
-  </section>
-  </section>
-  <button class="btn btn-info">Filter</button>
-  <a href="{{ productsPath }}" class="btn btn-default">Reset</a>
+    </section>
+  </fieldset>
+  <fieldset>
+    <input type="text" name="search" placeholder="Search..." value="{{ search }}" class="form-control">
+    <button class="btn btn-info">Filter</button>
+    <a href="{{ productsPath }}" class="btn btn-warning">Reset</a>
+  </fieldset>
 </form>
 
 <hr> {{#if products.length }}

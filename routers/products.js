@@ -34,6 +34,13 @@ function buildOptions(req, min, max) {
     options.where["CategoryId"] = req.query.category;
 
   if (sortOpts[req.query.sort]) options["order"] = [sortOpts[req.query.sort]];
+
+  if (req.query.search) {
+    options.where["$or"] = {
+      name: { $iLike: `%${req.query.search}%` },
+      description: { $iLike: `%${req.query.search}%` }
+    };
+  }
   return options;
 }
 
@@ -55,7 +62,13 @@ router.get("/", async (req, res) => {
       return { name, value, selected: value == req.query.sort };
     });
 
-    res.render("products/index", { products, categories, range, sorts });
+    res.render("products/index", {
+      products,
+      categories,
+      range,
+      sorts,
+      search: req.query.search
+    });
   } catch (e) {
     res.status(500).send(e.stack);
   }
