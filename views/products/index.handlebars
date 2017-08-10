@@ -20,10 +20,10 @@
         <a href="{{ productPath product.id }}">{{ product.name }}</a>
       </td>
       <td>
-        <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
+        <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
       </td>
       <td>
-        <a href="{{ productPath product.id }}">{{ product.prettyPrice }}</a>
+        {{ product.prettyPrice }}
       </td>
       <td>
         <a class="btn btn-primary" href="{{ addProductPath product.id }}">

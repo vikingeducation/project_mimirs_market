@@ -1,17 +1,10 @@
 <header class="page-header">
-  <h1>{{ product.name }}</h1>
-  Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
+  <h1>{{ category.name }}</h1>
+  Items: {{ category.Products.length }}</a>
 </header>
 
-<div class="panel panel-primary">
-  <div class="panel-body">
-    <p>{{ product.prettyPrice }}</p>
-    <p>{{ product.description}}</p>
-    <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
-  </div>
-</div>
-{{#if product.Category.Products}}
-<h2>Related Products</h2>
+{{#if category.Products}}
+<h2>Products</h2>
 <table class="table">
   <thead>
     <tr>
@@ -21,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each product.Category.Products as |product| }}
+    {{#each category.Products as |product| }}
     <tr>
       <td>
         <a href="{{ productPath product.id }}">{{ product.name }}</a>

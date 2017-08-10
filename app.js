@@ -50,12 +50,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.all("/", (req, res) => res.redirect("/products"));
-
 app.use("/products", require("./routers/products"));
-
-// app.use("/users", require("./routers/users"));
-
-// app.use("/comments", require("./routers/comments"));
+app.use("/categories", require("./routers/categories"));
 
 // Set up port/host
 const port = process.env.PORT || process.argv[2] || 3000;

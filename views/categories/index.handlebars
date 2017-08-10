@@ -1,0 +1,29 @@
+<header class="page-header">
+  <h1>Categories</h1>
+</header>
+
+
+{{#if categories.length }}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Items</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each categories as |category| }}
+    <tr>
+      <td>
+        <a href="{{ categoryPath category.id }}">{{ category.name }}</a>
+      </td>
+      <td>
+        {{ category.Products.length }}
+      </td>
+    </tr>
+    {{/each }}
+  </tbody>
+</table>
+{{else }}
+<p class="text-danger">No categories</p>
+{{/if }}

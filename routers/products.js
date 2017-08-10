@@ -1,35 +1,34 @@
-var express = require("express");
-var router = express.Router();
-var models = require("./../models/sequelize");
-const Product = models.Product;
+const router = require("express").Router();
+const { Product, Category } = require("../models/sequelize");
+const h = require("../helpers");
 
 router.get("/", (req, res) => {
-  Product.findAll({ include: models.Category })
-    .then(products => {
-      res.render("products/index", { products });
-    })
+  Product.findAll({ include: Category })
+    .then(products => res.render("products/index", { products }))
     .catch(e => res.status(500).send(e.stack));
 });
 
-// ----------------------------------------
-// Add
-// ----------------------------------------
+// add to cart
 // router.get("/add", (req, res) => {
 //   res.render("users/new");
 // });
 
 router.get("/:id", (req, res) => {
-  Product.findById(req.params.id, {
-    include: {
-      model: models.Category,
-      include: { model: models.Product, where: { id: { $ne: req.params.id } } }
-    }
-  })
-    .then(product => {
-      console.log(product);
-      res.render("products/single", { product });
+  let id = req.params.id;
+  if (isNaN(id)) h.missingFlashRedirect(req, res, h.productsPath(), "product");
+  else {
+    Product.findById(id, {
+      include: {
+        model: Category,
+        include: { model: Product, where: { id: { $ne: id } } }
+      }
     })
-    .catch(e => res.status(500).send(e.stack));
+      .then(product => {
+        if (product) res.render("products/single", { product });
+        else h.missingFlashRedirect(req, res, h.productsPath(), "product");
+      })
+      .catch(e => res.status(500).send(e.stack));
+  }
 });
 
 module.exports = router;
