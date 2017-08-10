@@ -38,11 +38,12 @@
       <button class="btn btn-info">GO!</button>
     </form>
   </div>
+  <!-- SHOW ALL PRODUCTS -->
   <div class="panel-body">
     {{#each products as |product|}}
-    <form method='POST' action='./../cart/add'>
+    <form method='POST' action='/cart/add'>
       <div class="col-xs-4">
-        <img src='./{{product.img}}' class='smallImg'>
+        <img src='/{{product.img}}' class='smallImg'>
         <h3>${{product.price}}</h3>
         <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
         <h5>{{product.description}}</h5>

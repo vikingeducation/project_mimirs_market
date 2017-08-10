@@ -3,6 +3,8 @@ var router = express.Router();
 const { Product, Category } = require("../models/sequelize");
 
 //make a getCategories Names function`
+//TODO: refactor some of the model handling code
+//TODO: change the routing / front end so that it uses params instead of different routes
 
 //index Route
 router.get("/", (req, res) => {
@@ -23,8 +25,7 @@ router.get("/", (req, res) => {
       });
     })
     .catch(error => {
-      //TODO: gracefully handle the error?
-      res.end("ERROR");
+      res.setStatus(500).send(`error ${error}`);
     });
 });
 
@@ -85,7 +86,6 @@ router.post("/filter", (req, res) => {
 
 //TODO: add max price,
 //add min price
-//add filtering by category
 
 router.post("/sort", (req, res) => {
   //TODO: MAKE AN OPTIONS HASH
@@ -102,6 +102,3 @@ router.post("/sort", (req, res) => {
 });
 
 module.exports = router;
-
-///////
-///
