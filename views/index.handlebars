@@ -83,7 +83,9 @@
 			<p>${{product.price}}.00</p>
 			<a href="/products/{{product.id}}"><p>{{product.name}}</p></a>
 			<p>{{product.Category.name}}</p>
-			<button class="btn btn-large btn-primary">Add to Cart</button>
+			<form action="/products/{{product.id}}" method="post">
+				<button class="btn btn-large btn-primary">Add to Cart</button>
+			</form>
 		</div>
 	{{/each}}
 </div>

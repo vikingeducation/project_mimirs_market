@@ -1,36 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const models = require("./../models/sequelize");
+const ProductsController = require("./../controllers/products");
 
 router.get("/", (req, res) => {
 	res.redirect("/");
 });
 
-router.get("/:id", (req, res) => {
-	const id = req.params.id;
-	models.Product
-		.findById(id, {
-			include: [
-				{
-					model: models.Category
-				}
-			]
-		})
-		.then(product => {
-			models.Product
-				.findAll({
-					where: { categoryId: product.categoryId, id: { $ne: product.id } },
-					limit: 6,
-					include: [
-						{
-							model: models.Category
-						}
-					]
-				})
-				.then(relatedProducts => {
-					res.render("product", { product, relatedProducts });
-				});
-		});
+router.get("/:id", ProductsController.singleProduct);
+
+router.post("/:id", (req, res) => {
+	req.session.cart = req.session.cart || [];
+	req.session.cart.push({ id: req.params.id, quantity: 1 });
+	res.redirect("/cart");
 });
 
 module.exports = router;

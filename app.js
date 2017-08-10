@@ -45,9 +45,21 @@ app.use("/products", products);
 app.get("/", ProductsController.listProducts);
 
 app.get("/cart", (req, res) => {
-  sqlModels.Product.findAll({ price: { $lt: 200 } }).then(products => {
-    res.render("cart", { products });
+  const quantities = {};
+  const productIds = req.sessions.cart.map(item => {
+    quantities[item.id] = item.quantity;
+    return item.id;
   });
+
+  sqlModels.Product
+    .findAll({ where: { id: { in: productIds } } })
+    .then(products => {
+      products = products.forEach(product => {
+        product.quantity = quantities[product.id];
+      });
+
+      res.render("cart", { products });
+    });
 });
 
 app.listen(3000, () => {
