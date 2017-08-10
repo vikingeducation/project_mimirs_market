@@ -72,13 +72,16 @@ a {
 }
 
 .refine-well {
+	border-bottom-left-radius: 2em;
+	border-bottom-right-radius: 2em;
 	position: absolute;
 	max-width: 50%;
 	top: 25px;
 	left: 25%;
 	color: #eee;
-	border: 1px solid #888;
-	background-color: #555;
+	border: 1px solid #666;
+	background: url('../../images/refine-bg.png');
+	background-size: 15%;
 	box-shadow: 0 4px 8px #111;
 }
 
