@@ -2,6 +2,16 @@ const models = require("./../models/sequelize");
 
 module.exports = {
 	listProducts: (req, res) => {
+		let productIds = [];
+
+		if (req.session.cart) {
+			productIds = req.session.cart.map(item => {
+				return Number(item.id);
+			});
+		}
+
+		console.log(typeof productIds[0]);
+
 		let params = {
 			include: [
 				{
@@ -16,6 +26,12 @@ module.exports = {
 		}
 
 		models.Product.findAll(params).then(products => {
+			products.forEach(product => {
+				if (productIds.indexOf(product.id) > -1) {
+					product.inCart = true;
+				}
+			});
+
 			models.Category.findAll({ order: ["id"] }).then(categories => {
 				res.render("index", { products, categories });
 			});
@@ -24,6 +40,15 @@ module.exports = {
 
 	singleProduct: (req, res) => {
 		const id = req.params.id;
+
+		let productIds = [];
+
+		if (req.session.cart) {
+			productIds = req.session.cart.map(item => {
+				return Number(item.id);
+			});
+		}
+
 		models.Product
 			.findById(id, {
 				include: [
@@ -33,6 +58,9 @@ module.exports = {
 				]
 			})
 			.then(product => {
+				if (productIds.indexOf(Number(id)) > -1) {
+					product.inCart = true;
+				}
 				models.Product
 					.findAll({
 						where: { categoryId: product.categoryId, id: { $ne: product.id } },
@@ -44,6 +72,11 @@ module.exports = {
 						]
 					})
 					.then(relatedProducts => {
+						relatedProducts.forEach(relatedProduct => {
+							if (productIds.indexOf(relatedProduct.id) > -1) {
+								relatedProduct.inCart = true;
+							}
+						});
 						res.render("product", { product, relatedProducts });
 					});
 			});
