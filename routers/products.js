@@ -34,14 +34,10 @@ router.post('/query', (req, res) => {
 router.get('/:productId/category/:CategoryId', (req, res) => {
   let productId = req.params.productId;
   let CategoryId = req.params.CategoryId;
-  console.log(productId);
-  console.log(CategoryId);
 
   getProductPageInfo(productId, CategoryId)
   .then((results) => {
-    let { productSel, products } = results;
-    console.log(productSel);
-    res.render('product', { productSel, products })
+    res.render('product', results)
   })
 
 })

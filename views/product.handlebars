@@ -2,13 +2,15 @@
   {{#if productSel}}
   {{#each productSel as |productSel|}}
   <div class="col-xs-12">
-    <h2>Product</h2>
+    <h2 class="text-center">Product</h2>
       <section class="product-box">
-        <img src="{{productSel.imageUrl}}" class="img-responsive" align="middle" />
+        <div class="col-xs-4">
+          <img src="{{productSel.imageUrl}}" class="img-responsive" align="middle" />
+        </div>
         <h3><strong>Price: </strong>${{ productSel.price }}.00</h3>
         <h3><strong>Name: </strong>{{ productSel.name }}</h3>
         <h3><strong>Category: </strong>{{ productSel.Category.name }}</h3>
-        <p>{{productSel.description}}</p>
+        <p><strong>Description: </strong>{{productSel.description}}</p>
         <div class="text-center cart-button"><button type="button" class="btn btn-primary">Add to Cart</button></div>
       </section>
   </div>
