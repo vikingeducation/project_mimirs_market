@@ -1,28 +1,41 @@
 var express = require("express");
 var router = express.Router();
+const { Product, Category } = require("../models/sequelize");
 
 //show cart route
 router.get("/", (req, res) => {
   res.render("cart/show", {
-    cart: [{ name: "thign" }, { name: "thign" }]
+    cart: req.session.cart
   });
 });
 
 //add to Cart
 router.post("/add", (req, res) => {
   req.session.cart = req.session.cart || [];
-  //option 1
-  //should the cart contain all the data ?
-  // req.session.cart.push(req.body.addItem);
-
-  //option 2, store whole item
+  // req.session.cart = [];
   //get the product
   Product.findAll({
     where: { id: req.body.addItem }
-  }).then(item => {
-    req.session.cart.push(item);
-    console.log(`back = ${req.session.backUrl}`);
-    res.redirect("/");
+  }).then(result => {
+    let product = result[0];
+    //look for matching products already in cart
+    let match = req.session.cart.find(item => {
+      return item.id === product.id;
+    });
+    if (match) {
+      //if product already in cart add one
+      match.quantity++;
+    } else {
+      //else throw it in cart
+      let item = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1
+      };
+      req.session.cart.push(item);
+    }
+    return res.redirect("/");
   });
 });
 //delete one from cart

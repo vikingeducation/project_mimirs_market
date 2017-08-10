@@ -25,8 +25,8 @@ module.exports = {
     for (var i = 0; i < 50; i++) {
       let name = `${faker.random.catch_phrase_descriptor()} ${faker.random.catch_phrase_descriptor()} ${faker.random.bs_noun()}`;
       let p = {
-        name: name,
-        description: faker.Lorem.sentence(),
+        name: name.trim(),
+        description: faker.Lorem.sentence().trim(),
         price: faker.random.number(5000),
         sku: Math.random() * 122221,
         img: "images/weapons/war_axe.jpg",

@@ -6,7 +6,6 @@ const { Product, Category } = require("../models/sequelize");
 
 //index Route
 router.get("/", (req, res) => {
-  // debugger;
   let cats = Category.findAll({ attributes: ["name"] });
   let products = Product.findAll({});
   Promise.all([cats, products])
@@ -19,7 +18,8 @@ router.get("/", (req, res) => {
       console.log(`cateogires = ${categories}`);
       res.render("products/index", {
         products: results[1],
-        categories: categories
+        categories: categories,
+        cart: req.session.cart
       });
     })
     .catch(error => {
