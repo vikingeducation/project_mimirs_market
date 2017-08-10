@@ -4,29 +4,30 @@ const models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
 const helpers = require("../helpers/productsHelpers");
-const filterFind = require("../dbSequelize/queries");
+const queryFind = require("../dbSequelize/queries");
 
 //
-let filterParams = {};
+let queryParams = {};
 
 router.get('/', (req, res) => {
 
   let info = [
-    filterFind(filterParams),
+    queryFind(queryParams),
     Category.findAll()
   ]
 
   Promise.all(info)
   .then(infoArray => {
     products = infoArray[0];
+    // console.log(products);
     categories = infoArray[1].map(category => category.dataValues);
-    res.render("products/allProducts", { products, categories });
+    res.render("index", { products, categories });
   })
   .catch(e => res.send(e));
 })
 
-router.post('/filter', (req, res) => {
-  filterParams = req.body.filter;
+router.post('/query', (req, res) => {
+  queryParams = req.body;
 
   res.redirect(helpers.productsPath());
 })

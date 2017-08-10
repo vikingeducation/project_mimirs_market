@@ -3,29 +3,63 @@ const Product = models.Product;
 const Category = models.Category;
 const _ = require("lodash");
 
-const filterFind = function(filterObj) {
-  if(_.isEmpty(filterObj)) {
-    return Product.findAll({
-      include: models.Category
-    })
-  }
+const queryFind = function(queryParams) {
+  let queryOptions = { include: models.Category };
+
+  // andArray for filters
   let andArray = [];
+  genFilterArray(queryParams.filter, andArray);
+  genSearch(queryParams.search, andArray);
 
-  if(filterObj.categoryId) andArray.push({ CategoryId: filterObj.categoryId });
-  console.log(typeof filterObj.minPrice);
-  if(filterObj.minPrice.length > 0) andArray.push({ price: { $gte: parseInt(filterObj.minPrice) } });
-  if(filterObj.maxPrice.length > 0) andArray.push({ price: { $lte: parseInt(filterObj.maxPrice) } });
+  queryOptions.where = { $and: andArray }
+  queryOptions.order = genSort(queryParams.sortType)
 
-  return Product.findAll({
-    where: {
-      $and: andArray
-    },
-    include:  models.Category
-  })
+  return Product.findAll(queryOptions)
   .then(products => {
       return products.map(product => product.dataValues);
   })
 }
 
+const genFilterArray = function(filterObj, andArray) {
+  if(_.isEmpty(filterObj)) {
+    return andArray;
+  }
+  if(filterObj.categoryId) andArray.push({ CategoryId: filterObj.categoryId });
+  if(filterObj.minPrice.length > 0) andArray.push({ price: { $gte: parseInt(filterObj.minPrice) } });
+  if(filterObj.maxPrice.length > 0) andArray.push({ price: { $lte: parseInt(filterObj.maxPrice) } });
+}
 
-module.exports = filterFind;
+const genSort = function(sortString) {
+  switch(sortString) {
+    case "nameAsc":
+      return [['name']]
+    case "nameDsc":
+      return [['name', 'DESC']]
+    case "priceAsc":
+      return [['price']]
+    case "priceDsc":
+      return [['price', 'DESC']]
+    case "newestFirst":
+      return [['createdAt', 'DESC']]
+    case "oldestFirst":
+      return [['createdAt']]
+    default:
+      return []
+  }
+}
+
+// IMPLEMENT CATEGORY WHEN YOU HAVE TIME LATER
+const genSearch = function(stringSearch, andArray) {
+  if(!stringSearch) return;
+  andArray.push({
+    $or: [
+    { description: { $iLike: `%${stringSearch}%`} },
+    { name: { $iLike: `%${stringSearch}%`} }
+   ]
+ })
+}
+
+
+
+
+module.exports = queryFind;
