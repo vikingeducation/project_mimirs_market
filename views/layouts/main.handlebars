@@ -14,7 +14,21 @@
 	<header>
 		<nav class='navbar navbar-inverse'>
 			<h1 class='navbar-left'><a href='/'>Mimir's Market</a></h1>
-			<a href='/cart'><span style="font-size:3em;float:right;" class="glyphicon glyphicon-shopping-cart"><span style='font-size:.5em;'>({{length}})</span></span></a>
+			<div class="btn-group" style='float:right;'>
+			  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" style='float:right;'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span style="font-size:3em;" class="glyphicon glyphicon-shopping-cart"><span style='font-size:.5em;'>({{length}})</span></span></a>
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{{#each cartItems as |item|}}
+			    	<a class="dropdown-item" href="/products/{{item.productId}}">
+							<li>{{item.name}}</li>
+						</a>
+					{{/each}}
+					<a href='/cart'>
+						<li>Checkout</li>
+					</a>
+			  </div>
+			</div>
 			<span class="glyphicon glyphicon-search" style="font-size:3em;float:right;"></span>
 		</nav>
 	</header>

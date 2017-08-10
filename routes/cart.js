@@ -5,15 +5,12 @@ router.get("/", (req, res) => {
   let products = [];
   let total = 0;
   let length = Object.keys(req.session.cart).length;
-
   Object.keys(req.session.cart).forEach(productId => {
     products.push(req.session.cart[productId]);
     let quantity = req.session.cart[productId].quantity;
     let price = req.session.cart[productId].price;
     total += quantity * price;
   });
-  console.log(req.session.cart);
-  console.log(total);
   res.render("cart", { products, total, length });
 });
 

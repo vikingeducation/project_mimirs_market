@@ -10,8 +10,10 @@ const sqlModels = require("./models/sequelize");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const products = require("./routes/products");
-const buildQuery = require("./lib/buildQuery");
 const cart = require("./routes/cart");
+const checkout = require("./routes/checkout");
+const buildQuery = require("./lib/buildQuery");
+const sessionBuilder = require("./lib/sessionBuilder");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -43,13 +45,22 @@ app.use((req, res, next) => {
 
 app.use("/products", products);
 app.use("/cart", cart);
+app.use("/checkout", checkout);
 
 app.get("/", (req, res) => {
   req.session.cart = req.session.cart || {};
-  let length = Object.keys(req.session.cart).length;
+  let cartItems = sessionBuilder(req.session.cart);
+  let keys = Object.keys(req.session.cart);
+  let length = keys.length;
   sqlModels.Product.findAll(buildQuery(req.query)).then(products => {
     sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
-      res.render("index", { products, categories, length });
+      products = products.map(product => {
+        if (keys.includes(product.id.toString())) {
+          product.selected = true;
+        }
+        return product;
+      });
+      res.render("index", { products, categories, length, cartItems });
     });
   });
 });
@@ -61,9 +72,9 @@ app.post("/addCart", (req, res) => {
     category: req.body.category,
     price: req.body.price,
     productId: id,
-    quantity: 1
+    quantity: 1,
+    selected: true
   };
-  console.log(req.session.cart);
   res.redirect("/");
 });
 
