@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const products = require("./routes/products");
 const buildQuery = require("./lib/buildQuery");
+const cart = require("./routes/cart");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -21,6 +22,8 @@ const hbs = exphbs.create({
 });
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
+
+app.use(express.static(`${__dirname}/public`));
 
 app.use(
   session({
@@ -39,13 +42,29 @@ app.use((req, res, next) => {
 });
 
 app.use("/products", products);
+app.use("/cart", cart);
 
 app.get("/", (req, res) => {
+  req.session.cart = req.session.cart || {};
+  let length = Object.keys(req.session.cart).length;
   sqlModels.Product.findAll(buildQuery(req.query)).then(products => {
     sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
-      res.render("index", { products, categories });
+      res.render("index", { products, categories, length });
     });
   });
+});
+
+app.post("/addCart", (req, res) => {
+  let id = req.body.productId;
+  req.session.cart[id] = {
+    name: req.body.name,
+    category: req.body.category,
+    price: req.body.price,
+    productId: id,
+    quantity: 1
+  };
+  console.log(req.session.cart);
+  res.redirect("/");
 });
 
 app.listen(3000, () => {

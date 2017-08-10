@@ -8,13 +8,15 @@
   	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   	crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src='/scripts/script.js'></script>
 </head>
 <body>
 	<header>
 		<nav class='navbar navbar-inverse'>
-			<h1><a href='/'>Mimir's Market</a></h1>
+			<h1 class='navbar-left'><a href='/'>Mimir's Market</a></h1>
+			<a href='/cart'><span style="font-size:3em;float:right;" class="glyphicon glyphicon-shopping-cart"><span style='font-size:.5em;'>({{length}})</span></span></a>
+			<span class="glyphicon glyphicon-search" style="font-size:3em;float:right;"></span>
 		</nav>
-
 	</header>
 
 	<main class="container">

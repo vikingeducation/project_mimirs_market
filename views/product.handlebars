@@ -9,18 +9,30 @@
 	</div>
 	<div class="col-md-7">
 		<p>{{product.description}}</p>
-		<button class="btn btn-large btn-primary">Add to Cart</button>
+		<form method='post' action='/addCart'>
+			<input type=hidden value ='{{product.id}}' name='productId' />
+			<input type=hidden value ='{{product.price}}' name='price' />
+			<input type=hidden value ='{{product.name}}' name='name' />
+			<input type=hidden value ='{{product.Category.name}}' name='category' />
+			<button class="btn btn-large btn-primary cart-addition" type='submit'>Add to Cart</button>
+		</form>
 	</div>
 </div>
 
 <div class="row">
 	{{#each relatedProducts as |rProduct|}}
-		<div class="col-md-4">
-			<img src="{{rProduct.imagePath}}" width="200px" class="img-thumbnail">
-			<p>${{rProduct.price}}.00</p>
-			<a href="/products/{{rProduct.id}}"><p>{{rProduct.name}}</p></a>
-			<p>{{rProduct.Category.name}}</p>
-			<button class="btn btn-large btn-primary">Add to Cart</button>
-		</div>
+			<div class="col-md-4">
+				<img src="{{rProduct.imagePath}}" width="200px" class="img-thumbnail">
+				<p>${{rProduct.price}}.00</p>
+				<a href="/products/{{rProduct.id}}"><p>{{rProduct.name}}</p></a>
+				<p>{{rProduct.Category.name}}</p>
+				<form method='post' action='/addCart'>
+					<input type=hidden value ='{{rProduct.id}}' name='productId' />
+					<input type=hidden value ='{{rProduct.price}}' name='price' />
+					<input type=hidden value ='{{rProduct.name}}' name='name' />
+					<input type=hidden value ='{{rProduct.Category.name}}' name='category' />
+					<button class="btn btn-large btn-primary cart-addition" type='submit'>Add to Cart</button>
+				</form>
+			</div>
 	{{/each}}
 </div>

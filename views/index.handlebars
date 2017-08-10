@@ -82,14 +82,20 @@
 
 <br><br><br>
 
-<div class="row">
-	{{#each products as |product|}}
-		<div class="col-md-4">
-			<img src="{{product.imagePath}}" width="200px" class="img-thumbnail">
-			<p>${{product.price}}.00</p>
-			<a href="/products/{{product.id}}"><p>{{product.name}}</p></a>
-			<p>{{product.Category.name}}</p>
-			<button class="btn btn-large btn-primary">Add to Cart</button>
-		</div>
-	{{/each}}
+<div class="row product-container">
+		{{#each products as |product|}}
+				<div class="col-md-4">
+					<img src="{{product.imagePath}}" width="200px" class="img-thumbnail">
+					<p class='price'>${{product.price}}.00</p>
+					<a href="/products/{{product.id}}"><p class='product-name'>{{product.name}}</p></a>
+					<p class='category-name'>{{product.Category.name}}</p>
+					<form method='post' action='/addCart'>
+						<input type=hidden value ='{{product.id}}' name='productId' />
+						<input type=hidden value ='{{product.price}}' name='price' />
+						<input type=hidden value ='{{product.name}}' name='name' />
+						<input type=hidden value ='{{product.Category.name}}' name='category' />
+						<button class="btn btn-large btn-primary cart-addition" type='submit'>Add to Cart</button>
+					</form>
+				</div>
+		{{/each}}
 </div>
