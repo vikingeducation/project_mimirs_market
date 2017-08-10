@@ -5,32 +5,10 @@
 
 <div class="panel panel-primary">
   <div class="panel-body">
-    <p>{{ product.prettyPrice }}</p>
     <p>{{ product.description}}</p>
-    <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
+    {{> shared/_addCart product=product }}
   </div>
 </div>
 {{#if product.Category.Products}}
 <h2>Related Products</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each product.Category.Products as |product| }}
-    <tr>
-      <td>
-        <a href="{{ productPath product.id }}">{{ product.name }}</a>
-      </td>
-      <td>
-        <a href="{{ productPath product.id }}">{{ product.prettyPrice }}</a>
-      </td>
-      <td>
-        <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
-      </td>
-    </tr>
-    {{/each }} {{/if}}
+{{#each product.Category.Products as |product| }} {{> shared/_product product=product }} {{/each }} {{/if}}

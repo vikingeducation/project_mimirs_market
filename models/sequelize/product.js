@@ -14,6 +14,12 @@ module.exports = function(sequelize, DataTypes) {
           currency: "USD"
         });
       }
+    },
+    prettyDate: {
+      type: DataTypes.VIRTUAL,
+      get: function() {
+        return this.createdAt.toLocaleDateString();
+      }
     }
   });
   Product.associate = function(models) {

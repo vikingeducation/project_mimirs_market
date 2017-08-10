@@ -37,6 +37,7 @@
     </select>
     </section>
   </fieldset>
+  <br>
   <fieldset>
     <input type="text" name="search" placeholder="Search..." value="{{ search }}" class="form-control">
     <button class="btn btn-info">Filter</button>
@@ -45,39 +46,9 @@
 </form>
 
 <hr> {{#if products.length }}
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Price</th>
-      <th>Added</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each products as |product| }}
-    <tr>
-      <td>
-        <a href="{{ productPath product.id }}">{{ product.name }}</a>
-      </td>
-      <td>
-        <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
-      </td>
-      <td>
-        {{ product.prettyPrice }}
-      </td>
-      <td>
-        {{ product.createdAt }}
-      </td>
-      <td>
-        <a class="btn btn-primary" href="{{ addProductPath product.id }}">
-            Add to Cart</a>
-      </td>
-    </tr>
-    {{/each }}
-  </tbody>
-</table>
+<section class="row">
+  {{#each products as |product| }} {{> shared/_product product=product }} {{/each }}
+</section>
 {{else }}
 <p class="text-danger">No products</p>
 {{/if }}
