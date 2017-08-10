@@ -7,10 +7,15 @@ module.exports = function(sequelize, DataTypes) {
     }
   );
 
+  // Category.associate = function(models) {
+  //   Category.hasMany(models.Product, {
+  //     foreignKey: "categoryId"
+  //   });
+  // };
+
   Category.associate = function(models) {
-    Category.hasMany(models.Product, {
-      foreignKey: "categoryId"
-    });
+    Category.hasMany(models.Product);
   };
+
   return Category;
 };

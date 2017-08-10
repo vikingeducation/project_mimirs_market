@@ -8,10 +8,16 @@ module.exports = function(sequelize, DataTypes) {
     description: DataTypes.STRING,
     price: DataTypes.FLOAT
   });
+
+  // Product.associate = function(models) {
+  //   Product.belongsTo(models.Category, {
+  //     foreignKey: "categoryId"
+  //   });
+  // };
+
   Product.associate = function(models) {
-    Product.belongsTo(models.Category, {
-      foreignKey: "categoryId"
-    });
+    Product.belongsTo(models.Category);
   };
+
   return Product;
 };

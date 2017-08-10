@@ -20,16 +20,18 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT
       },
-      categoryId: {
+      CategoryId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW")
       },
       updatedAt: {
         allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW")
       }
     });
   },

@@ -1,0 +1,15 @@
+.product-box{
+  border: 2px solid black;
+  margin-top: 20px;
+}
+
+h3 {
+  text-align: center;
+}
+
+img {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 10px;
+
+}

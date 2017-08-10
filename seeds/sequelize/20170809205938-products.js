@@ -10,7 +10,7 @@ module.exports = {
         sku: `sku${i}`,
         description: "General description",
         price: 85,
-        categoryId: i + 1
+        CategoryId: i + 1
       });
     }
     return queryInterface.bulkInsert("Products", products);
