@@ -2,36 +2,60 @@ const router = require("express").Router();
 const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
 
-function buildOptions(req, priceRange) {
+const sortOpts = {
+  nameAsc: ["name", "ASC"],
+  nameDesc: ["name", "DESC"],
+  priceAsc: ["price", "ASC"],
+  priceDesc: ["price", "DESC"],
+  oldest: ["createdAt", "ASC"],
+  newest: ["createdAt", "DESC"]
+};
+
+const sortNames = {
+  nameAsc: "Name, ascending",
+  nameDesc: "Name, decending",
+  priceAsc: "Price, ascending",
+  priceDesc: "Price, descending",
+  oldest: "Oldest First",
+  newest: "Newest First"
+};
+
+function buildOptions(req, min, max) {
   let options = {
     include: Category,
     where: {
       price: {
-        $between: [
-          req.query.min || priceRange.min,
-          req.query.max || priceRange.max
-        ]
+        $between: [+(req.query.min || min), +(req.query.max || max)]
       }
     }
   };
+
   if (!isNaN(req.query.category))
     options.where["CategoryId"] = req.query.category;
+
+  if (sortOpts[req.query.sort]) options["order"] = [sortOpts[req.query.sort]];
   return options;
 }
 
 router.get("/", async (req, res) => {
   try {
-    const priceRange = await Product.priceRange(req.query.min, req.query.max);
-    const categories = (await Category.findAll()).map(category => {
+    const { min, max, range } = await Product.priceRange(
+      req.query.min,
+      req.query.max
+    );
+    const products = await Product.findAll(buildOptions(req, min, max));
+
+    let categories = await Category.findAll();
+    categories = categories.map(category => {
       if (category.id == req.query.category) category["selected"] = true;
       return category;
     });
-    const products = await Product.findAll(buildOptions(req, priceRange));
-    res.render("products/index", {
-      products,
-      categories,
-      priceRange: priceRange.range
+
+    const sorts = Object.entries(sortNames).map(([value, name]) => {
+      return { name, value, selected: value == req.query.sort };
     });
+
+    res.render("products/index", { products, categories, range, sorts });
   } catch (e) {
     res.status(500).send(e.stack);
   }
