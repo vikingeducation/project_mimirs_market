@@ -25,9 +25,9 @@
 // .then(products => { console.log(products) })
 
 
-const faker = require("faker");
-const { generate } = require("random-image-url")
-console.log(generate());
+// const faker = require("faker");
+// const { generate } = require("random-image-url")
+// console.log(generate());
 
 // console.log(faker.fake(`ProductName: {{commerce.productName}}`));
 // console.log(faker.fake(`Product: {{commerce.department}}`));

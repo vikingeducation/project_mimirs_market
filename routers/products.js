@@ -3,20 +3,32 @@ const router = express.Router();
 const models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
+const helpers = require("../helpers/productsHelpers");
+const filterFind = require("../dbSequelize/queries");
 
+//
+let filterParams = {};
 
 router.get('/', (req, res) => {
+
   let info = [
-    Product.findAll({ include: models.Category }),
+    filterFind(filterParams),
     Category.findAll()
   ]
+
   Promise.all(info)
   .then(infoArray => {
-    products = infoArray[0].map(product => product.dataValues);
+    products = infoArray[0];
     categories = infoArray[1].map(category => category.dataValues);
     res.render("products/allProducts", { products, categories });
   })
   .catch(e => res.send(e));
+})
+
+router.post('/filter', (req, res) => {
+  filterParams = req.body.filter;
+
+  res.redirect(helpers.productsPath());
 })
 
 

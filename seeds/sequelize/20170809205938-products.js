@@ -13,7 +13,7 @@ module.exports = {
         sku: faker.fake(`{{finance.bitcoinAddress}}`),
         description: faker.fake(`{{lorem.paragraph}}`),
         price: Math.floor((Math.random() * 100)) + 1,
-        CategoryId: Math.floor((Math.random() * 10)) + 1,
+        CategoryId: Math.floor((Math.random() * 7)) + 1,
         imageUrl: generate()
       });
     }

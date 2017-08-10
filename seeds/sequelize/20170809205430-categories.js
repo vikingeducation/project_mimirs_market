@@ -4,10 +4,16 @@ const faker = require("faker");
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let categories = [];
-    for(let i = 0; i < 10; i++) {
+    let categoryNames = [];
+    let category = faker.fake(`{{commerce.department}}`);
+    for(let i = 0; i < 7; i++) {
+      while(categoryNames.includes(category)) {
+        category = faker.fake(`{{commerce.department}}`);
+      }
       categories.push({
-        name: faker.fake(`{{commerce.department}}`)
+        name: category
       });
+      categoryNames.push(category);
     }
 
     return queryInterface.bulkInsert("Categories", categories);
