@@ -2,6 +2,18 @@
   <h1>Products</h1>
 </header>
 
+<form class="form-inline" action="{{ productsPath }}">
+  <section class="form-group">
+    <label for="category">Category</label>
+    <select name="category" id="category" class="form-control">
+      {{#each categories as |category|}}
+      <option value="{{ category.id }}" {{#if category.selected }}selected{{/if}}>{{ category.name }}</option>
+      {{/each}}
+    </select>
+  </section>
+  <button class="btn btn-info">Filter</button>
+</form>
+
 
 {{#if products.length }}
 <table class="table">

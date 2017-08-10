@@ -6,7 +6,7 @@ const voca = require("voca");
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let categories = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       categories.push({
         name: voca.titleCase(
           [

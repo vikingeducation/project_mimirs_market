@@ -1,10 +1,28 @@
 const router = require("express").Router();
 const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
+const queryMap = {
+  category: id => {
+    if (id === undefined) return "CategoryId";
+    return { $eq: id };
+  }
+};
 
 router.get("/", (req, res) => {
-  Product.findAll({ include: Category })
-    .then(products => res.render("products/index", { products }))
+  let options = { include: Category, where: {} };
+  Object.entries(req.query).forEach(([key, value]) => {
+    if (!queryMap[key]) return;
+    options.where[queryMap[key]()] = queryMap[key](value);
+  });
+  Product.findAll(options)
+    .then(products => [products, Category.findAll()])
+    .spread((products, categories) => {
+      categories = categories.map(category => {
+        if (category.id == req.query.category) category["selected"] = true;
+        return category;
+      });
+      res.render("products/index", { products, categories });
+    })
     .catch(e => res.status(500).send(e.stack));
 });
 
