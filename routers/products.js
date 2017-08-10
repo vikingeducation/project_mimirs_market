@@ -1,27 +1,39 @@
 const router = require("express").Router();
 const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
-const queryMap = {
+const filterMap = {
   category: id => {
     if (id === undefined) return "CategoryId";
     return { $eq: id };
+  },
+  min: value => {
+    if (value === undefined) return "price";
+    return { $gte: value };
+  },
+  max: value => {
+    if (value === undefined) return "price";
+    return { $lte: value };
   }
 };
 
 router.get("/", (req, res) => {
-  let options = { include: Category, where: {} };
+  let options = { include: Category, where: { $and: {} } };
   Object.entries(req.query).forEach(([key, value]) => {
-    if (!queryMap[key]) return;
-    options.where[queryMap[key]()] = queryMap[key](value);
+    if (!value || !filterMap[key]) return;
+    options.where.$and[filterMap[key]()] = filterMap[key](value);
   });
-  Product.findAll(options)
-    .then(products => [products, Category.findAll()])
-    .spread((products, categories) => {
+  console.log(options);
+  Promise.all([
+    Product.findAll(options),
+    Product.priceRange(req.query.min, req.query.max),
+    Category.findAll()
+  ])
+    .then(([products, priceRange, categories]) => {
       categories = categories.map(category => {
         if (category.id == req.query.category) category["selected"] = true;
         return category;
       });
-      res.render("products/index", { products, categories });
+      res.render("products/index", { products, categories, priceRange });
     })
     .catch(e => res.status(500).send(e.stack));
 });

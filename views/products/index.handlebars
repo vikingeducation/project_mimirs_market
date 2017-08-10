@@ -4,18 +4,34 @@
 
 <form class="form-inline" action="{{ productsPath }}">
   <section class="form-group">
-    <label for="category">Category</label>
     <select name="category" id="category" class="form-control">
+      <option value="">Category</option>
       {{#each categories as |category|}}
       <option value="{{ category.id }}" {{#if category.selected }}selected{{/if}}>{{ category.name }}</option>
       {{/each}}
     </select>
+    <section class="form-group">
+      <select name="min" id="category" class="form-control">
+      <option value="">Minimum</option>
+      {{#each priceRange as |price|}}
+      <option value="{{ price.value }}" {{#if price.min }}selected{{/if}}>{{ price.pretty }}</option>
+      {{/each}}
+    </select>
+    </section>
+    <section class="form-group">
+      <select name="max" id="category" class="form-control">
+      <option value="">Maximum</option>
+      {{#each priceRange as |price|}}
+      <option value="{{ price.value }}" {{#if price.max }}selected{{/if}}>{{ price.pretty }}</option>
+      {{/each}}
+    </select>
+    </section>
   </section>
   <button class="btn btn-info">Filter</button>
+  <a href="{{ productsPath }}" class="btn btn-default">Reset</a>
 </form>
 
-
-{{#if products.length }}
+<hr> {{#if products.length }}
 <table class="table">
   <thead>
     <tr>
