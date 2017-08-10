@@ -10,10 +10,15 @@ const sqlModels = require("./models/sequelize");
 const ProductsController = require("./controllers/products");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
+const stripe = require("stripe")(process.env.STRIPE_SK);
 
 const products = require("./routes/products");
 const cart = require("./routes/cart");
 const checkout = require("./routes/checkout");
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
