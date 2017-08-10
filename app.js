@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.all("/", (req, res) => res.redirect("/products"));
+app.all("/", (req, res) => {return res.redirect("/products")});
 
 app.use("/products", require("./routers/products"));
 

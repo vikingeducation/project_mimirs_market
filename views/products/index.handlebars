@@ -1,6 +1,56 @@
-<header class="page-header">
+<header class="page-header text-center">
   <h1>Products</h1>
+
+<form action="/products" method="get">
+   <div class="form-group row">
+     <label for="search"></label>
+     
+     <div class="col-sm-3">
+       <input type="text" class="form-control" name="search" id="search" placeholder="search">
+     </div>
+     Lorem Ipsom Here! {{categories.length}}
+     <label for="categoryFilter"></label>
+     <div class="col-sm-2">
+       <select class="form-control" name="category" id="categoryFilter">
+         <option value="All">Categories</option>
+
+         {{#each categories as |category|}}
+         <option value="{{category.id}}">{{category.name}}</option>
+         {{/each}}
+       </select>
+     </div>
+
+     <div class="col-sm-2">
+       <input type="number" class="form-control" min="0" name="min" id="min" placeholder="Min price">
+     </div>
+
+     <div class="col-sm-2">
+       <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
+     </div>
+ 
+     <label for="sortSelect" ></label>
+     <div class="col-sm-2">
+       <select class="form-control" name="sort" id="sortSelect">
+         <option value="">Sort By</option>
+         <option value="name">Sort by Name Ascending</option>
+         <option value="nameDesc">Sort by Name Decending</option>
+         <option value="price">Sort by Price Ascending</option>
+         <option value="priceDesc">Sort by Price Descending</option>
+         <option value="created">Sort by Newest First</option>
+         <option value="createdDesc">Sort by Oldest First</option>
+       </select>
+   </div>
+
+   <br>
+   <br>
+   <button type="submit" class="btn btn-primary">Search</button>
+ </div>
+  </form>
+
+
 </header>
+
+
 
 
 {{#if products.length }}
