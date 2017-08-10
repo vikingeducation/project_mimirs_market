@@ -7,7 +7,8 @@ module.exports = {
 				{
 					model: models.Category
 				}
-			]
+			],
+			order: [["name", "ASC"]]
 		};
 
 		if (Object.keys(req.query).length) {

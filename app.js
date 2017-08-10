@@ -44,6 +44,12 @@ app.use("/products", products);
 
 app.get("/", ProductsController.listProducts);
 
+app.get("/cart", (req, res) => {
+  sqlModels.Product.findAll({ price: { $lt: 200 } }).then(products => {
+    res.render("cart", { products });
+  });
+});
+
 app.listen(3000, () => {
   console.log("Now listening...");
 });
