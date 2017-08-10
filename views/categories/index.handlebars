@@ -3,27 +3,20 @@
 </header>
 
 
-{{#if categories.length }}
-<table class="table">
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Items</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each categories as |category| }}
-    <tr>
-      <td>
-        <a href="{{ categoryPath category.id }}">{{ category.name }}</a>
-      </td>
-      <td>
-        {{ category.Products.length }}
-      </td>
-    </tr>
-    {{/each }}
-  </tbody>
-</table>
-{{else }}
+{{#if categories.length }} {{#each categories as |category| }}
+<div class="col-sm-6 col-md-4 col-lg-3">
+  <article class="panel panel-default">
+    <section class="panel-body">
+      <a href="{{ categoryPath category.id }}">
+        <h4>
+          {{ category.name }}
+        </h4>
+      </a>
+      <h5>
+        {{ category.Products.length }} items
+      </h5>
+  </article>
+</div>
+{{/each }} {{else }}
 <p class="text-danger">No categories</p>
 {{/if }}

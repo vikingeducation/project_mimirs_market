@@ -3,7 +3,7 @@ const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
 
 router.get("/", (req, res) => {
-  Category.findAll({ include: Product })
+  Category.findAll({ include: Product, order: [["name", "ASC"]] })
     .then(categories => res.render("categories/index", { categories }))
     .catch(e => res.status(500).send(e.stack));
 });
