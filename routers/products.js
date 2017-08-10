@@ -4,13 +4,12 @@ const models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
 const helpers = require("../helpers/productsHelpers");
-const queryFind = require("../dbSequelize/queries");
+const { queryFind, getProductPageInfo } = require("../dbSequelize/queries");
 
 //
 let queryParams = {};
 
 router.get('/', (req, res) => {
-
   let info = [
     queryFind(queryParams),
     Category.findAll()
@@ -32,9 +31,19 @@ router.post('/query', (req, res) => {
   res.redirect(helpers.productsPath());
 })
 
+router.get('/:productId/category/:CategoryId', (req, res) => {
+  let productId = req.params.productId;
+  let CategoryId = req.params.CategoryId;
+  console.log(productId);
+  console.log(CategoryId);
 
-// router.get('/products/:id', (req, res) => {
-//
-// })
+  getProductPageInfo(productId, CategoryId)
+  .then((results) => {
+    let { productSel, products } = results;
+    console.log(productSel);
+    res.render('product', { productSel, products })
+  })
+
+})
 
 module.exports = router;

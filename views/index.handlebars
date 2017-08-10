@@ -78,7 +78,7 @@
       <section class="product-box">
         <img src="{{product.imageUrl}}" class="img-responsive" align="middle" />
         <h3><strong>Price: </strong>${{ product.price }}.00</h3>
-        <h3><strong>Name: </strong>{{ product.name }}</h3>
+        <a href="/products/{{product.id}}/category/{{product.CategoryId}}"><h3><strong>Name: </strong>{{ product.name }}</h3></a>
         <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
         <div class="text-center cart-button"><button type="button" class="btn btn-primary">Add to Cart</button></div>
       </section>

@@ -59,7 +59,27 @@ const genSearch = function(stringSearch, andArray) {
  })
 }
 
+const getProductPageInfo = function(productId, CategoryId) {
+  return Product.findAll({
+    include: models.Category,
+    where: { CategoryId: CategoryId }
+  })
+  .then(results => {
+      let products = results.map(product => product.dataValues);
+      let productSel = {};
+      products.forEach((product, index) => {
+
+        if(product.id === parseInt(productId)) {
+          productSel = products.splice(index, 1);
+        }
+      })
+      return { productSel, products };
+  })
+}
 
 
 
-module.exports = queryFind;
+module.exports = {
+  queryFind,
+  getProductPageInfo
+}

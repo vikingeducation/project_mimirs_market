@@ -1,4 +1,6 @@
 <div class="row">
+  {{#if productSel}}
+  {{#each productSel as |productSel|}}
   <div class="col-xs-12">
     <h2>Product</h2>
       <section class="product-box">
@@ -10,6 +12,8 @@
         <div class="text-center cart-button"><button type="button" class="btn btn-primary">Add to Cart</button></div>
       </section>
   </div>
+  {{/each}}
+  {{/if}}
 </div>
 
 <div class="row">
