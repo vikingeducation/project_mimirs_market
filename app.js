@@ -13,6 +13,7 @@ const User = mongoose.model("User");
 
 const products = require("./routes/products");
 const cart = require("./routes/cart");
+const checkout = require("./routes/checkout");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 
 app.use("/products", products);
 app.use("/cart", cart);
+app.use("/checkout", checkout);
 
 app.get("/", ProductsController.listProducts);
 

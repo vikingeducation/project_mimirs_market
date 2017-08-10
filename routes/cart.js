@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const ProductsController = require("./../controllers/products");
 
-router.get("/", ProductsController.showCart);
+router.get("/", (req, res) => {
+	ProductsController.showCart(req, res).then(products => {
+		res.render("cart", { products: products[0], sum: products[1] });
+	});
+});
 
 router.post("/:id/quantity", (req, res) => {
 	if (isNaN(Number(req.body.quantity))) {

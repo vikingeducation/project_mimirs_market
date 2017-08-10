@@ -93,17 +93,22 @@ module.exports = {
 			});
 		}
 
-		models.Product
-			.findAll({ where: { id: { in: productIds } } })
-			.then(products => {
-				let sum = 0;
-				products.forEach(product => {
-					sum += product.price * quantities[product.id];
-					product.quantity = quantities[product.id];
-				});
+		let p = new Promise((resolve, reject) => {
+			models.Product
+				.findAll({ where: { id: { in: productIds } } })
+				.then(products => {
+					let sum = 0;
+					products.forEach(product => {
+						product.total = product.price * quantities[product.id];
+						sum += product.total;
+						product.quantity = quantities[product.id];
+					});
 
-				res.render("cart", { products: products, sum: sum });
-			});
+					resolve([products, sum]);
+				});
+		});
+
+		return p;
 	}
 };
 
