@@ -3,14 +3,19 @@ var router = express.Router();
 var models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
+const filter = require('./../helpers/filterHandler.js')
 
 // ----------------------------------------
 // Index
 // ----------------------------------------
 router.get("/", (req, res) => {
+  const queryObj = filter(req.query);
+
+  console.log("queryObj is: ", queryObj)
+
   let categories;
   let products;
-  Product.findAll({ include: models.Category })
+  Product.findAll(queryObj)
     .then(result => {
       products = result;
       return Category.findAll();

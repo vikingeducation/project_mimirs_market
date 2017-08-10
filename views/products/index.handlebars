@@ -8,11 +8,10 @@
      <div class="col-sm-3">
        <input type="text" class="form-control" name="search" id="search" placeholder="search">
      </div>
-     Lorem Ipsom Here! {{categories.length}}
-     <label for="categoryFilter"></label>
+     <label for="category"></label>
      <div class="col-sm-2">
-       <select class="form-control" name="category" id="categoryFilter">
-         <option value="All">Categories</option>
+       <select class="form-control" name="category" id="category">
+         <option value="Any">Any Category</option>
 
          {{#each categories as |category|}}
          <option value="{{category.id}}">{{category.name}}</option>
@@ -32,11 +31,11 @@
      <div class="col-sm-2">
        <select class="form-control" name="sort" id="sortSelect">
          <option value="">Sort By</option>
-         <option value="name">Sort by Name Ascending</option>
-         <option value="nameDesc">Sort by Name Decending</option>
-         <option value="price">Sort by Price Ascending</option>
-         <option value="priceDesc">Sort by Price Descending</option>
-         <option value="created">Sort by Newest First</option>
+         <option value="nameAsc">Sort by Name A-Z</option>
+         <option value="nameDesc">Sort by Name Z-A</option>
+         <option value="priceAsc">Sort by Price, Lowest First</option>
+         <option value="priceDesc">Sort by Price, Highest First</option>
+         <option value="createdAsc">Sort by Newest First</option>
          <option value="createdDesc">Sort by Oldest First</option>
        </select>
    </div>
