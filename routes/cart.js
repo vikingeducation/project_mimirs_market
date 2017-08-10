@@ -5,7 +5,12 @@ const ProductsController = require("./../controllers/products");
 router.get("/", ProductsController.showCart);
 
 router.post("/:id/quantity", (req, res) => {
-	if (req.body.quantity === "0") {
+	if (isNaN(Number(req.body.quantity))) {
+		console.log("Not a number!");
+		res.redirect("back");
+	}
+
+	if (Number(req.body.quantity) <= 0) {
 		removeSingle(req, res);
 	}
 
