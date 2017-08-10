@@ -1,5 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Condensed|Ubuntu+Mono');
+
 body {
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	font: 14px Ubuntu, "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+body.page-bg {
+	background: rgb(0, 0, 0); /* Old browsers */
+	background: -moz-linear-gradient(
+		top,
+		rgba(0, 0, 0, 1) 0px,
+		rgba(15, 15, 15, 1) 50px,
+		rgba(25, 25, 25, 1) 1080px
+	); /* FF3.6-15 */
+	background: -webkit-linear-gradient(
+		top,
+		rgba(0, 0, 0, 1) 0px,
+		rgba(15, 15, 15, 1) 50px,
+		rgba(25, 25, 25, 1) 1080px
+	); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 1) 0px,
+		rgba(15, 15, 15, 1) 50px,
+		rgba(25, 25, 25, 1) 1080px
+	); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+			startColorstr='#000000',
+			endColorstr='#383838',
+			GradientType=0
+		); /* IE6-9 */
+	background: url('../../images/page-bg.jpg') no-repeat fixed center;
+	background-size: cover;
+}
+
+.page-nav {
+	z-index: 1;
+	position: fixed;
+	left: 0;
+	right: 0;
+	box-shadow: 0 1px 2px #111;
+}
+
+.page-container {
+	min-width: 1280px;
+	z-index: 0;
+}
+
+.page-footer {
+	z-index: -2;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	box-shadow: 0 -1px 2px #222;
+	border-top: 1px solid #111;
+	background-color: #222;
+	height: 100px;
 }
 
 a {
@@ -10,8 +65,74 @@ a {
 	margin-top: 0;
 }
 
-.mimir-bg {
-	background: url('../../images/landing_bg.jpg');
+.refine-well {
+	position: absolute;
+	max-width: 50%;
+	top: 25px;
+	left: 25%;
+	color: #eee;
+	border: 1px solid #888;
+	background-color: #555;
+	box-shadow: 0 4px 8px #111;
+}
+
+@media (max-width: 1540px) {
+	.refine-well {
+		max-width: 70%;
+		left: 15%;
+	}
+}
+
+/*** LANDING PAGE ***/
+.landing-page-bg {
+	background: url('../../images/landing-page-bg.jpg');
+	background-position: center top;
+	background-color: black;
+	background-size: 50%;
+	background-repeat: no-repeat;
+}
+
+.landing-header-bg {
+	border-radius: 2em !important;
+	border: 1px solid #333;
+	box-shadow: 0 4px 6px #000;
+	background: url('../../images/landing-header-bg.jpg');
 	background-size: cover;
-	color: white;
+	color: #eee;
+}
+
+.landing-page-footer {
+	box-shadow: 0 -12px 20px #000;
+	background-color: #000;
+	color: #ccc;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/*** PRODUCTS PAGES ***/
+.products-container {
+	background: rgba(175, 175, 175, 1);
+	box-shadow: 0px 0 30px #000;
+}
+.products-list {
+	margin-top: 280px;
+}
+
+a.product {
+	margin-bottom: 0;
+}
+
+div.product {
+	box-shadow: 0 1px 2px #444;
+	padding: 4px;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
 }

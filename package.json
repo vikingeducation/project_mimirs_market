@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"sql:seed": "sequelize --config config/sequelize.js db:migrate:undo:all && sequelize --config config/sequelize.js db:migrate && sequelize --config config/sequelize.js db:seed:all",
+		"sql:seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
 		"start": "which nodemon > /dev/null && nodemon ./bin/www || node ./bin/www",
 		"sql:migrate:undo": "npm run sql db:migrate:undo:all",
 		"sql:migrate": "npm run sql db:migrate",
