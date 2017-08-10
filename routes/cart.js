@@ -14,4 +14,12 @@ router.post("/:id/quantity", (req, res) => {
 	res.redirect("/cart");
 });
 
+router.post("/:id/remove", (req, res) => {
+	req.session.cart = req.session.cart.filter(el => {
+		return el.id !== req.params.id;
+	});
+
+	res.redirect("/cart");
+});
+
 module.exports = router;
