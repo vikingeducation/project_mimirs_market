@@ -34,8 +34,6 @@ function parseParams(params, query) {
 		];
 	}
 
-	console.log(params.where["$or"]);
-
 	if (query.category) {
 		if (query.category.length) {
 			params.where["categoryId"] = query.category;
@@ -45,6 +43,11 @@ function parseParams(params, query) {
 			$gte: query.minPrice,
 			$lte: query.maxPrice
 		};
+	}
+
+	if (query.sortBy) {
+		const sort = query.sortBy.split("-");
+		params.order = [[sort[0], sort[1]]];
 	}
 
 	return params;
