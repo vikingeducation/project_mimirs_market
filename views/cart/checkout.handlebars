@@ -4,7 +4,7 @@
     <h3 class='col-xs-12' align='center'>Checkout</h3>
   </div>
 </div>
-<form method='POST' action='pay' class='row'>
+<form method='POST' action='/checkout' class='row'>
   <!--left section      BILLING INFO -->
   <div class='col-xs-6'>
     <div class="panel panel-primary">
@@ -58,11 +58,11 @@
       <div class="panel-body">
         <div class='col-xs-12'>
           <div class='row'>
-            <div class='col-xs-6'>
+            <div class='col-xs-4'>
               <img src='/{{item.img}}'class='smallImg'>
             </div>
-            <div class='col-xs-6'>
-              <p>{{item.name}} ${{item.price}} x {{item.quantity}} = ${{item.subtotal}}</p>
+            <div class='col-xs-8 text-right'>
+              <p>{{item.name}} ||   ${{item.price}} x {{item.quantity}} = ${{item.subtotal}}</p>
             </div>
           </div>
         </div>
@@ -73,9 +73,15 @@
     <div class='col-xs-12'>
       <!-- BUY IT NOW-->
       <p>Your Total: ${{total}}</p>
-      <button type='submit' class="btn btn-danger">Return to Cart</button>
+      <!-- figure out how to submit a get request within a form -->
+      <!-- <form method='GET' action='/cart'>
+        <button type='submit' class="btn btn-danger">Return to Cart</button>
+      </form> -->
       <button type='submit' class="btn btn-success">Submit Payment</button>
     </div>
   </div>
 
+</form>
+<form method='GET' action='/cart'>
+  <button type='submit' class="btn btn-danger">Return to Cart</button>
 </form>

@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   states
     .then(stateList => {
       return res.render("cart/checkout", {
-        cart: req.session.cart,
+        cart: makeCart(req.session.cart),
         states: stateList,
         total: getTotal(req.session.cart)
       });
@@ -26,6 +26,27 @@ function getTotal(cart) {
   return cart.reduce((sum, item) => {
     return sum + item.price * item.quantity;
   }, 0);
+}
+//not needed anymore?
+// function getSubtotals(cart) {
+//   return cart.map(item => {
+//     return item.price * item.quantity;
+//   });
+// }
+//make a new obj to pass to my checkout view that includes the subtotal
+//assuming that items aren't deeply nested
+function makeCart(cart) {
+  //make a copy of the cart
+  let newCart = cart.map(item => {
+    let newItem = {};
+    Object.keys(item).forEach(key => {
+      newItem[key] = item[key];
+    });
+    //add the subtotals
+    newItem["subtotal"] = newItem.price * newItem.quantity;
+    return newItem;
+  });
+  return newCart;
 }
 function getStates() {
   return new Promise(resolve => {
