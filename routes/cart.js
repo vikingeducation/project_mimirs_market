@@ -3,8 +3,8 @@ const router = express.Router();
 const ProductsController = require("./../controllers/products");
 
 router.get("/", (req, res) => {
-	ProductsController.showCart(req, res).then(products => {
-		res.render("cart", { products: products[0], sum: products[1] });
+	ProductsController.showCart(req, res).then(cart => {
+		res.render("cart", { products: cart.products, sum: cart.sum });
 	});
 });
 

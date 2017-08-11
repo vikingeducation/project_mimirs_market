@@ -10,8 +10,6 @@ module.exports = {
 			});
 		}
 
-		console.log(typeof productIds[0]);
-
 		let params = {
 			include: [
 				{
@@ -104,7 +102,7 @@ module.exports = {
 						product.quantity = quantities[product.id];
 					});
 
-					resolve([products, sum]);
+					resolve({ products, sum });
 				});
 		});
 
