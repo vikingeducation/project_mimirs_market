@@ -1,0 +1,9 @@
+html * {
+  text-align: center;
+}
+
+#cart-dropdown:nth-child(even) {
+}
+
+#cart-dropdown:nth-child(odd) {
+}

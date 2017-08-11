@@ -5,9 +5,9 @@ let faker = require("Faker");
 let categoriesName = [
   "Weapons",
   "Armor",
-  "Heads",
+  "Thatch-Roof-Cottages",
   "Pelts",
-  "Parisols",
+  "Shoes",
   "Shields",
   "Grog",
   "Torches",

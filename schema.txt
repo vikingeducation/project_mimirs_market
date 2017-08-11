@@ -40,8 +40,10 @@ MONGODB
 
 Orders: [{
 - id
-- userId (Sequelize)
-- name
+- description
+- total
+- first name
+- last name
 - email
 - items: [{
 name, category, quantity
@@ -55,5 +57,5 @@ name, category, quantity
 }]
 
 OrderItems: [{
-name, category, quantity
+name, price, sku, description, category, quantity
 }, {}, {}]

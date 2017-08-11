@@ -1,0 +1,49 @@
+<header class="page-header">
+  <h1>My Cart</h1>
+</header>
+{{#if err}}
+  <h3 style="color: red;">{{err}}</h3>
+{{/if}}
+<div>
+  <form action="/checkout" method="get">
+    <button style="margin: 30px;" class="btn btn-success">Checkout</button>
+  </form>
+  <form action="/cart/clear" method="post">
+    <input name="_method" type="hidden" value="PUT"></input>
+    <button type="submit" style="margin: 30px;" class="btn btn-danger">Clear Cart</button>
+  </form>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Total: ${{total}}</h2>
+  </div>
+  <div class="panel-body">
+    {{#each items as |item|}}
+      <div style="height: 170px; border: 1px solid black;" class="col-xs-4 col-xs-offset-2">
+        <img style="width: 10%; margin: 20px;" src="{{item.imageUrl}}">
+        <p>${{item.price}}</p>
+        <p><a href="/products/show/{{item.id}}"><strong>{{item.name}}</strong></a></p>
+        <p>Quantity: {{item.quantity}}</p>
+      </div>
+      <div style="height: 170px; border: 1px solid black;" class="col-xs-4">
+        <form method="POST" action="/cart/edit">
+          <hr>
+          <div class="form-group">
+            <input name="_method" type="hidden" value="PATCH"></input>
+            <input class="form-control" style="width: 80px;" name="newQuantity" type="text" placeholder="quantity"></input>
+            <input type="hidden" name="newQuantityItem" value="{{item.id}}"></input>
+          </div>
+          <button style="float: left;" type="submit" class="btn btn-primary">Set Quantity</button>
+        </form>
+        <form method="POST" action="/cart/delete/">
+          <input type="hidden" name="_method" value="DELETE"></input>
+          <input type="hidden" name="delete" value="{{item.id}}">
+          <button style="float: right;" type="submit" class="btn btn-danger">Remove</button>
+          <hr>
+        </form>
+      </div>
+    {{/each}}
+  </div>
+
+</div>

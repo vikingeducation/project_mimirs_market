@@ -1,68 +1,79 @@
-var express = require("express");
-var app = express();
+//Express app
+const express = require("express");
+const app = express();
 
-var bodyParser = require("body-parser");
+//Modules
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const cookieSession = require("cookie-session");
+const methodOverride = require("method-override");
+const getPostSupport = require("express-method-override-get-post-support");
+const morgan = require("morgan");
+const morganToolkit = require("morgan-toolkit")(morgan);
+const expressHandlebars = require("express-handlebars");
+const hbs = expressHandlebars.create({
+  partialsDir: "views/partials",
+  defaultLayout: "application"
+});
+
+//Custom middleware modules
+const mdw = require("./lib/middleware");
+
+//Database models
+const { Product } = require("./models/sequelize");
+
+//Routers
+const productsRouter = require("./routers/products");
+const cartRouter = require("./routers/cart");
+const checkoutRouter = require("./routers/checkout");
+
+//View engine
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+
+//Middleware from modules
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-var cookieSession = require("cookie-session");
+app.use(express.static(`${__dirname}/public`));
+app.use(morgan("tiny"));
+app.use(morganToolkit());
 app.use(
   cookieSession({
     name: "session",
-    keys: ["asdf1234567890qwer"]
+    keys: ["asdfqwerfdsarewq"]
   })
 );
-
-const methodOverride = require("method-override");
-const getPostSupport = require("express-method-override-get-post-support");
 app.use(
   methodOverride(
     getPostSupport.callback,
     getPostSupport.options // { methods: ['POST', 'GET'] }
   )
 );
-app.use((req, res, next) => {
-  req.session.backUrl = req.header("Referer") || "/";
-  next();
-});
-app.use(express.static(`${__dirname}/public`));
-var morgan = require("morgan");
-var morganToolkit = require("morgan-toolkit")(morgan);
-app.use(morgan("tiny"));
-app.use(morganToolkit());
 
-const mongoose = require("mongoose");
-app.use((req, res, next) => {
-  if (mongoose.connection.readyState) {
-    next();
-  } else {
-    require("./mongo")().then(() => next());
-  }
-});
-
+//Initial redirect
 app.get("/", (req, res) => {
-  res.redirect("/products");
+  return res.redirect("/products");
 });
-var productsRouter = require("./routers/products");
+
+//Middleware from files
+app.use(mdw.setBackUrl);
+app.use(mdw.mongooseReady);
+app.use(mdw.retainSortField);
+app.use(mdw.cartFiller);
+
+//Routes
 app.use("/products", productsRouter);
+app.use("/cart", cartRouter);
+app.use("/checkout", checkoutRouter);
 
-var expressHandlebars = require("express-handlebars");
-var hbs = expressHandlebars.create({
-  partialsDir: "views/partials",
-  defaultLayout: "application"
-});
-
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
-
-var port = process.env.PORT || process.argv[2] || 3000;
-var host = "localhost";
-
-var args;
+//Set up and start server
+const port = process.env.PORT || process.argv[2] || 3000;
+const host = "localhost";
+let args;
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
-
 args.push(() => {
   console.log(`Listening: http://${host}:${port}`);
 });
-
 app.listen.apply(app, args);
 
 module.exports = app;

@@ -8,14 +8,6 @@ var models = {
 
 require("./mongo")().then(() => {
   repl.context.models = models;
-  // repl.context.helpers = helpers;
-  //
-  // // ----------------------------------------
-  // // Helpers
-  // // ----------------------------------------
-  // Object.keys(helpers).forEach(key => {
-  //   repl.context[key] = helpers[key];
-  // });
 
   // ----------------------------------------
   // Mongoose

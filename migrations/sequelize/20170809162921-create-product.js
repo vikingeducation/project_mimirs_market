@@ -14,6 +14,9 @@ module.exports = {
       description: {
         type: Sequelize.CHAR
       },
+      imageUrl: {
+        type: Sequelize.CHAR
+      },
       price: {
         type: Sequelize.INTEGER
       },

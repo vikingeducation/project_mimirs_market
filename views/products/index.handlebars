@@ -6,34 +6,107 @@
   <div class="panel-heading">
     <form style="margin: 10px;" action='/products/search' method='POST' class="form-inline">
       <div class="form-group">
-        Search: <input class='form-control' type='text' placeholder="search" name='search'>
-        <button class="btn btn-info">GO!</button>
+        Search: <input id="search" class='form-control' type='text' placeholder="search" name='search'>
+        <button class="btn btn-info">Search</button>
       </div>
     </form>
+    <hr>
+    <form method="POST" action="/products/filter" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Filter By:
+        <select id="filter-options" class="form-control" name="filterOption[category]">
+          <option selected="selected" value="">Category</option>
+          <option id="Weapons" value="Weapons">Weapons</option>
+          <option id="Armor" value="Armor">Armor</option>
+          <option id="Thatch-Roof-Cottages" value="Thatch-Roof-Cottages">Thatch Roof Cottages</option>
+          <option id="Pelts" value="Pelts">Pelts</option>
+          <option id="Shoes" value="Shoes">Shoes</option>
+          <option id="Shields" value="Shields">Shields</option>
+          <option id="Grog" value="Grog">Grog</option>
+          <option id="Torches" value="Torches">Torches</option>
+          <option id="Ships" value="Ships">Ships</option>
+          <option id="Horses" value="Horses">Horses</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select id="filter-options" class="form-control" name="filterOption[minPrice]">
+          <option selected="selected" value="0">Min Price</option>
+          <option id="0" value="0">$0</option>
+          <option id="100" value="100">$100</option>
+          <option id="250" value="250">$250</option>
+          <option id="500" value="500">$500</option>
+          <option id="1000" value="1000">$1000</option>
+          <option id="1500" value="1500">$1500</option>
+          <option id="2000" value="2000">$2000</option>
+          <option id="2500" value="2500">$2500</option>
+          <option id="3000" value="3000">$3000</option>
+          <option id="3500" value="3500">$3500</option>
+          <option id="4000" value="4000">$4000</option>
+          <option id="4500" value="4500">$4500</option>
+        </select>
+      </div>
+      -
+      <div class="form-group">
+        <select id="filter-options" class="form-control" name="filterOption[maxPrice]">
+          <option selected="selected" value="5000">Max Price</option>
+          <option id="100" value="100">$100</option>
+          <option id="250" value="250">$250</option>
+          <option id="500" value="500">$500</option>
+          <option id="1000" value="1000">$1000</option>
+          <option id="1500" value="1500">$1500</option>
+          <option id="2000" value="2000">$2000</option>
+          <option id="2500" value="2500">$2500</option>
+          <option id="3000" value="3000">$3000</option>
+          <option id="3500" value="3500">$3500</option>
+          <option id="4000" value="4000">$4000</option>
+          <option id="4500" value="4500">$4500</option>
+          <option id="5000" value="5000">$5000</option>
+        </select>
+      </div>
+      <button class="btn btn-info">Filter</button>
+    </form>
+    <hr>
     <form method="POST" action="/products/sort" style="margin: 10px;" class="form-inline sort-select">
       <div class="form-group">
         Sort By:
-        <select class="form-control" name="sortOption">
-          <option value="nameA">Name Ascending</option>
-          <option value="nameD">Name Descending</option>
-          <option value="priceA">Price Ascending</option>
-          <option value="priceD">Price Descending</option>
-          <option value="dateD">Newest First</option>
-          <option value="dateA">Oldest First</option>
+        <select id="sort-options" class="form-control" name="sortOption">
+          <option selected="selected" value="id-ASC"></option>
+          <option id="name-ASC" value="name-ASC">Name Ascending</option>
+          <option id="name-DESC" value="name-DESC">Name Descending</option>
+          <option id="price-ASC" value="price-ASC">Price Ascending</option>
+          <option id="price-DESC" value="price-DESC">Price Descending</option>
+          <option id="createdAt-DESC" value="createdAt-DESC">Newest First</option>
+          <option id="createdAt-ASC" value="createdAt-ASC">Oldest First</option>
         </select>
+        {{#each products as |prod|}}
+          <input type="hidden" name="shownProducts[{{prod.id}}]" value="{{prod.id}}"></input>
+        {{/each}}
       </div>
-      <button class="btn btn-info">GO!</button>
+      <button class="btn btn-info">Sort</button>
     </form>
+    <h3 id="searchValueDisplay"></h3>
+    <h3 id="sortOptionDisplay"></h3>
   </div>
   <div class="panel-body">
     {{#each products as |prod|}}
-    <div style="height: 600px; border: 1px solid black;" class="col-xs-4">
-      <img style="width: 100%;" src="http://4.bp.blogspot.com/-1PPIpuTPnPY/UCudijf1DPI/AAAAAAAABgY/Ohzq0co9uyk/s1600/generic.jpg">
-      <h3>${{prod.price}}</h3>
-      <h3><a href="/products/show/{{prod.id}}">{{prod.name}}</a></h3>
-      <h5>{{prod.description}}</h5>
-      <button class="btn btn-primary">Add to Cart</button>
-    </div>
+      <div style="height: 650px; border: 1px solid black;" class="col-xs-4">
+        <img style="width: 75%; margin: 20px;" src="{{prod.imageUrl}}">
+        <h3>${{prod.price}}</h3>
+        <h3><a href="/products/show/{{prod.id}}">{{prod.name}}</a></h3>
+        <h5>{{prod.description}}</h5>
+        {{#if prod.inCart }}
+          <form method="get" action="/cart">
+            <input type="hidden"></input>
+            <button style="color: red" type="submit" class="btn btn-warning"><strong>Edit in Cart</strong></button>
+          </form>
+        {{else}}
+          <form method="post" action="/cart/add">
+            <input type="hidden" value="{{prod.id}}" name="itemId"></input>
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+          </form>
+        {{/if}}
+      </div>
     {{/each}}
   </div>
 

@@ -5,18 +5,46 @@
         <li class="active"><a href="/products">Mimir's Market<span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/products" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span></a>
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-          <ul class="dropdown-menu">
-            <!-- put cart items here later -->
-            {{#each products as |p|}}
-            <li>> {{p.name}}</li>
-            <li>${{p.price}}</li>
-            <li><hr></li>
+          <a href="/cart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span> ({{items.length}})</a>
+          <ul style="max-height: 500px; overflow: scroll;" id="cart-dropdown" class="dropdown-menu">
+            <li><strong>Your Items:</strong></li>
+            {{#each items as |i|}}
+              <li style="padding: 10%;">
+                <img style="width: 50%;" src="{{i.imageUrl}}">
+                <br>
+                <strong>{{i.name}}</strong><br>
+                <span style="color: blue;">${{i.price}}</span><br>
+                <span>Quantity: {{i.quantity}}</span><br>
+              </li>
+              <li><br>. . . . . . . . . . . . .</li><br>
             {{/each}}
-            <li><hr></li>
-            <li><a href="/">Checkout</a></li>
+            <li>
+              <hr>
+            </li>
+            <li><strong style="background: yellow;">Total: ${{total}}</strong></li>
+            <li>
+              <hr>
+            </li>
+            <form action="/cart" method="get">
+              <li><button class="btn btn-primary">View Cart</button></li>
+              <hr>
+            </form>
+
+            <form action="/checkout" method="get">
+              <li><button class="btn btn-success">Checkout</button></li>
+              <hr>
+            </form>
           </ul>
+        </li>
+        <li>
+          <a href="/" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span></a>
+        </li>
+        <li>
+          <a href="/" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-dashboard"></span></a>
         </li>
         <li><a href="/">Logout</a></li>
       </ul>

@@ -29,6 +29,7 @@
   "homepage": "https://github.com/IDHalverson/project_mimirs_market#readme",
   "dependencies": {
     "Faker": "^0.7.2",
+    "asyncawait": "^1.0.6",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
