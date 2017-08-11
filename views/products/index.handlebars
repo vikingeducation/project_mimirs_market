@@ -40,7 +40,7 @@
   <br>
   <fieldset>
     <input type="text" name="search" placeholder="Search..." value="{{ search }}" class="form-control">
-    <button class="btn btn-info">Filter</button>
+    <button class="btn btn-success">Filter/Search</button>
     <a href="{{ productsPath }}" class="btn btn-warning">Reset</a>
   </fieldset>
 </form>
@@ -50,5 +50,5 @@
   {{#each products as |product| }} {{> shared/_product product=product }} {{/each }}
 </section>
 {{else }}
-<p class="text-danger">No products match that filter. Try again.</p>
+<p class="text-danger">No products match your search. Try again.</p>
 {{/if }}
