@@ -3,7 +3,7 @@ const Product = models.Product;
 const Category = models.Category;
 const _ = require("lodash");
 
-const queryFind = function(queryParams) {
+const queryFind = function(queryParams = {}) {
   let queryOptions = { include: models.Category };
 
   // andArray for filters
@@ -77,9 +77,27 @@ const getProductPageInfo = function(productId, CategoryId) {
   })
 }
 
+const genCartItem = function(productId) {
+  return Product.findById(productId,
+    { include: models.Category }
+  )
+  .then((product) => {
+    return {
+      productId: product.id,
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      quantity: 1,
+      CategoryId: product.CategoryId,
+      category: product.Category.dataValues.name
+    }
+  })
+}
+
 
 
 module.exports = {
   queryFind,
-  getProductPageInfo
+  getProductPageInfo,
+  genCartItem
 }

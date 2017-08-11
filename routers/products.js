@@ -3,15 +3,16 @@ const router = express.Router();
 const models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
-const helpers = require("../helpers/productsHelpers");
+const { ProductsHelpers } = require("../helpers");
 const { queryFind, getProductPageInfo } = require("../dbSequelize/queries");
 
 //
-let queryParams = {};
+// let queryParams = {};
 
 router.get('/', (req, res) => {
+
   let info = [
-    queryFind(queryParams),
+    queryFind(req.session.queryParams),
     Category.findAll()
   ]
 
@@ -20,15 +21,15 @@ router.get('/', (req, res) => {
     products = infoArray[0];
     // console.log(products);
     categories = infoArray[1].map(category => category.dataValues);
-    res.render("index", { products, categories });
+    return res.render("index", { products, categories });
   })
   .catch(e => res.send(e));
 })
 
 router.post('/query', (req, res) => {
-  queryParams = req.body;
+  req.session.queryParams = req.body;
 
-  res.redirect(helpers.productsPath());
+  res.redirect(ProductsHelpers.productsPath());
 })
 
 router.get('/:productId/category/:CategoryId', (req, res) => {
@@ -37,9 +38,9 @@ router.get('/:productId/category/:CategoryId', (req, res) => {
 
   getProductPageInfo(productId, CategoryId)
   .then((results) => {
-    res.render('product', results)
+    return res.render('product', results)
   })
-
 })
+
 
 module.exports = router;

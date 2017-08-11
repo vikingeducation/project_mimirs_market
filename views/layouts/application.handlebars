@@ -13,6 +13,12 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-inverse">
+    <a class="navbar-brand" href="/products">Mimir's Market</a>
+
+    <a type="button" href="/cart" class="btn btn-info navbar-toggler navbar-toggler-right"><span class="glyphicon glyphicon-shopping-cart"> {{cartQuantity}}</span></a>
+
+  </nav>
   <div class="container">
     {{{ body }}}
   </div>

@@ -28,9 +28,28 @@ app.use((req, res, next) => {
   next();
 })
 
+// Method Override
+const methodOverride = require('method-override');
+const getPostSupport = require('express-method-override-get-post-support');
+
+
+app.use(methodOverride(
+  getPostSupport.callback,
+  getPostSupport.options // { methods: ['POST', 'GET'] }
+));
+
 // Passing our routes
 const productsRoutes = require("./routers/products");
 app.use("/products", productsRoutes);
+
+const cartRoutes = require("./routers/cart");
+app.use("/cart", cartRoutes)
+
+
+// Direct to products page
+app.get('/', (req, res) => {
+  return res.redirect("/products");
+})
 
 // Setting up port
 var port = process.env.PORT || process.argv[2] || 3000;
