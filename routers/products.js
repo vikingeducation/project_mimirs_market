@@ -39,7 +39,7 @@ router.get("/", (req, res) => {
         return el.name.trim();
       });
       let productsObj = isInCart(req.session.cart, results[1]);
-      res.render("products/index", {
+      return res.render("products/index", {
         products: productsObj,
         categories: categories,
         cart: req.session.cart
@@ -57,7 +57,7 @@ router.get("/show/:productId", (req, res) => {
       where: { categoryId: product.categoryId, id: { $ne: product.id } },
       limit: 6
     }).then(relatedProducts => {
-      res.render("products/show", {
+      return res.render("products/show", {
         product: product,
         products: relatedProducts
       });
@@ -77,7 +77,7 @@ router.post("/search", (req, res) => {
       $or: [{ name: { $regexp: r } }, { description: { $regexp: r } }]
     }
   }).then(products => {
-    res.render("products/index", { products });
+    return res.render("products/index", { products });
   });
 });
 
@@ -95,7 +95,7 @@ router.post("/filter", (req, res) => {
       let categoriesStrings = results[0].map(el => {
         return el.name.trim();
       });
-      res.render("products/index", {
+      return res.render("products/index", {
         products: results[1],
         categoryName: category.name,
         categories: categoriesStrings

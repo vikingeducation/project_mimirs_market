@@ -2,22 +2,9 @@ var express = require("express");
 var router = express.Router();
 const { Product, Category } = require("../models/sequelize");
 
-//util functions
-function getTotal(cart) {
-  return cart.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
-}
-let removeFromCart = (cart, itemId) => {
-  let newCart = cart.filter(item => {
-    return item.id !== Number(itemId);
-  });
-  return newCart;
-};
-
 //show cart route
 router.get("/", (req, res) => {
-  res.render("cart/show", {
+  return res.render("cart/show", {
     cart: req.session.cart,
     total: getTotal(req.session.cart)
   });
@@ -86,5 +73,18 @@ router.post("/:id", (req, res) => {
   req.method = "GET";
   res.redirect("/cart");
 });
+
+//util functions
+function getTotal(cart) {
+  return cart.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
+}
+let removeFromCart = (cart, itemId) => {
+  let newCart = cart.filter(item => {
+    return item.id !== Number(itemId);
+  });
+  return newCart;
+};
 
 module.exports = router;

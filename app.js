@@ -45,6 +45,8 @@ var productsRouter = require("./routers/products");
 app.use("/products", productsRouter);
 const cartRouter = require("./routers/cart");
 app.use("/cart", cartRouter);
+const checkoutRouter = require("./routers/checkout");
+app.use("/checkout", checkoutRouter);
 
 var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({
