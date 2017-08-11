@@ -1,0 +1,24 @@
+
+<header>Your Cart</header>
+
+{{#each cart as |product|}}
+<div id={{product.id}} name={{product.id}} class="col-xs-6">
+  <h1>{{product.name}}</h1>
+<input type="text" name="quantity" id="quantity" pattern="[0-9]{0,99}" value={{product.quantity}}></input>
+    <p>Price: {{product.price}} per unit</p>
+    <form action="/checkout/add/{{product.id}}" method="post" class="col-xs-12">
+<button type="submit" class="btn btn-primary"> + </button>
+</form>
+<form action="/checkout/subtract/{{product.id}}" method="post" class="col-xs-12">
+<button type="submit" class="btn btn-primary"> - </button>
+</form>
+    <form action="/checkout/deleteItem/{{product.id}}" method="post" class="col-xs-12">
+<button type="submit" class="btn btn-primary">remove</button>
+    </form>
+    <img src={{product.sku}}  style="width:100px;height:100px;">
+</div>
+    {{/each}}
+
+    <form action="/register" method="get" class="col-xs-12">
+    <button type="submit" class="btn btn-primary"> Purchase </button>
+    </form>

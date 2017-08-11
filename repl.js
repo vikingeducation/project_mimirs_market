@@ -1,0 +1,23 @@
+var repl = require("repl").start({});
+var models = require("./models");
+
+// Make `models` and each model a global object in the REPL
+repl.context.models = models;
+Object.keys(models).forEach(modelName => {
+  repl.context[modelName] = models[modelName];
+});
+
+// Provide a convenience function `lg` to pass to `then()` and `catch()`
+// to output less verbose values for sequelize model query results
+repl.context.lg = data => {
+  if (Array.isArray(data)) {
+    if (data.length && data[0].dataValues) {
+      data = data.map(item => item.dataValues);
+    }
+  } else {
+    if (data.dataValues) {
+      data = data.dataValues;
+    }
+  }
+  console.log(data);
+};

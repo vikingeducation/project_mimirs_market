@@ -1,0 +1,33 @@
+
+
+
+
+<table class="col-xs-12">
+  <tr>
+    <th>firstname</th>
+    <th>lastname</th>
+    <th>email</th>
+    <th>streetaddress</th>
+    <th>totalCost</th>
+    <th>Product</th>
+    <th> # </th>
+    <th>Cost</th>
+    <th>Product</th>
+    <th> # </th>
+    <th>Cost</th>
+  </tr>
+  {{#each orders as |order|}}
+  <tr>
+    <td>{{order.firstname}}</td>
+      <td >{{order.lastname}}</td>
+      <td>{{order.email}}</td>
+      <td>{{order.streetaddress}}</td>
+      <td>{{order.totalcost}}</td>
+      {{#each order.products as |nested|}}
+<td>{{nested.name}}</td>
+<td>{{nested.quantity}}</td>
+<td>{{nested.price}}</td>
+      {{/each}}
+  </tr>
+    {{/each}}
+</table>

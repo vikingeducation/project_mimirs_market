@@ -1,0 +1,8 @@
+
+node_modules/
+<<<<<<< HEAD
+config/config.json/
+=======
+config/config.json
+>>>>>>> 286893e8866e559129d17ce24cf945fbc606e131
+

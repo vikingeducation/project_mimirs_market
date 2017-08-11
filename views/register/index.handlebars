@@ -1,0 +1,44 @@
+
+<header>Time to Pay</header>
+<h1 class="col-xs-12">Your total is {{cost}}</h1>
+
+<form action="/charges" method="post" class="col-xs-6">
+  first name
+  <input class="form-control" type="text" name="firstname" id="firstname"  pattern="[A-Za-z]{3, 20}" required="true"> </input>
+  last name
+  <input class="form-control" type="text" name="lastname" id="lastname"  pattern="[A-Za-z]{3, 20}" required="true"> </input>
+  email
+  <input class="form-control" type="text" name="email" id="email"  pattern="[A-Za-z0-9]{3, 20}" required="true">  </input>
+  street address
+  <input class="form-control" type="text" name="streetaddress" id="streetaddress"  pattern="[A-Za-z0-9]{3, 20}" required="true"> </input>
+  state
+  <input class="form-control" type="text" name="myState" id="myState"  pattern="[A-Za-z0-9]{3, 20}" required="true"> </input>
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_dgosTajRPHp51mUGJpVH5eWE"
+    data-amount={{cost}}
+    data-name="Stripe Node Test"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"></script>
+
+</form>
+
+
+{{#each cart as |product|}}
+<div id={{product.id}} name={{product.id}} class="col-xs-6">
+  <p>{{product.quantity}} Units of {{product.name}}</p>
+<input type="text" name="quantity" id="quantity" pattern="[0-9]{0,99}" value={{product.quantity}}></input>
+    <p>Price: {{product.price}} per unit</p>
+    <form action="/register/add/{{product.id}}" method="post" >
+<button type="submit" class="btn btn-primary"> + </button>
+</form>
+<form action="/register/subtract/{{product.id}}" method="post" >
+<button type="submit" class="btn btn-primary"> - </button>
+</form>
+    <form action="/register/deleteItem/{{product.id}}" method="post" >
+<button type="submit" class="btn btn-primary">remove</button>
+    </form>
+    <img src={{product.sku}}  style="width:100px;height:100px;">
+</div>
+    {{/each}}

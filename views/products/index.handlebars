@@ -1,0 +1,34 @@
+
+
+  <form action="/products/search" method="post">
+
+      <label for="name">name</label>
+      <input class="form-control" type="text" name="name" id="name"  pattern="[A-Za-z0-9]{3, 20}"></input>
+
+
+      <label for="priceMin">priceMin</label>
+      <input class="form-control" type="text" name="priceMin" id="priceMin"  pattern="[0-9]{3, 20}"></input>
+
+
+      <label for="priceMax">priceMax</label>
+      <input class="form-control" type="text" name="priceMax" id="priceMax"  pattern="[0-9]{3, 20}"></input>
+
+
+      <label for="descending">descending</label>
+      <input class="form-control" type="checkbox" name="descending" id="descending" ></input>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+
+
+{{#each products as |product|}}
+<div class="col-xs-3">
+  <a href="/products/{{product.id}}">
+  <p >Do you want {{product.name}}</p>
+    <p>It costs {{product.price}} money</p>
+    <p>Looks like</p>
+    <img src={{product.sku}}  style="width:100px;height:100px;">
+  </a>
+</div>
+    {{/each}}
