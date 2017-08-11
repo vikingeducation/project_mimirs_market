@@ -8,7 +8,7 @@
       </a>
     </header>
     <section class="panel-body">
-      <p><a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a></p>
+      <p>{{ product.Category.name }}</p>
       <p>Added on {{ product.prettyDate }}</p>
       <hr> {{> shared/_addOrUpdate product=product }}
   </article>

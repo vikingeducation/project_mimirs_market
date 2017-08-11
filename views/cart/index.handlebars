@@ -15,7 +15,7 @@
       </a>
     </header>
     <section class="panel-body">
-      <p>Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a></p>
+      <p>Category: {{ product.Category.name }}</p>
       <p>Subtotal: {{ product.subtotal }}</p>
       {{> shared/_updateCart product=product }}
     </section>
