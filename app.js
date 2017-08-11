@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const products = require("./routes/products");
 const cart = require("./routes/cart");
 const checkout = require("./routes/checkout");
+const admin = require("./routes/admin");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 app.use("/products", products);
 app.use("/cart", cart);
 app.use("/checkout", checkout);
+app.use("/admin", admin);
 
 app.get("/", ProductsController.listProducts);
 

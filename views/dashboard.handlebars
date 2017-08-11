@@ -1,0 +1,26 @@
+<h2>Admin Orders Index</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Description</th>
+			<th>Checkout Date</th>
+			<th>Revenue</th>
+			<th>Customer Email</th>
+			<th>Customer State</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each orders as |order|}}
+			<tr>
+				<td>{{order.id}}</td>
+				<td>{{order.description}}</td>
+				<td>{{order.createdAt}}</td>
+				<td>${{order.total}}.00</td>
+				<td>{{order.customer.email}}</td>
+				<td>{{order.customer.state}}</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

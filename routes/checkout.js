@@ -31,6 +31,7 @@ router.post("/charge", (req, res) => {
 
 	ProductsController.showCart(req, res)
 		.then(cart => {
+			order.description = `Bought ${Object.keys(cart.products).length} item(s)`;
 			order.products = cart.products.map(product => {
 				return {
 					id: product.id,

@@ -14,6 +14,7 @@ const OrderSchema = new Schema(
 			}
 		},
 		products: [],
+		description: String,
 		total: Number,
 		token: String,
 		card: String
