@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Product, Category, State } = require("../models/sequelize");
 const h = require("../helpers");
+const stripe = require("stripe")(process.env.STRIPE_SK);
 
 // Middleware to prepare cart details
 const cart = async (req, res, next) => {
@@ -19,8 +20,11 @@ const cart = async (req, res, next) => {
         total += subtotal;
         return product;
       });
+      req.session.total = total;
       res.locals.cartProducts = products;
+      res.locals.centTotal = total * 100;
       res.locals.cartTotal = h.prettyPrice(total);
+      res.locals.STRIPE_PK = process.env.STRIPE_PK;
     }
   } catch (e) {
     console.error(e.stack);
@@ -31,6 +35,26 @@ const cart = async (req, res, next) => {
   next();
 };
 
+// Strip charges
+router.post("/charges", async (req, res) => {
+  try {
+    const options = {
+      amount: req.session.total,
+      currency: "usd",
+      description: "Mimir is pleased!",
+      source: req.body.stripeToken
+    };
+    const charge = await stripe.charges.create(options);
+    console.log(charge);
+    // req.session.cart = {};
+    res.redirect("back");
+  } catch (e) {
+    console.error(e.stack);
+    res.status(500).end(e.stack);
+  }
+});
+
+// Shopping Cart/Checkout
 router.get(["/", "/checkout"], async (req, res) => {
   if (!Object.keys(res.locals.cartProducts).length) {
     req.flash(
@@ -47,6 +71,7 @@ router.get(["/", "/checkout"], async (req, res) => {
   console.log(req.originalUrl);
 });
 
+// C_UD cart
 router.delete("/", (req, res) => {
   req.session.cart = {};
   res.redirect(h.productsPath());

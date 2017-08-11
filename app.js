@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 
+// .env
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 // Templates
 const expressHandlebars = require("express-handlebars");
 const hbs = expressHandlebars.create({
