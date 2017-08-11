@@ -54,6 +54,18 @@ router.post("/charges", async (req, res) => {
   }
 });
 
+const faker = require("faker");
+function fakeCustomer() {
+  return {
+    fname: faker.name.firstName(),
+    lname: faker.name.lastName(),
+    email: faker.internet.email(),
+    street: faker.address.streetAddress(),
+    city: faker.address.city(),
+    zip: faker.address.zipCode()
+  };
+}
+
 // Shopping Cart/Checkout
 router.get(["/", "/checkout"], async (req, res) => {
   if (!Object.keys(res.locals.cartProducts).length) {
@@ -64,7 +76,8 @@ router.get(["/", "/checkout"], async (req, res) => {
     res.redirect(h.productsPath());
   } else if (/\/[^/]*\/checkout(\/.*)?/.test(req.originalUrl)) {
     const states = await State.findAll();
-    res.render("cart/checkout", { states });
+    const customer = fakeCustomer();
+    res.render("cart/checkout", { states, customer });
   } else {
     res.render("cart/index");
   }

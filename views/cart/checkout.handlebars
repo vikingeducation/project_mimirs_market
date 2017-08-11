@@ -40,30 +40,30 @@
         <legend>Personal</legend>
         <section class="form-group">
           <label for="fname">First Name</label>
-          <input type="text" name="fname" class="form-control" value="Korben">
+          <input type="text" name="fname" class="form-control" value="{{ customer.fname }}">
         </section>
         <section class="form-group">
           <label for="lname">Last Name</label>
-          <input type="text" name="lname" class="form-control" value="Dallas">
+          <input type="text" name="lname" class="form-control" value="{{ customer.lname }}">
         </section>
         <section class="form-group">
           <label for="email">Email</label>
-          <input type="email" name="email" class="form-control" value="popsicle@zorg.industries">
+          <input type="email" name="email" class="form-control" value="{{ customer.email }}">
         </section>
       </fieldset>
       <fieldset>
         <legend>Address</legend>
         <section class="form-group">
           <label for="street">Street</label>
-          <input type="text" name="street" class="form-control" value="281-53 Block 5,000">
+          <input type="text" name="street" class="form-control" value="{{ customer.street }}">
         </section>
         <section class="form-group">
           <label for="city">City</label>
-          <input type="text" name="city" class="form-control" value="Brooklyn">
+          <input type="text" name="city" class="form-control" value="{{ customer.city }}">
         </section>
         <section class="form-group">
           <label for="zip">Zip</label>
-          <input type="text" name="zip" class="form-control" value="11203">
+          <input type="text" name="zip" class="form-control" value="{{ customer.zip }}">
         </section>
         <section>
           <label for="state">State</label>

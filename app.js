@@ -59,6 +59,7 @@ app.get("/*", cart.cart);
 app.use("/cart", cart.router);
 app.all("/", (req, res) => res.redirect("/products"));
 app.use("/products", require("./routers/products"));
+app.use("/admin", require("./routers/admin"));
 
 // Set up port/host
 const port = process.env.PORT || process.argv[2] || 3000;
