@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const id = req.params.id;
   let cartItems = sessionBuilder(req.session.cart);
-  let length = cartItems.length;
   models.Product
     .findById(id, {
       include: [
@@ -31,11 +30,10 @@ router.get("/:id", (req, res) => {
           ]
         })
         .then(relatedProducts => {
-          res.render("product", {
+          res.render("products/index", {
             product,
             relatedProducts,
-            cartItems,
-            length
+            cartItems
           });
         });
     });

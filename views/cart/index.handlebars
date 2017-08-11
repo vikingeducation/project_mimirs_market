@@ -1,28 +1,28 @@
 <h2>Cart</h2>
 
 <div class='container'>
-    {{#each products as |product|}}
+    {{#each cartItems.cartItems as |item|}}
     <div class='row'>
       <div class='col-md-8'>
         <div class='row'>
           <img src='https://pets.monoutlet.com/wp-content/uploads/2014/07/All-Dog-Breeds.jpg'/ height='100px'>
           <div class='col-md-2'>
             <p>
-              {{product.name}}
+              {{item.name}}
             </p>
             <p>
-              {{product.category}}
+              {{item.category}}
             </p>
             <p>
-              {{product.price}}
+              {{item.price}}
             </p>
           </div>
           <form action="/cart/updateQuantity" method='post'>
-            <input type='text' value="{{product.quantity}}" name='quantity'/>
-            <input type='hidden' value="{{product.productId}}" name='id'/>
+            <input type='text' value="{{item.quantity}}" name='quantity'/>
+            <input type='hidden' value="{{item.productId}}" name='id'/>
             <button class="btn btn-success" type='submit'>Set New Quantity</button>
           </form>
-          <a href="/cart/delete/{{product.productId}}"><button class="btn btn-danger">Delete item</button></a>
+          <a href="/cart/delete/{{item.productId}}"><button class="btn btn-danger">Delete item</button></a>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
 
 <div class='container'>
   <div class='row'>
-    <h2>Total: {{total}}</h2>
+    <h2>Total: {{cartItems.total}}</h2>
     <a href='/cart/deleteCart'><button class='btn btn-danger'>Clear Cart</button></a>
     <a href='/checkout'><button class='btn btn-primary'>Checkout</button></a>
   </div>

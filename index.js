@@ -5,15 +5,20 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const getPostSupport = require("express-method-override-get-post-support");
 const session = require("express-session");
-const mongooseModels = require("./models/mongoose");
+
 const sqlModels = require("./models/sequelize");
+const mongooseModels = require("./models/mongoose");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const products = require("./routes/products");
-const cart = require("./routes/cart");
-const checkout = require("./routes/checkout");
+
+const productsRoute = require("./routes/products");
+const cartRoute = require("./routes/cart");
+const checkoutRoute = require("./routes/checkout");
+const chargesRoute = require("./routes/charges");
+
 const buildQuery = require("./lib/buildQuery");
 const sessionBuilder = require("./lib/sessionBuilder");
+const getCartInfo = require("./lib/getCartInfo");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
@@ -43,26 +48,36 @@ app.use((req, res, next) => {
   }
 });
 
-app.use("/products", products);
-app.use("/cart", cart);
-app.use("/checkout", checkout);
+app.use("/products", productsRoute);
+app.use("/cart", cartRoute);
+app.use("/checkout", checkoutRoute);
+app.use("/charges", chargesRoute);
 
 app.get("/", (req, res) => {
   req.session.cart = req.session.cart || {};
-  let cartItems = sessionBuilder(req.session.cart);
   let keys = Object.keys(req.session.cart);
-  let length = keys.length;
-  sqlModels.Product.findAll(buildQuery(req.query)).then(products => {
-    sqlModels.Category.findAll({ order: ["id"] }).then(categories => {
+  const cartItems = getCartInfo(req.session.cart);
+  let products;
+  let categories;
+  sqlModels.Product
+    .findAll(buildQuery(req.query))
+    .then(results => {
+      products = results;
+      return sqlModels.Category.findAll({ order: ["id"] });
+    })
+    .then(results => {
+      categories = results;
       products = products.map(product => {
         if (keys.includes(product.id.toString())) {
           product.selected = true;
         }
         return product;
       });
-      res.render("index", { products, categories, length, cartItems });
+      res.render("index", { products, categories, cartItems });
+    })
+    .catch(e => {
+      res.status(500).send(e.stack);
     });
-  });
 });
 
 app.post("/addCart", (req, res) => {
@@ -71,6 +86,7 @@ app.post("/addCart", (req, res) => {
     name: req.body.name,
     category: req.body.category,
     price: req.body.price,
+    description: req.body.description,
     productId: id,
     quantity: 1,
     selected: true

@@ -1,17 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const getCartInfo = require("./../lib/getCartInfo");
 
 router.get("/", (req, res) => {
-  let products = [];
-  let total = 0;
-  let length = Object.keys(req.session.cart).length;
-  Object.keys(req.session.cart).forEach(productId => {
-    products.push(req.session.cart[productId]);
-    let quantity = req.session.cart[productId].quantity;
-    let price = req.session.cart[productId].price;
-    total += quantity * price;
-  });
-  res.render("cart", { products, total, length });
+  const cartItems = getCartInfo(req.session.cart);
+  res.render("cart/index", { cartItems });
 });
 
 router.get("/delete/:id", (req, res) => {
@@ -28,7 +21,6 @@ router.get("/deleteCart", (req, res) => {
 router.post("/updateQuantity", (req, res) => {
   const id = req.body.id;
   const newQuantity = req.body.quantity;
-  console.log(newQuantity);
   req.session.cart[id].quantity = newQuantity;
   res.redirect("/cart");
 });
