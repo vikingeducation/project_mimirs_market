@@ -51,10 +51,7 @@ function buildRange(query, min, max, steps) {
     let step = Math.round(min + i * increment);
     range.push({
       value: step,
-      pretty: step.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD"
-      }),
+      pretty: h.prettyPrice(step),
       min: step == query.min,
       max: step == query.max
     });
@@ -68,11 +65,13 @@ router.get("/", async (req, res) => {
     const [min, max] = await Product.priceRange();
     const range = buildRange(query, min, max);
 
-    const products = await Product.findAll(buildOptions(query, min, max));
+    let products = await Product.findAll(buildOptions(query, min, max));
+    products = h.productsCart(products, req.session.cart);
 
     let categories = await Category.findAll();
     categories = categories.map(category => {
       if (category.id == query.category) category["selected"] = true;
+
       return category;
     });
 
@@ -92,26 +91,30 @@ router.get("/", async (req, res) => {
   }
 });
 
-// add to cart
-// router.get("/add", (req, res) => {
-//   res.render("users/new");
-// });
-
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   let id = req.params.id;
   if (isNaN(id)) h.missingFlashRedirect(req, res, h.productsPath(), "product");
   else {
-    Product.findById(id, {
-      include: {
-        model: Category,
-        include: { model: Product, where: { id: { $ne: id } } }
-      }
-    })
-      .then(product => {
-        if (product) res.render("products/single", { product });
-        else h.missingFlashRedirect(req, res, h.productsPath(), "product");
-      })
-      .catch(e => res.status(500).send(e.stack));
+    try {
+      const options = {
+        include: {
+          model: Category,
+          include: {
+            model: Product,
+            where: { id: { $ne: id } },
+            limit: 10
+          }
+        }
+      };
+      let product = await Product.findById(id, options);
+      if (product) {
+        product = h.productCart(product, req.session.cart);
+        res.render("products/single", { product });
+      } else h.missingFlashRedirect(req, res, h.productsPath(), "product");
+    } catch (e) {
+      console.error(e.stack);
+      res.status(500).send(e.stack);
+    }
   }
 });
 

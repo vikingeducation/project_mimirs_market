@@ -1,12 +1,12 @@
 <header class="page-header">
-  <h1>{{ product.name }}</h1>
+  <h1>{{ product.name }}<small for="count"> {{ product.prettyPrice }}</small></h1>
   Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
 </header>
 
 <div class="panel panel-primary">
   <div class="panel-body">
     <p>{{ product.description}}</p>
-    {{> shared/_addCart product=product }}
+    {{> shared/_addOrUpdate product=product }}
   </div>
 </div>
 {{#if product.Category.Products}}

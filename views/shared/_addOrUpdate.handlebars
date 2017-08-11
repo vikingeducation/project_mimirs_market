@@ -1,0 +1,3 @@
+{{#if product.selected }}
+<p><a href="{{ cartPath }}">View this product in your cart</a></p>
+{{> shared/_updateCart product=product }} {{else}} {{> shared/_addCart product=product }} {{/if}}

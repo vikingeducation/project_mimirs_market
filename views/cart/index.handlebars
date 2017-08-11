@@ -10,21 +10,14 @@
     <header class="panel-heading">
       <a href="{{ productPath product.id }}">
         <h3 class="panel-title">
-          {{ product.name }}
+          {{ product.name }} | <small for="count">{{ product.prettyPrice }}</small>
         </h3>
       </a>
     </header>
     <section class="panel-body">
       <p>Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a></p>
-      <form method="post" class="form-inline" action="{{ editCartPath product.id }}">
-        <input type="hidden" name="_method" value="put">
-        <section class="form-group">
-          <label for="count">{{ product.prettyPrice }}</label>
-          <input type="number" step="1" min="0" max="99" value="{{ product.count }}" class="form-control" name="count">
-        </section>
-        <input type="submit" class="btn btn-primary" value="Update">
-        <a href="{{ destroyCartPath product.id }}" class="btn btn-danger">Remove</a>
-      </form>
+      <p>Subtotal: {{ product.subtotal }}</p>
+      {{> shared/_updateCart product=product }}
     </section>
   </article>
 </div>

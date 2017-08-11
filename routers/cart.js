@@ -2,8 +2,8 @@ const router = require("express").Router();
 const { Product, Category } = require("../models/sequelize");
 const h = require("../helpers");
 
+// Middleware to prepare cart details
 const cart = async (req, res, next) => {
-  // req.session.cart = {};
   const cart = req.session.cart;
   try {
     if (cart) {
@@ -14,14 +14,13 @@ const cart = async (req, res, next) => {
       let total = 0;
       products = products.map(product => {
         product["count"] = cart[product.id];
-        total += product.count * product.price;
+        const subtotal = product.count * product.price;
+        product["subtotal"] = h.prettyPrice(subtotal);
+        total += subtotal;
         return product;
       });
       res.locals.cartProducts = products;
-      res.locals.cartTotal = total.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD"
-      });
+      res.locals.cartTotal = h.prettyPrice(total);
     }
   } catch (e) {
     console.error(e.stack);

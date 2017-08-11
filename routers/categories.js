@@ -8,16 +8,25 @@ router.get("/", (req, res) => {
     .catch(e => res.status(500).send(e.stack));
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   let id = req.params.id;
-  if (isNaN(id)) h.missingFlashRedirect(req, res, h.productsPath(), "category");
-  else {
-    Category.findById(req.params.id, { include: Product })
-      .then(category => {
-        if (category) res.render("categories/single", { category });
-        else h.missingFlashRedirect(req, res, h.productsPath(), "category");
-      })
-      .catch(e => res.status(500).send(e.stack));
+  if (isNaN(id)) {
+    h.missingFlashRedirect(req, res, h.productsPath(), "category");
+  } else {
+    try {
+      let category = await Category.findById(req.params.id, {
+        include: Product
+      });
+      if (category) {
+        category.Products = h.productsCart(category.Products, req.session.cart);
+        res.render("categories/single", { category });
+      } else {
+        h.missingFlashRedirect(req, res, h.productsPath(), "category");
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send(e.stack);
+    }
   }
 });
 

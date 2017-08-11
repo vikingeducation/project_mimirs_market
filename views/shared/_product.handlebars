@@ -1,15 +1,15 @@
 <div class="col-sm-6 col-md-4 col-lg-3">
-  <article class="panel panel-default">
+  <article class="panel {{#if product.selected }}panel-warning{{else}}panel-default{{/if}}">
     <header class="panel-heading">
       <a href="{{ productPath product.id }}">
-        <h3 class="panel-title">
-          {{ product.name }}
-        </h3>
+        <h2 class="panel-title">
+          {{ product.name }} | <small for="count">{{ product.prettyPrice }}</small>
+        </h2>
       </a>
     </header>
     <section class="panel-body">
       <p><a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a></p>
       <p>Added on {{ product.prettyDate }}</p>
-      {{> shared/_addCart product=product }}
+      <hr> {{> shared/_addOrUpdate product=product }}
   </article>
 </div>
