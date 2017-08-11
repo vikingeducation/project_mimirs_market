@@ -4,7 +4,7 @@
   "description": "A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine-node spec/",
     "start": "nodemon app.js",
     "sql:migrate:undo": "npm run sql db:migrate:undo:all",
     "sql:migrate": "npm run sql db:migrate",
@@ -38,6 +38,8 @@
     "express-method-override-get-post-support": "0.0.7",
     "express-session": "^1.15.5",
     "faker": "^4.1.0",
+    "jasmine": "^2.7.0",
+    "jasmine-node": "^1.14.5",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.6",
     "mongoose-findorcreate": "^2.0.0",
