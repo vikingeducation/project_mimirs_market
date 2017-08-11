@@ -73,46 +73,54 @@ module.exports = {
 		}
 
 		const stripeData = req.body;
+		const charge = {
+			amount: total,
+			currency: 'usd',
+			description: 'Someone bought a product BRUH!',
+			source: stripeData.stripeToken
+		};
+
 		stripe.charges
-			.create({
-				amount: total,
-				currency: 'usd',
-				description: 'Someone bought a product BRUH!',
-				source: stripeData.stripeToken
-			})
-			.then(charge => {
-				// Extra the data we need from our charge.
-				let { amount, created, description } = charge;
-				let refund_url = charge.refunds.url;
-				const chargeData = {
-					amount,
-					created,
-					description,
-					refund_url
-				};
-
-				// Create the final collection object.
-				const order = {
-					cart: cart,
-					billing: billingData,
-					charge: chargeData
-				};
-				return order;
-			})
-			.then(order => {
-				// Get our database and create a new order.
-				let wrapper = getModelWrapper('mongoose');
-
-				// Save it.
-				return wrapper.saveOrder(order);
-			})
-			.then(() => {
-				// Remove items from session.
-				delete req.session.billing;
-				delete req.session.cart;
-				res.redirect('/products/?ps= true');
-			})
+			.create(charge)
+			.then(_createOrderData)
+			.then(_saveOrder)
+			.then(_clearSessionAndRedirect)
 			.catch(e => res.status(500).send(e.stack));
+
+		function _createOrderData(charge) {
+			// Extra the data we need from our charge.
+			let { amount, created, description } = charge;
+			let refund_url = charge.refunds.url;
+			const chargeData = {
+				amount,
+				created,
+				description,
+				refund_url
+			};
+
+			// Create the final collection object.
+			const order = {
+				cart: cart,
+				billing: billingData,
+				charge: chargeData
+			};
+			return order;
+		}
+
+		function _saveOrder(order) {
+			// Get our database and create a new order.
+			let wrapper = getModelWrapper('mongoose');
+
+			// Save it.
+			return wrapper.saveOrder(order);
+		}
+
+		function _clearSessionAndRedirect() {
+			// Remove items from session.
+			delete req.session.billing;
+			delete req.session.cart;
+			res.redirect('/products/?ps= true');
+		}
 	},
 
 	saveBilling: function(req, res) {
