@@ -1,0 +1,71 @@
+<div id="cart-products-container" class="row products-container">
+	<div class="no-refine-crumbs">
+		{{#if crumbs}}
+			{{breadcrumbs crumbs}}
+		{{/if}}
+	</div>
+	<div class="product-view">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1>Your Shopping Cart <small>({{total.items}} items)</small><div style="float: right" class="text-right">
+					<button type="button" class="btn btn-danger cart-clear-btn">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear Cart
+					</button>
+					<button type="button" class="btn btn-success cart-checkout-btn">
+						<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Checkout
+					</button>
+				</div></h1>
+			</div>
+		  <div id="cart-list" class="panel-body">
+			{{#each userCart as |productObj|}}
+				{{>_cart-product productObj=productObj}}
+				<hr />
+			{{/each}}
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-10 text-right">
+					<h4>Subtotal: <strong>{{total.subtotal}}</strong></h4>
+					<h4>Tax (@ 8%): <strong>{{total.tax}}</strong></h4>
+					<hr />
+					<h3>Total: <strong>{{total.total}}</strong></h3>
+				</div>
+			</div>
+		  </div>
+		  <div class="panel-footer">
+				<div class="row">
+					<div class="col-xs-4 col-xs-offset-8 text-right">
+						<button type="button" class="btn btn-danger cart-clear-btn">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Clear Cart
+						</button>
+						<button type="button" class="btn btn-success cart-checkout-btn">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Checkout
+						</button>
+					</div>
+				</div>
+		  </div>
+		</div>
+	</div>
+
+	{{#if relatedProducts}}
+		{{>_related-products RelatedProducts=relatedProducts }}
+	{{/if}}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="confirmModalLabel">Clear Cart</h4>
+      </div>
+      <div class="modal-body">
+	      Are you sure you want to clear your cart? <br />This action is not undoable.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No, leave it be!</button>
+        <button id="cart-confirm-clear-btn" type="button" data-dismiss="modal" class="btn btn-primary">Yes, clear it.</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/scripts/cart.js"></script>

@@ -1,0 +1,33 @@
+<form id="filter-form" class="form">
+  <div class="form-group col-xs-3 col-xs-offset-1">
+		<select id="categoryId" class="form-control" name="refine[filter][categoryId]">
+      <option value="-1">
+        Category
+      </option>
+      {{#each categories as |category|}}
+		  <option value="{{category.id}}">{{category.name}}</option>
+      {{/each}}
+		</select>
+  </div>
+  <div class="form-group col-xs-3">
+    <select id="minPrice" class="form-control" name="refine[filter][minPrice]">
+      <option value="-1">No Minimum Price</option>
+      <option value="100">$100</option>
+      <option value="500">$500</option>
+      <option value="1000">$1000</option>
+      <option value="2000">$2000</option>
+      <option value="5000">$5000</option>
+    </select>
+  </div>
+  <div class="form-group col-xs-3">
+    <select id="maxPrice" class="form-control" name="refine[filter][minPrice]">
+      <option value="-1">No Maximum Price</option>
+      <option value="500">$500</option>
+      <option value="1000">$1000</option>
+      <option value="2000">$2000</option>
+      <option value="5000">$5000</option>
+      <option value="10000">$10000</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary"></span>Filter &nbsp;<span class="glyphicon glyphicon-filter"></button>
+</form>

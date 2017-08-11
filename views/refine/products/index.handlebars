@@ -1,0 +1,17 @@
+{{#if paginationData }}
+	{{paginate paginationData}}
+{{/if}}
+{{#if products.length }}
+	{{#each products as |productGroup| }}
+		<div class="row">
+		{{#each productGroup as |product|}}
+			{{>_product product=product}}
+		{{/each}}
+		</div>
+	{{/each }}
+{{else }}
+	<p class="text-danger">No products</p>
+{{/if }}
+{{#if paginationData }}
+	{{paginate paginationData}}
+{{/if}}

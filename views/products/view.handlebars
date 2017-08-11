@@ -1,0 +1,119 @@
+<div class="row products-container">
+	<div class="no-refine-crumbs">
+		{{#if crumbs}}
+			{{breadcrumbs crumbs}}
+		{{/if}}
+	</div>
+	<div class="product-view" id="products-list">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1>{{product.name}}</h1>
+			</div>
+		  <div class="panel-body">
+				<div class="row">
+					<div class="col-xs-3">
+						<small><strong>Category:</strong> {{product.Category.name}}</small><br />
+						<small><strong>Serial Number:</strong> {{product.sku}}</small>
+					</div>
+					<div class="col-xs-6">
+
+					</div>
+					<div class="col-xs-3 text-right">
+						<small><strong>Added on </strong>{{product.created}}</small><br />
+						<small ><strong>Updated on </strong>{{product.updated}}</small>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-xs-4">
+						<a href="#" class="thumbnail">
+						  <img src="{{product.img}}" />
+						</a>
+					</div>
+					<div class="col-xs-8">
+						<div class="row">
+							<div class="col-xs-11">
+								{{product.desc}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-2">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>
+								Average Customer Rating:
+							</p>
+							<span class="product-rating">{{rating 3}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+						<!-- Extra thumbnails go here -->
+						</div>
+						<div class="col-xs-6">
+						<!-- Extra thumbnails go here -->
+						</div>
+					</div>
+					</div>
+				  <div class="col-xs-2">
+						<div class="btn-toolbar" role="toolbar" aria-label="Social Media">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Add to wishlist">
+									<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Share this product">
+									<span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Like this product">
+									<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Dislike this product">
+									<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+								</button>
+								<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Flag this product">
+									<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+								</button>
+							</div>
+						</div>
+				  </div>
+					<div class="col-xs-8">
+						<div class="row">
+							<div class="col-xs-12">
+								<hr class="product-divider"/>
+								<div class="row">
+									<div class="col-xs-6">
+										<p class="product-price">Price: <strong>{{product.prettyPrice}}</strong></p>
+										<form id="add-to-cart-form" class="form-inline">
+										  <div class="form-group col-xs-4">
+										    <div class="input-group">
+										      <div class="input-group-addon">#</div>
+										      <input type="number" min="0" max="100" class="form-control" id="quantity" value="1">
+										    </div>
+										  </div>
+										  <a href="/cart/{{product.id}}" class="btn btn-primary add-to-cart-btn">
+												<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
+											</a>
+											<button type="button" class="btn btn-success">
+												<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Add to Wishlist
+											</button>
+										</form>
+									</div>
+									<div class="col-xs-6">
+
+									</div>
+								</div>
+							</div>
+						</div>
+				  </div>
+				</div>
+		  </div>
+		  <div class="panel-footer">
+
+		  </div>
+		</div>
+	</div>
+
+	{{>_related-products RelatedProducts=product.RelatedProducts}}
+</div>

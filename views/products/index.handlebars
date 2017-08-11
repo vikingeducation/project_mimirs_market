@@ -1,0 +1,52 @@
+<div class="row products-container">
+  <script src="/scripts/pagination.js"></script>
+  <!-- <header class="page-header">
+    <h1>Products</h1>
+    <a href="/products/new" class="btn btn-primary">+ New Product</a>
+  </header> -->
+  {{#if crumbs}}
+    {{breadcrumbs crumbs}}
+  {{/if}}
+  <div id="products-list" class="col-xs-12 products-list">
+    {{#if paginationData }}
+      {{paginate paginationData}}
+    {{/if}}
+    {{#if products.length }}
+      {{#each products as |productGroup| }}
+        <div class="row">
+        {{#each productGroup as |product|}}
+          {{>_product product=product}}
+        {{/each}}
+        </div>
+      {{/each }}
+    {{else }}
+      <p class="text-danger">No products</p>
+    {{/if }}
+		{{#if paginationData }}
+			{{paginate paginationData}}
+		{{/if}}
+  </div>
+</div>
+
+{{#if paymentSuccessful}}
+<div class="modal fade" id="paymentSuccessfulModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="">Payment Successful!</h4>
+      </div>
+      <div class="modal-body">
+				Payment successful!! Your products will be shipped as soon as your order has finished processing.
+				Thank you for shopping at Mimir's Market!  Come see us again soon!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('#paymentSuccessfulModal').modal('show');
+</script>
+{{/if}}

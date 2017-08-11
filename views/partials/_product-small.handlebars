@@ -1,0 +1,16 @@
+<div class="col-xs-3 product-container">
+	<a href="/products/{{product.id}}" class="product thumbnail">
+		<img src="{{product.img}}" alt="{{product.name}}">
+	</a>
+	<div class="caption product product-caption">
+		<h4><a href="/products/{{product.id}}"><strong>{{product.name}}</strong></a></h4>
+		{{#unless hideDesc }}
+		<p>
+			S/N: {{product.sku}}
+		</p>
+		<p>{{product.shortDesc}}</p>
+		{{/unless}}
+		<h3 class="text-center">{{product.prettyPrice}}</h3>
+		<p class="text-center"><a href="/cart/{{product.id}}" class="btn btn-primary" role="button">Add to Cart</a></p>
+	</div>
+</div>
