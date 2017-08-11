@@ -1,37 +1,81 @@
-{{>displayProducts}}
-<div class="panel panel-primary">
-  <div class='panel-heading'>Cart</div>
-  {{#each cart as |item|}}
-  <div class="panel-body">
-    <div class='col-xs-3'>
-      <img src='/{{item.img}}'class='mediumImg'>
-    </div>
-    <div class='col-xs-3'>
-      <p>{{item.name}}</p>
-      <p>{{item.category}}</p>
-      <p>${{item.price}}</p>
-    </div>
-    <div class='col-xs-6'>
-      <form method='POST' action='/cart/{{item.id}}'>
-        <label for='quantity'></label>
-        <input id='quantity' name='quantity' type='text' value={{item.quantity}}>
-        <button id='setQuantity' type='submit' class='btn btn-info'>Set Quantity</button>
-      </form>
-      <form method='POST' action='/cart/{{item.id}}?_method=DELETE'>
-        <button id='remove' type='submit' class='btn btn-danger'>Remove</button>
-      </form>
-    </div>
+<!-- use displayProducts partial later?? -->
+<div class='container'>
+  <div class='row justify-content-center'>
+    <h3 class='col-xs-12' align='center'>Checkout</h3>
   </div>
-  {{/each}}
-  <div class='panel-footer'>
-    <!--checkout section-->
-    <p>Your Total: ${{total}}</p>
-    <form method='POST' action='/cart?_method=DELETE'>
-      <button type='submit' class="btn btn-danger">Clear Cart</button>
-    </form>
-    <form method='GET' action='/checkout'>
-      <button type='submit' class="btn btn-success">Checkout</button>
-    </form>
+</div>
+<form method='POST' action='pay' class='row'>
+  <!--left section      BILLING INFO -->
+  <div class='col-xs-6'>
+    <div class="panel panel-primary">
+      <div class='panel-heading'>Billing Info</div>
+      <div class="panel-body">
+
+        <h5>Personal Info</h5>
+        <hr>
+        <div class='form-group'>
+          <label for='fname'>First Name</label>
+          <input type='text' class="form-control" id="fname" name="user[fname]" value="Bob">
+        </div>
+        <div class='form-group'>
+          <label for='lname'>Last Name</label>
+          <input type='text' class="form-control" id="lname" name="user[lname]" value="Tom">
+        </div>
+        <div class='form-group'>
+          <label for='email'>Email</label>
+          <input type='email' class="form-control" id="email" name="user[email]" value="coolStuff@aol.com">
+        </div>
+        <h5>Address</h5>
+        <hr>
+        <div class='form-group'>
+          <label for='street'>Street</label>
+          <input type='text' class="form-control" id="street" name="user[street]" value="Karlton St">
+        </div>
+        <div class='form-group'>
+          <label for='city'>City</label>
+          <input type='text' class="form-control" id="city" name="user[city]" value="Bobville">
+        </div>
+        <div class='form-group'>
+          <label for="state">State</label>
+          <select name="user[state]" id="state" class="form-control">
+            {{#each states as |state|}}
+              <option value={{state}}>{{state}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-</div>
+  <!--right section     YOUR CART -->
+  <div class='col-xs-6'>
+    <div class="panel panel-primary">
+      <div class='panel-heading'>Cart</div>
+
+      <!-- create panel-body -->
+      {{#each cart as |item|}}
+      <div class="panel-body">
+        <div class='col-xs-12'>
+          <div class='row'>
+            <div class='col-xs-6'>
+              <img src='/{{item.img}}'class='smallImg'>
+            </div>
+            <div class='col-xs-6'>
+              <p>{{item.name}} ${{item.price}} x {{item.quantity}} = ${{item.subtotal}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+    <div class='col-xs-12'>
+      <!-- BUY IT NOW-->
+      <p>Your Total: ${{total}}</p>
+      <button type='submit' class="btn btn-danger">Return to Cart</button>
+      <button type='submit' class="btn btn-success">Submit Payment</button>
+    </div>
+  </div>
+
+</form>
