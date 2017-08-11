@@ -21,7 +21,8 @@ router.get('/', (req, res) => {
     products = infoArray[0];
     // console.log(products);
     categories = infoArray[1].map(category => category.dataValues);
-    return res.render("index", { products, categories });
+    let cartQuantity = req.session.cart.length;
+    return res.render("index", { products, categories, cartQuantity });
   })
   .catch(e => res.send(e));
 })
@@ -35,10 +36,12 @@ router.post('/query', (req, res) => {
 router.get('/:productId/category/:CategoryId', (req, res) => {
   let productId = req.params.productId;
   let CategoryId = req.params.CategoryId;
+  let cartQuantity = req.session.cart.length;
 
   getProductPageInfo(productId, CategoryId)
   .then((results) => {
-    return res.render('product', results)
+    const { productSel, products } = results;
+    return res.render('product', { productSel, products, cartQuantity })
   })
 })
 

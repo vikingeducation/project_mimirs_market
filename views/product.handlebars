@@ -22,13 +22,17 @@
   {{#if products}}
   {{#each products as |product|}}
     <div class="col-xs-4">
-      <section class="product-box">
+      <form class="product-box" action="/cart/addNewItem" method="post">
+        <input type="hidden" name="productId" value="{{product.id}}"></input>
+        <input type="hidden" name="productId" value="{{product.id}}"></input>
+        <input type="hidden" name="productIdView" value="{{product.id}}"></input>
+
         <img src="{{product.imageUrl}}" class="img-responsive" align="middle" />
         <h3><strong>Price: </strong>${{ product.price }}.00</h3>
         <h3><strong>Name: </strong>{{ product.name }}</h3>
         <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
-        <a class="text-center cart-button"><button type="button" class="btn btn-primary">Add to Cart</button></a>
-      </section>
+        <a class="text-center"><button type="button" class="btn btn-primary">Add to Cart</button></a>
+      </form>
     </div>
   {{/each}}
   {{/if}}
