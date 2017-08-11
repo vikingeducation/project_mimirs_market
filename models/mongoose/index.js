@@ -9,6 +9,7 @@ var models = {};
 
 // Load models and attach to models here
 models.Order = require("./order");
+models.OrderItem = require("./orderitem");
 //... more models
 
 module.exports = models;

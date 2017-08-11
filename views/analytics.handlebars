@@ -1,0 +1,64 @@
+<h2>Admin Analytics</h2>
+
+<div class="row">
+	<div class="col-sm-6">
+		<h3>Totals</h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Total Revenue Ever</th>
+				<td>${{total.total}}.00</td>
+			</tr>
+			<tr>
+				<th>Total Units Sold</th>
+				<td>{{total.units}}</td>
+			</tr>
+			<tr>
+				<th>Total Transactions</th>
+				<td>{{total.transactions}}</td>
+			</tr>
+			<tr>
+				<th>Total Products</th>
+				<td>{{total.products}}</td>
+			</tr>
+			<tr>
+				<th>Total Categories</th>
+				<td>{{total.categories}}</td>
+			</tr>
+			<tr>
+				<th>Total States Sold To</th>
+				<td>{{total.states}}</td>
+			</tr>
+		</table>
+
+		<h3>Revenue by Product</h3>
+		<table class="table table-striped">
+			{{#each products as |product|}}
+				<tr>
+					<th>{{product._id}}</th>
+					<td>${{product.total}}.00</td>
+				</tr>
+			{{/each}}
+		</table>
+	</div>
+	<div class="col-sm-6">
+		<h3>Revenue by State</h3>
+		<table class="table table-striped">
+			{{#each states as |state|}}
+				<tr>
+					<th>{{state._id}}</th>
+					<td>${{state.total}}.00</td>
+				</tr>
+			{{/each}}
+		</table>
+
+		<h3>Revenue by Category</h3>
+		<table class="table table-striped">
+			{{#each categories as |category|}}
+				<tr>
+					<th>{{category._id}}</th>
+					<td>${{category.total}}.00</td>
+				</tr>
+			{{/each}}
+		</table>
+	</div>
+</div>

@@ -93,7 +93,14 @@ module.exports = {
 
 		let p = new Promise((resolve, reject) => {
 			models.Product
-				.findAll({ where: { id: { in: productIds } } })
+				.findAll({
+					include: [
+						{
+							model: models.Category
+						}
+					],
+					where: { id: { in: productIds } }
+				})
 				.then(products => {
 					let sum = 0;
 					products.forEach(product => {
@@ -107,6 +114,10 @@ module.exports = {
 		});
 
 		return p;
+	},
+
+	findStates: () => {
+		return models.State.findAll();
 	}
 };
 

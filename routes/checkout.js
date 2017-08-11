@@ -6,18 +6,25 @@ const mongoose = require("mongoose");
 const mdbModels = require("./../models/mongoose");
 
 router.get("/", (req, res) => {
-	ProductsController.showCart(req, res).then(cart => {
-		res.render("checkout", {
-			products: cart.products,
-			sum: cart.sum,
-			STRIPE_PK: process.env.STRIPE_PK
+	output = {};
+	ProductsController.showCart(req, res)
+		.then(cart => {
+			output.products = cart.products;
+			output.sum = cart.sum;
+			output.STRIPE_PK = process.env.STRIPE_PK;
+
+			return ProductsController.findStates();
+		})
+		.then(states => {
+			output.states = states;
+			res.render("checkout", output);
 		});
-	});
 });
 
 router.post("/charge", (req, res) => {
 	let charge = req.body;
 	let order = {};
+	let orderItems = [];
 	order.customer = {
 		fname: req.body.fname,
 		lname: req.body.lname,
@@ -29,11 +36,13 @@ router.post("/charge", (req, res) => {
 		}
 	};
 
+	order.orderItems = [];
+
 	ProductsController.showCart(req, res)
 		.then(cart => {
 			order.description = `Bought ${Object.keys(cart.products).length} item(s)`;
-			order.products = cart.products.map(product => {
-				return {
+			cart.products.forEach(product => {
+				product = new mdbModels.OrderItem({
 					id: product.id,
 					name: product.name,
 					sku: product.sku,
@@ -41,10 +50,15 @@ router.post("/charge", (req, res) => {
 					description: product.description,
 					price: product.price,
 					categoryId: product.categoryId,
+					category: product.Category.name,
 					createdAt: product.createdAt,
 					updatedAt: product.updatedAt,
-					quantity: product.quantity
-				};
+					quantity: product.quantity,
+					total: product.price * product.quantity
+				});
+
+				order.orderItems.push(product);
+				orderItems.push(product);
 			});
 			order.total = cart.sum;
 
@@ -56,12 +70,21 @@ router.post("/charge", (req, res) => {
 			});
 		})
 		.then(newCharge => {
-			(order.token = charge.stripeToken), (order.card = newCharge.source.brand);
+			console.log(newCharge);
+			(order.token = newCharge.balance_transaction), (order.card =
+				newCharge.source.brand);
 
-			new mdbModels.Order(order).save();
-			// ... Save charge and session data
-			// from checkout and cart
-			// to MongoDB
+			newOrder = new mdbModels.Order(order);
+
+			let promises = [];
+
+			promises.push(newOrder.save());
+
+			orderItems.forEach(model => {
+				promises.push(model.save());
+			});
+
+			return Promise.all(promises);
 		})
 		.then(() => {
 			req.session.cart = [];

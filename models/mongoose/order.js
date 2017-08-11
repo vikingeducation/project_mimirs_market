@@ -13,7 +13,12 @@ const OrderSchema = new Schema(
 				state: String
 			}
 		},
-		products: [],
+		orderItems: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "OrderItem"
+			}
+		],
 		description: String,
 		total: Number,
 		token: String,
