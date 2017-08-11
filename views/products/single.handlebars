@@ -1,17 +1,19 @@
-<header class="page-header">
-  <h1>Product: {{ product.name }}</h1>
+{{!-- <header class="page-header">
+  <h1></h1>
   Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
-</header>
+</header> --}}
 
 <div class="panel panel-primary">
   <div class="panel-body">
-    <p>{{ product.price }}</p>
-    <p>{{ product.description}}</p>
+    <h1>Product: {{ product.name }}</h1>
+    <p>Category: {{product.Category.name}}</p>
+    <p>Price: {{ product.price }}</p>
+    <p>Description: {{ product.description}}</p>
     <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
   </div>
 </div>
 
-<h2>Related Products</h2>
+<h3>Related Products</h3>
 <table class="table">
   <thead>
     <tr>

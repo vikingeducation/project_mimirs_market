@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
-const filter = require('./../helpers/filterHandler.js')
+const filter = require("./../helpers/filterHandler.js");
 
 // ----------------------------------------
 // Index
@@ -11,18 +11,18 @@ const filter = require('./../helpers/filterHandler.js')
 router.get("/", (req, res) => {
   const queryObj = filter(req.query);
 
-  console.log("queryObj is: ", queryObj)
+  console.log("queryObj is: ", queryObj);
 
   let categories;
   let products;
   Product.findAll(queryObj)
-    .then(result => {
-      products = result;
+    .then(results => {
+      products = results;
       return Category.findAll();
     })
-    .then(result => {
-      categories = result;
-      res.render("products/index", { products, categories });
+    .then(results => {
+      categories = results;
+      return res.render("products/index", { products, categories });
     })
     .catch(e => res.status(500).send(e.stack));
 });
@@ -38,14 +38,24 @@ router.get("/", (req, res) => {
 // Show
 // ----------------------------------------
 router.get("/:id", (req, res) => {
-  Product.findById(req.params.id, {
-    include: { model: models.Category, include: { model: models.Product } }
-  })
-    .then(product => {
-      console.log(product);
-      res.render("products/single", { product });
+  let product;
+  let relatedCategoryId;
+  let relatedProducts;
+  Product.findById(req.params.id)
+
+  .then(result => {
+    product = result;
+    relatedCategoryId = product.CategoryId;
+    return Product.findAll({
+      where: {CategoryId: relatedCategoryId}
     })
-    .catch(e => res.status(500).send(e.stack));
+  }) 
+  
+  .then(results => {
+    relatedProducts = results
+    return res.render("products/single", { product, relatedProducts });
+    })
+  .catch(e => res.status(500).send(e.stack));
 });
 
 module.exports = router;
