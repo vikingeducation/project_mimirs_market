@@ -40,7 +40,8 @@ mongooseeder.seed({
 					imagePath: `image_${i % 10}.jpg`,
 					description: faker.lorem.sentences(),
 					price: faker.commerce.price(),
-					categoryId: Math.floor(Math.random() * 10 + 1)
+					categoryId: Math.floor(Math.random() * 10 + 1),
+					quantity: Math.floor(Math.random() * 5 + 1)
 				};
 
 				order.total += Number(product.price);

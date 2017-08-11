@@ -1,0 +1,109 @@
+<h2>Admin Orders Show</h2>
+
+<div class="row">
+	<div class="col-sm-6">
+		<h3>Ordered Items</h3>
+		{{#each order.products as |product|}}
+			<div>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Name</td>
+							<td>{{product.name}}</td>
+						</tr>
+						<tr>
+							<td>Price</td>
+							<td>${{product.price}}.00</td>
+						</tr>
+						<tr>
+							<td>SKU</td>
+							<td>{{product.sku}}</td>
+						</tr>
+						<tr>
+							<td>Description</td>
+							<td>{{product.description}}</td>
+						</tr>
+						<tr>
+							<td>Category</td>
+							<td>{{product.Category.name}}</td>
+						</tr>
+						<tr>
+							<td>Quantity</td>
+							<td>{{product.quantity}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		{{/each}}
+	</div>
+	<div class="col-sm-6">
+		<h3>Customer Info</h3>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Field</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>First Name</td>
+						<td>{{order.customer.fname}}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{{order.customer.lname}}</td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td>{{order.customer.email}}</td>
+					</tr>
+					<tr>
+						<td>Street</td>
+						<td>{{order.customer.address.street}}</td>
+					</tr>
+					<tr>
+						<td>City</td>
+						<td>{{order.customer.address.city}}</td>
+					</tr>
+					<tr>
+						<td>State</td>
+						<td>{{order.customer.address.state}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h3>Order Info</h3>
+			<div>
+				<table>
+					<thead>
+						<tr>
+							<th>Field</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Checkout Date</td>
+							<td>{{order.createdAt}}</td>
+						</tr>
+						<tr>
+							<td>Stripe Token</td>
+							<td>{{order.token}}</td>
+						</tr>
+						<tr>
+							<td>Card Type</td>
+							<td>{{order.card}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	</div>
+</div>

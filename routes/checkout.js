@@ -42,7 +42,8 @@ router.post("/charge", (req, res) => {
 					price: product.price,
 					categoryId: product.categoryId,
 					createdAt: product.createdAt,
-					updatedAt: product.updatedAt
+					updatedAt: product.updatedAt,
+					quantity: product.quantity
 				};
 			});
 			order.total = cart.sum;
