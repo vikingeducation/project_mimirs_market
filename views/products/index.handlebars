@@ -46,7 +46,7 @@
         <div class="col-xs-4">
           <img src='/{{product.img}}' class='smallImg'>
           <h3>${{product.price}}</h3>
-          <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+          <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
           <h5>{{product.description}}</h5>
           <button type='submit' class="btn btn-info" value={{product.id}} name='addItem'>Edit Cart</button>
         </div>
@@ -56,7 +56,7 @@
         <div class="col-xs-4">
           <img src='/{{product.img}}' class='smallImg'>
           <h3>${{product.price}}</h3>
-          <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+          <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
           <h5>{{product.description}}</h5>
           <button type='submit' class="btn btn-success" value={{product.id}} name='addItem'>Add to Cart</button>
         </div>

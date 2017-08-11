@@ -3,9 +3,15 @@ const model = require("../../models/sequelize");
 let faker = require("Faker");
 const cp = require("child_process");
 // const productPath = require("./../../.env")["productPath"];
-const productBasename = require(__dirname + "/../../.env")["productPath"];
-const productPath = __dirname + "/../../" + productBasename;
-console.log(`productPath = ${productPath}`);
+// const productBasename = require(__dirname + "/../../.env")["productPath"];
+/*change this later for production*/
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+var { PRODUCT_BASENAME } = process.env;
+// console.log(PRODUCT_BASENAME);
+const productPath = __dirname + "/../../" + PRODUCT_BASENAME;
+// console.log(`productPath = ${productPath}`);
 //TODO: make this automagically populate categories from
 //public/images/x where x becomes a category
 
@@ -26,7 +32,7 @@ let getCategories = async function() {
   } catch (e) {
     throw e;
   }
-  console.log(`dirs = ${dirs}`);
+  // console.log(`dirs = ${dirs}`);
   return await dirs;
   // return dirs;
 };

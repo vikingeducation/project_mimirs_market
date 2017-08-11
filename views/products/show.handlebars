@@ -2,10 +2,10 @@
   <img class='largeImg' src='/{{product.img}}'>
 </div>
 <div class="col-xs-12">
-  <form method='POST' action='/cart/add'>
+  <form method='POST' action='/cart'>
     <div class="col-xs-4">
       <h3>${{product.price}}</h3>
-      <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+      <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
       <h5>{{product.description}}</h5>
       <button type='submit' class="btn btn-primary" value={{product.id}} name='addItem'>Add to Cart</button>
     </div>
@@ -15,11 +15,11 @@
   <div class='panel-heading'>Related Products</div>
   <div class="panel-body">
   {{#each products as |product|}}
-    <form method='POST' action='/cart/add'>
+    <form method='POST' action='/cart'>
       <div class="col-xs-4">
         <img src='/{{product.img}}' class='smallImg'>
         <h3>${{product.price}}</h3>
-        <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+        <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
         <h5>{{product.description}}</h5>
         <button type='submit' class="btn btn-primary" value={{product.id}} name='addItem'>Add to Cart</button>
       </div>

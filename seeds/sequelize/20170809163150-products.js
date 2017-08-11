@@ -3,50 +3,42 @@ const model = require("../../models/sequelize");
 let faker = require("Faker");
 
 //file path to products
-const productBasename = require(__dirname + "/../../.env")["productPath"];
-const productPath = __dirname + "/../../" + productBasename;
+// const productBasename = require(__dirname + "/../../.env")["productPath"];
+// const productPath = __dirname + "/../../" + productBasename;
+
+// if (process.env.NODE_ENV !== "production") {
+//   require("dotenv").config();
+// }
+// var { PRODUCT_BASENAME } = process.env;
+// const productPath = __dirname + "/../../" + PRODUCT_BASENAME;
 
 //TODO: GRAB IMAGES AND SEED THEM
-//get root path
-// fs
-//   .readdirSync(__dirname)
-//   .filter(function(file) {
-//     console.log(file)
-//     return (
-//       // file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-//     );
-//   })
-//   .forEach(function(file) {
-//     var model = sequelize["import"](path.join(__dirname, file));
-//     db[model.name] = model;
-//   });
-//seeds the categories
-// let getUrls = async function() {
-//   let productHash;
-//   try {
-//     productHash = await new Promise((resolve, reject) => {
-//       cp.exec(`ls -R ${productPath}`, (err, out, stdErr) => {
-//         //grab all the categories
+//seeds the products
+////////store them all in a hash
+////////return the hash for seeding
+// let getUrls = function() {
+//   let productHash = {};
+//   let pCat = new Promise((resolve, reject) => {
+//     cp.exec(`ls -R ${productPath}`, (err, out, stdErr) => {
+//       //grab all the categories
+//       // console.log(`out = ${process.argv[1] + "/public/images"}`);
+//       console.log(`out = ${out}`);
 //
-//         //store them all in a hash
-//         //return the hash for seeding
-//         let strArr = out.split("\n");
-//         const c = strArr.filter(item => {
-//           return !(item.includes(".") || !item);
-//         });
-//         //then for each category grab it's files
 //
-//         c.forEach(category => {});
-//         resolve(c);
-//
-//         console.log(`out = ${process.argv[1] + "/public/images"}`);
-//         console.log(`out = ${out}`);
+//       let strArr = out.split("\n");
+//       const c = strArr.filter(item => {
+//         return !(item.includes(".") || !item);
 //       });
+//       return resolve(c);
+//
+//
 //     });
-//   } catch (e) {
-//     throw e;
-//   }
-//   return await productHash;
+//   }).then(categories => {
+//     //for each category get the product img urls
+//     categories.forEach()
+//   });
+//
+//   return productHash;
 // };
 
 module.exports = {

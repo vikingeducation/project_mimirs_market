@@ -73,11 +73,22 @@
     <div class='col-xs-12'>
       <!-- BUY IT NOW-->
       <p>Your Total: ${{total}}</p>
+      <input type='hidden' name='total' value={{total}}>
       <!-- figure out how to submit a get request within a form -->
       <!-- <form method='GET' action='/cart'>
         <button type='submit' class="btn btn-danger">Return to Cart</button>
       </form> -->
-      <button type='submit' class="btn btn-success">Submit Payment</button>
+
+      <!-- <button type='submit' class="btn btn-success">Submit Payment</button> -->
+      <!--Stripe button-->
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{ STRIPE_PK }}"
+        data-amount="100"
+        data-name="Stripe Node Test"
+        data-description="Widget"
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto"></script>
     </div>
   </div>
 
@@ -86,16 +97,6 @@
   <button type='submit' class="btn btn-danger">Return to Cart</button>
 </form>
 
-<form action="checkout/charges" method="post">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="{{ STRIPE_PK }}"
-    data-amount="100"
-    data-name="Stripe Node Test"
-    data-description="Widget"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto"></script>
-</form>
 <!--
 
 4242 4242 4242 4242

@@ -8,9 +8,6 @@ const { Product, Category } = require("../models/sequelize");
 
 //return a new array of products{} with isInCart set correctly
 let isInCart = function(cart, products) {
-  console.log(`cart = ${cart}`);
-  console.log(`products = ${products}`);
-  debugger;
   let p = products.map(product => {
     let productFake = {
       id: product.id,
@@ -24,7 +21,6 @@ let isInCart = function(cart, products) {
     });
     return productFake;
   });
-  console.log(`new products = ${p[isInCart]}`);
   return p;
 };
 
@@ -51,7 +47,7 @@ router.get("/", (req, res) => {
 });
 
 //show Route
-router.get("/show/:productId", (req, res) => {
+router.get("/:productId", (req, res) => {
   Product.findById(req.params.productId).then(product => {
     Product.findAll({
       where: { categoryId: product.categoryId, id: { $ne: product.id } },
