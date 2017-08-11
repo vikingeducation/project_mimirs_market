@@ -1,8 +1,4 @@
 module.exports = {
   productsPath: () => "/products/",
-  productPath: id => `/products/${id}`,
-  addProductPath: id => `/products/${id}/add`
+  productPath: id => `/products/${id}`
 };
-
-// ProductHelper.editProductPath = (id) => `/products/${ id }/edit`;
-// ProductHelper.destroyProductPath = (id) => `/products/${ id }/?_method=delete`;

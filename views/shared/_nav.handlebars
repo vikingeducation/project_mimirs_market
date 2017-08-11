@@ -27,9 +27,13 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shopping Cart <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ productsPath }}">Products</a></li>
+            {{#each cartProducts as |product| }}
+            <li><a href="{{ productPath product.id }}">{{ product.count }} {{ product.name }}</a></li>
+            {{/each}} {{!-- cart items --}}
             <li role="separator" class="divider"></li>
-            <li><a href="{{ categoriesPath }}">Categories</a></li>
+            <li><a href="{{ cartPath }}">View Cart</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ checkoutPath }}">Check Out</a></li>
           </ul>
         </li>
       </ul>

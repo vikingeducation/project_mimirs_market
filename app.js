@@ -49,6 +49,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
+const cart = require("./routers/cart");
+app.get("/*", cart.cart);
+app.use("/cart", cart.router);
 app.all("/", (req, res) => res.redirect("/products"));
 app.use("/products", require("./routers/products"));
 app.use("/categories", require("./routers/categories"));

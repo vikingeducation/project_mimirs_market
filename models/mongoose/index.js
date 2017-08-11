@@ -1,7 +1,3 @@
-const mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-
-
-module.exports = {
-  
-}
+const mongoose = require("mongoose");
+// mongoose.Promise = require('bluebird');
+module.exports = {};
