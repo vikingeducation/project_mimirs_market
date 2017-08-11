@@ -1,0 +1,11 @@
+  <h1 class="col-xs-12">Do you want {{product.name}}</h1>
+  <h1 class="col-xs-12">From the {{category}}</h1>
+  <img src={{product.sku}}  style="width:320px;height:220px;">
+
+  <section class="row">
+    <h1 class="col-xs-12">Buy?</h1>
+    <form action="/checkout/{{product.id}}" method="post" class="col-xs-12">
+
+      <button type="submit" class="btn btn-primary">Buy this</button>
+    </form>
+  </section>

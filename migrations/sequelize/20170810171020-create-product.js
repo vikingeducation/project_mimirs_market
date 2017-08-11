@@ -20,15 +20,15 @@ module.exports = {
       price: {
         type: Sequelize.FLOAT
       },
-      categoryId: {
+      CategoryId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       }
     });

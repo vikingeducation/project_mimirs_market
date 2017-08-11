@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "password",
-    "database": "database_mimirs_market_development",
+    "username": "highdefinition",
+    "password": null,
+    "database": "mimir_market",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "password",
-    "database": "database_mimirs_market_development",
+    "username": "highdefinition",
+    "password": null,
+    "database": "mimir_market",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
+    "username": "highdefinition",
     "password": null,
-    "database": "database_mimirs_market_development",
+    "database": "mimir_market",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

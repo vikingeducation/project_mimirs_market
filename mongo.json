@@ -1,10 +1,10 @@
 {
   "development": {
-    "database": "Mimirs_Market_dev",
+    "database": "mimir_market",
     "host": "localhost"
   },
   "test": {
-    "database": "Mimirs_Market_test",
+    "database": "mimir_market_test",
     "host": "localhost"
   },
   "production": {

@@ -1,7 +1,0 @@
-login page
-browse products page
-    search by category/term/similar
-product page
-cart page
-checkout page
-admin page

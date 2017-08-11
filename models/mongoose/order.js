@@ -1,20 +1,19 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var OrderSchema = new Schema(
-  {
-    firstName: String,
-    lastName: String,
-    email: String,
-    street: String,
-    city: String,
-    state: String,
-    country: String,
-    items: [{ type: Schema.Types.ObjectId, ref: "OrderItem" }],
-    charge: { type: Schema.Types.ObjectId, ref: "Charge" }
-  },
-  { timeStamps: true }
-);
+var OrderSchema = {
+  firstname: String,
+  lastname: String,
+  email: String,
+  streetaddress: String,
+  state: String,
+  products: Schema.Types.Mixed,
+  totalcost: Number,
+  date: Date,
+  productIdArray: Array,
+  productQuantityArray: Array,
+  productPriceArray: Array
+};
 
 var Order = mongoose.model("Order", OrderSchema);
 

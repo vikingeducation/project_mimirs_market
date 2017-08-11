@@ -1,25 +1,19 @@
 "use strict";
-
-let cats = ["weapons", "balloons", "chairs", "onions"];
-
+var models = require("C:\\Users\\High Definition\\Desktop\\mMarket\\assignment_okodin\\models");
+var cats = ["weapons", "balloons", "chairs", "onions"];
 module.exports = {
   up: function(queryInterface, Sequelize) {
     let categories = [];
     cats.forEach(i => {
       categories.push({
-        name: cats[i]
+        name: i
       });
     });
+
     return queryInterface.bulkInsert("Categories", categories);
   },
 
   down: function(queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
+    return queryInterface.bulkDelete("Categories", null, {}, models.Category);
   }
 };
