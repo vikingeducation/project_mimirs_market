@@ -85,3 +85,20 @@
 <form method='GET' action='/cart'>
   <button type='submit' class="btn btn-danger">Return to Cart</button>
 </form>
+
+<form action="checkout/charges" method="post">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ STRIPE_PK }}"
+    data-amount="100"
+    data-name="Stripe Node Test"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"></script>
+</form>
+<!--
+
+4242 4242 4242 4242
+1/18
+123
+ -->

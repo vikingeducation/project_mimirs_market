@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { Product, Category, State } = require("../models/sequelize");
+let stripe = require("stripe")(process.env.STRIPE_SK);
 
 //checkout route
 router.get("/", (req, res) => {
@@ -10,13 +11,35 @@ router.get("/", (req, res) => {
       return res.render("cart/checkout", {
         cart: makeCart(req.session.cart),
         states: stateList,
-        total: getTotal(req.session.cart)
+        total: getTotal(req.session.cart),
+        STRIPE_PK: process.env.STRIPE_PK
       });
     })
     .catch(e => {
       console.log(`TERRIBLE THINGS HAVE HAPPENED: ${e}`);
       throw e;
     });
+});
+router.post("/charges", (req, res) => {
+  var charge = req.body;
+  stripe.charges
+    .create({
+      amount: 100,
+      currency: "usd",
+      description: "/* Some description of the transaction */",
+      source: charge.stripeToken
+    })
+    .then(charge => {
+      // ... Save charge and session data
+      // from checkout and cart
+      // to MongoDB
+      return res.render("cart/success");
+    })
+    .then(() => {
+      // Redirect or render here
+      // return res.render("cart/success");
+    })
+    .catch(e => res.status(500).send(e.stack));
 });
 
 module.exports = router;

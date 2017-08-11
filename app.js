@@ -1,6 +1,13 @@
 var express = require("express");
 var app = express();
 
+/*change this later for production*/
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+var { STRIPE_SK, STRIPE_PK } = process.env;
+let stripe = require("stripe")(STRIPE_SK);
+
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 var cookieSession = require("cookie-session");

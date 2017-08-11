@@ -18,7 +18,7 @@ router.delete("/", (req, res) => {
 });
 
 //add an item to Cart
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
   req.session.cart = req.session.cart || [];
   // req.session.cart = []; //used to refresh the cart
   //get the product
