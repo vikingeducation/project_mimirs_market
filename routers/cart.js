@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Product, Category } = require("../models/sequelize");
+const { Product, Category, State } = require("../models/sequelize");
 const h = require("../helpers");
 
 // Middleware to prepare cart details
@@ -31,14 +31,20 @@ const cart = async (req, res, next) => {
   next();
 };
 
-router.get("/", (req, res) => {
+router.get(["/", "/checkout"], async (req, res) => {
   if (!Object.keys(res.locals.cartProducts).length) {
     req.flash(
       "notice",
       "Your cart is empty. Perhaps you'd like to select some items?"
     );
     res.redirect(h.productsPath());
-  } else res.render("cart/index");
+  } else if (/\/[^/]*\/checkout(\/.*)?/.test(req.originalUrl)) {
+    const states = await State.findAll();
+    res.render("cart/checkout", { states });
+  } else {
+    res.render("cart/index");
+  }
+  console.log(req.originalUrl);
 });
 
 router.delete("/", (req, res) => {

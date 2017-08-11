@@ -1,0 +1,86 @@
+<header class="page-header">
+  <h1>Check out</h1>
+</header>
+
+<section class="row">
+
+  <section class="col-sm-6">
+    <h2>Order Items</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>No.</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each cartProducts as |product| }}
+        <tr>
+          <td>
+            <a href="{{ productPath product.id }}">{{ product.name }}</a>
+          </td>
+          <td>{{ product.prettyPrice }}</td>
+          <td>{{ product.count }}</td>
+          <td>{{ product.subtotal }}</td>
+        </tr>
+        {{/each }}
+      </tbody>
+    </table>
+    <hr>
+    <h2>Order Total</h2>
+    <h3 class="text-success">{{ cartTotal }}</h3>
+    <hr>
+  </section>
+
+  <section class="col-sm-6 col-lg-4">
+    <h2>Billing Info</h2>
+    <form action="{{ checkoutPath }}" method="post">
+      <fieldset>
+        <legend>Personal</legend>
+        <section class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" name="fname" class="form-control" pattern="^\w{1, 20}$" required>
+        </section>
+        <section class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" name="lname" class="form-control" pattern="^\w{1, 20}$" required>
+        </section>
+        <section class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </section>
+      </fieldset>
+      <fieldset>
+        <legend>Address</legend>
+        <section class="form-group">
+          <label for="street">Street</label>
+          <input type="text" name="street" class="form-control" pattern="^[\w\ ]{1, 60}$" required>
+        </section>
+        <section class="form-group">
+          <label for="city">City</label>
+          <input type="text" name="city" class="form-control" pattern="^[\w\ ]{1, 60}$" required>
+        </section>
+        <section class="form-group">
+          <label for="zip">Zip</label>
+          <input type="text" name="zip" class="form-control" pattern="^\d{5}$" required>
+        </section>
+        <section>
+          <label for="state">State</label>
+          <select name="state" class="form-control" required>
+            {{#each states as |state|}}
+            <option value="{{ state.id }}">{{ state.name }}</option>
+            {{/each}}
+          </select>
+        </section>
+      </fieldset>
+      <hr>
+      <a href="{{ cartPath }}" class="btn btn-warning">Return to Cart</a>
+      <button class="btn btn-primary">Submit Payment</button>
+    </form>
+
+  </section>
+
+
+</section>
