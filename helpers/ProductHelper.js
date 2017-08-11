@@ -9,17 +9,35 @@ function selectProduct(product, count) {
 const ProductHelper = {
   productsPath: () => "/products/",
   productPath: id => `/products/${id}`,
+
   productCart: (product, cart) => {
-    product.Category.Products = ProductHelper.productsCart(
-      product.Category.Products,
-      cart
-    );
-    return selectProduct(product, cart[product.id]);
+    if (cart) {
+      product.Category.Products = ProductHelper.productsCart(
+        product.Category.Products,
+        cart
+      );
+      if (cart[product.id]) {
+        return selectProduct(product, cart[product.id].count);
+      } else {
+        return product;
+      }
+    } else {
+      return product;
+    }
   },
+
   productsCart: (products, cart) => {
-    return products.map(product => {
-      return selectProduct(product, cart[product.id]);
-    });
+    if (cart) {
+      return products.map(product => {
+        if (cart[product.id]) {
+          return selectProduct(product, cart[product.id].count);
+        } else {
+          return product;
+        }
+      });
+    } else {
+      return products;
+    }
   }
 };
 

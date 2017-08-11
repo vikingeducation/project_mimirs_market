@@ -1,4 +1,4 @@
-module.exports = {
+const CartHelper = {
   cartPath: () => "/cart/",
   newCartPath: id => `/cart/${id}`,
   editCartPath: id => `/cart/${id}`,
@@ -13,3 +13,5 @@ module.exports = {
     });
   }
 };
+
+module.exports = CartHelper;

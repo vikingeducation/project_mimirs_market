@@ -24,11 +24,12 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Session
-const cookieSession = require("cookie-session");
+const session = require("express-session");
 app.use(
-  cookieSession({
-    name: "session",
-    keys: ["as908ffa9d08sadf89sadf89qjqwjkl"]
+  session({
+    secret: "adfs89adfs890qrkjlrqjkl;9xzcv88-v",
+    resave: false,
+    saveUninitialized: true
   })
 );
 
@@ -55,7 +56,7 @@ app.use((req, res, next) => {
 
 // Routes
 const cart = require("./routers/cart");
-app.get("/*", cart.cart);
+app.use(cart.cart);
 app.use("/cart", cart.router);
 app.all("/", (req, res) => res.redirect("/products"));
 app.use("/products", require("./routers/products"));
