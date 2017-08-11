@@ -13,29 +13,40 @@ router.all('/:resource/:id?', (req, res, next) => {
 		return;
 	}
 	// returns the method
-	determineMethod(req)(req, res);
+	const method = determineMethod(req);
+	if (!method) {
+		return res.status(404).json({
+			msg: 'Error, the requested resource was not found.'
+		});
+	}
+
+	method(req, res);
 });
 
 router.use('/api', asyncRoutes);
 
 function determineMethod(req) {
-	if (req.params.id === undefined) {
-		if (req.method === 'GET') {
-			return controller.index;
-		} else {
-			return controller.create;
-		}
-	} else {
+	if (req.params.id !== undefined) {
 		if (req.method === 'GET') {
 			return controller.view;
 		}
 
 		if (req.method === 'PUT') {
+			return controller.create;
+		}
+
+		if (req.method === 'PATCH') {
 			return controller.update;
 		}
 
 		if (req.method === 'DELETE') {
 			return controller.remove;
+		}
+	} else {
+		if (req.method === 'GET') {
+			return controller.index;
+		} else {
+			return controller.create;
 		}
 	}
 

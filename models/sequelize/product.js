@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
 	Product.init(
 		{
 			name: DataTypes.STRING,
-			img: DataTypes.BLOB,
+			img: DataTypes.STRING,
 			sku: DataTypes.STRING,
 			desc: DataTypes.TEXT,
 			price: DataTypes.REAL,
@@ -49,23 +49,28 @@ module.exports = function(sequelize, DataTypes) {
 
 	Product.hook('afterFind', product => {
 		if (!Array.isArray(product)) {
-			// Limit on include wasn't working correctly.
-			product.RelatedProducts = product.RelatedProducts.slice(0, 20);
+			if (
+				product.RelatedProducts !== undefined &&
+				Array.isArray(product.RelatedProducts)
+			) {
+				// Limit on include wasn't working correctly.
+				product.RelatedProducts = product.RelatedProducts.slice(0, 20);
 
-			// Group related products by 3
-			let relatedProducts = [];
-			let count = 0;
-			product.RelatedProducts.forEach((product, i) => {
-				if (!Array.isArray(relatedProducts[count])) {
-					relatedProducts[count] = [];
-				}
-				relatedProducts[count][i % 4] = product;
-				if (i % 4 === 3) {
-					count++;
-				}
-			});
-			relatedProducts[0].first = true;
-			product.RelatedProducts = relatedProducts;
+				// Group related products by 3
+				let relatedProducts = [];
+				let count = 0;
+				product.RelatedProducts.forEach((product, i) => {
+					if (!Array.isArray(relatedProducts[count])) {
+						relatedProducts[count] = [];
+					}
+					relatedProducts[count][i % 4] = product;
+					if (i % 4 === 3) {
+						count++;
+					}
+				});
+				relatedProducts[0].first = true;
+				product.RelatedProducts = relatedProducts;
+			}
 		}
 	});
 

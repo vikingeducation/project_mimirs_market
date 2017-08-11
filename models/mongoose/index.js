@@ -12,7 +12,6 @@ fs
 	})
 	.forEach(file => {
 		var model = require(path.join(__dirname, file));
-		console.log(model);
 		db[model.modelName] = model;
 	});
 

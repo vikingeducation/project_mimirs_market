@@ -1,0 +1,40 @@
+<div class="product-view">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="row related-products-row">
+				<div class="col-xs-12 related-products">
+					<div class="page-header">
+						<h2>Customers who purchased items in your cart also purchased</h2>
+					</div>
+					<div id="carousel-example-generic" class="carousel slide product-carousel" data-ride="carousel">
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							{{#each RelatedProducts as |relatedProductGroup| }}
+
+							{{#if relatedProductGroup.first }}
+								<div class="item active carousel-product-group">
+							{{else}}
+								<div class="item">
+							{{/if}}
+								{{#each relatedProductGroup as |relatedProduct| }}
+									{{>_product-small hideDesc=true product=relatedProduct }}
+								{{/each}}
+								</div>
+							{{/each}}
+
+							<!-- Controls -->
+							<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

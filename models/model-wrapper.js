@@ -7,7 +7,8 @@ const DB_MAP = {
 	},
 	mongoose: {
 		findAll: 'find',
-		findById: 'findById'
+		findById: 'findById',
+		create: 'create'
 	}
 };
 
@@ -38,6 +39,11 @@ class ModelWrapper {
 	findAndCountAll(model, query) {
 		let method = this._getMethod('findAndCountAll');
 		return this.db[model][method](query);
+	}
+
+	create(model, data) {
+		let method = this._getMethod('create');
+		return this.db[model][method](data);
 	}
 }
 

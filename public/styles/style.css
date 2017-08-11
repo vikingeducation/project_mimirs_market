@@ -245,3 +245,29 @@ hr.product-divider {
 	padding-left: 0;
 	padding-right: .15em;
 }
+
+.update-quantity-form div.form-group {
+	max-width: 105px;
+	padding-left: 0;
+	padding-right: .15em;
+}
+
+ul.pagination-container li.active span {
+	z-index: 0;
+}
+
+p.cart-product-price {
+	font-size: 200%;
+}
+
+.billing-info-container {
+	padding-left: 2em;
+}
+
+.stripe-well {
+	margin-top: 6em;
+}
+
+.stripe-well img {
+	margin-bottom: 2em;
+}

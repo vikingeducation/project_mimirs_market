@@ -1,0 +1,9 @@
+<ul id="user-cart" class="dropdown-menu">
+	{{#each userCart as |productObj|}}
+	<li id="cart-product">
+		{{>_product-cart product=productObj}}
+	</li>
+		<li role="separator" class="divider"></li>
+	{{/each}}
+	<li><a href="/cart">View your cart</a></li>
+</ul>

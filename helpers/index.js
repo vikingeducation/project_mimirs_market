@@ -2,7 +2,6 @@ const Handlebars = require('handlebars');
 module.exports = {
 	breadcrumbs: function(crumbs) {
 		let html = `<ol class="breadcrumb">`;
-		html = html.concat(`<li>Home</li>`);
 		crumbs.forEach((item, idx) => {
 			if (idx !== crumbs.length - 1) {
 				html = html.concat(`<li><a href="${item.href}">${item.name}</a></li>`);
@@ -29,7 +28,7 @@ module.exports = {
 		data.pageCount = +data.pageCount;
 
 		let html = '<nav class="text-center" aria-label="Page navigation">';
-		html += '<ul id="pagination-container" class="pagination">';
+		html += '<ul class="pagination-container pagination">';
 
 		if (data.currentPage !== 0) {
 			html += '<li>';

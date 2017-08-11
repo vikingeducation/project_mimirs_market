@@ -4,7 +4,7 @@
 			{{breadcrumbs crumbs}}
 		{{/if}}
 	</div>
-	<div class="product-view">
+	<div class="product-view" id="products-list">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h1>{{product.name}}</h1>
@@ -92,9 +92,9 @@
 										      <input type="number" min="0" max="100" class="form-control" id="quantity" value="1">
 										    </div>
 										  </div>
-										  <button type="button" class="btn btn-primary">
+										  <a href="/cart/{{product.id}}" class="btn btn-primary add-to-cart-btn">
 												<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
-											</button>
+											</a>
 											<button type="button" class="btn btn-success">
 												<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Add to Wishlist
 											</button>
@@ -115,58 +115,5 @@
 		</div>
 	</div>
 
-	<div class="product-view">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="row related-products-row">
-					<div class="col-xs-12 related-products">
-						<div class="page-header">
-							<h2>Related Products</h2>
-						</div>
-						<div id="carousel-example-generic" class="carousel slide product-carousel" data-ride="carousel">
-							<!-- Wrapper for slides -->
-						  <div class="carousel-inner" role="listbox">
-								{{#each product.RelatedProducts as |relatedProductGroup| }}
-
-								{{#if relatedProductGroup.first }}
-						    	<div class="item active carousel-product-group">
-								{{else}}
-									<div class="item">
-								{{/if}}
-									{{#each relatedProductGroup as |relatedProduct| }}
-										{{>_product-small hideDesc=true product=relatedProduct }}
-									{{/each}}
-						    	</div>
-								{{/each}}
-
-							  <!-- Controls -->
-							  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-							    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							    <span class="sr-only">Previous</span>
-							  </a>
-							  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-							    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							    <span class="sr-only">Next</span>
-							  </a>
-							</div>
-						</div>
-						<!-- Indicators -->
-						<!-- <ol class="carousel-indicators">
-							<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-						</ol> -->
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 related-products">
-						<div class="page-header">
-							<h2>Customer Reviews</h2>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{{>_related-products RelatedProducts=product.RelatedProducts}}
 </div>

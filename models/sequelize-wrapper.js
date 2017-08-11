@@ -34,7 +34,7 @@ class SequelizeWrapper extends ModelWrapper {
 		return this.findAll(MODEL_PRODUCT, options);
 	}
 
-	findAllProductsAndGroup(options, groupNum) {
+	findAllProductsAndGroup(options, groupNum, shuffle) {
 		groupNum = groupNum || 3;
 		const promises = [
 			this.findAllProducts(options),
@@ -45,6 +45,10 @@ class SequelizeWrapper extends ModelWrapper {
 			let [rawProducts, productCount] = results;
 			const products = [];
 			let count = 0;
+
+			if (shuffle) {
+				rawProducts = shuffle(rawProducts);
+			}
 
 			if (groupNum !== undefined && groupNum > 1) {
 				rawProducts.forEach((product, i) => {
@@ -59,6 +63,38 @@ class SequelizeWrapper extends ModelWrapper {
 			}
 			return [products, productCount];
 		});
+
+		function shuffle(array) {
+			var currentIndex = array.length,
+				temporaryValue,
+				randomIndex;
+
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+				// Pick a remaining element...
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex -= 1;
+
+				// And swap it with the current element.
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}
+
+			return array;
+		}
+	}
+
+	findProductsByCategory(categoryId, groupNum, shuffle = false) {
+		if (categoryId === undefined) {
+			return Promise.resolve([]);
+		}
+
+		return this.findAllProductsAndGroup(
+			{ where: { categoryId: categoryId } },
+			groupNum,
+			shuffle
+		);
 	}
 
 	refineProducts(criteria, groupNum) {

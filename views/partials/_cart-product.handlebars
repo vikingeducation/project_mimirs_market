@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-xs-2 product-container">
+		<a href="/products/{{product.id}}" class="product thumbnail">
+			<img src="{{product.img}}" alt="{{product.name}}">
+		</a>
+		<div class="caption product product-caption">
+			<h4><a href="/products/{{product.id}}"><strong>{{productObj.product.name}}</strong></a></h4>
+
+			<p>
+				S/N: {{productObj.product.sku}}
+			</p>
+			<!-- <p class="cart-product-desc">{{product.desc}}</p> -->
+		</div>
+		<p class="text-right cart-product-price">{{productObj.product.prettyPrice}}</h3>
+	</div>
+	<div class="col-xs-10">
+		<p>{{productObj.product.desc}}</p>
+		{{#unless hideQuantity}}
+		<hr class="product-divider" />
+		<div class="row">
+			<div class="col-xs-12">
+				<form class="form-inline update-quantity-form">
+					<div class="form-group col-xs-12">
+						<div class="input-group">
+							<div class="input-group-addon">#</div>
+							<input type="number" min="0" max="100" class="form-control" data-product-id="{{productObj.product.id}}" value="{{productObj.quantity}}">
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						 Update
+					</button>
+				</form>
+			</div>
+		</div>
+		{{/unless}}
+	</div>
+</div>

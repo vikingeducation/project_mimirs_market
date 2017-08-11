@@ -1,4 +1,8 @@
-var OrderModel = require('../models/mongoose/order.js');
+const getModelWrapper = require('../models');
+const { STRIPE_SK, STRIPE_PK } = process.env;
+
+const stripe = require('stripe')(STRIPE_SK);
+const UTIL = require('../util');
 
 /**
  * OrderController.js
@@ -10,111 +14,112 @@ module.exports = {
    * OrderController.index()
    */
 	index: function(req, res) {
-		OrderModel.find(function(err, Orders) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when getting Order.',
-					error: err
-				});
-			}
-			return res.json(Orders);
-		});
+		// Get related products for all products in the cart.
+		let categories = [],
+			foundHash = {};
+		if (req.session.cart !== undefined && req.session.cart.length > 0) {
+			req.session.cart.forEach(productObj => {
+				let categoryId = productObj.product.categoryId;
+				if (foundHash[categoryId] === undefined) {
+					foundHash[categoryId] = true;
+					categories.push(categoryId);
+				}
+			});
+		}
+
+		// Needed if we have categories for related products.
+		// So just use it anyway if we don't have categories.
+		const totals = UTIL.calculateTotals(req.session.cart);
+		totals.totalRaw *= 100;
+		const options = {
+			total: totals,
+			crumbs: [
+				{ href: '/products', name: 'Home' },
+				{ href: '/cart', name: 'Your Cart' },
+				{ href: '', name: 'Check Out' }
+			],
+			STRIPE_PK: STRIPE_PK
+		};
+		res.render('orders/index', options);
 	},
 
 	/**
    * OrderController.view()
    */
-	view: function(req, res) {
-		var id = req.params.id;
-		OrderModel.findOne({ _id: id }, function(err, Order) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when getting Order.',
-					error: err
-				});
-			}
-			if (!Order) {
-				return res.status(404).json({
-					message: 'No such Order'
-				});
-			}
-			return res.json(Order);
-		});
-	},
+	view: function(req, res) {},
 
 	/**
    * OrderController.create()
    */
 	create: function(req, res) {
-		var Order = new OrderModel({
-			itemCount: req.body.itemCount,
-			totalCost: req.body.totalCost,
-			userId: req.body.userId
-		});
+		console.log('ORDER RECEIVED');
 
-		Order.save(function(err, Order) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when creating Order',
-					error: err
-				});
-			}
-			return res.status(201).json(Order);
-		});
-	},
-
-	/**
-   * OrderController.update()
-   */
-	update: function(req, res) {
-		var id = req.params.id;
-		OrderModel.findOne({ _id: id }, function(err, Order) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when getting Order',
-					error: err
-				});
-			}
-			if (!Order) {
-				return res.status(404).json({
-					message: 'No such Order'
-				});
-			}
-
-			Order.itemCount = req.body.itemCount
-				? req.body.itemCount
-				: Order.itemCount;
-			Order.totalCost = req.body.totalCost
-				? req.body.totalCost
-				: Order.totalCost;
-			Order.userId = req.body.userId ? req.body.userId : Order.userId;
-
-			Order.save(function(err, Order) {
-				if (err) {
-					return res.status(500).json({
-						message: 'Error when updating Order.',
-						error: err
-					});
-				}
-
-				return res.json(Order);
+		const cart = req.session.cart;
+		if (cart === undefined || !Array.isArray(cart) || cart.length === 0) {
+			return res.status(500).json({
+				msg: 'Error, nothing in your cart'
 			});
-		});
+		}
+
+		// Grab the total amount from our sesion.
+		const total = UTIL.calculateTotals(cart).totalRaw;
+		console.log(req.session);
+		// Grab the billing info from the session.
+		const billingData = req.session.billing;
+		if (!billingData) {
+			return res.status(500).json({
+				msg: 'Error, no billing information present.'
+			});
+		}
+
+		const stripeData = req.body;
+		stripe.charges
+			.create({
+				amount: total,
+				currency: 'usd',
+				description: 'Someone bought a product BRUH!',
+				source: stripeData.stripeToken
+			})
+			.then(charge => {
+				// Extra the data we need from our charge.
+				let { amount, created, description } = charge;
+				let refund_url = charge.refunds.url;
+				const chargeData = {
+					amount,
+					created,
+					description,
+					refund_url
+				};
+
+				// Create the final collection object.
+				const order = {
+					cart: cart,
+					billing: billingData,
+					charge: chargeData
+				};
+				return order;
+			})
+			.then(order => {
+				// Get our database and create a new order.
+				let wrapper = getModelWrapper('mongoose');
+
+				// Save it.
+				return wrapper.saveOrder(order);
+			})
+			.then(() => {
+				// Remove items from session.
+				delete req.session.billing;
+				delete req.session.cart;
+				res.redirect('/products/?ps= true');
+			})
+			.catch(e => res.status(500).send(e.stack));
 	},
 
-	/**
-   * OrderController.remove()
-   */
-	remove: function(req, res) {
-		var id = req.params.id;
-		OrderModel.findByIdAndRemove(id, function(err, Order) {
-			if (err) {
-				return res.status(500).json({
-					message: 'Error when deleting the Order.',
-					error: err
-				});
-			}
-			return res.status(204).json();
-		});
+	saveBilling: function(req, res) {
+		console.log('BILLING INFO SAVED');
+		const billing = req.body.billing;
+		console.log(billing);
+		req.session.billing = billing;
+		res.end();
 	}
 };
