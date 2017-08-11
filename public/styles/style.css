@@ -1,8 +1,24 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Condensed|Ubuntu+Mono');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Condensed|Ubuntu+Mono|Pacifico');
+
+html {
+	height: 100%;
+}
 
 body {
 	font: 14px Ubuntu, "Lucida Grande", Helvetica, Arial, sans-serif;
+	min-height: 100%;
 }
+
+a.navbar-brand {
+	margin-left: 0;
+	padding: 0 0 0 2em;
+}
+
+.navbar-brand h1 {
+	margin: .25em 0 0 0;
+	font-family: Pacifico;
+}
+
 body.page-bg {
 	background: rgb(0, 0, 0); /* Old browsers */
 	background: -moz-linear-gradient(
@@ -47,6 +63,7 @@ body.page-bg {
 }
 
 .page-container {
+	min-height: 100vh;
 	min-width: 1280px;
 	z-index: 0;
 }
@@ -63,15 +80,29 @@ body.page-bg {
 	height: 45px;
 }
 
-a {
-	color: #00b7ff;
-}
-
 .well h3 {
 	margin-top: 0;
 }
 
+@keyframes slide-in {
+	0% {
+		top: -500px;
+		opacity: 0;
+	}
+	100% {
+		top: 25px;
+		opacity: 1;
+	}
+}
+
 .refine-well {
+	animation-name: slide-in;
+	animation-duration: .5s;
+	animation-timing-function: ease-in;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-play-state: running;
+
 	border-bottom-left-radius: 2em;
 	border-bottom-right-radius: 2em;
 	position: absolute;
@@ -122,11 +153,23 @@ a {
 
 /*** PRODUCTS PAGES ***/
 .products-container {
+	min-height: 100vh;
 	background: rgba(175, 175, 175, 1);
 	box-shadow: 0px 0 30px #000;
 }
-.products-list {
-	margin-top: 280px;
+.products-container ol {
+	margin: 250px 1em 1em 1em;
+}
+
+.no-refine-crumbs ol {
+	margin-top: 80px;
+}
+
+.product-view {
+	padding: 0 2em;
+}
+.product-view .panel {
+	box-shadow: 0 1px 2px #555;
 }
 
 a.product {
@@ -134,6 +177,7 @@ a.product {
 }
 
 div.product {
+	background-color: #fff;
 	box-shadow: 0 1px 2px #444;
 	padding: 4px;
 	margin-left: 2px;
@@ -144,4 +188,60 @@ div.product {
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
 	border-bottom: 1px solid #999;
+}
+
+.product-rating {
+	font-size: 200%;
+	color: gold;
+}
+
+.product h4 {
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
+p.product-price {
+	font-size: 200%;
+}
+.product-carousel {
+	border-radius: 3px;
+	border: 1px solid #aaa;
+	box-shadow: 1px 1px 2px #555;
+	background-color: #ddd;
+}
+
+.related-products-row {
+	min-height: 520px;
+}
+
+.related-products .page-header {
+	margin-top: 0;
+}
+
+.carousel-product-group {
+	margin-top: 1em;
+}
+
+.carousel-indicators li {
+	background-color: #999;
+	/*background-color: rgba(70, 70, 70, .25);*/
+}
+
+.carousel-indicators .active {
+	background-color: #555;
+}
+
+hr.product-divider {
+	border: 0;
+	height: 1px;
+	background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+	background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+	background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+	background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+}
+
+#add-to-cart-form div.form-group {
+	max-width: 90px;
+	padding-left: 0;
+	padding-right: .15em;
 }

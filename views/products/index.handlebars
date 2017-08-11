@@ -1,9 +1,16 @@
 <div class="row products-container">
+  <script src="/scripts/pagination.js"></script>
   <!-- <header class="page-header">
     <h1>Products</h1>
     <a href="/products/new" class="btn btn-primary">+ New Product</a>
   </header> -->
-  <div class="col-xs-12 products-list">
+  {{#if crumbs}}
+    {{breadcrumbs crumbs}}
+  {{/if}}
+  <div id="products-list" class="col-xs-12 products-list">
+    {{#if paginationData }}
+      {{paginate paginationData}}
+    {{/if}}
     {{#if products.length }}
       {{#each products as |productGroup| }}
         <div class="row">
@@ -15,5 +22,8 @@
     {{else }}
       <p class="text-danger">No products</p>
     {{/if }}
+		{{#if paginationData }}
+			{{paginate paginationData}}
+		{{/if}}
   </div>
 </div>

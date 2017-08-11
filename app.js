@@ -1,18 +1,28 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const genuuid = require('shortid');
 
-var exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-
 mongoose.Promise = Promise;
 
-var app = express();
+const app = express();
+const session = require('express-session');
+app.use(
+	session({
+		genid: req => genuuid(),
+		secret: 'I like pickles',
+		resave: false,
+		saveUninitialized: true
+	})
+);
+
 require('dotenv').config();
 
 //connect to mongoose
@@ -36,13 +46,14 @@ require('dotenv').config();
 // 	// }
 // });
 
+// Handlebar helpers.
+let hbs = exphbs.create({
+	defaultLayout: 'main',
+	helpers: require('./helpers')
+});
+
 // view engine setup
-app.engine(
-	'handlebars',
-	exphbs({
-		defaultLayout: 'main'
-	})
-);
+app.engine('handlebars', hbs.engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
@@ -50,7 +61,7 @@ app.set('view engine', 'handlebars');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -59,7 +70,7 @@ app.use('/', apiRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-	var err = new Error('Not Found');
+	const err = new Error('Not Found');
 	err.status = 404;
 	next(err);
 });

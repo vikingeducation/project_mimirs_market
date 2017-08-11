@@ -19,14 +19,14 @@ module.exports = {
 		];
 
 		const products = [];
-
+		const desc = faker.lorem.words(250);
 		for (let a = 0; a < categories.length; a++) {
 			for (let i = 0; i < 20; i++) {
 				products.push({
-					name: faker.random.words(3),
+					name: faker.random.words(2),
 					img: faker.image[categories[a]](),
 					sku: faker.random.number(1000000, 10000000),
-					desc: faker.lorem.words(25),
+					desc: desc,
 					price: faker.finance.amount(3),
 					categoryId: a + 1
 				});

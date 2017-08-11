@@ -1,7 +1,9 @@
 const DB_MAP = {
 	sequelize: {
+		count: 'count',
 		findAll: 'findAll',
-		findById: 'findById'
+		findById: 'findById',
+		findAndCountAll: 'findAndCountAll'
 	},
 	mongoose: {
 		findAll: 'find',
@@ -14,12 +16,28 @@ class ModelWrapper {
 		this.db = db;
 	}
 
-	findAll(model, query, options) {
-		return this.db[model][DB_MAP[this.type]['findAll']](query);
+	_getMethod(name) {
+		return DB_MAP[this.type][name];
+	}
+
+	getCount(model, query) {
+		let method = this._getMethod('count');
+		return this.db[model][method](query);
+	}
+
+	findAll(model, query) {
+		let method = this._getMethod('findAll');
+		return this.db[model][method](query);
 	}
 
 	findById(model, id, options) {
-		return this.db[model][DB_MAP[this.type]['findById']](id, options);
+		let method = this._getMethod('findById');
+		return this.db[model][method](id, options);
+	}
+
+	findAndCountAll(model, query) {
+		let method = this._getMethod('findAndCountAll');
+		return this.db[model][method](query);
 	}
 }
 
