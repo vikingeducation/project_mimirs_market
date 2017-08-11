@@ -77,15 +77,22 @@
       <div class="col-xs-4">
         <form class="product-box" action="/cart/addNewItem" method="post">
           <input type="hidden" name="productId" value="{{product.id}}"></input>
+          <input type="hidden" name="productPage" value="false"></input>
 
           <img src="{{product.imageUrl}}" name="picture" value="{{product.imageUrl}}" class="img-responsive" align="middle" />
           <h3><strong>Price: </strong>${{ product.price }}.00</h3>
           <a href="/products/{{product.id}}/category/{{product.CategoryId}}"><h3><strong>Name: </strong>{{ product.name }}</h3></a>
           <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
 
-          <div class="text-center cart-button form-group">
-            <button type="submit" class="btn btn-primary">Add to Cart</button>
-          </div>
+          {{#if product.inCart.length}}
+            <a href="/cart" class="text-center cart-button">
+              <div class="btn btn-success">Edit in Cart</div>
+            </a>
+          {{else}}
+            <div class="text-center cart-button form-group">
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </div>
+          {{/if}}
         </form>
 
       </div>

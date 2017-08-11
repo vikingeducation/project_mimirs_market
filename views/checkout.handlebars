@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <h2>Checkout</h2>
+  </div>
+</div>
+<div class="row">
+
+  <article class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-3">
+        <h3 class="text-center">Billing Info</h3>
+      </div>
+      <div class="col-xs-2 col-xs-offset-2">
+        <h3 class="text-center">Order Items</h3>
+      </div>
+    </div>
+  </article>
+
+  <div class="row">
+    <section class="col-xs-4 col-xs-offset-2 product-box">
+      <form action="order/new" method="POST">
+        <h5 class="text-center">Personal</h5>
+        <label>First Name</label><input type="text" name="order[personal][firstName]" /><br />
+        <label>Last Name </label><input type="text" name="order[personal][lastName]" /><br />
+        <label>Email </label><input type="text" name="order[personal][email]" /><br />
+        <h5 class="text-center">Address </h5>
+        <label>Street </label><input type="text" name="order[address][street]" /><br />
+        <label>City </label><input type="text" name="order[address][city]" /><br />
+        <select name="order[address][state]">
+            <option value="">State</option>
+            <option value="Alabama">Alabama</option>
+            <option value="Alaska">Alaska</option>
+            <option value="Arkansas">Arkansas</option>
+            <option value="California">California</option>
+        </select>
+      </form>
+    </section>
+    <section class="col-xs-4 col-xs-offset-1 product-box">
+      {{#each cart as |orderItem|}}
+        <div class="row">
+          <div class="col-xs-3">
+            <img src="{{orderItem.imageUrl}}" />
+          </div>
+          <div class="col-xs-9">
+            <h5>{{orderItem.name}}  ${{orderItem.price}}.00 x {{orderItem.quantity}} = ${{orderItem.totalPrice}}.00</h5>
+          </div>
+        </div>
+      {{/each}}
+      <h3>Total: ${{cartTotalPrice}}.00</h3>
+      <a href="/cart" class="btn btn-warning btn-lg">Return to Cart</a>
+      <button type="submit" class="btn btn-primary btn-lg">Submit Payment</button>
+    </section>
+  </div>

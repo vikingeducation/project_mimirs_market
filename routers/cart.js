@@ -4,14 +4,16 @@ const models = require("./../models/sequelize");
 const Product = models.Product;
 const Category = models.Category;
 const {ProductsHelpers, CartHelpers} = require("../helpers");
-const {genCartItem} = require("../dbSequelize/queries");
+const {genCartItem} = require("../controller/queries");
 
 router.get('/', (req, res) => {
-  let totalPrice = req.session.cart.reduce((sum, orderItem) => {
-    return sum + orderItem.price * orderItem.quantity;
+  let cart = req.session.cart;
+  let cartQuantity = cart.length;
+  let cartTotal = cart.reduce((sum, orderItem) => {
+    return sum + orderItem.totalPrice;
   }, 0)
-  let cartQuantity = req.session.cart.length;
-  res.render("cart", {cart: req.session.cart, total: totalPrice, cartQuantity});
+
+  res.render("cart", {cart: req.session.cart, total: cartTotal, cartQuantity});
 })
 
 router.post('/addNewItem', (req, res) => {
@@ -20,7 +22,9 @@ router.post('/addNewItem', (req, res) => {
   genCartItem(req.body.productId).then((cartItem) => {
     req.session.cart.push(cartItem);
 
-    return res.redirect(ProductsHelpers.productsPath());
+    return req.body.productPage === 'true' ?
+    res.redirect(ProductsHelpers.productPath(req.body.productIdView, req.body.CategoryIdView)) :
+    res.redirect(ProductsHelpers.productsPath())
   }).catch((e) => res.send(`error: ${e}`))
 })
 
@@ -52,14 +56,26 @@ router.put('/:productId', (req, res) => {
 
   req.session.cart.forEach((orderItem, index) => {
     if (orderItem.productId === productId) {
-      quantity > 0
-        ? orderItem.quantity = quantity
-        : req.session.cart.splice(index, 1)
+      if(quantity > 0) {
+        orderItem.quantity = quantity;
+        orderItem.totalPrice = quantity * orderItem.price;
+      } else {
+        req.session.cart.splice(index, 1)
+      }
     }
   })
 
   req.method = 'GET';
   return res.redirect(CartHelpers.cartPath())
+})
+
+router.get('/checkout', (req, res) => {
+  let cart = req.session.cart || [];
+  let cartTotalPrice = cart.reduce((sum, orderItem) => {
+    return sum + orderItem.totalPrice;
+  }, 0)
+  console.log(cart);
+  return res.render("checkout", { cart, cartTotalPrice });
 })
 
 module.exports = router;

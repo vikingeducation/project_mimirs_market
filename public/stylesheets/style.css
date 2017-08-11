@@ -35,3 +35,11 @@ input {
 .btn {
   margin: 10px;
 }
+
+label {
+  padding: 10px;
+}
+
+select {
+  margin-bottom: 10px;
+}
