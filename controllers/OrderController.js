@@ -80,6 +80,7 @@ module.exports = {
 			source: stripeData.stripeToken
 		};
 
+		// Promise chaining is cool bff jill.
 		stripe.charges
 			.create(charge)
 			.then(_createOrderData)
