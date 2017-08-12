@@ -2,7 +2,10 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var ChargeSchema = new Schema({
-  name: String
+  chargeId: String,
+  amount: Number,
+  description: String,
+  currency: String
 });
 
 var Charge = mongoose.model("Charge", ChargeSchema);

@@ -1,3 +1,8 @@
+// Initialize process variables
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // Setting up Express
 const express = require("express");
 const app = express();
@@ -44,6 +49,18 @@ app.use("/products", productsRoutes);
 
 const cartRoutes = require("./routers/cart");
 app.use("/cart", cartRoutes)
+
+const chargeRoutes = require("./routers/charges");
+app.use('/charges', chargeRoutes);
+
+const mongoose = require("mongoose");
+app.use((req, res, next) => {
+  if(mongoose.connection.readyState) {
+    next();
+  } else {
+    require("./mongo")().then(() => next());
+  }
+})
 
 
 // Direct to products page

@@ -17,8 +17,8 @@
   </article>
 
   <div class="row">
-    <section class="col-xs-4 col-xs-offset-2 product-box">
-      <form action="order/new" method="POST">
+    <form action="/cart/checkout" method="POST">
+      <section class="col-xs-4 col-xs-offset-2 product-box">
         <h5 class="text-center">Personal</h5>
         <label>First Name</label><input type="text" name="order[personal][firstName]" /><br />
         <label>Last Name </label><input type="text" name="order[personal][lastName]" /><br />
@@ -33,21 +33,23 @@
             <option value="Arkansas">Arkansas</option>
             <option value="California">California</option>
         </select>
-      </form>
-    </section>
-    <section class="col-xs-4 col-xs-offset-1 product-box">
-      {{#each cart as |orderItem|}}
-        <div class="row">
-          <div class="col-xs-3">
-            <img src="{{orderItem.imageUrl}}" />
+
+      </section>
+      <section class="col-xs-4 col-xs-offset-1 product-box">
+        {{#each cart as |orderItem|}}
+          <div class="row">
+            <div class="col-xs-3">
+              <img src="{{orderItem.imageUrl}}" />
+            </div>
+            <div class="col-xs-9">
+              <h5>{{orderItem.name}}  ${{orderItem.price}}.00 x {{orderItem.quantity}} = ${{orderItem.totalPrice}}.00</h5>
+            </div>
           </div>
-          <div class="col-xs-9">
-            <h5>{{orderItem.name}}  ${{orderItem.price}}.00 x {{orderItem.quantity}} = ${{orderItem.totalPrice}}.00</h5>
-          </div>
-        </div>
-      {{/each}}
-      <h3>Total: ${{cartTotalPrice}}.00</h3>
-      <a href="/cart" class="btn btn-warning btn-lg">Return to Cart</a>
-      <button type="submit" class="btn btn-primary btn-lg">Submit Payment</button>
-    </section>
+        {{/each}}
+        <h3>Total: ${{cartTotalPrice}}.00</h3>
+        <a href="/cart" class="btn btn-danger btn-lg">Return to Cart</a>
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit Payment</button>
+      </section>
+    </form>
   </div>

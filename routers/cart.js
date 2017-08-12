@@ -74,8 +74,12 @@ router.get('/checkout', (req, res) => {
   let cartTotalPrice = cart.reduce((sum, orderItem) => {
     return sum + orderItem.totalPrice;
   }, 0)
-  console.log(cart);
   return res.render("checkout", { cart, cartTotalPrice });
+})
+
+router.post('/checkout', (req, res) => {
+  req.session.order = req.body.order;
+  res.redirect('/charges');
 })
 
 module.exports = router;

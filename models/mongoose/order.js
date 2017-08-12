@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var OrderSchema = new Schema(
+const OrderSchema = new Schema(
   {
     firstName: String,
     lastName: String,
@@ -9,13 +9,19 @@ var OrderSchema = new Schema(
     street: String,
     city: String,
     state: String,
-    country: String,
     items: [{ type: Schema.Types.ObjectId, ref: "OrderItem" }],
     charge: { type: Schema.Types.ObjectId, ref: "Charge" }
   },
   { timeStamps: true }
 );
 
-var Order = mongoose.model("Order", OrderSchema);
+
+OrderSchema.virtual('updateOrderItem').set(function(orderItem) {
+  return this.items.push(orderItem);
+})
+
+const Order = mongoose.model("Order", OrderSchema);
+
+
 
 module.exports = Order;
