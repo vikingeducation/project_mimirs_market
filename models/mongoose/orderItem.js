@@ -8,6 +8,8 @@ var OrderItemSchema = new Schema(
     name: String,
     price: Number,
     category: String,
+    // sku: String,
+    // description: String,
     quantity: Number
   },
   {

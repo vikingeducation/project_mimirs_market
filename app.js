@@ -8,13 +8,15 @@ if (process.env.NODE_ENV !== "production") {
 var { STRIPE_SK, STRIPE_PK } = process.env;
 let stripe = require("stripe")(STRIPE_SK);
 
+//MIDDLEWARE
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-var cookieSession = require("cookie-session");
+const session = require("express-session");
 app.use(
-  cookieSession({
-    name: "session",
-    keys: ["asdf1234567890qwer"]
+  session({
+    secret: "chamberofsecretsOHHHSNAKES",
+    resave: false,
+    saveUninitialized: true
   })
 );
 
@@ -45,16 +47,6 @@ app.use((req, res, next) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.redirect("/products");
-});
-var productsRouter = require("./routers/products");
-app.use("/products", productsRouter);
-const cartRouter = require("./routers/cart");
-app.use("/cart", cartRouter);
-const checkoutRouter = require("./routers/checkout");
-app.use("/checkout", checkoutRouter);
-
 var expressHandlebars = require("express-handlebars");
 var hbs = expressHandlebars.create({
   partialsDir: "views/partials",
@@ -64,9 +56,22 @@ var hbs = expressHandlebars.create({
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
+////Routes
+const checkoutRouter = require("./routers/checkout");
+var productsRouter = require("./routers/products");
+const cartRouter = require("./routers/cart");
+const orderRouter = require("./routers/order");
+app.get("/", (req, res) => {
+  res.redirect("/products");
+});
+app.use("/products", productsRouter);
+app.use("/cart", cartRouter);
+app.use("/checkout", checkoutRouter);
+app.use("/orders", orderRouter);
 var port = process.env.PORT || process.argv[2] || 3000;
 var host = "localhost";
 
+//SERVER
 var args;
 process.env.NODE_ENV === "production" ? (args = [port]) : (args = [port, host]);
 

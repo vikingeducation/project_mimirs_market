@@ -72,32 +72,6 @@ router.post("/", (req, res) => {
     .catch(e => res.status(500).send(e.stack));
 });
 
-//Stripe submit route
-router.get("/charges", (req, res) => {
-  // var charge = req.body;
-  // stripe.charges
-  //   .create({
-  //     amount: 100,
-  //     currency: "usd",
-  //     description: "/* Some description of the transaction */",
-  //     source: charge.stripeToken
-  //   })
-  //   .then(charge => {
-  //     // ... Save charge and session data
-  //     // from checkout and cart
-  //     // to MongoDB
-  //
-  //     let order = new Order({});
-  //     return order.save();
-  //   })
-  //   .then(() => {
-  //     // Redirect or render here
-  //     return res.render("cart/success");
-  //   })
-  //   .catch(e => res.status(500).send(e.stack));
-  return res.render("cart/success");
-});
-
 module.exports = router;
 
 //util functions
@@ -122,12 +96,7 @@ function getTotal(cart) {
     return sum + item.price * item.quantity;
   }, 0);
 }
-//not needed anymore?
-// function getSubtotals(cart) {
-//   return cart.map(item => {
-//     return item.price * item.quantity;
-//   });
-// }
+
 //make a new obj to pass to my checkout view that includes the subtotal
 //assuming that items aren't deeply nested
 function makeCart(cart) {

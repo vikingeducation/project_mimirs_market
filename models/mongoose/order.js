@@ -35,3 +35,12 @@ var OrderSchema = new Schema(
 var Order = mongoose.model("Order", OrderSchema);
 
 module.exports = Order;
+
+//test commands
+/*
+let o = new Order({
+  user: {fname:'test'},
+  items: [],
+  stripe: null
+})
+*/
