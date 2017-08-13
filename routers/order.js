@@ -21,6 +21,7 @@ router.get("/:id", (req, res) => {
   })
     .populate("items")
     .then(order => {
+      // if (err) throw err;
       let items = order.items;
       console.log(order);
       console.log(items);

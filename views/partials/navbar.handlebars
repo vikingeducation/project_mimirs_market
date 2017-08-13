@@ -8,7 +8,6 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
           <ul class="dropdown-menu">
-            <!-- put cart items here later -->
             {{#each cart as |item|}}
               <li>> {{item.name}}</li>
               <li>${{item.price}} per item</li>
@@ -17,6 +16,15 @@
             {{/each}}
             <li><hr></li>
             <li><a href="/cart">Checkout</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-right"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href='/'>Home</></li>
+            <li><a href='/ordrs'>Admin</></li>
+            <li><a href='/checkout'>Checkout</></li>
+            <li><a href='/chamberOfSecrets'>Chamber of Secrets</></li>
           </ul>
         </li>
         <li><a href="/">Logout</a></li>
