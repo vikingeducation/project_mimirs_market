@@ -20,11 +20,14 @@ router.get("/show/:productId", (req, res) => {
   let product;
   Product.findById(req.params.productId)
     .then(p => {
-      product = p;
+      product = checkIfInCart(req, res, [p])[0];
       return Product.findAll({
         where: { categoryId: product.categoryId, id: { $ne: product.id } },
         limit: 6
       });
+    })
+    .then(relatedProducts => {
+      return checkIfInCart(req, res, relatedProducts);
     })
     .then(relatedProducts => {
       return res.render("products/show", { product, relatedProducts });

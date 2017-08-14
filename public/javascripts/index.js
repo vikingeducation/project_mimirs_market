@@ -14,7 +14,7 @@ $(document).ready(() => {
 
   //Variables from page
   const search = $("#search");
-  const sortDisplay = $(`#${selectedSort}`).html();
+  const sort = $(`#${selectedSort}`).html();
 
   //Page-load form setters
 
@@ -38,59 +38,59 @@ $(document).ready(() => {
     let value = search.val();
     value === "" ? (value = "search") : (value = value);
     search.attr("placeholder", value);
-
-    //Search parameter displays
-
-    //sorted by:
-    if (sortDisplay) {
-      $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`);
-    }
-
-    //searched for:
-    if (searchValue !== "search") {
-      $("#searchValueDisplay").html(`Search Results for: "${searchValue}"`);
-    }
-
-    // let filterOptionCategory = document.cookie
-    //   .split(" ")
-    //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
-    //   .join("")
-    //   .split("=")[1];
-    // /;$/.test(selectedSort)
-    //   ? (selectedSort = selectedSort.split(";")[0])
-    //   : selectedSort;
-    // $(`#${selectedSort}`).attr("selected", "selected");
-    // let sortDisplay = $(`#${selectedSort}`).html();
-    // sortDisplay
-    //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
-    //   : selectedSort;
-    //
-    // let filterOptionMinPrice = document.cookie
-    //   .split(" ")
-    //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
-    //   .join("")
-    //   .split("=")[1];
-    // /;$/.test(selectedSort)
-    //   ? (selectedSort = selectedSort.split(";")[0])
-    //   : selectedSort;
-    // $(`#${selectedSort}`).attr("selected", "selected");
-    // let sortDisplay = $(`#${selectedSort}`).html();
-    // sortDisplay
-    //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
-    //   : selectedSort;
-    //
-    // let filterOptionMaxPrice = document.cookie
-    //   .split(" ")
-    //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
-    //   .join("")
-    //   .split("=")[1];
-    // /;$/.test(selectedSort)
-    //   ? (selectedSort = selectedSort.split(";")[0])
-    //   : selectedSort;
-    // $(`#${selectedSort}`).attr("selected", "selected");
-    // let sortDisplay = $(`#${selectedSort}`).html();
-    // sortDisplay
-    //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
-    //   : selectedSort;
   });
+
+  //Search parameter displays
+
+  //sorted by:
+  if (sort) {
+    $("#sortOptionDisplay").html(`Sorted by: ${sort}`);
+  }
+
+  //searched for:
+  if (searchValue !== "search") {
+    $("#searchValueDisplay").html(`Search Results for: "${searchValue}"`);
+  }
+
+  // let filterOptionCategory = document.cookie
+  //   .split(" ")
+  //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
+  //   .join("")
+  //   .split("=")[1];
+  // /;$/.test(selectedSort)
+  //   ? (selectedSort = selectedSort.split(";")[0])
+  //   : selectedSort;
+  // $(`#${selectedSort}`).attr("selected", "selected");
+  // let sortDisplay = $(`#${selectedSort}`).html();
+  // sortDisplay
+  //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
+  //   : selectedSort;
+  //
+  // let filterOptionMinPrice = document.cookie
+  //   .split(" ")
+  //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
+  //   .join("")
+  //   .split("=")[1];
+  // /;$/.test(selectedSort)
+  //   ? (selectedSort = selectedSort.split(";")[0])
+  //   : selectedSort;
+  // $(`#${selectedSort}`).attr("selected", "selected");
+  // let sortDisplay = $(`#${selectedSort}`).html();
+  // sortDisplay
+  //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
+  //   : selectedSort;
+  //
+  // let filterOptionMaxPrice = document.cookie
+  //   .split(" ")
+  //   .filter(el => /^selectedSortOption=.+[A|D]$/.test(el))
+  //   .join("")
+  //   .split("=")[1];
+  // /;$/.test(selectedSort)
+  //   ? (selectedSort = selectedSort.split(";")[0])
+  //   : selectedSort;
+  // $(`#${selectedSort}`).attr("selected", "selected");
+  // let sortDisplay = $(`#${selectedSort}`).html();
+  // sortDisplay
+  //   ? $("#sortOptionDisplay").html(`Sorted by: ${sortDisplay}`)
+  //   : selectedSort;
 });

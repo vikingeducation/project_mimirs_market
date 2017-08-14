@@ -2,6 +2,11 @@
 const express = require("express");
 const app = express();
 
+//Production environment variables
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 //Modules
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -15,6 +20,8 @@ const hbs = expressHandlebars.create({
   partialsDir: "views/partials",
   defaultLayout: "application"
 });
+const { STRIPE_SK, STRIPE_PK } = process.env;
+const stripe = require("stripe")(STRIPE_SK);
 
 //Custom middleware modules
 const mdw = require("./lib/middleware");
@@ -26,6 +33,7 @@ const { Product } = require("./models/sequelize");
 const productsRouter = require("./routers/products");
 const cartRouter = require("./routers/cart");
 const checkoutRouter = require("./routers/checkout");
+const adminRouter = require("./routers/admin");
 
 //View engine
 app.engine("handlebars", hbs.engine);
@@ -65,6 +73,7 @@ app.use(mdw.cartFiller);
 app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/checkout", checkoutRouter);
+app.use("/admin", adminRouter);
 
 //Set up and start server
 const port = process.env.PORT || process.argv[2] || 3000;

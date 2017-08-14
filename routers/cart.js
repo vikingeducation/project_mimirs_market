@@ -11,6 +11,12 @@ router.get("/", (req, res) => {
 router.post("/add", (req, res) => {
   let item = { id: req.body.itemId, quantity: 1 };
   req.session.cart.push(item);
+  if (req.body.addedFromShow === "true") {
+    return res.redirect(`/products/show/${item.id}`);
+  }
+  if (req.body.addedFromRelated === "true") {
+    return res.redirect(`/products/show/${req.body.currentShowPageId}`);
+  }
   return res.redirect("/");
 });
 

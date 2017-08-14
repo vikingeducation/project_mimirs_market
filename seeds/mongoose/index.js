@@ -30,11 +30,11 @@ const seeds = () => {
       description: "Viking gear for to pillage.",
       total: 200,
       email: "viking@viking.com",
-      address: "123 Pillagers Ln",
+      streetAddress: "123 Pillagers Ln",
       city: "Stockholm",
       state: "VK",
       checkoutDate: "Fri Sep 16 2011 19:05:17 GMT+0900 (JST)",
-      StripeToken: "tokie-toke",
+      StripeToke: "tokie-toke",
       cardType: "VikingCard",
       items: [
         orderItems[i],
