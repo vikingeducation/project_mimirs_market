@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="text-center">Cart</h2>
+  </div>
+</div>
+
+<div class="row">
+  {{#each cart as |orderItem|}}
+    <div class="col-xs-8 col-xs-offset-2 product-box">
+      <div class="col-xs-3">
+        <img src="{{orderItem.imageUrl}}" />
+      </div>
+
+      <section class="col-xs-3">
+        <h4><strong>Name: </strong>{{orderItem.name}}</h4>
+        <h4><strong>Category: </strong>{{orderItem.category}}</h4>
+        <h4><strong>Price: </strong>${{orderItem.price}}.00</h4>
+        <h4><strong>Quantity: </strong>{{orderItem.quantity}}</h4>
+      </section>
+
+    <div class="col-xs-6">
+      <div class="row">
+        <div class="col-xs-12">
+          <form action="/cart/{{ orderItem.productId }}" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form-group">
+              <input type="text" name="quantity" />
+              <button type="submit" class="btn btn-success">Set Quantity</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <form class="form-group col-xs-12">
+          <a class="btn btn-danger" href="/cart/{{ orderItem.productId }}?_method=delete">Remove</a>
+        </form>
+      </div>
+    </div>
+
+    </div>
+  {{/each}}
+</div>
+
+<div class="row">
+  <div class="col-xs-2 col-xs-offset-2">
+    <h3><strong>Total: </strong>${{total}}.00</h3>
+  </div>
+  <div class="col-xs-2 col-xs-offset-2">
+    <a class="btn btn-danger btn-lg" href="/cart/?_method=delete">Clear Cart</a>
+  </div>
+  <div class="col-xs-2">
+    <a href="/cart/checkout" class="btn btn-lg btn-primary">Checkout</a>
+  </div>
+</div>

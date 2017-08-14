@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h2>Products</h2>
+
+    <form action="/products/query" method="post">
+      <!-- Search Category -->
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="search" name="search" />
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" />
+      </div>
+
+      <!-- Filter by Category -->
+      <div class="form-group">
+        <label for="category-selection">Category</label>
+        <select name="filter[categoryId]" class="form-control">
+            <option value=""></option>
+            {{#each categories as |category|}}
+              <option value="{{category.id}}">{{category.name}}</option>
+            {{/each}}
+          </select>
+      </div>
+
+      <!-- Filter by min price -->
+      <div class="form-group">
+        <label for="category-selection">Min Price</label>
+        <select name="filter[minPrice]" class="form-control">
+            <option value=""></option>
+            <option value="0">$0.00</option>
+            <option value="20">$20.00</option>
+            <option value="40">$40.00</option>
+            <option value="60">$60.00</option>
+            <option value="80">$80.00</option>
+            <option value="100">$100.00</option>
+          </select>
+      </div>
+
+      <!-- Filter by max price -->
+      <div class="form-group">
+        <label for="category-selection">Max Price</label>
+        <select name="filter[maxPrice]" class="form-control">
+            <option value=""></option>
+              <option value="0">$0.00</option>
+              <option value="20">$20.00</option>
+              <option value="40">$40.00</option>
+              <option value="60">$60.00</option>
+              <option value="80">$80.00</option>
+              <option value="100">$100.00</option>
+          </select>
+      </div>
+
+      <!-- Filter by max price -->
+      <div class="form-group">
+        <label for="sort-selection">Submit Sort By</label>
+        <select name="sortType" class="form-control">
+            <option value=""></option>
+            <option value="nameAsc">Sort by Name Ascending</option>
+            <option value="nameDsc">Sort by Name Descending</option>
+            <option value="priceAsc">Sort by Price Ascending</option>
+            <option value="priceDsc">Sort by Price Descending</option>
+            <option value="newestFirst">Sort by Newest First</option>
+            <option value="oldestFirst">Sort by Oldest First</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="filter" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  {{#if products}}
+    {{#each products as |product|}}
+      <div class="col-xs-4">
+        <form class="product-box" action="/cart/addNewItem" method="post">
+          <input type="hidden" name="productId" value="{{product.id}}"></input>
+          <input type="hidden" name="productPage" value="false"></input>
+
+          <img src="{{product.imageUrl}}" name="picture" value="{{product.imageUrl}}" class="img-responsive" align="middle" />
+          <h3><strong>Price: </strong>${{ product.price }}.00</h3>
+          <a href="/products/{{product.id}}/category/{{product.CategoryId}}"><h3><strong>Name: </strong>{{ product.name }}</h3></a>
+          <h3><strong>Category: </strong>{{ product.Category.name }}</h3>
+
+          {{#if product.inCart.length}}
+            <a href="/cart" class="text-center cart-button">
+              <div class="btn btn-success">Edit in Cart</div>
+            </a>
+          {{else}}
+            <div class="text-center cart-button form-group">
+              <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </div>
+          {{/if}}
+        </form>
+
+      </div>
+    {{/each}}
+  {{/if}}
+</div>

@@ -1,0 +1,47 @@
+
+============================================
+            SEQUELIZE Schema
+============================================
+
+sequelize model:create --name Product --attributes "name:string sku:string description:string price:float categoryId:integer"
+sequelize model:create --name Category --attributes "name:string"
+sequelize model:create --name State --attributes "name:string"
+
+Product
+  name: STRING
+  sku: STRING
+  description: TEXT
+  price: FLOAT
+  categoryId: INTEGER
+
+Category
+  name: STRING
+
+
+
+=============================================
+            MongoDB Schema
+=============================================
+
+Collections
+ ORDER
+ PRODUCTORDER
+
+ProductOrder:
+ product: productObject
+ quantity: integer
+
+Order
+  items: [ProductOrder, ProductOrder, ...]
+  fname: STRING
+  lname: STRING
+  email: STRING
+  street: STRING
+  city: STRING
+  state: STRING
+  checkoutDate: DATE
+  stripeToken: STRING
+  cardType: STRING
+
+
+ProductRevenue????
