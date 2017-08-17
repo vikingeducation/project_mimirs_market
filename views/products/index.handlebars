@@ -1,0 +1,54 @@
+<header class="page-header">
+  <h1>Products</h1>
+</header>
+
+<form class="form-inline" action="{{ productsPath }}">
+  <fieldset>
+    <section class="form-group">
+      <select name="category" id="category" class="form-control">
+      <option value="all">Category</option>
+      {{#each categories as |category|}}
+      <option value="{{ category.id }}" {{#if category.selected }}selected{{/if}}>{{ category.name }}</option>
+      {{/each}}
+    </select>
+    </section>
+    <section class="form-group">
+      <select name="min" id="category" class="form-control">
+      <option value="">Minimum</option>
+      {{#each range as |price|}}
+      <option value="{{ price.value }}" {{#if price.min }}selected{{/if}}>{{ price.pretty }}</option>
+      {{/each}}
+    </select>
+    </section>
+    <section class="form-group">
+      <select name="max" id="category" class="form-control">
+      <option value="">Maximum</option>
+      {{#each range as |price|}}
+      <option value="{{ price.value }}" {{#if price.max }}selected{{/if}}>{{ price.pretty }}</option>
+      {{/each}}
+    </select>
+    </section>
+    <section class="form-group">
+      <select name="sort" id="category" class="form-control">
+      <option value="">Sort</option>
+      {{#each sorts as |sort|}}
+      <option value="{{ sort.value }}" {{#if sort.selected }}selected{{/if}}>{{ sort.name }}</option>
+      {{/each}}
+    </select>
+    </section>
+  </fieldset>
+  <br>
+  <fieldset>
+    <input type="text" name="search" placeholder="Search..." value="{{ search }}" class="form-control">
+    <button class="btn btn-success">Filter/Search</button>
+    <a href="{{ productsPath }}" class="btn btn-warning">Reset</a>
+  </fieldset>
+</form>
+
+<hr> {{#if products.length }}
+<section class="row">
+  {{#each products as |product| }} {{> shared/_product product=product }} {{/each }}
+</section>
+{{else }}
+<p class="text-danger">No products match your search. Try again.</p>
+{{/if }}

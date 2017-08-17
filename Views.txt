@@ -1,0 +1,26 @@
+Product:
+    index
+    single
+    (edit)
+
+Category:
+    index
+    single
+    (edit)
+
+User:
+    single
+
+Address:
+    index
+    edit
+
+Cart:
+    index
+    checkout
+
+Admin:
+    User index
+    Orders index
+    Orders single
+    Analytics

@@ -1,0 +1,14 @@
+<header class="page-header">
+  <h1>{{ product.name }}<small for="count"> {{ product.prettyPrice }}</small></h1>
+  Category: {{ product.Category.name }}
+</header>
+
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <p>{{ product.description}}</p>
+    {{> shared/_addOrUpdate product=product }}
+  </div>
+</div>
+{{#if product.Category.Products}}
+<h2>Related Products</h2>
+{{#each product.Category.Products as |product| }} {{> shared/_product product=product }} {{/each }} {{/if}}

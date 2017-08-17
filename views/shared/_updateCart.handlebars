@@ -1,0 +1,8 @@
+<form method="post" class="form-inline" action="{{ editCartPath product.id }}">
+  <input type="hidden" name="_method" value="put">
+  <section class="form-group">
+    <input type="number" step="1" min="0" max="99" value="{{ product.count }}" class="form-control" name="count">
+  </section>
+  <input type="submit" class="btn btn-primary" value="Update">
+  <a href="{{ destroyCartPath product.id }}" class="btn btn-danger">Remove</a>
+</form>
