@@ -2,7 +2,15 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    user: {
+      fname: String,
+      lname: String,
+      email: String,
+      street: String,
+      city: String,
+      state: String,
+      zip: Number
+    },
     items: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
     date: Date,
     total: Number

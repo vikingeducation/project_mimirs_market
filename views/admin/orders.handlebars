@@ -1,0 +1,25 @@
+<header class="page-header col-xs-12">
+  <h1>Orders</h1>
+</header>
+<section class="col-sm-12">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>State</th>
+        <th>Date</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order| }}
+      <tr>
+        <td>{{ order.user.email }}</td>
+        <td>{{ order.user.state }}</td>
+        <td>{{ order.date }}</td>
+        <td>{{ order.total }}</td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+</section>
