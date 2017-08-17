@@ -1,15 +1,25 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-const OrderItem = new Schema({
-  name: String,
-  price: Number,
-  sku: String,
-  description: String,
-  category: String,
-  quantity: number,
-  order: {
-    type: Schema.Types.Object
-    ref: "Order"
+const OrderItemSchema = new Schema(
+  {
+    id: Number,
+    name: String,
+    price: Number,
+    sku: String,
+    description: String,
+    category: String,
+    quantity: Number,
+    order: {
+      type: Schema.Types.Object,
+      ref: "Order"
+    }
+  },
+  {
+    timestamps: true
   }
-});
+);
+
+var OrderItem = mongoose.model("OrderItem", OrderItemSchema);
+
+module.exports = OrderItem;
