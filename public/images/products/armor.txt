@@ -1,0 +1,4 @@
+DB-icon-armor-Nordic_Carved_Armor.png
+DB-icon-armor-Nordic_Carved_Boots.png
+DB-icon-armor-Nordic_Carved_Gauntlets.png
+DB-icon-armor-Nordic_Carved_Helmet.png

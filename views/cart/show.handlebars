@@ -1,0 +1,35 @@
+<div class="panel panel-primary">
+  <div class='panel-heading'>Cart</div>
+  {{#each cart as |item|}}
+  <div class="panel-body">
+    <div class='col-xs-3'>
+      <img src='/{{item.img}}'class='mediumImg'>
+    </div>
+    <div class='col-xs-3'>
+      <p>{{item.name}}</p>
+      <p>{{item.category}}</p>
+      <p>${{item.price}}</p>
+    </div>
+    <div class='col-xs-6'>
+      <form method='POST' action='/cart/{{item.id}}'>
+        <label for='quantity'></label>
+        <input id='quantity' name='quantity' type='text' value={{item.quantity}}>
+        <button id='setQuantity' type='submit' class='btn btn-info'>Set Quantity</button>
+      </form>
+      <form method='POST' action='/cart/{{item.id}}?_method=DELETE'>
+        <button id='remove' type='submit' class='btn btn-danger'>Remove</button>
+      </form>
+    </div>
+  </div>
+  {{/each}}
+  <div class='panel-footer'>
+    <!--checkout section-->
+    <p>Your Total: ${{total}}</p>
+    <form method='POST' action='/cart?_method=DELETE'>
+      <button type='submit' class="btn btn-danger">Clear Cart</button>
+    </form>
+    <form method='GET' action='/checkout'>
+      <button type='submit' class="btn btn-success">Checkout</button>
+    </form>
+  </div>
+</div>

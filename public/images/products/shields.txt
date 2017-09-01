@@ -1,0 +1,4 @@
+DB-icon-armor-Nordic_Shield.png
+falkreath_shield.jpg
+shield.jpg
+steel_shield.jpg

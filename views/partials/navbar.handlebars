@@ -1,0 +1,36 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/products">Mimir's Market<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+          <ul class="dropdown-menu">
+            {{#each cart as |item|}}
+              <li>> {{item.name}}</li>
+              <li>${{item.price}} per item</li>
+              <li>Quantity: {{item.quantity}}</li>
+              <li><hr></li>
+            {{/each}}
+            <li><hr></li>
+            <li><a href="/cart">Checkout</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-right"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href='/'>Home</></li>
+            <li><a href='/ordrs'>Admin</></li>
+            <li><a href='/checkout'>Checkout</></li>
+            <li><a href='/chamberOfSecrets'>Chamber of Secrets</></li>
+          </ul>
+        </li>
+        <li><a href="/">Logout</a></li>
+      </ul>
+    </div>
+    <!--  /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>

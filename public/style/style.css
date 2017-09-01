@@ -1,0 +1,20 @@
+/* note:
+  due to bootstrap, width is the determining value for
+  the size of my images atm
+*/
+.smallImg {
+  width: 25%;
+  height: 30%;
+}
+.mediumImg {
+  width: 35%;
+  height: 35%;
+}
+.largeImg {
+  width: 35%;
+  height: 55%;
+}
+.heroImg {
+  width: 50%;
+  height: 35%;
+}

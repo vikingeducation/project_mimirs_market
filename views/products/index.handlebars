@@ -1,0 +1,68 @@
+<header class="page-header">
+  <h1>Mimir's Market</h1>
+</header>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <form style="margin: 10px;" action='/products/search' method='POST' class="form-inline">
+      <div class="form-group">
+        Search: <input class='form-control' type='text' placeholder="search" name='search'>
+        <button class="btn btn-info">GO!</button>
+      </div>
+    </form>
+    <!-- sorting -->
+    <form method="POST" action="/products/filter" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Filter By Category: {{#if categoryName}} {{categoryName}} {{/if}}
+        <select class="form-control" name="filterByCategory">
+          {{#each categories as |category|}}
+            <option value={{category}}>{{category}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button class="btn btn-info">GO!</button>
+    </form>
+    <!-- sorting -->
+    <form method="POST" action="/products/sort" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Sort By:
+        <select class="form-control" name="sortOption">
+          <option value="nameA">Name Ascending</option>
+          <option value="nameD">Name Descending</option>
+          <option value="priceA">Price Ascending</option>
+          <option value="priceD">Price Descending</option>
+          <option value="dateD">Newest First</option>
+          <option value="dateA">Oldest First</option>
+        </select>
+      </div>
+      <button class="btn btn-info">GO!</button>
+    </form>
+  </div>
+  <!-- SHOW ALL PRODUCTS -->
+  <div class="panel-body">
+    {{#each products as |product|}}
+      {{#if product.isInCart}}
+      <form method='GET' action='/cart'>
+        <div class="col-xs-4">
+          <img src='/{{product.img}}' class='smallImg'>
+          <h3>${{product.price}}</h3>
+          <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
+          <h5>{{product.description}}</h5>
+          <button type='submit' class="btn btn-info" value={{product.id}} name='addItem'>Edit Cart</button>
+        </div>
+      </form>
+      {{else}}
+      <form method='POST' action='/cart'>
+        <div class="col-xs-4">
+          <img src='/{{product.img}}' class='smallImg'>
+          <h3>${{product.price}}</h3>
+          <h3><a href="/products/{{product.id}}">{{product.name}}</a></h3>
+          <h5>{{product.description}}</h5>
+          <button type='submit' class="btn btn-success" value={{product.id}} name='addItem'>Add to Cart</button>
+        </div>
+      </form>
+      {{/if}}
+    {{/each}}
+  </div>
+
+</div>

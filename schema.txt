@@ -1,0 +1,59 @@
+SEQUELIZE
+
+States
+- id
+- Name
+- Abbreviation
+
+Category
+- id
+- name
+
+Product
+- id
+- categoryId
+- name
+- description
+- price
+- SKU
+
+Relationships
+Product belongs to one Category
+Category has many Products
+
+
+--> SUBMITTING ORDER -->  name, email, state, items(name, category, quantity)
+
+CREATE COMMANDS
+sequelize model:create --name State --attributes "name:char abbreviation:char"
+sequelize model:create --name User --attributes "name:char email:char"
+sequelize model:create --name Category --attributes "name:char"
+sequelize model:create --name Product --attributes "name:char description:char price:integer sku:integer img:char categoryId:integer"
+
+CREATE SEEDS
+sequelize seed:create --name categories
+
+
+MONGODB
+
+//possible Stripe
+
+Orders: [{
+- id
+- userId (Sequelize)
+- name
+- email
+- items: [{
+name, category, quantity
+}, {}, {}]
+- street address
+- city
+- state
+- checkoutDate
+- StripeToken
+- CardType
+}]
+
+OrderItems: [{
+name, category, quantity
+}, {}, {}]

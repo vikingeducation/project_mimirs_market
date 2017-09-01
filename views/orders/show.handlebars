@@ -1,0 +1,81 @@
+<div class='container'>
+  <div class='row justify-content-center'>
+    <h3 class='col-xs-12' align='center'>Admin Orders Show</h3>
+  </div>
+</div>
+<div class='container-fluid'>
+  <div class='row'>
+    <div class='col-xs-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>Ordered Items</div>
+        <div class='panel-body'>
+
+          <!-- orders -->
+          {{#each items as |item|}}
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <th scope="row">Name</th>
+                  <td>{{item.name}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Price</th>
+                  <td>{{item.price}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">SKU</th>
+                  <td>{{item.sku}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Description</th>
+                  <td>{{item.description}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Category</th>
+                  <td>{{item.category}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Quantity</th>
+                  <td>{{item.quantity}}</td>
+                </tr>
+            </tbody>
+          </table>
+          {{/each}}
+
+        </div>
+      </div>
+
+    </div>
+    <div class='col-xs-6'>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Checkout Date</th>
+            <th>Mollah</th>
+            <th>Customer Email</th>
+            <th>Customer State</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{order}}
+            <tr>
+              <th scope="row">?</th>
+              <td><a href='/orders/{{order.stripe.id}}'>{{order.user.fname}}</a></td>
+              <td><a href='/orders/{{order.stripe.id}}'>{{order.stripe.createdAt}}</a></td>
+              <td><a href='/orders/{{order.stripe.id}}'>${{order.stripe.amount}}</a></td>
+              <td><a href='/orders/{{order.stripe.id}}'>{{order.user.email}}</a></td>
+              <td><a href='/orders/{{order.stripe.id}}'>{{order.user.state}}</a></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
