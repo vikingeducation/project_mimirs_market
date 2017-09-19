@@ -1,0 +1,55 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/products">Mimir's Market<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/products" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span></a>
+        </li>
+        <li class="dropdown">
+          <a href="/cart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span> ({{items.length}})</a>
+          <ul style="max-height: 500px; overflow: scroll;" id="cart-dropdown" class="dropdown-menu">
+            <li><strong>Your Items:</strong></li>
+            {{#each items as |i|}}
+              <li style="padding: 10%;">
+                <img style="width: 50%;" src="{{i.imageUrl}}">
+                <br>
+                <strong>{{i.name}}</strong><br>
+                <span style="color: blue;">${{i.price}}</span><br>
+                <span>Quantity: {{i.quantity}}</span><br>
+              </li>
+              <li><br>. . . . . . . . . . . . .</li><br>
+            {{/each}}
+            <li>
+              <hr>
+            </li>
+            <li><strong style="background: yellow;">Total: ${{total}}</strong></li>
+            <li>
+              <hr>
+            </li>
+            <form action="/cart" method="get">
+              <li><button class="btn btn-primary">View Cart</button></li>
+              <hr>
+            </form>
+
+            <form action="/checkout" method="get">
+              <li><button class="btn btn-success">Checkout</button></li>
+              <hr>
+            </form>
+          </ul>
+        </li>
+        <li>
+          <a href="/admin/orders" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span></a>
+        </li>
+        <li>
+          <a href="/admin/analytics" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-dashboard"></span></a>
+        </li>
+        <li><a href="/">Logout</a></li>
+      </ul>
+    </div>
+    <!--  /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>

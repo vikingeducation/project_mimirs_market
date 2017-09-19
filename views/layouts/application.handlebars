@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  {{>head}}
+  <body>
+        {{#unless hideNav }}
+            {{>navbar}}
+        {{/unless }}
+    <main class="container">
+      {{{ body }}}
+    </main>
+  </body>
+</html>

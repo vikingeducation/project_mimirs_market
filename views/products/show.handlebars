@@ -1,0 +1,45 @@
+<div class="col-xs-12">
+  <img style="width: 25%;" src="{{product.imageUrl}}">
+</div>
+<div class="col-xs-12">
+  <h3>${{product.price}}</h3>
+  <h3><a href="/products/show/{{product.id}}">{{product.name}}</a></h3>
+  <h5>{{product.description}}</h5>
+  {{#if product.inCart }}
+    <form method="get" action="/cart">
+      <input type="hidden"></input>
+      <button style="margin-bottom: 100px; color: red;" type="submit" class="btn btn-warning"><strong>Edit in Cart</strong></button>
+    </form>
+  {{else}}
+    <form method="post" action="/cart/add">
+      <input type="hidden" value="{{product.id}}" name="itemId"></input>
+      <input type="hidden" value="true" name="addedFromShow"></input>
+      <button style="margin-bottom: 100px;" type="submit" class="btn btn-primary">Add to Cart</button>
+    </form>
+  {{/if}}
+</div>
+
+<h3>Related Products</h3>
+<div class="panel-body">
+  {{#each relatedProducts as |prod|}}
+    <div style="height: 700px; border: 1px solid black;" class="col-xs-4">
+      <img style="width: 100%;" src="{{prod.imageUrl}}">
+      <h3>${{prod.price}}</h3>
+      <h3><a href="/products/show/{{prod.id}}">{{prod.name}}</a></h3>
+      <h5>{{prod.description}}</h5>
+      {{#if prod.inCart }}
+        <form method="get" action="/cart">
+          <input type="hidden"></input>
+          <button style="color: red" type="submit" class="btn btn-warning"><strong>Edit in Cart</strong></button>
+        </form>
+      {{else}}
+        <form method="post" action="/cart/add">
+          <input type="hidden" value="{{prod.id}}" name="itemId"></input>
+          <input type="hidden" value="true" name="addedFromShow"></input>
+          <input type="hidden" value="{{../product.id}}" name="currentShowPageId"></input>
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>
