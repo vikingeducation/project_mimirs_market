@@ -1,0 +1,50 @@
+<h2>Cart</h2>
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		{{#each products as |product|}}
+			<div class="row">
+				<div class="col-xs-4 col-sm-3">
+					<img src="/images/{{product.imagePath}}" class="img-thumbnail">
+				</div>
+				<div class="col-xs-8 col-sm-3">
+					<p>{{product.name}}</p>
+					<p>{{product.Category.name}}</p>
+					<p>${{product.price}}.00</p>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<form action="/cart/{{product.id}}/quantity" method="post">
+						<input type="text" class="form-control" name="quantity" value="{{product.quantity}}">
+				</div>
+				<div class="col-xs-6 col-sm-3">
+						<button class="btn btn-success">Set Quantity</button>
+					</form>
+					<br>
+					<form action="/cart/{{product.id}}/remove" method="post">
+						<button class="btn btn-danger">Remove</button>
+					</form>
+				</div>
+			</div>
+		{{/each}}
+		<div class="row">
+			{{#if products.length}}
+				<div class="col-xs-4 col-md-3">
+					<h3>Total: ${{sum}}.00</h3>
+				</div>
+				<div class="col-xs-4 col-md-3 col-md-offset-3">
+					<form action="/cart/empty" method="post">
+						<button class="btn btn-danger">Clear Cart</button>
+					</form>
+				</div>
+				<div class="col-xs-4 col-md-3">
+					<a href="/checkout" class="btn btn-primary">Checkout</a>
+				</div>
+			{{else}}
+				<div class="col-md-8 col-md-offset-2">
+					<h3>There are no items in your cart.</h3>
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+

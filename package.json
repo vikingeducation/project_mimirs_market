@@ -1,0 +1,40 @@
+{
+  "name": "project_mimirs_market",
+  "version": "1.0.0",
+  "description": "An e-commerce app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sql-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avonyel/project_mimirs_market.git"
+  },
+  "author": "Greg and Stephanie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Avonyel/project_mimirs_market/issues"
+  },
+  "homepage": "https://github.com/Avonyel/project_mimirs_market#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "express-method-override-get-post-support": "0.0.7",
+    "express-session": "^1.15.5",
+    "faker": "^4.1.0",
+    "method-override": "^2.3.9",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
+    "mongoose": "^4.11.6",
+    "mongooseeder": "^2.0.5",
+    "pg": "^7.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.4.2",
+    "sequelize-cli": "^2.8.0",
+    "stripe": "^4.24.0"
+  }
+}

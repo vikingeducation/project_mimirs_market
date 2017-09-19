@@ -1,0 +1,96 @@
+<form action="/" method="get">
+
+	<div class="row">
+		<div class="form-group col-md-8 col-md-offset-2">
+			<label for="search">Search</label>
+			<input type="text" name="search" class="form-control">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-2 col-md-offset-3">
+			<select name="category" class="form-control">
+				<option value=''>Select a Category</option>
+				{{#each categories as |category|}}
+					<option value="{{category.id}}">{{category.name}}</option>
+				{{/each}}
+			</select>
+		</div>
+
+		<div class="col-md-2">
+			<select name="minPrice" class="form-control">
+				<option value='0'>Minimum Price</option>
+				<option value="0">$0</option>
+				<option value="100">$100</option>
+				<option value="200">$200</option>
+				<option value="300">$300</option>
+				<option value="400">$400</option>
+				<option value="500">$500</option>
+				<option value="600">$600</option>
+				<option value="700">$700</option>
+				<option value="800">$800</option>
+				<option value="900">$900</option>
+				<option value="1000">$1000</option>
+			</select>
+		</div>
+
+		<div class="col-md-2">
+		<select name="maxPrice" class="form-control">
+				<option value = '100000'>Maximum Price</option>
+				<option value="0">$0</option>
+				<option value="100">$100</option>
+				<option value="200">$200</option>
+				<option value="300">$300</option>
+				<option value="400">$400</option>
+				<option value="500">$500</option>
+				<option value="600">$600</option>
+				<option value="700">$700</option>
+				<option value="800">$800</option>
+				<option value="900">$900</option>
+				<option value="1000">$1000</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class='form-group'>
+			<div class="col-md-4 col-md-offset-4">
+				<select name="sortBy" class="form-control">
+					<option value='name-ASC'>Sort By Name Ascending</option>
+					<option value="name-DESC">Sort By Name Descending</option>
+					<option value="price-ASC">Sort By Price Ascending</option>
+					<option value="price-DESC">Sort By Price Descending</option>
+					<option value="updatedAt-DESC">Sort By Newest First</option>
+					<option value="updatedAt-ASC">Sort By Oldest First</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-5">
+			<button class="btn btn-primary">Search/Filter</button>
+		</div>
+	</div>
+</form>
+
+
+<br><br><br>
+
+<div class="row">
+	{{#each products as |product|}}
+		<div class="col-md-4">
+			<img src="/images/{{product.imagePath}}" width="200px" class="img-thumbnail">
+			<p>${{product.price}}.00</p>
+			<a href="/products/{{product.id}}"><p>{{product.name}}</p></a>
+			<p>{{product.Category.name}}</p>
+
+			{{#if product.inCart}}
+				<a href="/cart" class="btn btn-success">Edit in Cart</a>
+			{{else}}
+				<form action="/products/{{product.id}}" method="post">
+					<button class="btn btn-primary">Add to Cart</button>
+				</form>
+			{{/if}}
+		</div>
+	{{/each}}
+</div>
