@@ -1,0 +1,20 @@
+Product:
+  sku: string
+  name: string
+  description: string
+  price: integer
+  CategoryId: Integer
+
+sequelize model:create --name Product --attributes "sku:string name:string description:string price:integer CategoryId:integer"
+
+
+Category:
+  name: string
+
+sequelize model:create --name Category --attributes "name:string"
+
+
+State:
+  name: string
+
+sequelize model:create --name State --attributes "name:string"

@@ -1,0 +1,27 @@
+Order: (collection)
+
+    Product: [ productId, productId]
+
+    Customer:
+        fname:
+        lname:
+        email
+        street:
+        city:
+        state:
+        zip:
+
+    Metadata:
+        dateTime:
+        stripeToken:
+        cardType:
+        total:
+
+
+Product: (collection)
+    Name:
+    Price:
+    SKU:
+    Description:
+    Categories:
+    Quantity:

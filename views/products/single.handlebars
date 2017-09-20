@@ -1,0 +1,42 @@
+{{!-- <header class="page-header">
+  <h1></h1>
+  Category: <a href="{{ categoryPath product.Category.id }}">{{ product.Category.name }}</a>
+</header> --}}
+
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <h1>Product: {{ product.name }}</h1>
+    <p>Category: {{product.Category.name}}</p>
+    <p>Price: {{ product.price }}</p>
+    <p>Description: {{ product.description}}</p>
+    <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
+  </div>
+</div>
+
+<h3>Related Products</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each relatedProducts as |product| }}
+    <tr>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.price }}</a>
+      </td>
+      <td>
+        <a class="btn btn-primary" href="{{ addProductPath product.id }}">Add to Cart</a>
+      </td>
+    </tr>
+    {{/each }}

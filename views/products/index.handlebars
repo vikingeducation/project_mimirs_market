@@ -1,0 +1,90 @@
+<header class="page-header text-center">
+  <h1>Products</h1>
+
+<form action="/products" method="get">
+   <div class="form-group row">
+     <label for="search"></label>
+     
+     <div class="col-sm-3">
+       <input type="text" class="form-control" name="search" id="search" placeholder="search">
+     </div>
+     <label for="category"></label>
+     <div class="col-sm-2">
+       <select class="form-control" name="category" id="category">
+         <option value="Any">Any Category</option>
+
+         {{#each categories as |category|}}
+         <option value="{{category.id}}">{{category.name}}</option>
+         {{/each}}
+       </select>
+     </div>
+
+     <div class="col-sm-2">
+       <input type="number" class="form-control" min="0" name="min" id="min" placeholder="Min price">
+     </div>
+
+     <div class="col-sm-2">
+       <input type="number" class="form-control" min="0" name="max" id="max" placeholder="Max price">
+     </div>
+ 
+     <label for="sortSelect" ></label>
+     <div class="col-sm-2">
+       <select class="form-control" name="sort" id="sortSelect">
+         <option value="">Sort By</option>
+         <option value="nameAsc">Sort by Name A-Z</option>
+         <option value="nameDesc">Sort by Name Z-A</option>
+         <option value="priceAsc">Sort by Price, Lowest First</option>
+         <option value="priceDesc">Sort by Price, Highest First</option>
+         <option value="createdAsc">Sort by Newest First</option>
+         <option value="createdDesc">Sort by Oldest First</option>
+       </select>
+   </div>
+
+   <br>
+   <br>
+   <button type="submit" class="btn btn-primary">Search</button>
+ </div>
+  </form>
+
+
+</header>
+
+
+
+
+{{#if products.length }}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each products as |product| }}
+    <tr>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.Category.name }}</a>
+      </td>
+      <td>
+        <a href="{{ productPath product.id }}">{{ product.price }}</a>
+      </td>
+
+
+      <td>
+
+        <a class="btn btn-primary" href="{{ addProductPath product.id }}">
+            Add to Cart</a>
+      </td>
+    </tr>
+    {{/each }}
+  </tbody>
+</table>
+{{else }}
+<p class="text-danger">No products</p>
+{{/if }}
