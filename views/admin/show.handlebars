@@ -1,0 +1,197 @@
+
+<!-- STUFF ON THE RIGHT -->
+<div class="row cart-body">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+      <!--CUSTOMER INFO-->
+      <div class="panel panel-info">
+        <div class="panel-heading">
+           Customer Info <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  First Name
+                </td>
+                <td>
+                  {{ order.firstName }}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Last Name
+                </td>
+                <td>
+                  {{ order.lastName}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Email
+                </td>
+                <td>
+                  {{ order.email }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Street
+                </td>
+                <td>
+                  {{order.street}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  City
+                </td>
+                <td>
+                  {{order.city}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  State
+                </td>
+                <td>
+                  {{order.state}}
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+        <!--CUSTOMER INFO END-->
+
+        <!-- ORDER INFO -->
+      <div class="panel panel-info">
+        <div class="panel-heading">
+           Order Info <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Checkout Date
+                </td>
+                <td>
+                  {{ formatDate order.createdAt }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Stripe Token
+                </td>
+                <td>
+                  {{ order.stripeToken}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Card Type
+                </td>
+                <td>
+                  {{ order.stripeTokenType }}
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+       <!--  ORDER INFO END -->
+    </div>
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+    <!-- STUFF on the LEFT -->
+
+  {{#each adminProducts as |product| }}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Name
+          </td>
+          <td>
+            {{ product.name }}</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Price
+          </td>
+          <td>
+            {{ formatCurrency product.price}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            SKU
+          </td>
+          <td>
+            {{ product.sku }}
+            </td>
+        </tr>
+        <tr>
+          <td>
+            Description
+          </td>
+          <td>
+            {{product.description}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Category
+          </td>
+          <td>
+            {{product.Category.name}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Quantity
+          </td>
+          <td>
+            {{product.quantity}}
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <br>
+      {{/each }}
+  </div>
+
+</div>
+
+
+
+<div class="row cart-footer"></div>
+
+
