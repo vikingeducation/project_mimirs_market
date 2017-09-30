@@ -15,12 +15,12 @@ module.exports = {
       }], {});
     */
     let categorys = [];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 9; i++) {
       categorys.push({
         name: faker.commerce.department()
       });
     }
-    return queryInterface.bulkInsert("Categorys", categorys);
+    return queryInterface.bulkInsert("Categories", categorys);
   },
 
   down: (queryInterface, Sequelize) => {
@@ -31,6 +31,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-    return queryInterface.bulkDelete("Categorys", null, {}, models.Categorys);
+    return queryInterface.bulkDelete("Categories", null, {}, models.Categorys);
   }
 };

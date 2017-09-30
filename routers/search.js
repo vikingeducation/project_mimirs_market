@@ -1,12 +1,18 @@
 var express = require("express");
 var router = express.Router();
-var Products = require("./../models/sequelize/product");
-var Categorys = require("./../models/sequelize/category");
-// var sequelize = models.sequelize;
+var models = require("../models/sequelize");
+var Product = models.Product;
+var Category = models.Category;
+var sequelize = models.sequelize;
 
 module.exports = app => {
   router.get("/", (req, res) => {
-    res.render("search/start");
+    Product.findAll({
+      include: [Category]
+    }).then(products => {
+      console.log(products[0].Category);
+      res.render("search/start", { products });
+    });
   });
 
   return router;

@@ -1,5 +1,4 @@
 "use strict";
-var Categorys = require("./../sequelize/category");
 
 module.exports = (sequelize, DataTypes) => {
   var Product = sequelize.define("Product", {
@@ -12,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Product.associate = function(models) {
     // associations can be defined here
-    this.belongsTo(Categorys, { foreignKey: "categoryId" });
+    this.belongsTo(models.Category, { foreignKey: "categoryId" });
   };
   return Product;
 };
