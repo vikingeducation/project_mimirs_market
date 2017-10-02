@@ -108,10 +108,10 @@
     {{#if products}}
     {{#each products as |product|}}
     <div class="col-sm-4" style="text-align: center; margin-top: 2em;">
-      <div class="col-sm-10 col-sm-offset-1" style="border:2px solid black; padding-bottom: 1em;">
-        <img src="../assets/images/vikingShip.png" style="height:10em; width:13em; margin-top: 1em; margin-bottom: 1em;">
+      <div class="col-sm-10 col-sm-offset-1" style="border:2px solid black; padding-bottom: 1em; height:25em;">
+        <a href="/product/{{product.id}}"><img src="../assets/images/vikingShip.png" style="height:10em; width:13em; margin-top: 1em; margin-bottom: 1em;"></a>
         <h5>${{product.price}}.00</h5>
-        <h4>{{product.name}}</h4>
+        <a href="/product/{{product.id}}"><h4>{{product.name}}</h4></a>
         <h4>{{product.Category.name}}</h4>
         <button class="btn btn-primary">Add to Cart</button>
         <button class="btn btn-success">Edit in Cart</button>
