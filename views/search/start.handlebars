@@ -5,7 +5,7 @@
       <h3>Products</h3>
       <form action="/search/filter" method="post">
         <div class="form-group">
-          <input name="search" type="text" style="background-image:url(../assets/icons/search.png); background-repeat: no-repeat; background-size:20px 20px; padding-left: 20px; width: 80%;">
+          <input name="search" type="text" value ="{{searched.search}}" style="background-image:url(../assets/icons/search.png); background-repeat: no-repeat; background-size:20px 20px; padding-left: 20px; width: 80%;">
           <a href="#"><button type="submit" class="btn btn-primary">Submit Search</button></a>
         </div>
     </div>
@@ -22,6 +22,7 @@
               <option value="{{category.name}}">{{category.name}}</option>
               {{/each}}
             </select>
+
           </div>
           <div class="col-sm-3">
             <select name="filter[priceMin]" id="priceMin" class="form-control">
@@ -40,6 +41,7 @@
               <option value="10">$10.00</option>
               <option value="1">$1.00</option>
             </select>
+
           </div>
           <div class="col-sm-3">
             <a href="#"><button type="submit" class="btn btn-primary">Submit Filter</button></a>
@@ -66,6 +68,39 @@
           </div>
         </div>
       </form>
+      <script>
+        var category = document.getElementById('category');
+        var priceMin = document.getElementById('priceMin');
+        var priceMax = document.getElementById('priceMax');
+        var sortBy = document.getElementById('sortBy');
+
+        for(var i, j = 0; i = category.options[j]; j++) {
+            if(i.value == "{{searched.filter.category}}") {
+                category.selectedIndex = j;
+                break;
+            }
+        }
+
+        for(var i, j = 0; i = priceMin.options[j]; j++) {
+            if(i.value === "{{searched.filter.priceMin}}") {
+                priceMin.selectedIndex = j;
+                break;
+            }
+        }
+        for(var i, j = 0; i = priceMax.options[j]; j++) {
+            if(i.value === "{{searched.filter.priceMax}}") {
+                priceMax.selectedIndex = j;
+                break;
+            }
+        }
+
+        for(var i, j = 0; i = sortBy.options[j]; j++) {
+            if(i.value === "{{searched.sort}}") {
+                sortBy.selectedIndex = j;
+                break;
+            }
+        }
+      </script>
     </div>
   </div>
   <!-- Each Product -->

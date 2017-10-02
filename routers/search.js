@@ -24,15 +24,25 @@ module.exports = app => {
       Product.findAll({
         include: [Category]
       }).then(products => {
-        res.render("search/start", { products, categorys });
+        var searched;
+        res.render("search/start", { products, categorys, searched });
       });
     });
   });
 
   router.post("/filter", (req, res) => {
-    var sortOrder = sortAndOrder(req.body.sort);
-    var searchText = "%" + req.body.search + "%";
-    if (req.body.filter.category === "any" && searchText === "%%") {
+    var searched = {
+      search: req.body.search,
+      filter: {
+        category: req.body.filter.category,
+        priceMin: req.body.filter.priceMin,
+        priceMax: req.body.filter.priceMax
+      },
+      sort: req.body.sort
+    };
+    var sortOrder = sortAndOrder(searched.sort);
+    var searchText = "%" + searched.search + "%";
+    if (searched.filter.category === "any" && searchText === "%%") {
       Category.findAll({}).then(categorys => {
         Product.findAll({
           include: [{ model: Category }],
@@ -40,17 +50,17 @@ module.exports = app => {
             price: {
               $and: [
                 {
-                  $lte: req.body.filter.priceMax
+                  $lte: searched.filter.priceMax
                 },
                 {
-                  $gte: req.body.filter.priceMin
+                  $gte: searched.filter.priceMin
                 }
               ]
             }
           },
           order: [[sortOrder.orderItem, sortOrder.sort]]
         }).then(products => {
-          res.render("search/start", { products, categorys });
+          res.render("search/start", { products, categorys, searched });
         });
       });
     } else if (searchText === "%%") {
@@ -60,7 +70,7 @@ module.exports = app => {
             {
               model: Category,
               where: {
-                name: req.body.filter.category
+                name: searched.filter.category
               }
             }
           ],
@@ -68,20 +78,20 @@ module.exports = app => {
             price: {
               $and: [
                 {
-                  $lte: req.body.filter.priceMax
+                  $lte: searched.filter.priceMax
                 },
                 {
-                  $gte: req.body.filter.priceMin
+                  $gte: searched.filter.priceMin
                 }
               ]
             }
           },
           order: [[sortOrder.orderItem, sortOrder.sort]]
         }).then(products => {
-          res.render("search/start", { products, categorys });
+          res.render("search/start", { products, categorys, searched });
         });
       });
-    } else if (req.body.filter.category === "any") {
+    } else if (searched.filter.category === "any") {
       Category.findAll({}).then(categorys => {
         Product.findAll({
           include: [{ model: Category }],
@@ -89,10 +99,10 @@ module.exports = app => {
             price: {
               $and: [
                 {
-                  $lte: req.body.filter.priceMax
+                  $lte: searched.filter.priceMax
                 },
                 {
-                  $gte: req.body.filter.priceMin
+                  $gte: searched.filter.priceMin
                 }
               ]
             },
@@ -106,7 +116,7 @@ module.exports = app => {
           },
           order: [[sortOrder.orderItem, sortOrder.sort]]
         }).then(products => {
-          res.render("search/start", { products, categorys });
+          res.render("search/start", { products, categorys, searched });
         });
       });
     } else {
@@ -116,7 +126,7 @@ module.exports = app => {
             {
               model: Category,
               where: {
-                name: req.body.filter.category
+                name: searched.filter.category
               }
             }
           ],
@@ -124,10 +134,10 @@ module.exports = app => {
             price: {
               $and: [
                 {
-                  $lte: req.body.filter.priceMax
+                  $lte: searched.filter.priceMax
                 },
                 {
-                  $gte: req.body.filter.priceMin
+                  $gte: searched.filter.priceMin
                 }
               ]
             },
@@ -141,7 +151,7 @@ module.exports = app => {
           },
           order: [[sortOrder.orderItem, sortOrder.sort]]
         }).then(products => {
-          res.render("search/start", { products, categorys });
+          res.render("search/start", { products, categorys, searched });
         });
       });
     }
