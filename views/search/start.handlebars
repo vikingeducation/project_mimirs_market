@@ -1,64 +1,64 @@
 <div class="container-fluid">
+  <!-- Search with Text -->
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1" style="text-align:center;">
       <h3>Products</h3>
-      <form>
+      <form action="/search/filter" method="post">
         <div class="form-group">
-          <input type="text" style="background-image:url(assets/icons/search.png); background-repeat: no-repeat; background-size:20px 20px; padding-left: 20px; width: 80%;">
+          <input name="search" type="text" style="background-image:url(../assets/icons/search.png); background-repeat: no-repeat; background-size:20px 20px; padding-left: 20px; width: 80%;">
           <a href="#"><button type="submit" class="btn btn-primary">Submit Search</button></a>
         </div>
-      </form>
     </div>
   </div>
+  <!-- Filter Category and Price -->
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2" style="text-align:center;">
-      <form>
         <div class="form-group">
           <div class="col-sm-3">
             <select name="filter[category]" id="category" class="form-control">
-              <option value="">Filter By Category</option>
-              <option value="">Category 1</option>
-              <option value="">Category 2</option>
-              <option value="">Category 3</option>
+              <option value="any">Filter By Category</option>
+              <option value="any">Any</option>
+              {{#each categorys as |category|}}
+              <option value="{{category.name}}">{{category.name}}</option>
+              {{/each}}
             </select>
           </div>
           <div class="col-sm-3">
             <select name="filter[priceMin]" id="priceMin" class="form-control">
-              <option value="">Min Price</option>
-              <option value="">Any</option>
-              <option value="">$1.00</option>
-              <option value="">$10.00</option>
-              <option value="">$100.00</option>
+              <option value="0">Min Price</option>
+              <option value="0">Any</option>
+              <option value="1">$1.00</option>
+              <option value="10">$10.00</option>
+              <option value="100">$100.00</option>
             </select>
           </div>
           <div class="col-sm-3">
             <select name="filter[priceMax]" id="priceMax" class="form-control">
-              <option value="">Max Price</option>
-              <option value="">Any</option>
-              <option value="">$100.00</option>
-              <option value="">$10.00</option>
-              <option value="">$1.00</option>
+              <option value="10000">Max Price</option>
+              <option value="10000">Any</option>
+              <option value="100">$100.00</option>
+              <option value="10">$10.00</option>
+              <option value="1">$1.00</option>
             </select>
           </div>
           <div class="col-sm-3">
             <a href="#"><button type="submit" class="btn btn-primary">Submit Filter</button></a>
           </div>
         </div>
-      </form>
     </div>
   </div>
+  <!-- Sort by Options -->
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3" style="text-align:center;">
-      <form>
         <div class="form-group">
           <div class="col-sm-6">
             <select name="sort" id="sortBy" class="form-control">
-              <option value="">Sort By Name Ascending</option>
-              <option value="">Sort By Name Descending</option>
-              <option value="">Sort By Price Ascending</option>
-              <option value="">Sort By Price Descending</option>
-              <option value="">Sort By Newest First</option>
-              <option value="">Sort By Oldest First</option>
+              <option value="nameASC">Sort By Name Ascending</option>
+              <option value="nameDESC">Sort By Name Descending</option>
+              <option value="priceASC">Sort By Price Ascending</option>
+              <option value="priceDESC">Sort By Price Descending</option>
+              <option value="updatedAtDESC">Sort By Newest First</option>
+              <option value="updatedAtASC">Sort By Oldest First</option>
             </select>
           </div>
           <div class="col-sm-6">
@@ -68,13 +68,14 @@
       </form>
     </div>
   </div>
+  <!-- Each Product -->
   <div class="row" style="margin-top: 3em; text-align:center;">
     {{#if products}}
     {{#each products as |product|}}
     <div class="col-sm-4" style="text-align: center; margin-top: 2em;">
       <div class="col-sm-10 col-sm-offset-1" style="border:2px solid black; padding-bottom: 1em;">
-        <img src="assets/images/vikingShip.png" style="height:10em; width:13em; margin-top: 1em; margin-bottom: 1em;">
-        <h5>{{product.price}}</h5>
+        <img src="../assets/images/vikingShip.png" style="height:10em; width:13em; margin-top: 1em; margin-bottom: 1em;">
+        <h5>${{product.price}}.00</h5>
         <h4>{{product.name}}</h4>
         <h4>{{product.Category.name}}</h4>
         <button class="btn btn-primary">Add to Cart</button>

@@ -45,6 +45,7 @@ app.use(morganToolkit());
 // ----------------------------------------
 var searchRouter = require("./routers/search")(app);
 app.use("/", searchRouter);
+app.use("/search", searchRouter);
 
 // ----------------------------------------
 // Template Engine

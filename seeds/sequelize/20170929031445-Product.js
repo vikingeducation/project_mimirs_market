@@ -22,7 +22,7 @@ module.exports = {
         description: faker.lorem.paragraph(),
         price: Number(faker.commerce.price()),
         image: "assets/images/vikingShip.png",
-        categoryId: i % 8 + 1
+        categoryId: i % 9 + 1
       });
     }
     return queryInterface.bulkInsert("Products", products);
