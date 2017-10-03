@@ -41,5 +41,27 @@ module.exports = app => {
     res.redirect("/checkout");
   });
 
+  router.get("/process", (req, res) => {
+    Product.findAll({
+      where: {
+        id: req.session.cart
+      },
+      include: [Category]
+    }).then(cart => {
+      var cartQ = req.session.cartQuanity;
+      res.locals.cart = cart;
+      res.locals.cartQuanity = req.session.cartQuanity;
+      var total = 0;
+      for (var i = 0; i < cart.length; i++) {
+        total += cart[i].price * cartQ[i];
+      }
+      res.render("checkout/process", { total });
+    });
+  });
+
+  router.post("/process", (req, res) => {
+    res.redirect("/checkout");
+  });
+
   return router;
 };

@@ -35,11 +35,11 @@
       </div>
       <form action="/checkout/update" method="post">
       <div class="col-sm-3">
-        <button class="btn btn-danger" type="submit" name="action" value="deleteAll" style="padding-top: 0em;"><h3>Clear Cart</h3></button>
+        <button class="btn btn-danger" type="submit" name="action" value="deleteAll"><h3>Clear Cart</h3></button>
       </div>
       </form>
       <div class="col-sm-3 col-sm-offset-1">
-        <button class="btn btn-primary" style="padding-top: 0em;"><h3>Checkout</h3></button>
+        <a href="/checkout/process"><button class="btn btn-primary"><h3>Checkout</h3></button></a>
       </div>
     </div>
       {{else}}
