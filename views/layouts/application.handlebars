@@ -27,16 +27,25 @@
           <a href="#"><img src="../assets/icons/dashboard.png" style="height: 3em; width: 3em;"></a>
         </div>
         <div class="navbar-right" style="margin-left: -1em;">
-        <p>(0)</p>
+          {{#if cartQuanity}}
+            <p>({{counter cartQuanity}})</p>
+          {{else}}
+            <p>(0)</p>
+          {{/if}}
         </div>
         <div class="navbar-right" style="margin-top: 1em; margin-right: 1em;">
           <div class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart" style="height: 1em; width: 1em; font-size: 34px; margin-bottom:-3em; "></span></a>
             <ul class="dropdown-menu" style="left: 50%; right: auto; text-align: center; transform: translate(-50%, 0);">
-              <li><a href="/user">(1) Item1</a></li>
-              <li><a href="/user/edit">(1) Item2</a></li>
+              {{#if cart}}
+              {{#each cart as |cartObj|}}
+              <li><a href="/product/{{cartObj.id}}">({{lookup ../cartQuanity @index}}) {{cartObj.name}}</a></li>
+              {{/each}}
+              {{else}}
+              <li>Empty</li>
+              {{/if}}
               <li><hr></li>
-              <li><a href="/views">Checkout</a></li>
+              <li><a href="/checkout">Checkout</a></li>
             </ul>
           </div>
         </div>

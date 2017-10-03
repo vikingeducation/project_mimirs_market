@@ -43,6 +43,8 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+var checkoutRouter = require("./routers/checkout")(app);
+app.use("/checkout", checkoutRouter);
 var productRouter = require("./routers/product")(app);
 app.use("/product", productRouter);
 var searchRouter = require("./routers/search")(app);
@@ -53,15 +55,18 @@ app.use("/", searchRouter);
 // Template Engine
 // ----------------------------------------
 var expressHandlebars = require("express-handlebars");
+var counter = require("./helpers/counter");
 
 var hbs = expressHandlebars.create({
+  helpers: {
+    counter
+  },
   partialsDir: "views/",
   defaultLayout: "application"
 });
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
-
 // ----------------------------------------
 // Server
 // ----------------------------------------

@@ -113,8 +113,8 @@
         <h5>${{product.price}}.00</h5>
         <a href="/product/{{product.id}}"><h4>{{product.name}}</h4></a>
         <h4>{{product.Category.name}}</h4>
-        <button class="btn btn-primary">Add to Cart</button>
-        <button class="btn btn-success">Edit in Cart</button>
+        <a href="/product/addToCart/{{product.id}}"><button class="btn btn-primary">Add to Cart</button></a>
+        <!-- <button class="btn btn-success">Edit in Cart</button> -->
       </div>
     </div>
     {{/each}}

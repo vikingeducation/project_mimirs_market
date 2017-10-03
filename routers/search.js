@@ -20,12 +20,20 @@ var sortAndOrder = function(sortStr) {
 
 module.exports = app => {
   router.get("/", (req, res) => {
-    Category.findAll({}).then(categorys => {
-      Product.findAll({
-        include: [Category]
-      }).then(products => {
-        var searched;
-        res.render("search/start", { products, categorys, searched });
+    Product.findAll({
+      where: {
+        id: req.session.cart
+      }
+    }).then(cart => {
+      res.locals.cart = cart;
+      res.locals.cartQuanity = req.session.cartQuanity;
+      Category.findAll({}).then(categorys => {
+        Product.findAll({
+          include: [Category]
+        }).then(products => {
+          var searched;
+          res.render("search/start", { products, categorys, searched });
+        });
       });
     });
   });
@@ -40,121 +48,129 @@ module.exports = app => {
       },
       sort: req.body.sort
     };
-    var sortOrder = sortAndOrder(searched.sort);
-    var searchText = "%" + searched.search + "%";
-    if (searched.filter.category === "any" && searchText === "%%") {
-      Category.findAll({}).then(categorys => {
-        Product.findAll({
-          include: [{ model: Category }],
-          where: {
-            price: {
-              $and: [
-                {
-                  $lte: searched.filter.priceMax
-                },
-                {
-                  $gte: searched.filter.priceMin
-                }
-              ]
-            }
-          },
-          order: [[sortOrder.orderItem, sortOrder.sort]]
-        }).then(products => {
-          res.render("search/start", { products, categorys, searched });
-        });
-      });
-    } else if (searchText === "%%") {
-      Category.findAll({}).then(categorys => {
-        Product.findAll({
-          include: [
-            {
-              model: Category,
-              where: {
-                name: searched.filter.category
+    Product.findAll({
+      where: {
+        id: req.session.cart
+      }
+    }).then(cart => {
+      res.locals.cart = cart;
+      res.locals.cartQuanity = req.session.cartQuanity;
+      var sortOrder = sortAndOrder(searched.sort);
+      var searchText = "%" + searched.search + "%";
+      if (searched.filter.category === "any" && searchText === "%%") {
+        Category.findAll({}).then(categorys => {
+          Product.findAll({
+            include: [{ model: Category }],
+            where: {
+              price: {
+                $and: [
+                  {
+                    $lte: searched.filter.priceMax
+                  },
+                  {
+                    $gte: searched.filter.priceMin
+                  }
+                ]
               }
-            }
-          ],
-          where: {
-            price: {
-              $and: [
-                {
-                  $lte: searched.filter.priceMax
-                },
-                {
-                  $gte: searched.filter.priceMin
-                }
-              ]
-            }
-          },
-          order: [[sortOrder.orderItem, sortOrder.sort]]
-        }).then(products => {
-          res.render("search/start", { products, categorys, searched });
+            },
+            order: [[sortOrder.orderItem, sortOrder.sort]]
+          }).then(products => {
+            res.render("search/start", { products, categorys, searched });
+          });
         });
-      });
-    } else if (searched.filter.category === "any") {
-      Category.findAll({}).then(categorys => {
-        Product.findAll({
-          include: [{ model: Category }],
-          where: {
-            price: {
-              $and: [
-                {
-                  $lte: searched.filter.priceMax
-                },
-                {
-                  $gte: searched.filter.priceMin
+      } else if (searchText === "%%") {
+        Category.findAll({}).then(categorys => {
+          Product.findAll({
+            include: [
+              {
+                model: Category,
+                where: {
+                  name: searched.filter.category
                 }
+              }
+            ],
+            where: {
+              price: {
+                $and: [
+                  {
+                    $lte: searched.filter.priceMax
+                  },
+                  {
+                    $gte: searched.filter.priceMin
+                  }
+                ]
+              }
+            },
+            order: [[sortOrder.orderItem, sortOrder.sort]]
+          }).then(products => {
+            res.render("search/start", { products, categorys, searched });
+          });
+        });
+      } else if (searched.filter.category === "any") {
+        Category.findAll({}).then(categorys => {
+          Product.findAll({
+            include: [{ model: Category }],
+            where: {
+              price: {
+                $and: [
+                  {
+                    $lte: searched.filter.priceMax
+                  },
+                  {
+                    $gte: searched.filter.priceMin
+                  }
+                ]
+              },
+              $or: [
+                { name: { $iLike: searchText } },
+                { description: { $iLike: searchText } },
+                sequelize.literal(
+                  `"Category"."name" ILIKE ${"'" + searchText + "'"}`
+                )
               ]
             },
-            $or: [
-              { name: { $iLike: searchText } },
-              { description: { $iLike: searchText } },
-              sequelize.literal(
-                `"Category"."name" ILIKE ${"'" + searchText + "'"}`
-              )
-            ]
-          },
-          order: [[sortOrder.orderItem, sortOrder.sort]]
-        }).then(products => {
-          res.render("search/start", { products, categorys, searched });
+            order: [[sortOrder.orderItem, sortOrder.sort]]
+          }).then(products => {
+            res.render("search/start", { products, categorys, searched });
+          });
         });
-      });
-    } else {
-      Category.findAll({}).then(categorys => {
-        Product.findAll({
-          include: [
-            {
-              model: Category,
-              where: {
-                name: searched.filter.category
-              }
-            }
-          ],
-          where: {
-            price: {
-              $and: [
-                {
-                  $lte: searched.filter.priceMax
-                },
-                {
-                  $gte: searched.filter.priceMin
+      } else {
+        Category.findAll({}).then(categorys => {
+          Product.findAll({
+            include: [
+              {
+                model: Category,
+                where: {
+                  name: searched.filter.category
                 }
+              }
+            ],
+            where: {
+              price: {
+                $and: [
+                  {
+                    $lte: searched.filter.priceMax
+                  },
+                  {
+                    $gte: searched.filter.priceMin
+                  }
+                ]
+              },
+              $or: [
+                { name: { $iLike: searchText } },
+                { description: { $iLike: searchText } },
+                sequelize.literal(
+                  `"Category"."name" ILIKE ${"'" + searchText + "'"}`
+                )
               ]
             },
-            $or: [
-              { name: { $iLike: searchText } },
-              { description: { $iLike: searchText } },
-              sequelize.literal(
-                `"Category"."name" ILIKE ${"'" + searchText + "'"}`
-              )
-            ]
-          },
-          order: [[sortOrder.orderItem, sortOrder.sort]]
-        }).then(products => {
-          res.render("search/start", { products, categorys, searched });
+            order: [[sortOrder.orderItem, sortOrder.sort]]
+          }).then(products => {
+            res.render("search/start", { products, categorys, searched });
+          });
         });
-      });
-    }
+      }
+    });
   });
 
   return router;

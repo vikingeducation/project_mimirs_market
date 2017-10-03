@@ -14,7 +14,7 @@
         </div>
         <div class="col-sm-5 col-sm-offset-1">
           <p>{{mainProduct.description}}</p>
-          <button class="btn btn-primary">Add to Cart</button>
+          <a href="/product/addToCart/{{mainProduct.id}}"><button class="btn btn-primary">Add to Cart</button></a>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
           <h5>${{prod.price}}.00</h5>
           <a href="/product/{{prod.id}}"><h5>{{prod.name}}</h5></a>
           <h5>{{prod.Category.name}}</h5>
-          <button class="btn btn-primary">Add to Cart</button>
+          <a href="/product/addToCart/{{prod.id}}"><button class="btn btn-primary">Add to Cart</button></a>
         </div>
       </div>
       {{/each}}

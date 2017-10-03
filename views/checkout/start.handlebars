@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2" style="text-align:center;">
+      <h3>Cart</h3>
+      {{#if cart}}
+      {{#each cart as |prod|}}
+      <div class="col-sm-12" style="border:2px solid black; text-align:left; padding: 1em; margin: 2em;">
+        <div class="col-sm-1">
+          <img src="../assets/images/vikingShip.png" style="height:5em; width:6em; margin-top: 1em; margin-bottom: 1em;">
+        </div>
+        <div class="col-sm-3 col-sm-offset-1">
+          <h5>{{prod.name}}</h5>
+          <h5>{{prod.Category.name}}</h5>
+          <h5>${{prod.price}}.00</h5>
+        </div>
+        <form action="/checkout/update" method="post">
+        <div class="col-sm-2">
+          <input type="text" name="newValue" value="{{lookup ../cartQuanity @index}}">
+        </div>
+          <input type="hidden" name="location" value="{{@index}}">
+        <div class="col-sm-2 col-sm-offset-2">
+          <button class="btn btn-success" type="submit" name="action" value="update">Set Quanity</button>
+          <br><br>
+          <button class="btn btn-danger" type="submit" name="action" value="delete">Remove</button>
+        </div>
+      </form>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="col-sm-3 col-sm-offset-2">
+        <h3>Total: ${{total}}.00</h3>
+      </div>
+      <form action="/checkout/update" method="post">
+      <div class="col-sm-3">
+        <button class="btn btn-danger" type="submit" name="action" value="deleteAll" style="padding-top: 0em;"><h3>Clear Cart</h3></button>
+      </div>
+      </form>
+      <div class="col-sm-3 col-sm-offset-1">
+        <button class="btn btn-primary" style="padding-top: 0em;"><h3>Checkout</h3></button>
+      </div>
+    </div>
+      {{else}}
+      <h3>**Empty Cart**</h3>
+      {{/if}}
+    </div>
+  </div>
+</div>
