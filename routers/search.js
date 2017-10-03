@@ -27,6 +27,7 @@ module.exports = app => {
     }).then(cart => {
       res.locals.cart = cart;
       res.locals.cartQuanity = req.session.cartQuanity;
+      res.locals.cookieCart = req.session.cart;
       Category.findAll({}).then(categorys => {
         Product.findAll({
           include: [Category]
@@ -55,6 +56,7 @@ module.exports = app => {
     }).then(cart => {
       res.locals.cart = cart;
       res.locals.cartQuanity = req.session.cartQuanity;
+      res.locals.cookieCart = req.session.cart;
       var sortOrder = sortAndOrder(searched.sort);
       var searchText = "%" + searched.search + "%";
       if (searched.filter.category === "any" && searchText === "%%") {

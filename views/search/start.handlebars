@@ -113,10 +113,25 @@
         <h5>${{product.price}}.00</h5>
         <a href="/product/{{product.id}}"><h4>{{product.name}}</h4></a>
         <h4>{{product.Category.name}}</h4>
-        <a href="/product/addToCart/{{product.id}}"><button class="btn btn-primary">Add to Cart</button></a>
-        <!-- <button class="btn btn-success">Edit in Cart</button> -->
+          <a href="/product/addToCart/{{product.id}}"><button id="add{{product.id}}" class="btn btn-primary">Add to Cart</button></a>
+          <a href="/checkout"><button id="edit{{product.id}}" class="btn btn-success">Edit in Cart</button></a>
       </div>
     </div>
+    <script>
+      var buttonAdd = document.getElementById('add{{product.id}}');
+      var buttonEdit = document.getElementById('edit{{product.id}}');
+      var bool = true;
+      for(var i = 0; i < [{{../cookieCart}}].length; i++) {
+          if([{{../cookieCart}}][i] === {{product.id}}) {
+              buttonAdd.style.display = "none";
+              bool = false;
+              break;
+          }
+      }
+      if (bool) {
+        buttonEdit.style.display = "none";
+      }
+    </script>
     {{/each}}
     {{else}}
     <h3>No Results</h3>

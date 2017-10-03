@@ -14,9 +14,26 @@
         </div>
         <div class="col-sm-5 col-sm-offset-1">
           <p>{{mainProduct.description}}</p>
-          <a href="/product/addToCart/{{mainProduct.id}}"><button class="btn btn-primary">Add to Cart</button></a>
+          <a href="/product/addToCart/{{mainProduct.id}}"><button id="add{{mainProduct.id}}" class="btn btn-primary">Add to Cart</button></a>
+          <a href="/checkout"><button id="edit{{mainProduct.id}}" class="btn btn-success">Edit in Cart</button></a>
+
         </div>
       </div>
+      <script>
+        var buttonAdd = document.getElementById('add{{mainProduct.id}}');
+        var buttonEdit = document.getElementById('edit{{mainProduct.id}}');
+        var bool = true;
+        for(var i = 0; i < [{{cookieCart}}].length; i++) {
+            if([{{cookieCart}}][i] === {{mainProduct.id}}) {
+                buttonAdd.style.display = "none";
+                bool = false;
+                break;
+            }
+        }
+        if (bool) {
+          buttonEdit.style.display = "none";
+        }
+      </script>
     </div>
   </div>
   <!-- Related Products -->
@@ -30,8 +47,25 @@
           <h5>${{prod.price}}.00</h5>
           <a href="/product/{{prod.id}}"><h5>{{prod.name}}</h5></a>
           <h5>{{prod.Category.name}}</h5>
-          <a href="/product/addToCart/{{prod.id}}"><button class="btn btn-primary">Add to Cart</button></a>
+          <a href="/product/addToCart/{{prod.id}}"><button id="add{{prod.id}}" class="btn btn-primary">Add to Cart</button></a>
+          <a href="/checkout"><button id="edit{{prod.id}}" class="btn btn-success">Edit in Cart</button></a>
         </div>
+
+        <script>
+          var buttonAdd = document.getElementById('add{{prod.id}}');
+          var buttonEdit = document.getElementById('edit{{prod.id}}');
+          var bool = true;
+          for(var i = 0; i < [{{../cookieCart}}].length; i++) {
+              if([{{../cookieCart}}][i] === {{prod.id}}) {
+                  buttonAdd.style.display = "none";
+                  bool = false;
+                  break;
+              }
+          }
+          if (bool) {
+            buttonEdit.style.display = "none";
+          }
+        </script>
       </div>
       {{/each}}
 

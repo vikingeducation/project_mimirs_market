@@ -14,6 +14,7 @@ module.exports = app => {
     }).then(cart => {
       res.locals.cart = cart;
       res.locals.cartQuanity = req.session.cartQuanity;
+      res.locals.cookieCart = req.session.cart;
       Product.findAll({
         where: { id: req.params.id },
         include: [Category]
