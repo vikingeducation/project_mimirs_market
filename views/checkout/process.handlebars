@@ -134,11 +134,21 @@
         </div>
         <div style="text-align:right;">
           <h3>Total: ${{total}}.00</h3>
+          <input type="hidden" value="{{total}}" name="total">
+          <input type="hidden" value="{{cart.0.name}}" name="cartDescript">
         </div>
         <button style="margin-right: 6em;" class="btn btn-danger"><h5>Return to Cart</h5></button>
         <button style="" class="btn btn-primary"><h5>Submit Payment</h5></button>
       </div>
     </div>
+    <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ STRIPE_PK }}"
+    data-amount="100"
+    data-name="Stripe Node Test"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"></script>
   </form>
   </div>
 </div>

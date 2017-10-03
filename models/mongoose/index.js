@@ -7,6 +7,8 @@ mongoose.Promise = bluebird;
 
 var models = {};
 
+models.Admin = require("./admin");
+
 // Load models and attach to models here
 //models.User = require('./user');
 //... more models

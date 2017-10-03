@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 var express = require("express");
 var app = express();
 
@@ -41,8 +45,22 @@ var morganToolkit = require("morgan-toolkit")(morgan);
 app.use(morganToolkit());
 
 // ----------------------------------------
+// Mongoose
+// ----------------------------------------
+const mongoose = require("mongoose");
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require("./mongo")().then(() => next());
+  }
+});
+
+// ----------------------------------------
 // Routes
 // ----------------------------------------
+var adminRouter = require("./routers/admin")(app);
+app.use("/admin", adminRouter);
 var checkoutRouter = require("./routers/checkout")(app);
 app.use("/checkout", checkoutRouter);
 var productRouter = require("./routers/product")(app);
@@ -56,10 +74,12 @@ app.use("/", searchRouter);
 // ----------------------------------------
 var expressHandlebars = require("express-handlebars");
 var counter = require("./helpers/counter");
+var dateShorter = require("./helpers/dateShorter");
 
 var hbs = expressHandlebars.create({
   helpers: {
-    counter
+    counter,
+    dateShorter
   },
   partialsDir: "views/",
   defaultLayout: "application"
