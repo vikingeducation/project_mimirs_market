@@ -16,5 +16,18 @@ module.exports = app => {
       res.render("admin/start", { admin });
     });
   });
+
+  router.get("/:id", (req, res) => {
+    Admin.findById(req.params.id).then(admin => {
+      Product.findAll({
+        where: {
+          id: admin.orderedId
+        },
+        include: [Category]
+      }).then(products => {
+        res.render("admin/single", { admin, products });
+      });
+    });
+  });
   return router;
 };

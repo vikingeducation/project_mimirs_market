@@ -17,7 +17,7 @@
           {{#if admin}}
             {{#each admin as |ad|}}
             <tr class="info">
-              <td>{{ad.id}}</td>
+              <td><a href="admin/{{ad.id}}">{{ad.id}}</a></td>
               <td>{{ad.description}}...</td>
               <td>{{dateShorter ad.order.checkoutDate}}</td>
               <td>${{ad.revenue}}.00</td>
