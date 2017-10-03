@@ -56,10 +56,12 @@ app.use("/", searchRouter);
 // ----------------------------------------
 var expressHandlebars = require("express-handlebars");
 var counter = require("./helpers/counter");
+var equal = require("./helpers/equal");
 
 var hbs = expressHandlebars.create({
   helpers: {
-    counter
+    counter,
+    equal
   },
   partialsDir: "views/",
   defaultLayout: "application"
