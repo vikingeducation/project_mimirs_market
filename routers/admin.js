@@ -55,18 +55,23 @@ module.exports = app => {
     admin = await Admin.find();
     prod = await Product.findAll({ include: [Category] });
 
-    var tempV = [];
+    var test = [];
     if (admin.length > 1) {
       for (var i = 0; i < admin.length - 1; i++) {
-        tempV = tempV.concat(admin[i].productsQuantityById());
+        test = test.concat(admin[i].productsQuantityById());
       }
     }
-    admin = tempV;
-    var adminNameCatPriCatPri = admin.map(function(x) {
+    admin = test;
+    var adminName = admin.map(function(x) {
       return [prod[x - 1].name, prod[x - 1].Category.name, prod[x - 1].price];
     });
-    adminNameCatPri = adminNameCatPri.sort();
-    results.revBy = adminNameCatPri;
+    adminName = adminName.sort();
+    results.revBy = adminName;
+    const count = adminName.reduce((tally, fruit) => {
+      tally[fruit] = (tally[fruit] || 0) + 1;
+      return tally;
+    }, {});
+    console.log(count, count[adminName[1]]);
     // console.log("--*****--\n\n" + JSON.stringify(admin) + "\n\n--****--");
     res.render("admin/analytics", { results });
   });
