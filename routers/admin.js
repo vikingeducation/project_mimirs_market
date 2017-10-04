@@ -11,10 +11,64 @@ var modelsM = require("./../models/mongoose");
 var Admin = mongoose.model("Admin");
 
 module.exports = app => {
-  router.get("/", (req, res) => {
+  router.get("/", async (req, res) => {
     Admin.find({}).then(admin => {
       res.render("admin/start", { admin });
     });
+  });
+
+  router.get("/analytics", async (req, res) => {
+    var results = {};
+    var admin = await Admin.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalRev: { $sum: "$revenue" },
+          totalTransactions: { $sum: 1 }
+        }
+      }
+    ]);
+    results.totalRev = admin[0].totalRev;
+    results.totalTransactions = admin[0].totalTransactions;
+    admin = await Admin.find().distinct("customer.email");
+    results.totalCustomers = admin.length;
+    results.totalProducts = await Product.count();
+    results.totalCategorys = await Category.count();
+    admin = await Admin.find().distinct("customer.address.state");
+    results.totalStates = admin.length;
+    admin = await Admin.find();
+    results.totalUnits = 0;
+    for (var i = 0; i < admin.length; i++) {
+      for (var j = 0; j < admin[i].orderedQuanity.length; j++) {
+        results.totalUnits += admin[i].orderedQuanity[j];
+      }
+    }
+    results.states = await Admin.aggregate([
+      {
+        $group: {
+          _id: "$customer.address.state",
+          totalRev: { $sum: "$revenue" },
+          totalTransactions: { $sum: 1 }
+        }
+      }
+    ]);
+    admin = await Admin.find();
+    prod = await Product.findAll({ include: [Category] });
+
+    var tempV = [];
+    if (admin.length > 1) {
+      for (var i = 0; i < admin.length - 1; i++) {
+        tempV = tempV.concat(admin[i].productsQuantityById());
+      }
+    }
+    admin = tempV;
+    var adminNameCatPriCatPri = admin.map(function(x) {
+      return [prod[x - 1].name, prod[x - 1].Category.name, prod[x - 1].price];
+    });
+    adminNameCatPri = adminNameCatPri.sort();
+    results.revBy = adminNameCatPri;
+    // console.log("--*****--\n\n" + JSON.stringify(admin) + "\n\n--****--");
+    res.render("admin/analytics", { results });
   });
 
   router.get("/:id", (req, res) => {
@@ -29,5 +83,6 @@ module.exports = app => {
       });
     });
   });
+
   return router;
 };

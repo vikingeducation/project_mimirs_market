@@ -75,11 +75,13 @@ app.use("/", searchRouter);
 var expressHandlebars = require("express-handlebars");
 var counter = require("./helpers/counter");
 var dateShorter = require("./helpers/dateShorter");
+var totaler = require("./helpers/totaler");
 
 var hbs = expressHandlebars.create({
   helpers: {
     counter,
-    dateShorter
+    dateShorter,
+    totaler
   },
   partialsDir: "views/",
   defaultLayout: "application"

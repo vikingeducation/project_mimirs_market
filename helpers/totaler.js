@@ -1,4 +1,4 @@
-var counter = function(index, options) {
+var totaler = function(index, options) {
   var total = 0;
   for (var i = 0; i < index.length; i++) {
     if (typeof index[i] === "String") {
@@ -10,4 +10,4 @@ var counter = function(index, options) {
   return total;
 };
 
-module.exports = counter;
+module.exports = totaler;
