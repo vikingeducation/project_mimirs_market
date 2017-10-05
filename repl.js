@@ -3,8 +3,7 @@
 var mongoose = require("mongoose");
 var repl = require("repl").start({});
 var models = {
-  mongoose: require("./models/mongoose"),
-  sequelize: require("./models/sequelize")
+  mongoose: require("./models")
 };
 var helpers = require("./helpers");
 
@@ -24,13 +23,6 @@ require("./mongo")().then(() => {
   // ----------------------------------------
   Object.keys(models.mongoose).forEach(modelName => {
     repl.context[modelName] = mongoose.model(modelName);
-  });
-
-  // ----------------------------------------
-  // Sequelize
-  // ----------------------------------------
-  Object.keys(models.sequelize).forEach(modelName => {
-    repl.context[modelName] = models.sequelize[modelName];
   });
 
   // ----------------------------------------

@@ -61,7 +61,8 @@ module.exports = app => {
       res.locals.cartQuanity = req.session.cartQuanity;
       var total = 0;
       for (var i = 0; i < cart.length; i++) {
-        total += cart[i].price * cartQ[i];
+        total = total + cart[i].price * cartQ[i];
+        console.log(total);
       }
       res.render("checkout/process", { total, STRIPE_PK });
     });
@@ -86,6 +87,7 @@ module.exports = app => {
           revenue: Number(req.body.total),
           orderedId: req.session.cart,
           orderedQuanity: req.session.cartQuanity,
+          orderedItems: [],
           customer: {
             fname: req.body.name.fname,
             lname: req.body.name.lname,
@@ -103,6 +105,12 @@ module.exports = app => {
             email: req.body.stripeEmail
           }
         });
+        for (var i = 0; i < req.session.cart.length; i++) {
+          newAdmin.orderedItems.push({
+            id: req.session.cart[i],
+            quanity: req.session.cartQuanity[i]
+          });
+        }
         newAdmin.save(function(err) {
           if (err) {
             console.log(err);

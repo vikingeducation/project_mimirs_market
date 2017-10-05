@@ -51,10 +51,10 @@
             </tr>
           </thead>
           <tbody>
-            {{#each results.revBy as |rev|}}
+            {{#each results.revByProduct as |rev|}}
             <tr>
-              <th>{{rev.[0]}}</th>
-              <td>${{rev.[2]}}.00</td>
+              <th>{{rev.name}}</th>
+              <td>${{rev.price}}.00</td>
             </tr>
             {{/each}}
           </tbody>
@@ -87,10 +87,10 @@
             </tr>
           </thead>
           <tbody>
-            {{#each results.revBy as |rev|}}
+            {{#each results.revByCategory as |rev|}}
             <tr>
-              <th>{{rev.[1]}}</th>
-              <td>${{rev.[2]}}.00</td>
+              <th>{{rev.category}}</th>
+              <td>${{rev.price}}.00</td>
             </tr>
             {{/each}}
           </tbody>

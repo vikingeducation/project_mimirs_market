@@ -4,7 +4,7 @@
       <h3 style="margin-bottom: 2em;">Admin Orders Show</h3>
       <div class="col-sm-6">
         <h3>Ordered Items</h3>
-        {{#each products as |prod|}}
+        {{#each orderedItemsList as |item|}}
         <table class="table table-bordered table-hover table-striped" style="text-align:left">
           <thead>
             <tr>
@@ -15,27 +15,27 @@
           <tbody>
             <tr>
               <th>Name</th>
-              <td>{{prod.name}}</td>
+              <td>{{item.name}}</td>
             </tr>
             <tr>
               <th>Price</th>
-              <td>$ {{prod.price}} .00</td>
+              <td>$ {{item.price}}.00</td>
             </tr>
             <tr>
               <th>SKU</th>
-              <td>{{prod.sku}}</td>
+              <td>{{item.sku}}</td>
             </tr>
             <tr>
               <th>Description</th>
-              <td>{{prod.description}}</td>
+              <td>{{item.description}}</td>
             </tr>
             <tr>
               <th>Category</th>
-              <td>{{prod.Category.name}}</td>
+              <td>{{item.category}}</td>
             </tr>
             <tr>
               <th>Quanity</th>
-              <td>{{lookup ../admin.orderedQuanity @index}}</td>
+              <td>{{item.quanity}}</td>
             </tr>
           </tbody>
         </table>
