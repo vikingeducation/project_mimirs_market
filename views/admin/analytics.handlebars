@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1" style="text-align:center;">
+      <h3 style="margin-bottom: 2em;">Admin Orders Show</h3>
+      <div class="col-sm-6">
+        <h3>Totals</h3>
+        <table class="table table-bordered table-hover table-striped" style="text-align:left">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Total Revenue Ever</th>
+              <td>${{results.totalRev}}.00</td>
+            </tr>
+            <tr>
+              <th>Total Units Sold</th>
+              <td>{{results.totalUnits}}</td>
+            </tr>
+            <tr>
+              <th>Total Transactions</th>
+              <td>{{results.totalTransactions}}</td>
+            </tr>
+            <tr>
+              <th>Total Customers</th>
+              <td>{{results.totalCustomers}}</td>
+            </tr>
+            <tr>
+              <th>Total Products</th>
+              <td>{{results.totalProducts}}</td>
+            </tr>
+            <tr>
+              <th>Total Categories</th>
+              <td>{{results.totalCategorys}}</td>
+            </tr>
+            <tr>
+              <th>Total States Sold To</th>
+              <td>{{results.totalStates}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Revenue By Product</h3>
+        <table class="table table-bordered table-hover table-striped" style="text-align:left">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results.revByProduct as |rev|}}
+            <tr>
+              <th>{{rev.name}}</th>
+              <td>${{rev.price}}.00</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-6">
+        <h3>Revenue By State</h3>
+        <table class="table table-bordered table-hover table-striped" style="text-align:left">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results.states as |state|}}
+            <tr>
+              <th>{{state._id}}</th>
+              <td>${{state.totalRev}}.00</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <h3>Revenues By Category</h3>
+        <table class="table table-bordered table-hover table-striped" style="text-align:left">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results.revByCategory as |rev|}}
+            <tr>
+              <th>{{rev.category}}</th>
+              <td>${{rev.price}}.00</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

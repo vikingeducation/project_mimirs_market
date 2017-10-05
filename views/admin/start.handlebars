@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1" style="text-align:center;">
+      <h3 style="margin-bottom: 2em;">Admin Orders Index</h3>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr class="success">
+            <td>ID</td>
+            <td>Description</td>
+            <td>Checkout Date</td>
+            <td>Revenue</td>
+            <td>Customer Email</td>
+            <td>Customer State</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#if admin}}
+            {{#each admin as |ad|}}
+            <tr class="info">
+              <td><a href="admin/{{ad.id}}">{{ad.id}}</a></td>
+              <td>{{ad.description}}...</td>
+              <td>{{dateShorter ad.order.checkoutDate}}</td>
+              <td>${{ad.revenue}}.00</td>
+              <td>{{ad.customer.email}}</td>
+              <td>{{ad.customer.address.state}}</td>
+            </tr>
+            {{/each}}
+          {{else}}
+          <tr class="danger">
+            <td>No Entries</td>
+            <td>No Entries</td>
+            <td>No Entries</td>
+            <td>No Entries</td>
+            <td>No Entries</td>
+            <td>No Entries</td>
+          </tr>
+          {{/if}}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

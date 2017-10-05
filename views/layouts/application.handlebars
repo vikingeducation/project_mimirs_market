@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="../assets/stylesheets/style.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<title>Mimir's Market</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-left">
+          <h2>Mimir's Market</h2>
+        </div>
+        <div class="navbar-right" style="margin-top: 1em;">
+          <a href="/admin/analytics"><img src="../assets/icons/calculator.png" style="height: 3em; width: 3em;"></a>
+        </div>
+        <div class="navbar-right" style="margin-top: 1em;">
+          <a href="/admin"><img src="../assets/icons/dashboard.png" style="height: 3em; width: 3em;"></a>
+        </div>
+        <div class="navbar-right" style="margin-left: -1em;">
+          {{#if cartQuanity}}
+            <p>({{counter cartQuanity}})</p>
+          {{else}}
+            <p>(0)</p>
+          {{/if}}
+        </div>
+        <div class="navbar-right" style="margin-top: 1em; margin-right: 1em;">
+          <div class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart" style="height: 1em; width: 1em; font-size: 34px; margin-bottom:-3em; "></span></a>
+            <ul class="dropdown-menu" style="left: 50%; right: auto; text-align: center; transform: translate(-50%, 0);">
+              {{#if cart}}
+              {{#each cart as |cartObj|}}
+              <li><a href="/product/{{cartObj.id}}">({{lookup ../cartQuanity @index}}) {{cartObj.name}}</a></li>
+              {{/each}}
+              {{else}}
+              <li>Empty</li>
+              {{/if}}
+              <li><hr></li>
+              <li><a href="/checkout">Checkout</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="navbar-right" style="margin-top: 1em;">
+          <a href="/search"><span class="glyphicon glyphicon-search" style="height: 1em; width: 1em; font-size: 34px; margin-bottom:-3em; "></span></a>
+        </div>
+
+    </div>
+  </nav>
+
+  {{{body}}}
+
+</body>
+</html>
