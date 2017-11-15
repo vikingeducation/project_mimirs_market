@@ -9,7 +9,7 @@ const models = {};
 // models.User = require('./user');
 // models.Ratable = require('./ratable');
 // models.Hotel = require('./hotel');
-// models.Motel = require('./motel');
+// models.Motsel = require('./motel');
 // models.Rating = require('./rating');
 
 module.exports = models;

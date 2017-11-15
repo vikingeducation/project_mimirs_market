@@ -1,10 +1,10 @@
 {
 	"name": "project_mimirs_market",
 	"version": "1.0.0",
-	"description":
-		"A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
+	"description": "A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
 	"main": "index.js",
 	"dependencies": {
+		"faker": "^4.1.0",
 		"mongoose": "^4.13.2",
 		"pg": "^7.4.0",
 		"pg-hstore": "^2.3.2",
@@ -17,9 +17,8 @@
 		"sql:migrate:undo": "npm run sql db:migrate:undo:all",
 		"sql:migrate": "npm run sql db:migrate",
 		"sql:seed:undo": "npm run sql db:seed:undo:all",
-		"sql:seed": "npm run sql db:seed:all",
-		"sql:s":
-			"npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed",
+		"sql:seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+		"sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed",
 		"mg:seed": "node seeds/mongoose",
 		"console": "node repl.js",
 		"c": "node repl.js",
