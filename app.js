@@ -77,9 +77,9 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-// var sessionsRouter = require("./routers/sessions")(app);
-// app.use("/", sessionsRouter);
-//
+var productsRouter = require("./routers/products")(app);
+app.use("/", productsRouter);
+
 // var usersRouter = require("./routers/users");
 // app.use("/users", usersRouter);
 //
