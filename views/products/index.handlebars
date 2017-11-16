@@ -1,0 +1,33 @@
+<h1>Hey</h1>
+  <form class="" action="/search" method="post">
+    <div class="form-group">
+      <input class="form-control" type="text" name="search" value="{{params.search}}" placeholder="Search">
+
+      <label for="exampleFormControlSelect1">Example select</label>
+      <select name="category" class="form-control" id="exampleFormControlSelect1" >
+        <option>{{params.category}}</option>
+        {{#each categories as |category|}}
+        <option>{{category.name}}</option>
+        {{/each}}
+      </select>
+
+      <input type="submit" class="form-control"  name="" value="Submit Search" class="btn btn-defualt">
+
+    </div>
+  </form>
+
+<div class="row">
+  {{#each products as |product|}}
+  <div class="col-sm-3">
+    <div class="card">
+      <img class="card-img-top" src="/images/product.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
+        <h5>${{product.price}}</h5>
+        <h6>{{product.Category.name}}</h6>
+        <a href="/addtocart/{{product.id}}" class="btn btn-primary">Add to Cart</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

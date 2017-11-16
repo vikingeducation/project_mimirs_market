@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  var Categories = sequelize.define('Categories', {
-    name: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return Categories;
+	var Categories = sequelize.define("Categories", {
+		name: DataTypes.STRING
+	});
+
+	Categories.associate = function(models) {
+		Categories.hasMany(models.Products, {
+			foreignKey: "categoryId"
+		});
+	};
+	return Categories;
 };

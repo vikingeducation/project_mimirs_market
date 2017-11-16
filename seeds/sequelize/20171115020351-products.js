@@ -14,6 +14,10 @@ module.exports = {
 			var price = faker.random.number();
 			var categoryId = i % 15;
 
+			if (categoryId === 0) {
+				categoryId = 15;
+			}
+
 			products.push({
 				name: name,
 				sku: sku,

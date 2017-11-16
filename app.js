@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Public
 // ----------------------------------------
-// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/public`));
 
 // ----------------------------------------
 // Logging
@@ -77,7 +77,7 @@ app.use((req, res, next) => {
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-var productsRouter = require("./routers/products")(app);
+var productsRouter = require("./routers/products");
 app.use("/", productsRouter);
 
 // var usersRouter = require("./routers/users");
