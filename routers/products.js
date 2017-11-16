@@ -36,4 +36,36 @@ router.post("/search", (req, res) => {
 	}
 });
 
+router.get("/product/:id", (req, res) => {
+	//find one product
+	Products.findOne({
+		include: [
+			{
+				model: Categories
+			}
+		],
+		where: {
+			id: req.params.id
+		}
+	}).then(product => {
+		Products.findAll({
+			include: [
+				{
+					model: Categories,
+					where: {
+						name: product.Category.name
+					}
+				}
+			],
+			limit: 12
+		})
+			.then(relatedProducts => {
+				res.render("products/show", { product, relatedProducts });
+			})
+			.catch(e => {
+				res.status(500).send(e.stack);
+			});
+	});
+});
+
 module.exports = router;

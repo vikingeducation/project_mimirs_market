@@ -1,0 +1,31 @@
+<h1>Product</h1>
+<div class="row">
+  <div class="col-sm-4">
+    <img src="/images/product.png" alt="">
+  </div>
+  <div class="col-sm-4">
+    <h3>{{product.name}}</h3>
+    <h5>{{product.Category.name}}</h5>
+    <h3>${{product.price}}.00</h3>
+  </div>
+  <div class="col-sm-4">
+    {{product.description}}
+  </div>
+</div>
+<hr>
+<h1>Related Products</h1>
+<div class="row">
+  {{#each relatedProducts as |product|}}
+  <div class="col-sm-3">
+    <div class="card">
+      <img class="card-img-top" src="/images/product.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
+        <h5>${{product.price}}</h5>
+        <h6>{{product.Category.name}}</h6>
+        <a href="/addtocart/{{product.id}}" class="btn btn-primary">Add to Cart</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
