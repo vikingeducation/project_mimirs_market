@@ -11,7 +11,7 @@ module.exports = {
 			var name = faker.commerce.productName();
 			var sku = faker.random.uuid();
 			var description = faker.random.words(10);
-			var price = faker.random.number();
+			var price = i;
 			var categoryId = i % 15;
 
 			if (categoryId === 0) {

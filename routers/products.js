@@ -7,124 +7,32 @@ var sequelize = models.sequelize;
 var Products = models.Products;
 var Categories = models.Categories;
 
+const search = require("./../lib/search");
+
 router.get("/", (req, res) => {
 	// Find all products
-	Categories.findAll({}).then(categories => {
-		Products.findAll({
-			include: [{ model: Categories }],
-			limit: 16
-		})
-			.then(products => {
-				res.render("products/index", { products, categories });
-				// console.log("categories: ", JSON.stringify(categories, 0, 2));
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
-	});
+	search.findEverything(req, res);
 });
 
 router.post("/search", (req, res) => {
 	var params = {};
 	params.search = req.body.search;
 	params.category = req.body.category;
+	params.priceMin = req.body.priceMin;
+	params.priceMax = req.body.priceMax;
+	params.sortVal = req.body.sortVal;
+	params.sortDirection = req.body.sortDirection;
 
-	// console.log("params.category", params.category);
-	// Find seach params
+	// Find search params
 	if (params.category == "" && params.search == "") {
-		Products.findAll({
-			include: [{ model: Categories }]
-		})
-			.then(products => {
-				res.render("products/index", { products, params });
-				// console.log("products: ", JSON.stringify(products, 0, 2));
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
+		//if the search params and categories are empty then find findEverything
+		search.filter(req, res, params);
 	} else if (params.category != "" && params.search == "%%") {
-		Products.findAll({
-			include: [
-				{
-					model: Categories,
-					where: {
-						name: {
-							$like: `${params.category}%`
-						}
-					}
-				}
-			]
-		})
-			.then(products => {
-				res.render("products/index", { products, params });
-				// console.log("products: ", JSON.stringify(products, 0, 2));
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
+		search.findCategoriesButNotText(req, res, params);
 	} else if (params.category == "") {
-		Products.findAll({
-			include: [
-				{
-					model: Categories
-				}
-			],
-			where: {
-				$or: [
-					{
-						name: {
-							$ilike: `%${params.search}%`
-						}
-					},
-					{
-						description: {
-							$ilike: `%${params.search}%`
-						}
-					}
-				]
-			}
-		})
-			.then(products => {
-				res.render("products/index", { products, params });
-				// console.log("products: ", JSON.stringify(products, 0, 2));
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
+		search.findTextButNotCategories(req, res, params);
 	} else {
-		Products.findAll({
-			include: [
-				{
-					model: Categories,
-					where: {
-						name: {
-							$ilike: `${params.category}%`
-						}
-					}
-				}
-			],
-			where: {
-				$or: [
-					{
-						name: {
-							$ilike: `%${params.search}%`
-						}
-					},
-					{
-						description: {
-							$ilike: `%${params.search}%`
-						}
-					}
-				]
-			}
-		})
-			.then(products => {
-				res.render("products/index", { products, params });
-				// console.log("products: ", JSON.stringify(products, 0, 2));
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
+		search.findTextandCategories(req, res, params);
 	}
 });
 

@@ -3,13 +3,60 @@
     <div class="form-group">
       <input class="form-control" type="text" name="search" value="{{params.search}}" placeholder="Search">
 
-      <label for="exampleFormControlSelect1">Example select</label>
-      <select name="category" class="form-control" id="exampleFormControlSelect1" >
+      <label for="category-select">Select a Category</label>
+      <select name="category" class="form-control" id="category-select" >
         <option>{{params.category}}</option>
         {{#each categories as |category|}}
         <option>{{category.name}}</option>
         {{/each}}
       </select>
+
+      <div class="row">
+        <h5 class="col-sm-3">Select a Price</h5>
+        <div class="col-sm-3">
+          <label for="priceMin">Minimum price</label>
+          <select name="priceMin" id="priceMin" class="form-control">
+            <option value="0">Min Price</option>
+            <option value="0">Any</option>
+            <option value="1">$1.00</option>
+            <option value="10">$10.00</option>
+            <option value="100">$100.00</option>
+          </select>
+        </div>
+
+        <div class="col-sm-3">
+          <label for="priceMax">Max price</label>
+          <select name="priceMax" id="priceMax" class="form-control">
+            <option value="300">Max Price</option>
+            <option value="300">Any</option>
+            <option value="300">$300.00</option>
+            <option value="150">$150.00</option>
+            <option value="100">$100.00</option>
+            <option value="10">$10.00</option>
+            <option value="1">$1.00</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <h5 class="col-sm-3">Sort</h5>
+        <div class="col-sm-3">
+          <label for="sort">Sort</label>
+          <select name="sortVal" id="sort" class="form-control">
+            <option>name</option>
+            <option>price</option>
+            <option>createdAt</option>
+          </select>
+        </div>
+
+        <div class="col-sm-3">
+          <label for="sort">Asc Desc</label>
+          <select name="sortDirection" id="sort" class="form-control">
+            <option>ASC</option>
+            <option>DESC</option>
+          </select>
+        </div>
+      </div>
 
       <input type="submit" class="form-control"  name="" value="Submit Search" class="btn btn-defualt">
 
