@@ -29,6 +29,7 @@
         <h6>{{product.Category.name}}</h6>
         <form class="" action="/cart" method="post">
           <input type="hidden" name="id" value="{{product.id}}">
+          <input type="hidden" name="name" value="{{product.name}}">
           <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
         </form>
       </div>

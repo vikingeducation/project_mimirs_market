@@ -73,6 +73,7 @@
         <h5>${{product.price}}.00</h5>
         <h6>{{product.Category.name}}</h6>
         <form class="" action="/cart" method="post">
+          <input type="hidden" name="name" value="{{product.name}}">
           <input type="hidden" name="id" value="{{product.id}}">
           <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
         </form>

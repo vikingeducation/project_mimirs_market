@@ -7,8 +7,6 @@ var sequelize = models.sequelize;
 var Products = models.Products;
 var Categories = models.Categories;
 
-var _ = require("lodash");
-
 var findCartItem = function(cart, id) {
 	return cart.findIndex(i => i.id == id);
 };
@@ -16,15 +14,18 @@ var findCartItem = function(cart, id) {
 // Add to cart
 router.post("/cart", (req, res) => {
 	var id = req.body.id;
+	var name = req.body.name;
 
 	if (req.session.cart == null || req.session.cart == undefined) {
 		req.session.cart = [];
 		req.session.cart.push({
+			name: name,
 			id: id,
 			quantity: 1
 		});
 	} else if (findCartItem(req.session.cart, id) == -1) {
 		req.session.cart.push({
+			name: name,
 			id: id,
 			quantity: 1
 		});
@@ -63,6 +64,7 @@ router.get("/mycart", (req, res) => {
 				}
 
 				//assign quantities
+				// https://stackoverflow.com/questions/35903850/combine-json-arrays-by-key-javascript
 				var result = cartProducts.map(x =>
 					Object.assign(x, req.session.cart.find(y => y.id == x.id))
 				);

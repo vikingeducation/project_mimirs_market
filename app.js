@@ -26,6 +26,9 @@ app.use((req, res, next) => {
 	req.session.cart = req.session.cart || [];
 	res.locals.session = req.session;
 	res.locals.cart = req.session.cart;
+
+	var cart = req.session.cart;
+	cart.quantity = cart.length;
 	next();
 });
 
