@@ -24,7 +24,7 @@ app.use(
 
 app.use((req, res, next) => {
 	res.locals.session = req.session;
-	res.locals.currentUser = req.session.currentUser;
+	res.locals.cart = req.session.cart;
 	next();
 });
 
@@ -80,11 +80,8 @@ app.use((req, res, next) => {
 var productsRouter = require("./routers/products");
 app.use("/", productsRouter);
 
-// var usersRouter = require("./routers/users");
-// app.use("/users", usersRouter);
-//
-// var ratablesRouter = require("./routers/ratables");
-// app.use("/ratables", ratablesRouter);
+var cartRouter = require("./routers/cart");
+app.use("/", cartRouter);
 
 // ----------------------------------------
 // Template Engine

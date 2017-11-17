@@ -72,7 +72,10 @@
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}.00</h5>
         <h6>{{product.Category.name}}</h6>
-        <a href="/addtocart/{{product.id}}" class="btn btn-primary">Add to Cart</a>
+        <form class="" action="/cart" method="post">
+          <input type="hidden" name="id" value="{{product.id}}">
+          <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
+        </form>
       </div>
     </div>
   </div>

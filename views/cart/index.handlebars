@@ -1,0 +1,31 @@
+<h1>My Shopping Cart</h1>
+{{#if nothing}}
+<h1>Your cart is empty</h1>
+{{else}}
+{{#each cartProducts as |product|}}
+  <div class="row mb-3">
+    <div class="col-sm-4">
+      <img src="/images/product.png" alt="">
+    </div>
+    <div class="col-sm-4">
+      <h2>{{product.name}}</h2>
+      <h5>{{product.Category.name}}</h5>
+      <h2>${{product.price}}.00</h2>
+    </div>
+    <form class="col-sm-4" action="/updateitem" method="post">
+
+      <input type="number" name="quantity" value="{{product.quantity}}">
+
+      <input class="btn btn-primary" type="submit" name="" value="Update quantity">
+      <a class="btn btn-danger" href="/clear/{{product.id}}">Clear From Cart</a>
+
+    </form>
+  </div>
+{{/each}}
+
+<div class="row">
+  <h1 class="mr-3" >Total: ${{total}}</h1>
+  <a class="btn btn-danger mr-3" href="/clearcart">Clear Cart</a>
+  <a class="btn btn-primary mr-3" href="/checkout">Checkout</a>
+</div>
+{{/if}}
