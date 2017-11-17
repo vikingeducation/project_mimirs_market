@@ -2,24 +2,24 @@
 {{#if nothing}}
 <h1>Your cart is empty</h1>
 {{else}}
-{{#each cartProducts as |product|}}
+{{#each result as |product|}}
   <div class="row mb-3">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <img src="/images/product.png" alt="">
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <h2>{{product.name}}</h2>
       <h5>{{product.Category.name}}</h5>
       <h2>${{product.price}}.00</h2>
     </div>
-    <form class="col-sm-4" action="/mycart/updateitem" method="post">
+    <form class="col-md-4" action="/mycart/updateitem" method="post">
 
       <input type="number" name="quantity" value="{{product.quantity}}">
 
       <input type="hidden" name="id" value="{{product.id}}">
+
       <input class="btn btn-primary" type="submit" name="" value="Update quantity">
       <a class="btn btn-danger" href="/clear/{{product.id}}">Clear From Cart</a>
-
     </form>
   </div>
 {{/each}}

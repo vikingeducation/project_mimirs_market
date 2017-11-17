@@ -23,6 +23,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
+	req.session.cart = req.session.cart || [];
 	res.locals.session = req.session;
 	res.locals.cart = req.session.cart;
 	next();

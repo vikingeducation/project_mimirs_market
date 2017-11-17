@@ -7,11 +7,11 @@ var sequelize = models.sequelize;
 var Products = models.Products;
 var Categories = models.Categories;
 
-var findCartItem = function(cart, id) {
-	return cart.findIndex(i => i.id === id);
-};
+var _ = require("lodash");
 
-var incrCart = function() {};
+var findCartItem = function(cart, id) {
+	return cart.findIndex(i => i.id == id);
+};
 
 // Add to cart
 router.post("/cart", (req, res) => {
@@ -41,7 +41,8 @@ router.post("/cart", (req, res) => {
 
 // cart index
 router.get("/mycart", (req, res) => {
-	if (req.session.cart == null || req.session.cart == undefined) {
+	if (req.session.cart.length == 0) {
+		// if cart is empty
 		var nothing = true;
 		res.render("cart/index", { nothing });
 	} else {
@@ -56,16 +57,18 @@ router.get("/mycart", (req, res) => {
 			where: { id: { $in: ids } }
 		})
 			.then(cartProducts => {
-				//assign quantities
 				var total = 0;
-
 				for (var i = 0; i < cartProducts.length; i++) {
-					cartProducts[i].quantity = quantities[i];
 					total += cartProducts[i].price * quantities[i];
 				}
 
-				// console.log("cartProducts: ", JSON.stringify(cartProducts, 0, 2));
-				res.render("cart/index", { cartProducts, total });
+				//assign quantities
+				var result = cartProducts.map(x =>
+					Object.assign(x, req.session.cart.find(y => y.id == x.id))
+				);
+
+				res.render("cart/index", { result, total });
+				// console.log("result: ", JSON.stringify(result, 0, 2));
 			})
 			.catch(e => {
 				res.status(500).send(e.stack);
@@ -83,6 +86,10 @@ router.get("/mycart/delete", (req, res) => {
 // clear one product from cart
 router.get("/clear/:id", (req, res) => {
 	//clear
+	var id = req.params.id;
+	var index = findCartItem(req.session.cart, id);
+	req.session.cart.splice(index, 1);
+	res.redirect("back");
 });
 
 // update quantity
@@ -92,8 +99,13 @@ router.post("/mycart/updateitem", (req, res) => {
 	var quantity = req.body.quantity;
 	var index = findCartItem(req.session.cart, id);
 
-	req.session.cart[index].quantity = quantity;
-	res.redirect("/mycart");
+	if (quantity <= 0) {
+		req.session.cart.splice(index, 1);
+	} else {
+		req.session.cart[index].quantity = quantity;
+	}
+
+	res.redirect("back");
 });
 
 module.exports = router;
