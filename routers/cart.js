@@ -7,6 +7,12 @@ var sequelize = models.sequelize;
 var Products = models.Products;
 var Categories = models.Categories;
 
+var findCartItem = function(cart, id) {
+	return cart.findIndex(i => i.id === id);
+};
+
+var incrCart = function() {};
+
 // Add to cart
 router.post("/cart", (req, res) => {
 	var id = req.body.id;
@@ -17,7 +23,7 @@ router.post("/cart", (req, res) => {
 			id: id,
 			quantity: 1
 		});
-	} else if (req.session.cart.findIndex(i => i.id === id) == -1) {
+	} else if (findCartItem(req.session.cart, id) == -1) {
 		req.session.cart.push({
 			id: id,
 			quantity: 1
@@ -68,12 +74,27 @@ router.get("/mycart", (req, res) => {
 });
 
 // clear the entire cart
-router.get("/clearcart", (req, res) => {
+router.get("/mycart/delete", (req, res) => {
 	req.session.cart = null;
+	console.log("delete cart");
 	res.redirect("/");
 });
 
-// c
+// clear one product from cart
+router.get("/clear/:id", (req, res) => {
+	//clear
+});
+
+// update quantity
+router.post("/mycart/updateitem", (req, res) => {
+	//update
+	var id = req.body.id;
+	var quantity = req.body.quantity;
+	var index = findCartItem(req.session.cart, id);
+
+	req.session.cart[index].quantity = quantity;
+	res.redirect("/mycart");
+});
 
 module.exports = router;
 

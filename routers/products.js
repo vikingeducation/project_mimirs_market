@@ -7,7 +7,7 @@ var sequelize = models.sequelize;
 var Products = models.Products;
 var Categories = models.Categories;
 
-const search = require("./../lib/search");
+const search = require("./../services/search");
 
 //index
 router.get("/", (req, res) => {
@@ -41,61 +41,7 @@ router.post("/search", (req, res) => {
 // product show page
 router.get("/product/:id", (req, res) => {
 	//find one product
-	Products.findOne({
-		include: [
-			{
-				model: Categories
-			}
-		],
-		where: {
-			id: req.params.id
-		}
-	}).then(product => {
-		//find the products related to it
-		Products.findAll({
-			include: [
-				{
-					model: Categories,
-					where: {
-						name: product.Category.name
-					}
-				}
-			],
-			limit: 12
-		})
-			.then(relatedProducts => {
-				res.render("products/show", { product, relatedProducts });
-			})
-			.catch(e => {
-				res.status(500).send(e.stack);
-			});
-	});
-});
-
-// Add to cart
-router.post("/cart", (req, res) => {
-	var id = req.body.id;
-
-	if (req.session.cart == null || req.session.cart == undefined) {
-		req.session.cart = [];
-		req.session.cart.push({
-			id: id,
-			quantity: 1
-		});
-	} else if (req.session.cart.findIndex(i => i.id === id) == -1) {
-		req.session.cart.push({
-			id: id,
-			quantity: 1
-		});
-	} else {
-		req.session.cart.forEach(obj => {
-			if (obj.id == id) {
-				obj.quantity += 1;
-			}
-		});
-	}
-
-	res.redirect("back");
+	search.findOneProduct(req, res);
 });
 
 module.exports = router;

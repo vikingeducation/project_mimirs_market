@@ -155,4 +155,36 @@ search.findTextandCategories = (req, res, params) => {
 	});
 };
 
+search.findOneProduct = function(req, res) {
+	Products.findOne({
+		include: [
+			{
+				model: Categories
+			}
+		],
+		where: {
+			id: req.params.id
+		}
+	}).then(product => {
+		//find the products related to it
+		Products.findAll({
+			include: [
+				{
+					model: Categories,
+					where: {
+						name: product.Category.name
+					}
+				}
+			],
+			limit: 12
+		})
+			.then(relatedProducts => {
+				res.render("products/show", { product, relatedProducts });
+			})
+			.catch(e => {
+				res.status(500).send(e.stack);
+			});
+	});
+};
+
 module.exports = search;

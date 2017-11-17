@@ -12,10 +12,11 @@
       <h5>{{product.Category.name}}</h5>
       <h2>${{product.price}}.00</h2>
     </div>
-    <form class="col-sm-4" action="/updateitem" method="post">
+    <form class="col-sm-4" action="/mycart/updateitem" method="post">
 
       <input type="number" name="quantity" value="{{product.quantity}}">
 
+      <input type="hidden" name="id" value="{{product.id}}">
       <input class="btn btn-primary" type="submit" name="" value="Update quantity">
       <a class="btn btn-danger" href="/clear/{{product.id}}">Clear From Cart</a>
 
@@ -25,7 +26,7 @@
 
 <div class="row">
   <h1 class="mr-3" >Total: ${{total}}</h1>
-  <a class="btn btn-danger mr-3" href="/clearcart">Clear Cart</a>
+  <a class="btn btn-danger mr-3" href="/mycart/delete">Clear Cart</a>
   <a class="btn btn-primary mr-3" href="/checkout">Checkout</a>
 </div>
 {{/if}}
