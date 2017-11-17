@@ -17,6 +17,7 @@ router.get("/", (req, res) => {
 
 // search
 router.post("/search", (req, res) => {
+	// serch and filer params
 	var params = {};
 	params.search = req.body.search;
 	params.category = req.body.category;

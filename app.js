@@ -1,5 +1,8 @@
 // sequelize model:create --name Products --attributes "name:string sku:string description:string price:integer categoryId:integer"
 // sequelize model:create --name Categories --attributes "name:string"
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv").config();
+}
 
 var express = require("express");
 var app = express();
@@ -86,6 +89,9 @@ app.use("/", productsRouter);
 
 var cartRouter = require("./routers/cart");
 app.use("/", cartRouter);
+
+var checkoutRouter = require("./routers/checkout");
+app.use("/", checkoutRouter);
 
 // ----------------------------------------
 // Template Engine
