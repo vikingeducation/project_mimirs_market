@@ -117,7 +117,9 @@ router.post("/pay", (req, res) => {
 			// console.log("charge: ", JSON.stringify(charge, 0, 2));
 		})
 		.then(order => {
-			res.send("we got ur money");
+			req.session.cart = [];
+			console.log("order: ", JSON.stringify(order, 0, 2));
+			res.render("checkout/show", { order });
 		})
 		.catch(e => {
 			res.status(500).send(e.stack);
