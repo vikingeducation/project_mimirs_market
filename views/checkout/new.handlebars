@@ -98,7 +98,8 @@
         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
         data-locale="auto">
       </script>
-
+      <input type="hidden" name="price" value="{{ total }}">
+      <input type="hidden" name="description" value="{{ result.0.name}}">
       <a href="/mycart"><button  class="btn btn-primary">Return to Cart</button></a>
     </form>
   </div>

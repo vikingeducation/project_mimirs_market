@@ -58,6 +58,7 @@ router.get("/mycart", (req, res) => {
 			where: { id: { $in: ids } }
 		})
 			.then(cartProducts => {
+				//get a total
 				var total = 0;
 				for (var i = 0; i < cartProducts.length; i++) {
 					total += cartProducts[i].price * quantities[i];

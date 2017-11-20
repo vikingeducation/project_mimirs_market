@@ -6,10 +6,6 @@ mongoose.Promise = bluebird;
 const models = {};
 
 // Load models and attach to models here
-// models.User = require('./user');
-// models.Ratable = require('./ratable');
-// models.Hotel = require('./hotel');
-// models.Motsel = require('./motel');
-// models.Rating = require('./rating');
+models.Order = require("./order");
 
 module.exports = models;
