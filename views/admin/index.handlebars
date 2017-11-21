@@ -1,0 +1,24 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Revenue</th>
+      <th scope="col">Email</th>
+      <th scope="col">Customer State</th>
+      <th scope="col">Checkout Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each orders as |order|}}
+    <tr>
+      <th scope="row">{{order.id}}</th>
+      <td>{{order.fname}} {{order.lname}}</td>
+      <td>${{order.total}}.00</td>
+      <td>{{order.stripe.source.name}}</td>
+      <td>{{order.state}}</td>
+      <td>{{order.createdAt}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

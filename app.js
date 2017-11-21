@@ -93,6 +93,9 @@ app.use("/", cartRouter);
 var checkoutRouter = require("./routers/checkout");
 app.use("/", checkoutRouter);
 
+var adminRouter = require("./routers/admin");
+app.use("/", adminRouter);
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
