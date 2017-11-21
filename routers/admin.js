@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 var models = require("./../models/mongoose");
 var Order = mongoose.model("Order");
 
+const analytics = require("./../services/analytics");
+
 // index table
 router.get("/admin", (req, res) => {
 	Order.find()
@@ -14,5 +16,16 @@ router.get("/admin", (req, res) => {
 		})
 		.catch(e => res.status(500).send(e.stack));
 });
+
+//order show
+router.get("/order/:id", (req, res) => {
+	Order.findById(req.params.id)
+		.then(order => {
+			res.render("admin/show", { order });
+		})
+		.catch(e => res.status(500).send(e.stack));
+});
+
+router.get("/analytics", (req, res) => {});
 
 module.exports = router;

@@ -12,7 +12,7 @@
   <tbody>
     {{#each orders as |order|}}
     <tr>
-      <th scope="row">{{order.id}}</th>
+      <th scope="row"><a href="/order/{{order.id}}">{{order.id}}</a></th>
       <td>{{order.fname}} {{order.lname}}</td>
       <td>${{order.total}}.00</td>
       <td>{{order.stripe.source.name}}</td>
