@@ -118,7 +118,7 @@ router.post("/pay", (req, res) => {
 		})
 		.then(order => {
 			req.session.cart = [];
-			console.log("order: ", JSON.stringify(order, 0, 2));
+			// console.log("order: ", JSON.stringify(order, 0, 2));
 			res.render("checkout/show", { order });
 		})
 		.catch(e => {

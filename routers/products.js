@@ -26,6 +26,8 @@ router.post("/search", (req, res) => {
 	params.sortVal = req.body.sortVal;
 	params.sortDirection = req.body.sortDirection;
 
+	req.method = "get";
+
 	// Find search params
 	if (params.category == "" && params.search == "") {
 		//if the search params and categories are empty then find findEverything

@@ -12,9 +12,9 @@ var findCartItem = function(cart, id) {
 };
 
 // Add to cart
-router.post("/cart", (req, res) => {
-	var id = req.body.id;
-	var name = req.body.name;
+router.get("/cart/:id/:name", (req, res) => {
+	var id = req.params.id;
+	var name = req.params.name;
 
 	if (req.session.cart == null || req.session.cart == undefined) {
 		req.session.cart = [];
@@ -37,7 +37,7 @@ router.post("/cart", (req, res) => {
 		});
 	}
 
-	res.redirect("back");
+	res.redirect(`/product/${id}`);
 });
 
 // cart index

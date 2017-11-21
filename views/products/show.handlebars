@@ -27,11 +27,12 @@
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}</h5>
         <h6>{{product.Category.name}}</h6>
-        <form class="" action="/cart" method="post">
+        <!-- <form class="" action="/cart" method="post">
           <input type="hidden" name="id" value="{{product.id}}">
           <input type="hidden" name="name" value="{{product.name}}">
           <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
-        </form>
+        </form> -->
+        <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-primary pull-right" type="button" name="button">Add to Cart</button></a>
       </div>
     </div>
   </div>
