@@ -26,6 +26,11 @@ router.get("/order/:id", (req, res) => {
 		.catch(e => res.status(500).send(e.stack));
 });
 
-router.get("/analytics", (req, res) => {});
+router.get("/analytics", (req, res) => {
+	analytics.getAll().then(data => {
+		console.log("data", JSON.stringify(data, 0, 2));
+		res.render("admin/analytics", { data });
+	});
+});
 
 module.exports = router;
