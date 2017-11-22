@@ -11,7 +11,7 @@ const analytics = require("./../services/analytics");
 router.get("/admin", (req, res) => {
 	Order.find()
 		.then(orders => {
-			console.log("orders", JSON.stringify(orders, 0, 2));
+			// console.log("orders", JSON.stringify(orders, 0, 2));
 			res.render("admin/index", { orders });
 		})
 		.catch(e => res.status(500).send(e.stack));
@@ -28,7 +28,7 @@ router.get("/order/:id", (req, res) => {
 
 router.get("/analytics", (req, res) => {
 	analytics.getAll().then(data => {
-		console.log("data", JSON.stringify(data, 0, 2));
+		// console.log("data", JSON.stringify(data, 0, 2));
 		res.render("admin/analytics", { data });
 	});
 });

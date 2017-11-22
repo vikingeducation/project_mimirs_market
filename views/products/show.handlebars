@@ -10,10 +10,11 @@
   </div>
   <div class="col-sm-4">
     {{product.description}}<br>
-    <form class="" action="/cart" method="post">
+    <!-- <form class="" action="/cart" method="post">
       <input type="hidden" name="id" value="{{product.id}}">
       <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
-    </form>
+    </form> -->
+    <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-primary pull-right" type="button" name="button">Add to Cart</button></a>
   </div>
 </div>
 <hr>
