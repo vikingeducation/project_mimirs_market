@@ -1,5 +1,23 @@
-
-
-
-
-<h3 style="background-color: aliceblue; text-align: center; margin-top: 100px; height: 400px">List of Products</h3>
+<main class="container" style="background-color: aliceblue; margin-top: 120px; text-align: center; ">
+  <div>
+    <h1 style="color: blue">Products</h1>
+  </div>
+  <div class="row">
+    {{#if products}}
+    {{#each products as |product|}}
+      <div class="col-xs-4" style="height: 320px; width: 250px; border: solid 1px black; margin: 10px;">
+        <img src="/images/product.png" style="height: 8em; width: 8em; margin-top: 2em; padding:10px;"/>
+        <br>
+        <div style="margin-top: 1em; font-size: 1.5em; font-size: 14px; text-align: center">
+        	<p>${{product.price}}</p>
+        	<a href="/products/{{product.id}}">{{product.name}}</a><br>
+        	<p>Category: {{product.Category.name}}</p>
+        	<a href="#"><button class="btn btn-default btn-primary">Add to Cart</button></a>
+        </div>
+      </div>
+    {{/each}}
+    {{else}}
+    	<h3>No Products</h3>
+    {{/if}}
+  </div>
+</main>

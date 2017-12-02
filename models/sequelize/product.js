@@ -6,14 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     price: DataTypes.DECIMAL,
     categoryId: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        Product.belongsTo(models.Category, {
-          foreignKey: 'categoryId'
-        });
-      }
-    }
-  });
+  }); 
+  Product.associate = function(models) {
+    Product.belongsTo(models.Category, { foreignKey: 'categoryId' });
+  };
+
   return Product;
 };
