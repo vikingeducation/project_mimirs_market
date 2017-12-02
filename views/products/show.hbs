@@ -1,0 +1,21 @@
+<h1 class="text-center" id="products-heading">Product</h1>
+<section id="featureProduct" class="clearfix">
+  <div id="featureProductImg" class="col-sm-3">
+    <img src="{{product.img}}" class="pull-left" />
+  </div>
+  <div id="featureProductInfo" class="col-sm-3">
+    <p>{{product.name}}</p>
+    <p>{{product.category.name}}</p>
+    <p>${{displayPrice product.price}}</p>
+  </div>
+  <div id="featureProductDesc">
+    <p>{{product.description}}</p>
+    <button class="btn btn-primary">Add to Cart</button>
+  </div>
+</section>
+<h3 class="text-center" id="products-heading">Related Products</h3>
+<section id="products">
+  {{#each relatedProducts}}
+    {{> partials/_productPreview}}
+  {{/each}}
+</section>

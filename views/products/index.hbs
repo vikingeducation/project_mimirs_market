@@ -50,16 +50,8 @@
 </div>
 <hr class="clear">
 <section id="products">
-  {{#each products as |product|}}
-    <div class="product text-center col-sm-3 col-sm-offset-1">
-      <div class="product-image-preview">
-        <img src="{{product.img}}" />
-      </div>
-      <p>${{displayPrice product.price}}</p>
-      <p>{{product.name}}</p>
-      <p>{{product.category.name}}</p>
-      <button class="btn btn-primary">Add to Cart</button>
-    </div>
+  {{#each products}}
+    {{> partials/_productPreview}}
   {{/each}}
 </section>
 <script type="text/javascript" src="/searchFormSetup.js"></script>
