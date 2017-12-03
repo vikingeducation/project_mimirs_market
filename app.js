@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+// Environment Variables
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // Body Parser
 const bodyParser = require('body-parser');

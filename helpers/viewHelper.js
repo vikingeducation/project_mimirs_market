@@ -3,6 +3,10 @@ const ViewHelper = {
     return parseFloat(price).toFixed(2);
   },
 
+  convertToCents: price => {
+    return price * 100;
+  },
+
   displayQuantity: (product, cart) => {
     return cart[product.id].quantity;
   },

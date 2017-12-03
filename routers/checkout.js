@@ -1,16 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../models/sequelize');
-const { Product, Category } = models;
+const sequelizeModels = require('../models/sequelize');
+const { Product, Category } = sequelizeModels;
+const mongoModels = require('../models/mongoose');
+const { Transaction } = mongoModels;
 const SearchHandler = require('../lib/searchHandler');
+const { STRIPE_SK, STRIPE_PK } = process.env;
+const stripe = require('stripe')(STRIPE_SK);
 
 router.get('/', (req, res) => {
   SearchHandler.findCartProducts(res.locals.cart)
     .then(products => {
       const totalPrice = getTotalPrice(products, res.locals.cart);
-      res.render('checkout/index', { products, totalPrice });
+      res.render('checkout/index', { products, totalPrice, STRIPE_PK });
     })
     .catch(e => res.status(500).send(e.stack));
+});
+
+router.post('/', (req, res) => {
+  const { fname, lname, street, city, state, zip, stripeEmail, amount, stripeToken } = req.body
+
+  if (fname && lname && street && city && state && zip) {
+    stripe.charges.create({
+      amount: amount,
+      currency: "usd",
+      description: `Mimir's Market charge for ${ stripeEmail }`,
+      source: stripeToken,
+    })
+      .then(charge => {
+        res.clearCookie('cart');
+        let transaction = new Transaction(charge);
+
+        for (let attrname in req.body) {
+          transaction[attrname] = req.body[attrname];
+        }
+
+        return transaction.save();
+      })
+      .then(() => {
+        req.flash('success', "Thank you for your order!")
+        res.redirect('/products');
+      })
+      .catch(e => res.status(500).send(e.stack));
+    } else {
+      req.flash('error', 'All personal information fields are required');
+    }
 });
 
 router.get('/cart', (req, res) => {
