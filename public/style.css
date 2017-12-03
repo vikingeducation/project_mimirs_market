@@ -12,6 +12,10 @@
   .threecol:nth-child(3n) {
     margin-right: 0;
   }
+
+  .cartProductImg {
+    width: 15% !important;
+  }
 }
 
 .navbar-header {
@@ -47,7 +51,7 @@
   margin-right: 15px;
 }
 
-.product, #featureProduct {
+.product, .featureProduct, .cartProduct {
   padding: 10px;
   border: 1px solid #eee;
   margin-bottom: 20px;
@@ -65,15 +69,31 @@ img {
 }
 
 /* Feature Product Styles */
-#featureProduct {
+.featureProduct {
   min-height: 220px;
   padding: 20px;
 }
 
-#featureProductInfo, #featureProductDesc {
-  min-height: 220px;
+.featureProductInfo, .featureProductDesc {
+  min-height: 220px !important;
   padding-top: 30px;
 }
 
+.cartProduct {
+  min-height: 150px;
+  padding: 20px;
+}
 
+.cart-btn {
+  width: 110px;
+  margin-bottom: 7px !important;
+}
+
+h3#cart-total {
+  margin-top: 0 !important;
+}
+
+#cart-bottom {
+  margin-bottom: 40px;
+}
 

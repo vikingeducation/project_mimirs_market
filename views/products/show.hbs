@@ -1,14 +1,14 @@
-<h1 class="text-center" id="products-heading">Product</h1>
-<section id="featureProduct" class="clearfix">
-  <div id="featureProductImg" class="col-sm-3">
+<h2 class="text-center">Product</h2>
+<section class="featureProduct clearfix">
+  <div class="col-sm-3 featureProductImg">
     <img src="{{product.img}}" class="pull-left" />
   </div>
-  <div id="featureProductInfo" class="col-sm-3">
-    <p>{{product.name}}</p>
+  <div class="col-sm-3 featureProductInfo">
+    <p><b>{{product.name}}</b></p>
     <p>{{product.category.name}}</p>
     <p>${{displayPrice product.price}}</p>
   </div>
-  <div id="featureProductDesc">
+  <div class="featureProductDesc">
     <p>{{product.description}}</p>
     <a class="btn btn-primary add-to-cart" id="{{product.id}}">Add to Cart</a>
   </div>

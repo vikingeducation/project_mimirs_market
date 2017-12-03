@@ -1,11 +1,13 @@
 $(() => {
   const socket = io.connect();
-  const cart = getCookie('cart');
+  let cart = getCookie('cart');
   let cartObj;
-  if (cart) cartObj = JSON.parse(cart);
+
+  if (cart) cartObj = JSON.parse(unescape(cart));
 
   for (let button of $('.add-to-cart')) {
     let productId = button.id;
+
     if (cartObj && cartObj[productId]) {
       changeButton($(`.add-to-cart#${ productId }`));
     }
@@ -13,10 +15,12 @@ $(() => {
 
   $('.add-to-cart').click((e) => {
     e.preventDefault();
+    let cart = getCookie('cart');
 
     const productId = e.target.id;
 
     const cartData = { productId, cart };
+
     socket.emit('addToCart', cartData);
   });
 
@@ -49,5 +53,5 @@ function changeButton(button) {
     .removeClass('add-to-cart')
     .off('click')
     .addClass('btn-success')
-    .attr('href','/checkout');
+    .attr('href','/checkout/cart');
 }
