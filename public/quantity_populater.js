@@ -1,8 +1,8 @@
 $(() => {
-  let cart = unescape(getCookie('cart'));
+  let cart = getCookie('cart');
   let cartObj;
   if (cart) {
-    cartObj = JSON.parse(cart);
+    cartObj = JSON.parse(unescape(cart));
 
     for (let id of Object.keys(cartObj)) {
       $(`input#${ id }`).val(cartObj[id].quantity);

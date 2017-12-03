@@ -79,6 +79,8 @@ img {
   padding-top: 30px;
 }
 
+/* Cart Styles */
+
 .cartProduct {
   min-height: 150px;
   padding: 20px;
@@ -97,3 +99,47 @@ h3#cart-total {
   margin-bottom: 40px;
 }
 
+/* Checkout Styles */
+
+#billing-info, #checkout-order-items {
+  border: 1px solid #eee;
+  margin-bottom: 40px;
+}
+
+.form-subhead {
+  margin: 20px 0;
+  text-decoration: underline;
+}
+
+.col-form-label {
+  position: relative;
+  top: 7px;
+}
+
+.row.checkout-item {
+  max-height: 150px;
+  padding: 8px;
+}
+
+.product-total-info {
+  position: relative;
+  top: 25px;
+}
+
+.checkout-img-container {
+  width: 25%;
+  float: left;
+}
+
+#checkout-total {
+  margin-top: 0;
+  position: relative;
+  top: -30px;
+}
+
+#checkout-buttons {
+  position: relative;
+  top: 10px;
+  right: -209px;
+  margin-bottom: 30px;
+}

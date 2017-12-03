@@ -4,11 +4,20 @@ const models = require('../models/sequelize');
 const { Product, Category } = models;
 const SearchHandler = require('../lib/searchHandler');
 
-router.get('/cart', (req, res) => {
+router.get('/', (req, res) => {
   SearchHandler.findCartProducts(res.locals.cart)
     .then(products => {
       const totalPrice = getTotalPrice(products, res.locals.cart);
       res.render('checkout/index', { products, totalPrice });
+    })
+    .catch(e => res.status(500).send(e.stack));
+});
+
+router.get('/cart', (req, res) => {
+  SearchHandler.findCartProducts(res.locals.cart)
+    .then(products => {
+      const totalPrice = getTotalPrice(products, res.locals.cart);
+      res.render('checkout/cart', { products, totalPrice });
     })
     .catch(e => res.status(500).send(e.stack));
 });
