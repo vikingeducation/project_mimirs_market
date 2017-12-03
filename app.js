@@ -21,10 +21,11 @@ app.use(cookieSession({
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
-  // res.locals.currentUser = req.session.currentUser;
-  // if (req.session.currentUser) {
-  //   res.locals.userid = req.session.currentUser.id;
-  // }
+  req.session.cart = req.session.cart || [];
+  res.locals.cart = req.session.cart;
+
+  var cart = req.session.cart;
+  cart.quantity = cart.length;
 
   next();
 });
@@ -79,6 +80,7 @@ app.use(morganToolkit());
 // ----------------------------------------
 var productsRouter = require("./routers/products");
 app.use("/", productsRouter);
+app.use("/products", productsRouter);
 
 
 

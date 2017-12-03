@@ -1,12 +1,23 @@
 'use strict';
 const faker = require("faker");
 
+let categoryNames = [
+  "Books",
+  "Jewelry",
+  "Household",
+  "Garden",
+  "Shoes",
+  "Tools",
+  "Health",
+  "Sports"
+];
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     let categories = []
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 0; i < 8; i++) {
         categories.push({
-            name: faker.commerce.department(),
+            name: categoryNames[i],
         });
     }
 
