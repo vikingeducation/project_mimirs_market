@@ -56,6 +56,9 @@ app.use((req, res, next) => {
   }
 });
 
+const shoppingCart = require('./lib/shopping_cart');
+app.use(shoppingCart);
+
 
 // Routes
 const products = require('./routers/products');
@@ -97,3 +100,11 @@ args.push(() => {
 });
 
 const server = app.listen.apply(app, args);
+
+// export hbs to render partials for sockets
+module.exports = { hbs };
+
+// Web Socket
+const io = require('socket.io').listen(server);
+const socket = require('./lib/socket_handler');
+socket.setup(io);
