@@ -67,7 +67,9 @@ app.use(shoppingCart);
 // Routes
 const products = require('./routers/products');
 const checkout = require('./routers/checkout');
+const admin = require('./routers/admin');
 
+app.use('/admin', admin);
 app.use('/checkout', checkout);
 app.use('/', products);
 app.use('/products', products);

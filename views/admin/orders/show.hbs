@@ -1,0 +1,90 @@
+<h2 class="text-center">Admin Orders Show</h2>
+  <div class="container">
+    <div class="col-sm-6">
+      <h4 class="text-center">Ordered Items</h4>
+      {{#each orderData.products as |product|}}
+        <div class="col-sm-12">
+          <table class="table table-striped table-bordered">
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{product.name}}</td>
+              </tr>
+              <tr>
+                <th>Price</th>
+                <td>${{displayPrice product.price}}</td>
+              </tr>
+              <tr>
+                <th>SKU</th>
+                <td>{{product.sku}}</td>
+              </tr>
+              <tr>
+                <th>Category</th>
+                <td>{{product.category.name}}</td>
+              </tr>
+              <tr>
+                <th>Quantity</th>
+                <td>{{displayQuantity product.id ../orderData.order._doc.products}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      {{/each}}
+    </div>
+    <div class="col-sm-6">
+      <h4 class="text-center">Customer Info</h4>
+        <div class="col-sm-12">
+          <table class="table table-striped table-bordered">
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{orderData.order._doc.fname}} {{orderData.order._doc.lname}}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{orderData.order._doc.stripeEmail}}</td>
+              </tr>
+              <tr>
+                <th>Street</th>
+                <td>{{orderData.order._doc.street}}</td>
+              </tr>
+              <tr>
+                <th>City</th>
+                <td>{{orderData.order._doc.city}}</td>
+              </tr>
+              <tr>
+                <th>State</th>
+                <td>{{orderData.order._doc.state}}</td>
+              </tr>
+              <tr>
+                <th>Zip</th>
+                <td>{{orderData.order._doc.zip}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="text-center">Order Info</h4>
+        <div class="col-sm-12">
+          <table class="table table-striped table-bordered">
+            <tbody>
+              <tr>
+                <th>ID</th>
+                <td>{{orderData.order.id}}</td>
+              </tr>
+              <tr>
+                <th>Checkout Date</th>
+                <td>{{displayDate orderData.order._doc.created}}</td>
+              </tr>
+              <tr>
+                <th>Stripe Token</th>
+                <td>{{orderData.order._doc.stripeToken}}</td>
+              </tr>
+              <tr>
+                <th>Card Type</th>
+                <td>{{orderData.order._doc.source.brand}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>

@@ -28,16 +28,19 @@ router.post('/', (req, res) => {
       source: stripeToken,
     })
       .then(charge => {
-        res.clearCookie('cart');
         let transaction = new Transaction(charge);
 
         for (let attrname in req.body) {
-          transaction[attrname] = req.body[attrname];
+          transaction.set(attrname, req.body[attrname]);
         }
+
+        transaction.set('products', res.locals.cart);
 
         return transaction.save();
       })
-      .then(() => {
+      .then((t) => {
+        debugger;
+        res.clearCookie('cart');
         req.flash('success', "Thank you for your order!")
         res.redirect('/products');
       })
