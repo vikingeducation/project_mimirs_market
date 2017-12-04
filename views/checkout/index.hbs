@@ -126,7 +126,7 @@
                   <div class="checkout-img-container col-sm-3">
                     <img src="{{product.img}}" />
                   </div>
-                  <p class="product-total-info"><b>{{product.name}}</b> @ ${{displayPrice product.price}} X {{displayQuantity product ../cart}} = {{productSubTotal product ../cart}}</p>
+                  <p class="product-total-info"><b>{{product.name}}</b> @ ${{displayPrice product.price}} X {{displayQuantity product.id ../cart}} = {{productSubTotal product ../cart}}</p>
                 </div>
                 {{#unless @last}}
                   <hr>

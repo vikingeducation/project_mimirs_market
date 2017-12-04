@@ -33,13 +33,19 @@ router.post('/', (req, res) => {
         for (let attrname in req.body) {
           transaction.set(attrname, req.body[attrname]);
         }
-
+        transaction.set('amount', parseInt(amount));
         transaction.set('products', res.locals.cart);
+
+        const totalUnits = getTotalUnits(res.locals.cart);
+        transaction.set('totalUnits', totalUnits);
+
 
         return transaction.save();
       })
       .then((t) => {
+
         debugger;
+
         res.clearCookie('cart');
         req.flash('success', "Thank you for your order!")
         res.redirect('/products');
@@ -100,6 +106,16 @@ function getTotalPrice(products, cart) {
   }
 
   return price;
+}
+
+function getTotalUnits(cart) {
+  let total = 0;
+
+  for (let productId of Object.keys(cart)) {
+    total += cart[productId].quantity;
+  }
+
+  return total;
 }
 
 module.exports = router;

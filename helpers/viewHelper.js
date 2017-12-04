@@ -1,6 +1,7 @@
 const ViewHelper = {
   displayPrice: price => {
-    return parseFloat(price).toFixed(2);
+    price = parseFloat(price);
+    return price.toLocaleString(undefined, { minimumFractionDigits: 2 });
   },
 
   convertToCents: price => {
@@ -29,7 +30,6 @@ const ViewHelper = {
   },
 
   displayQuantity: (productId, cart) => {
-    debugger;
     return cart[productId].quantity;
   },
 

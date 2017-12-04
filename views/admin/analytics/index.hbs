@@ -1,0 +1,84 @@
+<h2 class="text-center">Admin Analytics</h2>
+<div class="container">
+  <div class="col-sm-6">
+    <h4 class="text-center">Totals</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          <tr>
+            <th>Total Revenue Ever</th>
+            <td>${{displayPrice (convertToDollars analytics.totalRevenue)}}</td>
+          </tr>
+          <tr>
+            <th>Total Units Sold</th>
+            <td>{{analytics.totalUnits}}</td>
+          </tr>
+          <tr>
+            <th>Total Transactions</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Total Customers</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Total Products</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Total Categories</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>States Sold To</th>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="text-center">Revenue By Product</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each productRevenues as |product|}}
+            <tr>
+              <th>{{product.name}}</th>
+              <td>{{product.revenue}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <h4 class="text-center">Revenue By State</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each stateRevenues as |state|}}
+            <tr>
+              <th>{{state.name}}</th>
+              <td>{{state.revenue}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="text-center">Revenue By Category</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each categoryRevenues as |category|}}
+            <tr>
+              <th>{{category.name}}</th>
+              <td>{{category.revenue}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
