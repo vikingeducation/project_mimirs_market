@@ -18,7 +18,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { fname, lname, street, city, state, zip, stripeEmail, amount, stripeToken } = req.body
+  const { fname, lname, street, city, state, zip, stripeEmail, amount, stripeToken } = req.body;
+  const products = getProducts(req.body.productRevenue, res.locals.cart);
 
   if (fname && lname && street && city && state && zip) {
     stripe.charges.create({
@@ -34,18 +35,15 @@ router.post('/', (req, res) => {
           transaction.set(attrname, req.body[attrname]);
         }
         transaction.set('amount', parseInt(amount));
-        transaction.set('products', res.locals.cart);
+        transaction.set('products', products);
 
-        const totalUnits = getTotalUnits(res.locals.cart);
+        const totalUnits = getTotalUnits(products);
         transaction.set('totalUnits', totalUnits);
 
 
         return transaction.save();
       })
       .then((t) => {
-
-        debugger;
-
         res.clearCookie('cart');
         req.flash('success', "Thank you for your order!")
         res.redirect('/products');
@@ -116,6 +114,18 @@ function getTotalUnits(cart) {
   }
 
   return total;
+}
+
+function getProducts(revenues, cart) {
+  for (let id of Object.keys(revenues)) {
+    // set revenue
+    cart[id.split('-')[1]].revenue = parseInt(revenues[id]);
+
+    // set category
+    cart[id.split('-')[1]].category = id.split('-')[2];
+  }
+
+  return cart;
 }
 
 module.exports = router;

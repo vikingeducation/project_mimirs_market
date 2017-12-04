@@ -23,6 +23,13 @@ const ViewHelper = {
     return '$' + ViewHelper.displayPrice(price * quantity);
   },
 
+  productSubTotalToCents: (product, cart) => {
+    let quantity = cart[product.id].quantity;
+    let price = product.price;
+
+    return ViewHelper.convertToCents(price * quantity);
+  },
+
   cartItemsCount: cart => {
     const count = Object.keys(cart).length;
 
@@ -36,6 +43,14 @@ const ViewHelper = {
   displayDate: unixTimestamp => {
     let date = new Date(unixTimestamp * 1000)
     return `${ date.getMonth() + 1 }/${ date.getDate() }/${ date.getFullYear() }`
+  },
+
+  toString: item => {
+    return item.toString();
+  },
+
+  length: item => {
+    return item.length;
   }
 };
 

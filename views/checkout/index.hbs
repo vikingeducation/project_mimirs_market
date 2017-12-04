@@ -121,6 +121,7 @@
           <h4 class="text-center">Order Items</h4>
           <div class="col-md-12" id="checkout-order-items">
             {{#each products as |product|}}
+              <input type="hidden" name="productRevenue[product-{{product.id}}-{{product.category.name}}]" value="{{productSubTotalToCents product ../cart}}">
               <section class="checkout-preview">
                 <div class="row checkout-item">
                   <div class="checkout-img-container col-sm-3">
