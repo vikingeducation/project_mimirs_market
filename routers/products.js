@@ -7,14 +7,26 @@ var sequelize = models.sequelize;
 
 var onIndex = (req, res) => {
 
+	let searchValue = req.session.searchValue || '';
+  let sortOption = req.session.selectedSortOption || 'id-ASC';
+  let filterOptionCategory = req.session.filterOptionCategory || '';
+  let filterOptionMinPrice = req.session.filterOptionMinPrice || '0';
+  let filterOptionMaxPrice = req.session.filterOptionMaxPrice || '5000';
+
   Product.findAll({
     include: [{ model: Category, required: true }]
+  })
+  .then(products => {
+    return checkIfInCart(req, res, products);
   })
   .then(products => {
     Category.findAll({
     	order: ['name']
     }).then(categories => {
-      res.render("products/index", { products, categories });
+      res.render("products/index", 
+        { products, categories, searchValue, 
+          sortOption, filterOptionCategory, 
+          filterOptionMinPrice, filterOptionMaxPrice });
     });
   });
 };
@@ -47,8 +59,15 @@ router.get("/show/:productId", (req, res) => {
 
 router.post("/search", (req, res) => {
   let search = req.body.search;
-  req.session.searchValue = search;
-  res.cookie('searchValue', search);
+  if (search) {
+  	req.session.searchValue = search;
+  }
+
+  let searchValue = req.session.searchValue || '';
+  let sortOption = req.session.selectedSortOption || 'id-ASC';
+  let filterOptionCategory = '';
+  let filterOptionMinPrice = '0';
+  let filterOptionMaxPrice = '5000';
 
   Product.findAll({
     where: {
@@ -63,13 +82,32 @@ router.post("/search", (req, res) => {
   	Category.findAll({
     	order: ['name']
     }).then(categories => {
-      res.render("products/index", { products, categories });
+      res.render("products/index", 
+        { products, categories, searchValue, 
+          sortOption, filterOptionCategory, 
+          filterOptionMinPrice, filterOptionMaxPrice });
     });
 	});
 });
 
 
 router.post("/filter", (req, res) => {
+  if (req.body.filterOption.category) {
+    req.session.filterOptionCategory = req.body.filterOption.category;
+  }
+  if (req.body.filterOption.minPrice) {
+    req.session.filterOptionMinPrice = req.body.filterOption.minPrice;
+  }
+  if (req.body.filterOption.maxPrice) {
+    req.session.filterOptionMaxPrice = req.body.filterOption.maxPrice;
+  }
+
+  let searchValue = '';
+  let sortOption = req.session.selectedSortOption || 'id-ASC';
+  let filterOptionCategory = req.session.filterOptionCategory || '';
+  let filterOptionMinPrice = req.session.filterOptionMinPrice || '0';
+  let filterOptionMaxPrice = req.session.filterOptionMaxPrice || '5000';
+
   Product.findAll({
     include: [
       {
@@ -95,19 +133,25 @@ router.post("/filter", (req, res) => {
   	Category.findAll({
     	order: ['name']
     }).then(categories => {
-      res.render("products/index", { products, categories });
+      res.render("products/index", 
+        { products, categories, searchValue, 
+          sortOption, filterOptionCategory, 
+          filterOptionMinPrice, filterOptionMaxPrice });
     });
 	});
 });
 
 
 router.post("/sort", (req, res) => {
-	let search = req.body.search;
-  res.cookie('searchValue', req.session.searchValue || search);
-
   if (req.body.sortOption) {
-    res.cookie('selectedSortOption', req.body.sortOption);
+    req.session.selectedSortOption = req.body.sortOption;
   }
+
+  let searchValue = req.session.searchValue || '';
+  let sortOption = req.session.selectedSortOption || 'id-ASC';
+  let filterOptionCategory = req.session.filterOptionCategory || '';
+  let filterOptionMinPrice = req.session.filterOptionMinPrice || '0';
+  let filterOptionMaxPrice = req.session.filterOptionMaxPrice || '5000';
 
   let productIds = Object.keys(req.body.shownProducts).map(
     el => req.body.shownProducts[el]
@@ -128,18 +172,22 @@ router.post("/sort", (req, res) => {
   	Category.findAll({
     	order: ['name']
     }).then(categories => {
-      res.render("products/index", { products, categories });
+      res.render("products/index", 
+        { products, categories, searchValue, 
+          sortOption, filterOptionCategory, 
+          filterOptionMinPrice, filterOptionMaxPrice });
     });
 	});
 });
 
 function checkIfInCart(req, res, products) {
-  // let cart = req.session.cart.map(i => i.id);
-  // products.forEach((p, i) => {
-  //   if (cart.includes(p.id.toString())) {
-  //     products[i].inCart = true;
-  //   }
-  // });
+  let cart = req.session.cart.map(i => i.id);
+  products.forEach((p, i) => {
+    if (cart.includes(p.id.toString())) {
+      products[i].inCart = true;
+    }
+  });
   return products;
 };
+
 module.exports = router;

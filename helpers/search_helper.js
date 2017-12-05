@@ -3,7 +3,7 @@ var SearchHelper = {};
 // https://stackoverflow.com/questions/26066768/how-to-set-the-selected-item-in-a-radio-button-group-in-handlebars-template
 SearchHelper.setChecked = function (value, currentValue) {
     if ( value == currentValue ) {
-       return "checked"
+       return "checked";
     } else {
        return "";
     }
@@ -14,6 +14,14 @@ SearchHelper.setChecked = function (value, currentValue) {
     return options.fn(this).replace(
         new RegExp(' value=\"' + selected + '\"'),
         '$& selected="selected"');
+};
+
+SearchHelper.setSelected = function( value, currentValue ) {
+    if ( value == currentValue ) {
+       return 'selected="selected"';
+    } else {
+       return "";
+    }
 };
 
 module.exports = SearchHelper;
