@@ -121,7 +121,7 @@
           <h4 class="text-center">Order Items</h4>
           <div class="col-md-12" id="checkout-order-items">
             {{#each products as |product|}}
-              <input type="hidden" name="productRevenue[product-{{product.id}}-{{product.category.name}}]" value="{{productSubTotalToCents product ../cart}}">
+              <input type="hidden" name="productRevenue[product-{{product.id}}]" value="{{productSubTotalToCents product ../cart}}">
               <section class="checkout-preview">
                 <div class="row checkout-item">
                   <div class="checkout-img-container col-sm-3">
@@ -136,7 +136,6 @@
             {{/each}}
           </div>
           <h2 class="pull-right clear" id="checkout-total">Total: ${{displayPrice totalPrice}}</h2>
-          <br>
           <div id="checkout-buttons" class="pull-right">
             <a href="/checkout/cart" class="btn btn-danger">Return To Cart</a>
             <button type="submit" class="btn btn-primary">Submit Payment</button>

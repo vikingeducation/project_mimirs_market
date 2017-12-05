@@ -17,9 +17,9 @@ router.get('/', (req, res) => {
     .catch(e => res.status(500).send(e.stack));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { fname, lname, street, city, state, zip, stripeEmail, amount, stripeToken } = req.body;
-  const products = getProducts(req.body.productRevenue, res.locals.cart);
+  const products = await getProducts(req.body.productRevenue, res.locals.cart);
 
   if (fname && lname && street && city && state && zip) {
     stripe.charges.create({
@@ -39,7 +39,6 @@ router.post('/', (req, res) => {
 
         const totalUnits = getTotalUnits(products);
         transaction.set('totalUnits', totalUnits);
-
 
         return transaction.save();
       })
@@ -74,9 +73,7 @@ router.post('/update', (req, res) => {
     delete cart[productId];
   }
 
-  cart = JSON.stringify(cart);
-
-  res.cookie('cart', cart);
+  res.cookie('cart', JSON.stringify(cart));
   res.redirect('/checkout/cart');
 });
 
@@ -90,42 +87,41 @@ router.delete('/:id', (req, res) => {
   let cart = res.locals.cart;
 
   delete cart[productId];
-  cart = JSON.stringify(cart);
 
-  res.cookie('cart', cart);
+  res.cookie('cart', JSON.stringify(cart));
   res.redirect('/checkout/cart');
 });
 
 function getTotalPrice(products, cart) {
-  let price = 0;
-
-  for (let product of products) {
-    price += product.price * cart[product.id].quantity
-  }
-
-  return price;
-}
-
-function getTotalUnits(cart) {
   let total = 0;
 
-  for (let productId of Object.keys(cart)) {
-    total += cart[productId].quantity;
+  for (let { id, price } of products) {
+    total += price * cart[id].quantity
   }
-
   return total;
 }
 
+function getTotalUnits(cart) {
+  return Object.values(cart).reduce((total, qty) => total + qty);
+}
+
 function getProducts(revenues, cart) {
-  for (let id of Object.keys(revenues)) {
-    // set revenue
-    cart[id.split('-')[1]].revenue = parseInt(revenues[id]);
+  return new Promise(async (resolve, reject) => {
+    let products = Object.assign({}, cart);
 
-    // set category
-    cart[id.split('-')[1]].category = id.split('-')[2];
-  }
+    for (let id of Object.keys(revenues)) {
+      let [ _, productId ] = id.split('-');
 
-  return cart;
+      // set revenue
+      products[productId].revenue = parseInt(revenues[id]);
+
+      //set category
+      let product = await SearchHandler.findProductById(productId);
+      products[productId].category = product.category.name;
+    }
+
+    resolve(products);
+  });
 }
 
 module.exports = router;

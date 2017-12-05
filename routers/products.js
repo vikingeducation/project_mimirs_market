@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
     .then(async (product) => {
       if (!product) throw new Error('404: Product not found')
 
-      let relatedProducts = await SearchHandler.findRelatedProducts(product)
+      const relatedProducts = await SearchHandler.findRelatedProducts(product);
 
       res.render('products/show', { product, relatedProducts });
     })

@@ -15,9 +15,9 @@ $(document).ready(() => {
 });
 
 function getPrices() {
-  let prices = ['0'];
+  let prices = [];
 
-  for (let i = 10; i <= 100; i += 10) {
+  for (let i = 0; i <= 100; i += 10) {
     prices.push(`${ i }.00`);
   }
 

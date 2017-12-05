@@ -19,17 +19,17 @@ router.get('/orders/:id', (req, res) => {
 
   Transaction.findById(req.params.id)
     .then(order => {
-      if (!order) throw '404: Order not found';
+      if (!order) throw 'orderNotFound';
       orderData.order = order;
-      return SearchHandler.findCartProducts(order._doc.products)
+      return SearchHandler.findCartProducts(order._doc.products);
     })
     .then(products => {
       orderData.products = products;
       res.render('admin/orders/show', { orderData });
     })
     .catch(e => {
-      if (e == '404: Order not found') {
-        res.status(404).send(e);
+      if (e == 'orderNotFound') {
+        res.status(404).send('404: Order not found');
       } else {
         res.status(500).send(e.stack);
       }
