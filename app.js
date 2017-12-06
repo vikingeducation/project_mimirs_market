@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // ----------------------------------------
 // Body Parser
@@ -75,6 +78,19 @@ app.use(morganToolkit());
 
 
 // ----------------------------------------
+// Mongoose
+// ----------------------------------------
+const mongoose = require("mongoose");
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require("./mongo")().then(() => next());
+  }
+});
+
+
+// ----------------------------------------
 // Routes
 // ----------------------------------------
 var productsRouter = require("./routers/products");
@@ -83,9 +99,11 @@ app.use("/products", productsRouter);
 
 var cartRouter = require("./routers/cart");
 app.use("/", cartRouter);
-app.use("/mycart", productsRouter);
+app.use("/mycart", cartRouter);
 
-
+var checkoutRouter = require("./routers/checkout");
+app.use("/", checkoutRouter);
+app.use("/checkout", checkoutRouter);
 
 // ----------------------------------------
 // Template Engine

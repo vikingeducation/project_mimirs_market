@@ -2,7 +2,7 @@
   <div>
     <h1 style="color: blue;">Products</h1>
   </div>
- <div class="panel panel-primary">
+  <hr>
   <div class="panel-heading">
     <form style="margin:10px;" action='/products/search' method='POST' class="form-inline">
       <div class="form-group">
@@ -105,14 +105,14 @@
 	        	<p>Category: {{product.Category.name}}</p>
 
             {{#if product.inCart}}
-               <form class="" action="/mycart" method="get">
+               <form class="form-inline" action="/mycart" method="GET">
                 <input type="hidden" name="name" value="{{product.name}}">
-                <input type="submit" class="btn btn-success" value="Edit Cart">
+                <button class="btn btn-success" style="width:120px; margin:0 auto">Edit Cart</button>
               </form>  
             {{else}}
-              <form class="" action="/cart/{{product.id}}" method="post">
+              <form class="form-inline" action="/cart/{{product.id}}" method="POST">
                 <input type="hidden" name="name" value="{{product.name}}">
-                <input type="submit" class="btn btn-primary" value="Add to Cart">
+                <button class="btn btn-primary" style="width:120px; margin:0 auto">Add to Cart</button>
               </form>
             {{/if}}
 	        	

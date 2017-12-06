@@ -11,7 +11,7 @@
 				  <img style="height:8em; width:8em; margin:20px 20px;" src="/images/product.png">
 				</div>
 				<div class="col-sm-3" style="margin:30px 0px; font-size:14px;">
-				 	<span><b>Name:&nbsp;</b>{{product.name}}</span><br><br>
+				 	<span><b>Name:&nbsp;</b><a href="/products/show/{{product.id}}">{{product.name}}</a></span><br><br>
 				  <span><b>Category:&nbsp;</b>{{product.Category.name}}</span><br><br>
 				  <span><b>Price:&nbsp;</b>${{product.price}}</span>
 				</div>
@@ -39,7 +39,7 @@
 				<a href="/mycart/clear">
 					<button type="submit" style="width:150px; margin:0 10px" class="btn btn-danger">Clear Cart</button>
 				</a>
-			  <a href="/mycart/checkout">
+			  <a href="/checkout">
 					<button style="width:150px;  margin:0 10px" class="btn btn-primary">Checkout</button>
 				</a>
 			</div>
