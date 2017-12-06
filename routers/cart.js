@@ -22,7 +22,6 @@ router.post("/cart/:id", (req, res) => {
 			quantity: 1
 		});
 	} else if (findCartItem(req.session.cart, id) == -1) {
-		console.log("name: " + name)
 		req.session.cart.push({
 			name: name,
 			id: id,

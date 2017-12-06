@@ -49,14 +49,10 @@ router.get("/checkout", (req, res) => {
 	});	
 });
 
-// pay submit
 router.post("/charges", (req, res) => {
-	// get item ids from cart
 	var ids = req.session.cart.map(k => k.id);
 
-	// get quantities from cart
 	var quantities = req.session.cart.map(k => k.quantity);
-	// console.log("req.body: ", JSON.stringify(req.body, 0, 2));
 
 	var total = 0;
 	let orderProducts = [];
@@ -66,19 +62,14 @@ router.post("/charges", (req, res) => {
 		where: { id: { $in: ids } }
 	})
 		.then(cartProducts => {
-			//get a total
 			for (var i = 0; i < cartProducts.length; i++) {
 				total += cartProducts[i].price * quantities[i];
 			}
 
-			//assign quantities
-			// https://stackoverflow.com/questions/35903850/combine-json-arrays-by-key-javascript
 			var result = cartProducts.map(x =>
 				Object.assign(x, req.session.cart.find(y => y.id == x.id))
 			);
 
-			// console.log("cartProducts: ", JSON.stringify(cartProducts, 0, 2));
-			// build order object
 			cartProducts.forEach(product => {
 				orderProducts.push({
 					id: product.id,
@@ -114,11 +105,9 @@ router.post("/charges", (req, res) => {
 			});
 
 			return newOrder.save();
-			// console.log("charge: ", JSON.stringify(charge, 0, 2));
 		})
 		.then(order => {
 			req.session.cart = [];
-			// console.log("order: ", JSON.stringify(order, 0, 2));
 			res.render("checkout/show", { order });
 		})
 		.catch(e => {

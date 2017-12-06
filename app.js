@@ -105,6 +105,10 @@ var checkoutRouter = require("./routers/checkout");
 app.use("/", checkoutRouter);
 app.use("/checkout", checkoutRouter);
 
+var adminRouter = require("./routers/admin");
+app.use("/", adminRouter);
+app.use("/admin", adminRouter);
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
