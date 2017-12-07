@@ -35,7 +35,7 @@ router.post("/cart/:id", (req, res) => {
 		});
 	}
 	
-	res.redirect("back");
+	res.redirect("/products");
 });
 
 
@@ -72,7 +72,6 @@ router.get("/mycart", (req, res) => {
 
 router.get("/mycart/clear", (req, res) => {
 	req.session.cart = null;
-	console.log("delete cart");
 	res.redirect("/");
 });
 
@@ -81,7 +80,7 @@ router.get("/mycart/delete/:id", (req, res) => {
 	var id = req.params.id;
 	var index = findCartItem(req.session.cart, id);
 	req.session.cart.splice(index, 1);
-	res.redirect("back");
+	res.redirect("/mycart");
 });
 
 
@@ -90,9 +89,7 @@ router.post("/mycart/update/:id", (req, res) => {
 	var quantity = parseInt(req.body.quantity);
 	var index = findCartItem(req.session.cart, id);
 
-	console.log("quantity: " + quantity);
 	if (quantity <= 0) {
-		// remove from cart
 		req.session.cart.splice(index, 1);
 	} else {
 		req.session.cart[index].quantity = quantity;

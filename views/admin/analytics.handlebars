@@ -1,0 +1,104 @@
+<main class="container" style="background-color:aliceblue; margin-top:120px; text-align:center; ">
+  <div>
+    <h1 style="color:blue; margin-bottom:30px; padding-top:20px">Admin Analytics</h1>
+  </div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Totals</h2>
+
+    <table class="table table-striped" style="border: 1px solid black;">
+      <thead class="bg-primary">
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Revenue Ever</td>
+          <td>${{data.totalRevenueEver.total}}.00</td>
+        </tr>
+        <tr>
+          <td>Total Units Sold</td>
+          <td>{{data.totalItemsSold.total}}</td>
+        </tr>
+        <tr>
+          <td>Total Transactions</td>
+          <td>{{data.totalTransactions}}</td>
+        </tr>
+        <tr>
+          <td>Total Customers</td>
+          <td>{{data.totalUniqueCustomers}}</td>
+        </tr>
+        <tr>
+          <td>Total Products</td>
+          <td>{{data.totalProducts}}</td>
+        </tr>
+        <tr>
+          <td>Total Categories</td>
+          <td>{{data.totalCategories}}</td>
+        </tr>
+        <tr>
+          <td>Total States Sold To</td>
+          <td>{{data.totalUniqueStates}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Revenue by Category</h2>
+    <table class="table table-striped" style="border: 1px solid black;">
+      <thead class="bg-primary">
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.revenueByCategory as |category|}}
+        <tr>
+          <td>{{category._id}}</td>
+          <td>${{category.sum}}.00</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Revenue by State</h2>
+    <table class="table table-striped" style="border: 1px solid black;">
+      <thead class="bg-primary">
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.revenueByState as |state|}}
+        <tr>
+          <td>{{state._id}}</td>
+          <td>${{state.sum}}.00</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Revenue by Product</h2>
+    <table class="table table-striped" style="border: 1px solid black;">
+      <thead class="bg-primary">
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data.revenueByProduct as |product|}}
+        <tr>
+          <td>{{product.name}}</td>
+          <td>${{product.sum}}.00</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
