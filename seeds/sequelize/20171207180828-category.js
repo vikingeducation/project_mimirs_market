@@ -17,7 +17,7 @@ module.exports = {
     var categories = [];
     for (let i = 0; i < 10; i++) {
       categories.push({
-        name: faker.commerce.department()
+        name: Math.floor(Math.random() * 10 + 1)
       });
     }
     return queryInterface.bulkInsert("Categories", categories);

@@ -1,13 +1,13 @@
 {
   "development": {
-    "username": "edwin",
-    "password": "test",
+    "username": "hai",
+    "password": "1234",
     "database": "project_mimirs_market_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "edwin",
+    "username": "1234",
     "password": "test",
     "database": "project_mimirs_market_test",
     "host": "127.0.0.1",
