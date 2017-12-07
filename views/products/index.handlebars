@@ -1,0 +1,126 @@
+<main class="container" style="background-color:aliceblue; margin-top:120px; text-align:center; ">
+  <div>
+    <h1 style="color: blue;">Products</h1>
+  </div>
+  <hr>
+  <div class="panel-heading">
+    <form style="margin:10px;" action='/products/search' method='POST' class="form-inline">
+      <div class="form-group">
+        Search:&nbsp; <input id="search" class='form-control' type='text' placeholder="search" name='search' value="{{searchValue}}">
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary" style="width:100px">Search</button>
+      </div>
+    </form>
+    <p style="margin:10px; text-align:left;">Or</p>
+    <form method="POST" action="/products/filter" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Filter By:&nbsp;
+        <select id="filter-options" class="form-control" name="filterOption[category]">
+        	{{#setSelect filterOptionCategory}}
+	          <option selected="selected" value="">Filter By Category</option>
+		        {{#each categories as |category|}}
+		        	<option id={{category.name}} value="{{category.name}}">{{category.name}}</option>
+	        	{{/each}}
+	        {{/setSelect}}
+        </select>
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <div class="form-group">
+        <select id="filter-options" class="form-control" name="filterOption[minPrice]">
+        	<option selected="selected" value="0">Min Price</option>
+          {{#setSelect filterOptionMinPrice}}
+	          <option id="0" value="0">$0</option>
+	          <option id="100" value="100">$100</option>
+	          <option id="250" value="250">$250</option>
+	          <option id="500" value="500">$500</option>
+	          <option id="1000" value="1000">$1000</option>
+	          <option id="1500" value="1500">$1500</option>
+	          <option id="2000" value="2000">$2000</option>
+	          <option id="2500" value="2500">$2500</option>
+	          <option id="3000" value="3000">$3000</option>
+	          <option id="3500" value="3500">$3500</option>
+	          <option id="4000" value="4000">$4000</option>
+	          <option id="4500" value="4500">$4500</option>
+          {{/setSelect}}
+        </select>
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <div class="form-group">
+        <select id="filter-options" class="form-control" name="filterOption[maxPrice]">
+          <option selected="selected" value="5000">Max Price</option>
+          {{#setSelect filterOptionMaxPrice}}
+	          <option id="100" value="100">$100</option>
+	          <option id="250" value="250">$250</option>
+	          <option id="500" value="500">$500</option>
+	          <option id="1000" value="1000">$1000</option>
+	          <option id="1500" value="1500">$1500</option>
+	          <option id="2000" value="2000">$2000</option>
+	          <option id="2500" value="2500">$2500</option>
+	          <option id="3000" value="3000">$3000</option>
+	          <option id="3500" value="3500">$3500</option>
+	          <option id="4000" value="4000">$4000</option>
+	          <option id="4500" value="4500">$4500</option>
+	          <option id="5000" value="5000">$5000</option>
+	        {{/setSelect}}
+        </select>
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-primary" style="width:100px">Filter</button>
+    </form>
+    <hr>
+    <form method="POST" action="/products/sort" style="margin: 10px;" class="form-inline sort-select">
+      <div class="form-group">
+        Sort By:&nbsp;
+        <select id="sort-options" class="form-control" name="sortOption">
+        	{{#setSelect sortOption}}
+	          <option selected="selected" value="id-ASC"></option>
+	          <option id="name-ASC" value="name-ASC">Name Ascending</option>
+	          <option id="name-DESC" value="name-DESC">Name Descending</option>
+	          <option id="price-ASC" value="price-ASC">Price Ascending</option>
+	          <option id="price-DESC" value="price-DESC">Price Descending</option>
+	          <option id="createdAt-DESC" value="createdAt-DESC">Newest First</option>
+	          <option id="createdAt-ASC" value="createdAt-ASC">Oldest First</option>
+	        {{/setSelect}}
+        </select>
+        
+        {{#each products as |prod|}}
+          <input type="hidden" name="shownProducts[{{prod.id}}]" value="{{prod.id}}"></input>
+        {{/each}}
+
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-primary" style="width:100px">Sort</button>
+    </form>
+  </div>
+  
+  <div class="row">
+    {{#if products}}
+	    {{#each products as |product|}}
+	      <div class="col-xs-4" style="height: 320px; width: 250px; border: solid 1px black; margin: 10px 13px;">
+	        <img src="/images/product.png" style="height: 8em; width: 8em; margin-top: 2em; padding:10px;"/>
+	        <br>
+	        <div style="margin-top: 1em; font-size: 14px; text-align: center">
+	        	<p>${{product.price}}</p>
+	        	<a href="/products/show/{{product.id}}">{{product.name}}</a><br>
+	        	<p>Category: {{product.Category.name}}</p>
+
+            {{#if product.inCart}}
+               <form class="form-inline" action="/mycart" method="GET">
+                <input type="hidden" name="name" value="{{product.name}}">
+                <button class="btn btn-success" style="width:120px; margin:0 auto">Edit Cart</button>
+              </form>  
+            {{else}}
+              <form class="form-inline" action="/cart/{{product.id}}" method="POST">
+                <input type="hidden" name="name" value="{{product.name}}">
+                <button class="btn btn-primary" style="width:120px; margin:0 auto">Add to Cart</button>
+              </form>
+            {{/if}}
+	        	
+	        </div>
+	      </div>
+	    {{/each}}
+    {{else}} 
+    	<h3>No Products</h3>
+    {{/if}}
+  </div>
+</main>

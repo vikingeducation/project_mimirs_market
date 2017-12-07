@@ -1,0 +1,96 @@
+<div class="container-fluid" style="background-color:aliceblue; margin-top:120px;">
+  <div>
+    <h1 style="color:blue; text-align:center; margin:10px 0; line-height: 80px">Checkout</h1>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-5" style="border:solid 1px black; margin-left:25px">
+      <h3 style="color:blue; text-align:center; margin:20px 0;">Enter Billing Info</h3>
+      <hr>
+      <form class="" action="/charges" method="post">
+        
+        <div class="form-row">
+          <div class="form-group col">
+            <input type="text" class="form-control" name="fname" placeholder="First Name">
+          </div>
+          <div class="form-group col">
+            <input type="text" class="form-control" name="lname" placeholder="Last Name">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <input name="email" type="text" class="form-control" id="email" placeholder="Email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <input name="address" type="text" class="form-control" id="inputAddress" placeholder="Street Address">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col">
+            <input name="city" type="text" class="form-control" id="inputCity" placeholder="City">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm-8">
+           <select id="inputState" class="form-control" name="state">
+              {{#each states as |state| }}
+                <option value="{{ state.name }}">{{ state.name }}</option>
+              {{/each }}
+            </select>
+          </div>
+          <div class="form-group col-sm-4">
+            <input name="zip" type="text" class="form-control" id="inputZip" placeholder="Zip Code">
+          </div>
+        </div>
+       
+        <div class="form-row">
+          <div class="col" style="text-align:center; margin: 20px auto">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="{{ STRIPE_PK }}"
+              data-amount="100"
+              data-name="Stripe Node Test"
+              data-description="Widget"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto">
+            </script>
+          </div>
+        </div>
+        <input type="hidden" name="price" value="{{ total }}">
+        <input type="hidden" name="description" value="{{ result.0.name}}">
+      </form>
+      <div class="form-row" style="text-align:center; margin-bottom: 0px;">
+        <div class="col">
+          <a href="/mycart"><button  class="btn btn-danger">Return to Cart</button></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6" style="margin-left:40px; border:solid 1px black; font-size:14px;">
+      <h3 style="color:blue; text-align:center; margin:20px 0;">Order Items</h3>
+      <hr>
+      {{#each result as |product|}}
+        <div class="row">
+          <div class="col-sm-2">
+            <img style="height:3em; width:3em; margin:5px 20px;" src="/images/product.png" alt="">
+          </div>
+          <div class="col-sm-6" style="margin-top:20px; text-align: center">
+            <a href="/products/show/{{product.id}}">{{product.name}}</a>
+          </div>
+          <div class="col-sm-4">
+            <p>${{product.price}} x {{product.quantity}} item(s)</p>
+            <p>subtotal: ${{product.total}}.00</p>
+          </div>
+        </div>
+        <hr>
+      {{/each}}
+      <br><br>
+      <h3 style="color:blue; text-align:center">Total: ${{total}}.00</h3>
+    </div>
+
+  </div>
+</div>

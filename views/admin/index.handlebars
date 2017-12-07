@@ -1,0 +1,29 @@
+<main class="container" style="background-color:aliceblue; margin-top:120px; text-align:center; ">
+  <div>
+    <h1 style="color:blue; margin-bottom:30px; padding-top:20px">Admin Orders Index</h1>
+  </div>
+  <table class="table table-striped table-bordered">
+    <thead class="bg-primary">
+      <tr>
+        <th scope="col">Order#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Revenue</th>
+        <th scope="col">Email</th>
+        <th scope="col">State</th>
+        <th scope="col">Checkout Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders as |order|}}
+      <tr>
+        <th scope="row"><a href="/order/{{order.id}}">{{order.id}}</a></th>
+        <td>{{order.fname}} {{order.lname}}</td>
+        <td>${{order.total}}.00</td>
+        <td>{{order.stripe.source.name}}</td>
+        <td>{{order.state}}</td>
+        <td>{{order.createdAt}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</main>

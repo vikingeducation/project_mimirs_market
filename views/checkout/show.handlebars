@@ -1,0 +1,40 @@
+<div class="container-fluid" style="background-color:aliceblue; margin-top:120px;">
+  <div style="color:blue; text-align:center;">
+    <h1>Receipt</h1>
+    <hr>
+    <h2>Thank you for your order!</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4" style="margin-left:40px;">
+      <h3 style="color:blue; margin:20px 0;">Mailed to:</h3>
+      <hr>
+      <h6>{{order.fname}} {{order.lname}}</h6>
+      <h6>{{order.email}}</h6>
+      <h6>{{order.address}}</h6>
+      <h6>{{order.city}}, {{order.zip}}, {{order.state}}</h6>
+    </div>
+
+    <div class="col-sm-7" style="margin-left:40px;font-size:14px;">
+      <h3 style="color:blue; text-align:center; margin:20px 0;">Ordered Items</h3>
+      <hr>
+      {{#each order.orderProducts as |product|}}
+        <div class="row">
+          <div class="col-sm-2">
+            <img style="height:3em; width:3em; margin:5px 20px;" src="/images/product.png" alt="">
+          </div>
+          <div class="col-sm-6" style="margin-top:20px;">
+            <p>{{product.name}}</p>
+            <p>{{product.category}}</p>
+          </div>
+          <div class="col-sm-4" style="margin-top:20px;">
+            <p>${{product.price}} x {{product.quantity}} item(s)</p>
+          </div>
+        </div>
+        <hr>
+      {{/each}}
+      <br><br>
+      <h3 style="color:blue; text-align:center">Total: ${{order.total}}.00</h3>
+    </div>
+  </div>
+</div>

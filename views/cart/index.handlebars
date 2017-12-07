@@ -1,0 +1,57 @@
+<div class="container-fluid" style="background-color:aliceblue; margin-top:120px;">
+  <div>
+    <h1 style="color:blue; text-align:center;">My Cart</h1>
+  </div>
+  {{#if nothing}}
+		<h1>Your cart is empty</h1>
+	{{else}}
+	  {{#each result as |product|}}
+		  <div class="row" style="border:solid 1px black; margin:50px; text-align:left; ">
+				<div class="col-sm-3">
+				  <img style="height:8em; width:8em; margin:20px 20px;" src="/images/product.png">
+				</div>
+				<div class="col-sm-3" style="margin:30px 0px; font-size:14px;">
+				 	<span><b>Name:&nbsp;</b><a href="/products/show/{{product.id}}">{{product.name}}</a></span><br><br>
+				  <span><b>Category:&nbsp;</b>{{product.Category.name}}</span><br><br>
+				  <span><b>Price:&nbsp;</b>${{product.price}}</span>
+				</div>
+				<div class="col-sm-5">
+					<form action="/mycart/update/{{product.id}}" method="post" style="font-size:14px;">
+						<div class="row">
+							<div class="col-sm-6">
+								<input style="height:40px; margin:30px 10px; padding:10px" type="text" value="{{product.quantity}}" name="quantity"/>
+							</div>
+							<div class="col-sm-6">
+				        <button type="submit" class="btn btn-success" style="margin:30px 10px; width:150px">Set Quantity</button>
+							</div>
+						</div>
+					</form>
+					<form action="/mycart/delete/{{product.id}}" method="get" style="font-size:14px;">
+						<div class="row">
+							<div class="col-sm-6">
+								
+							</div>
+							<div class="col-sm-6">
+				        <button type="submit" class="btn btn-danger" style="margin:0px 10px; width:150px">Remove</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		{{/each}}
+
+		<div class="row" style="margin:0 40px">
+			<div class="col-sm-7" style="padding:0px 50px 20px">
+	    	<h3>Total: ${{total}}.00</h3>
+	    </div>
+	    <div class="col-sm-5">
+				<a href="/mycart/clear">
+					<button type="submit" style="width:150px; margin:0 10px" class="btn btn-danger">Clear Cart</button>
+				</a>
+			  <a href="/checkout">
+					<button style="width:150px;  margin:0 10px" class="btn btn-primary">Checkout</button>
+				</a>
+			</div>
+		</div>
+	{{/if}}
+</div>

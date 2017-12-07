@@ -1,0 +1,113 @@
+<main class="container" style="background-color:aliceblue; margin-top:120px; text-align:center; ">
+  <div>
+    <h1 style="color:blue; margin-bottom:30px; padding-top:20px">Admin Orders Show</h1>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-6">
+      <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Ordered Items</h2>
+      {{#each order.orderProducts as |product|}}
+        <table class="table table-striped" style="border: 1px solid black;">
+          <thead class="bg-primary">
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td>{{product.name}}</td>
+            </tr>
+            <tr>
+              <td>price</td>
+              <td>${{product.price}}</td>
+            </tr>
+            <tr>
+              <td>SKU</td>
+              <td>{{product.sku}}</td>
+            </tr>
+            <tr>
+              <td>description</td>
+              <td>{{product.description}}</td>
+            </tr>
+            <tr>
+              <td>Category</td>
+              <td>{{product.category}}</td>
+            </tr>
+            <tr>
+              <td>quantity</td>
+              <td>{{product.quantity}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr style="border-width:2px">
+      {{/each}}
+    </div>
+    <div class="col-sm-6">
+      <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Customer Info</h2>
+      <table class="table table-striped" style="border: 1px solid black;">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>{{order.fname}} {{order.lname}}</td>
+          </tr>
+          <tr>
+            <td>email</td>
+            <td>{{order.stripe.source.name}}</td>
+          </tr>
+          <tr>
+            <td>address</td>
+            <td>{{order.address}}</td>
+          </tr>
+          <tr>
+            <td>city</td>
+            <td>{{order.city}}</td>
+          </tr>
+          <tr>
+            <td>state</td>
+            <td>{{order.state}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <h2 style="color:blue; margin-bottom:30px; padding-top:20px">Order Info</h2>
+      <table class="table table-striped" style="border: 1px solid black;">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col">Field</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Total</td>
+            <td>${{order.total}}.00</td>
+          </tr>
+          <tr>
+            <td>Checkout Date</td>
+            <td>{{order.createdAt}}</td>
+          </tr>
+          <tr>
+            <td>Stripe Token</td>
+            <td>{{order.stripeToken}}</td>
+          </tr>
+          <tr>
+            <td>Card Type</td>
+            <td>{{order.stripe.source.brand}}</td>
+          </tr>
+          <tr>
+            <td>Card Number</td>
+            <td>**** **** **** {{order.stripe.source.last4}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
