@@ -20,37 +20,32 @@ router.get('/', async function(req, res, next) {
   // });
 });
 
-router.post('/search', (req, res) => {
-	let params = {};
-	params['category'] = req.body.category;
-  if(req.body.min_max === "max"){
-    params['price'] = {$lte:req.body.price};
-  }else{
-    params['price'] = {$gte:req.body.price};
+router.get('/search', async (req, res) => {
+  let params = {};
+	console.log(req.query);
+  params['category'] = req.query.category;
+  if (req.query.min_max === 'max') {
+    params['price'] = {$lte: req.query.price};
+  } else {
+    params['price'] = {$gte: req.query.price};
   }
-  Products.findAll({
-	  where: {$and: [{category: params.category}, {price: params.price}]}
-	    //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
-  }).then(result => {
+    params['nameOrPrice'] = [`${req.query.sort_by}`];
+  if (req.query.asc_desc === 'ascending') {
+  } else {
+    params['nameOrPrice'][1] =  'DESC';
+  }
+  try {
+    let categories = await Categories.findAll();
+    let result = await Products.findAll({
+      where: {$and: [{category: params.category}, {price: params.price}]},
+      order: [params.nameOrPrice]
+      //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
+    });
     console.log(result);
-    res.render('product', {result});
-  });
-});
-
-router.post('/sort', (req, res) => {
-	let params = {};
-	params['nameOrPrice'] = req.body.sort_by;
-  if(req.body.asc_desc === "ascending"){
-    params['nameOrPrice'] = `${req.body.sort_by}`;
-  }else{
-    params['nameOrPrice'] = `${req.body.sort_by} DESC`;
+    res.render('product', {result, categories});
+  } catch (e) {
+    res.status(500).send(e.stack);
   }
-  Products.findAll({
-	  order: `'${params.nameOrPrice}'`
-  }).then(result => {
-    console.log("Sort result: ",result);
-    res.render('product', {result});
-  });
 });
 
 module.exports = router;
