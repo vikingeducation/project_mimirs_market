@@ -1,5 +1,5 @@
-"use strict";
-const faker = require("faker");
+'use strict';
+const faker = require('faker');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -18,10 +18,10 @@ module.exports = {
     for (let i = 0; i < 10; i++) {
       categories.push({
         name: faker.commerce.department(),
-        categoryId: i
+        categoryId: Math.floor(i / 2 + 1),
       });
     }
-    return queryInterface.bulkInsert("Categories", categories);
+    return queryInterface.bulkInsert('Categories', categories);
   },
 
   down: (queryInterface, Sequelize) => {
@@ -32,5 +32,5 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-  }
+  },
 };

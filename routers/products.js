@@ -5,10 +5,22 @@ const { Product, sequelize } = require('../models/sequelize');
 const h = require('../helpers');
 
 // ----------------------------------------
-// New
+// Image Path
 // ----------------------------------------
-router.get('/new', (req, res) => {
-  res.render('products/new');
+
+let productImagePath = product =>
+  `/assets/images/product${product.id.image}.jpg`;
+
+// ----------------------------------------
+// Index
+// ----------------------------------------
+router.get('/', async (req, res, next) => {
+  try {
+    const products = await Product.findAll();
+    res.render('products/index', { products });
+  } catch (e) {
+    next(e);
+  }
 });
 
 // ----------------------------------------
@@ -16,7 +28,9 @@ router.get('/new', (req, res) => {
 // ----------------------------------------
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id, {
+      include: Category,
+    });
     if (!product) {
       req.flash('error', 'Product not found');
       return res.redirect('/products');
