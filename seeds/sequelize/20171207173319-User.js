@@ -1,5 +1,5 @@
-"use strict";
-const faker = require("faker");
+'use strict';
+const faker = require('faker');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -20,10 +20,10 @@ module.exports = {
         lname: faker.name.lastName(),
         username: `${i}`,
         password: `${i}`,
-        email: `${i}}@gmail.com`
+        email: `${i}}@gmail.com`,
       });
     }
-    return queryInterface.bulkInsert("Users", users);
+    return queryInterface.bulkInsert('Users', users);
   },
 
   down: (queryInterface, Sequelize) => {
@@ -34,5 +34,5 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-  }
+  },
 };
