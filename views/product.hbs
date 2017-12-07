@@ -42,7 +42,7 @@ Search <input type = "text" name = "search">
 		{{#each result as |product|}}
 		<div class="col-md-3">
 			<img height="40" width="40" src="/images/stock-vector-product-quality-vector-icon-539804044.jpg">
-			<p>Name: {{product.name}}</p>
+      <p>Name: <a href='/products/{{product.name}}'>{{product.name}}</a></p>
 			<p>Category: {{product.category}}</p>
 			<p>Price: ${{product.price}}</p>
 			<p>Description: {{product.description}}</p>
