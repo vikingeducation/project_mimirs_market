@@ -13,17 +13,14 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    var users = [];
+    var orders = [];
     for (let i = 0; i < 10; i++) {
-      users.push({
-        fname: faker.name.firstName(),
-        lname: faker.name.lastName(),
-        username: `${i}`,
-        password: `${i}`,
-        email: `${i}}@gmail.com`
+      orders.push({
+        userId: i,
+        orderId: i
       });
     }
-    return queryInterface.bulkInsert("Users", users);
+    return queryInterface.bulkInsert("Orders", orders);
   },
 
   down: (queryInterface, Sequelize) => {

@@ -1,5 +1,5 @@
 "use strict";
-const faker = require("faker");
+var faker = require("faker");
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -13,17 +13,17 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    var users = [];
+    var products = [];
     for (let i = 0; i < 10; i++) {
-      users.push({
-        fname: faker.name.firstName(),
-        lname: faker.name.lastName(),
-        username: `${i}`,
-        password: `${i}`,
-        email: `${i}}@gmail.com`
+      products.push({
+        name: faker.commerce.productName(),
+        sku: faker.random.number(),
+        description: faker.lorem.sentence(),
+        price: faker.random.number(),
+        categoryId: i
       });
     }
-    return queryInterface.bulkInsert("Users", users);
+    return queryInterface.bulkInsert("Products", products);
   },
 
   down: (queryInterface, Sequelize) => {

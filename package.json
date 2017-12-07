@@ -16,7 +16,8 @@
     "mg:seed": "node seeds/mongoose",
     "console": "node repl.js",
     "c": "node repl.js",
-    "sql": "./node_modules/sequelize-cli/bin/sequelize"
+    "sql": "./node_modules/sequelize-cli/bin/sequelize",
+    "seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "express-flash-messages": "^0.1.1",
     "express-handlebars": "^3.0.0",
     "express-method-override-get-post-support": "^1.0.0",
+    "faker": "^4.1.0",
     "load-helpers": "^1.0.1",
     "lodash": "^4.17.4",
     "method-override": "^2.3.10",

@@ -13,17 +13,15 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    var users = [];
+
+    var categories = [];
     for (let i = 0; i < 10; i++) {
-      users.push({
-        fname: faker.name.firstName(),
-        lname: faker.name.lastName(),
-        username: `${i}`,
-        password: `${i}`,
-        email: `${i}}@gmail.com`
+      categories.push({
+        name: faker.commerce.department(),
+        categoryId: i
       });
     }
-    return queryInterface.bulkInsert("Users", users);
+    return queryInterface.bulkInsert("Categories", categories);
   },
 
   down: (queryInterface, Sequelize) => {
