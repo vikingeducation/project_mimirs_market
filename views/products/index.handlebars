@@ -11,32 +11,29 @@ categoryId: DataTypes.INTEGER, -->
 
 <h2>Search</h2>
 <form action="/products">
-
-
   {{!-- Price--}}
   <h3>Price</h3>
   <select class="form-control" name="price[min]" id="price_min">
-    {{#times start=48 stop=84 as |inches| }}
-      <option value="{{ inches }}" {{#if (eq searchSettings.price.min inches) }}selected{{/if }}>{{ feetInches inches }}</option>
+    {{#times start=0 stop=10 as |prices| }}
+      <option value="{{ prices }}" {{#if (eq searchSettings.price.min prices) }}selected{{/if }}>{{prices }}</option>
     {{/times}}
   </select>
   <br>
-  <select class="form-control" name="height[max]" id="height_max">
-    {{#times start=48 stop=84 as |inches| }}
-      <option value="{{ inches }}" {{#if (eq searchSettings.price.max inches) }}selected{{/if }}>{{ feetInches inches }}</option>
+  <select class="form-control" name="price[max]" id="height_max">
+    {{#times start=0 stop=10 as |prices| }}
+      <option value="{{ prices }}" {{#if (eq searchSettings.price.max prices) }}selected{{/if }}>{{prices }}</option>
     {{/times}}
   </select>
 
-  {{!-- Product Type --}}
-  <h3>Product Type</h3>
-  {{#each productTypes as |productType| }}
+  {{!-- Category Type --}}
+  <h3>Category Type</h3>
+  {{#each products as |product| }}
     <div class="checkbox">
-      <label for="product_types_{{ productType }}">
-        <input type="checkbox" name="product_types[]" id="product_types_{{ productType }}" value="{{ productType }}" {{#if (lookup ../searchSettings.productTypes productType) }}checked{{/if }}> {{ productType }}
+      <label for="category_types_{{ product.Category.name }}">
+        <input type="checkbox" name="category_types[]" id="category_types_{{ product.Category.name }}" value="{{ product.Category.name }}" {{#if (lookup ../searchSettings.categoryTypes product.Category.name) }}checked{{/if }}> {{ product.Category.name }}
       </label>
     </div>
   {{/each }}
-
 
   <div class="form-group">
     <input type="submit" class="btn btn-primary">
@@ -44,17 +41,18 @@ categoryId: DataTypes.INTEGER, -->
 </form>
 
 
+
+
 {{#if products.length }}
   <div id="search-results" class="row">
     {{#each products as |product| }}
       <div class="user col-xs-12 col-sm-6 col-md-4 text-center">
         <div class="thumbnail">
-          <img src="{{ productImagePath product }}" alt="User image" class="img-responsive">
+          <img src="{{ productImagePath }}" alt="Product image" class="img-responsive">
           <div class="caption">
-            <h3>{{ product.name }}</h3>
-            <p>
-              <a href="{{ productPath product.id }}" class="btn btn-default" role="button">Details</a>
-            </p>
+            <h3>
+              <a href="{{ productPath product.id }}" class="btn btn-default" role="button">{{product.name}}</a>
+            </3>
           </div>
         </div>
       </div>

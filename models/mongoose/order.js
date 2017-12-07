@@ -5,11 +5,5 @@ module.exports = (sequelize, DataTypes) => {
     orderId: DataTypes.INTEGER
   });
 
-  Order.associate = function(models) {
-    Order.belongsTo(models.User, {
-      foreignKey: "userId"
-    });
-  };
-
   return Order;
 };
