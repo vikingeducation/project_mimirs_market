@@ -41,29 +41,34 @@
 <!-- </div> -->
 
 <!--  search results -->
-<form action="/products/search" method="post">
-<select name="category">
-	{{#each categories as |category|}}
-	<option value="{{category.name}}">{{category.name}}</option>
-	{{/each}}
-</select>
-<select name="price">
-	<option value="1">1</option>
-	<option value="2">2</option>
-	<option value="3">3</option>
-	<option value="4">4</option>
-	<option value="5">5</option>
-	<option value="6">6</option>
-	<option value="7">7</option>
-	<option value="8">8</option>
-	<option value="9">9</option>
-	<option value="10">10</option>
-</select>
-<select name="min_max">
-	<option value="min">min</option>
-	<option value="max">max</option>
-</select>
-<form  action = "/products/sort" method = "post">
+<div class = "container-fluid">
+	<div class = "row">
+			<form  class="form-inline" action="/products/search" method="post">
+				<select name="category">
+					{{#each categories as |category|}}
+					<option value="{{category.name}}">{{category.name}}</option>
+					{{/each}}
+				</select>
+				<select name="price">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+				<select name="min_max">
+					<option value="min">min</option>
+					<option value="max">max</option>
+				</select>
+		</form>
+	</div>
+<div class = "row">
+<form class="form-inline" action = "/products/sort" method = "post">
 <select name="sort_by">
 	<option value="price">price</option>
 	<option value="name">name</option>
@@ -73,9 +78,11 @@
 	<option value="descending">descending</option>
 </select>
 <input type="submit" class="btn btn-primary">
-</form>
 <input type="submit" class="btn btn-primary">
 </form>
+</div>
+</div>
+
 <div class="container-fluid">
   <div class="row">
     {{#each result as |product|}}

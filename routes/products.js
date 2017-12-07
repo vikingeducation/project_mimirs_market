@@ -24,9 +24,9 @@ router.post('/search', (req, res) => {
 	let params = {};
 	params['category'] = req.body.category;
   if(req.body.min_max === "max"){
-    params['price'] = {$lt:req.body.price};
+    params['price'] = {$lte:req.body.price};
   }else{
-    params['price'] = {$gt:req.body.price};
+    params['price'] = {$gte:req.body.price};
   }
   Products.findAll({
 	  where: {$and: [{category: params.category}, {price: params.price}]}
@@ -39,17 +39,16 @@ router.post('/search', (req, res) => {
 
 router.post('/sort', (req, res) => {
 	let params = {};
-	params['category'] = req.body.category;
-  if(req.body.min_max === "max"){
-    params['price'] = {$lt:req.body.price};
+	params['nameOrPrice'] = req.body.sort_by;
+  if(req.body.asc_desc === "ascending"){
+    params['nameOrPrice'] = `${req.body.sort_by}`;
   }else{
-    params['price'] = {$gt:req.body.price};
+    params['nameOrPrice'] = `${req.body.sort_by} DESC`;
   }
   Products.findAll({
-	  where: {$and: [{category: params.category}, {price: params.price}]}
-	    //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
+	  order: `'${params.nameOrPrice}'`
   }).then(result => {
-    console.log(result);
+    console.log("Sort result: ",result);
     res.render('product', {result});
   });
 });
