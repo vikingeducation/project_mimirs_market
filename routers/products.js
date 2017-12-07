@@ -16,9 +16,7 @@ router.get('/new', (req, res) => {
 // ----------------------------------------
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id, {
-      include: Category,
-    });
+    const product = await Product.findById(req.params.id);
     if (!product) {
       req.flash('error', 'Product not found');
       return res.redirect('/products');
