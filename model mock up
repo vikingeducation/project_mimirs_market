@@ -1,0 +1,14 @@
+sequelize model:create --name User --attributes "fname:string lname:string email:string password:string"
+
+
+sequelize model:create --name Product --attributes "name:string sku:integer description:string price:integer categoryId:integer"
+
+
+
+sequelize model:create --name Category --attributes "name:string categoryId:integer"
+
+
+sequelize model:create --name OrderItem --attributes "orderId:integer productID:number quantity:number"
+
+
+sequelize model:create --name Order --attributes "userId:string orderId:number"
