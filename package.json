@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/edwinyung/project_mimirs_market#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^4.0.0",
