@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const router = express.Router();
-const { Product, sequelize } = require('../models/sequelize');
-const h = require('../helpers');
+const { Product, sequelize, Category } = require("../models/sequelize");
+const h = require("../helpers");
 
 // ----------------------------------------
 // Image Path
@@ -14,10 +14,10 @@ let productImagePath = product =>
 // ----------------------------------------
 // Index
 // ----------------------------------------
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll();
-    res.render('products/index', { products });
+    res.render("products/index", { products });
   } catch (e) {
     next(e);
   }
@@ -26,16 +26,17 @@ router.get('/', async (req, res, next) => {
 // ----------------------------------------
 // Show
 // ----------------------------------------
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id, {
-      include: Category,
+      include: Category
     });
+    console.log(product);
     if (!product) {
-      req.flash('error', 'Product not found');
-      return res.redirect('/products');
+      req.flash("error", "Product not found");
+      return res.redirect("/products");
     }
-    res.render('products/show', { product });
+    res.render("products/show", { product });
   } catch (e) {
     next(e);
   }

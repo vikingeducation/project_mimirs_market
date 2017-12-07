@@ -16,23 +16,23 @@ categoryId: DataTypes.INTEGER, -->
   {{!-- Price--}}
   <h3>Price</h3>
   <select class="form-control" name="price[min]" id="price_min">
-    {{#times start=48 stop=84 as |inches| }}
-      <option value="{{ inches }}" {{#if (eq searchSettings.price.min inches) }}selected{{/if }}>{{ feetInches inches }}</option>
+    {{#times start=0 stop=1000000 as |prices| }}
+      <option value="{{ prices }}" {{#if (eq searchSettings.price.min prices) }}selected{{/if }}>{{ feetprices prices }}</option>
     {{/times}}
   </select>
   <br>
   <select class="form-control" name="height[max]" id="height_max">
-    {{#times start=48 stop=84 as |inches| }}
-      <option value="{{ inches }}" {{#if (eq searchSettings.price.max inches) }}selected{{/if }}>{{ feetInches inches }}</option>
+    {{#times start=0 stop=1000000 as |prices| }}
+      <option value="{{ prices }}" {{#if (eq searchSettings.price.max prices) }}selected{{/if }}>{{ feetprices prices }}</option>
     {{/times}}
   </select>
 
   {{!-- Product Type --}}
-  <h3>Product Type</h3>
-  {{#each productTypes as |productType| }}
+  <h3>Category Type</h3>
+  {{#each categoryTypes as |categoryType| }}
     <div class="checkbox">
-      <label for="product_types_{{ productType }}">
-        <input type="checkbox" name="product_types[]" id="product_types_{{ productType }}" value="{{ productType }}" {{#if (lookup ../searchSettings.productTypes productType) }}checked{{/if }}> {{ productType }}
+      <label for="category_types_{{ productType }}">
+        <input type="checkbox" name="category_types[]" id="category_types_{{ categoryType }}" value="{{ categoryType }}" {{#if (lookup ../searchSettings.categoryTypes categoryType) }}checked{{/if }}> {{ categoryType }}
       </label>
     </div>
   {{/each }}
