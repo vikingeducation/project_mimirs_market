@@ -21,12 +21,35 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/search', (req, res) => {
-	let params = {};	
+	let params = {};
 	params['category'] = req.body.category;
+  if(req.body.min_max === "max"){
+    params['price'] = {$lt:req.body.price};
+  }else{
+    params['price'] = {$gt:req.body.price};
+  }
   Products.findAll({
-	  where: {category: req.body.category}
-	    // where: {$and: [{category: req.body.category}, {price: req.body.price}]},
+	  where: {$and: [{category: params.category}, {price: params.price}]}
+	    //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
   }).then(result => {
+    console.log(result);
+    res.render('product', {result});
+  });
+});
+
+router.post('/sort', (req, res) => {
+	let params = {};
+	params['category'] = req.body.category;
+  if(req.body.min_max === "max"){
+    params['price'] = {$lt:req.body.price};
+  }else{
+    params['price'] = {$gt:req.body.price};
+  }
+  Products.findAll({
+	  where: {$and: [{category: params.category}, {price: params.price}]}
+	    //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
+  }).then(result => {
+    console.log(result);
     res.render('product', {result});
   });
 });
