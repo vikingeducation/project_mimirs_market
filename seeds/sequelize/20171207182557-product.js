@@ -1,5 +1,7 @@
 'use strict';
 
+const faker = require('faker');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,31 +14,18 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-
-    let stats = {
-      1: 'single',
-      2: 'dating',
-      3: 'married',
-      4: 'divorced',
-      5: 'complicated'
-    };
-    let numberMaker = (min, max) => {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-    let statusMaker = (obj, max) => {
-      let num = numberMaker(1, max);
-      return obj[num];
-    };
-    var profiles = [];
-    for (let i = 0; i < 10; i++) {
-      profiles.push({
+    var products = [];
+    for (let i = 0; i < 100; i++) {
+      products.push({
         name: faker.commerce.productName(),
         sku: faker.random.number(),
         description: faker.random.words(),
-        price: faker.commerce.price()
+        price: faker.commerce.price(),
+        image: faker.image.food(),
+        categoryId: Math.floor(Math.random() * (10 - 1 + 1)) + 10 
       });
     }
-    return queryInterface.bulkInsert('Profiles', profiles);
+    return queryInterface.bulkInsert('Products', products);
   },
 
   down: (queryInterface, Sequelize) => {
