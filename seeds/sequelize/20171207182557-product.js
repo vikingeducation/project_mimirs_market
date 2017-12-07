@@ -25,6 +25,7 @@ module.exports = {
         categoryId: Math.floor(Math.random() * (10 - 1 + 1)) + 10 
       });
     }
+    console.log(products);
     return queryInterface.bulkInsert('Products', products);
   },
 
