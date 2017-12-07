@@ -3,7 +3,7 @@
 		<form class="form-inline" action="/products/search" method="get">
 			<select name="category">
 					{{#each categories as |category|}}
-					<option value="{{category.name}}">{{category.name}}</option>
+					<option value="{{category.id}}">{{category.name}}</option>
 					{{/each}}
 				</select>
 			<select name="price">

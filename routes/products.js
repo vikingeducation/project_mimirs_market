@@ -40,7 +40,7 @@ router.get('/search', async (req, res) => {
     let result = await Products.findAll({
       // where: {$and: [{category: params.category}, {price: params.price}, {description: {
       //   [Op.like]: `%${req.query.search}%`}
-      where: {$and: [{category: params.category}, {price: params.price}, {[Op.or]: [
+      where: {$and: [{categoryId: params.category}, {price: params.price}, {[Op.or]: [
     {
       name: {
         [Op.like]: `%${req.query.search}%`
@@ -52,7 +52,7 @@ router.get('/search', async (req, res) => {
       }
     },
     {
-      category: {
+      categoryId: {
         [Op.like]: `%${req.query.search}%`
       }
     }

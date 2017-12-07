@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      category: {
+      categoryId: {
         type: Sequelize.STRING
       },
       price: {
