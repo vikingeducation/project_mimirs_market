@@ -31,6 +31,7 @@
 	<option value="ascending">ascending</option>
 	<option value="descending">descending</option>
 </select>
+Search <input type = "text" name = "search">
 			<input type="submit" class="btn btn-primary">
 		</form>
 	</div>
@@ -46,6 +47,8 @@
 			<p>Price: ${{product.price}}</p>
 			<p>Description: {{product.description}}</p>
 			<p># in stock: {{product.stock}}</p>
+			<button class = "btn btn-primary btn-sm">Add to Cart</button>
+			<br><br>
 		</div>
 		{{/each}}
 	</div>

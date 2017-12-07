@@ -4,6 +4,7 @@ var models = require('./../models/sequelize');
 var Categories = models.Category;
 var Products = models.Product;
 var sequelize = models.sequelize;
+const Op = sequelize.Op;
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -37,7 +38,26 @@ router.get('/search', async (req, res) => {
   try {
     let categories = await Categories.findAll();
     let result = await Products.findAll({
-      where: {$and: [{category: params.category}, {price: params.price}]},
+      // where: {$and: [{category: params.category}, {price: params.price}, {description: {
+      //   [Op.like]: `%${req.query.search}%`}
+      where: {$and: [{category: params.category}, {price: params.price}, {[Op.or]: [
+    {
+      name: {
+        [Op.like]: `%${req.query.search}%`
+      }
+    },
+    {
+      description: {
+        [Op.like]: `%${req.query.search}%`
+      }
+    },
+    {
+      category: {
+        [Op.like]: `%${req.query.search}%`
+      }
+    }
+  ]}
+    ]},
       order: [params.nameOrPrice]
       //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
     });
