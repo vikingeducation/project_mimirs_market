@@ -25,9 +25,9 @@ require('./mongo')().then(() => {
   // ----------------------------------------
   // Mongoose
   // ----------------------------------------
-  Object.keys(models.mongoose).forEach((modelName) => {
-    repl.context[modelName] = mongoose.model(modelName);
-  });
+  // Object.keys(models.mongoose).forEach((modelName) => {
+  //  repl.context[modelName] = mongoose.model(modelName);
+  //});
 
 
   // ----------------------------------------
