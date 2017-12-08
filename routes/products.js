@@ -21,16 +21,6 @@ router.get('/', async function(req, res, next) {
   // });
 });
 
-router.get('/:name', async function(req, res) {
-  let productName = req.params.name;
-  try{
-    let product = await Products.find({where: {name: productName}});
-    res.render('productsShow', {product});
-  }catch(e){
-    res.status(500).send(e.stack);
-  }
-});
-
 router.get('/search', async (req, res) => {
   let params = {};
 	console.log(req.query);
@@ -74,6 +64,16 @@ router.get('/search', async (req, res) => {
     console.log(result);
     res.render('product', {result, categories});
   } catch (e) {
+    res.status(500).send(e.stack);
+  }
+});
+
+router.get('/:name', async function(req, res) {
+  let productName = req.params.name;
+  try{
+    let product = await Products.find({where: {name: productName}});
+    res.render('productsShow', {product});
+  }catch(e){
     res.status(500).send(e.stack);
   }
 });
