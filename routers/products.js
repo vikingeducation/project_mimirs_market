@@ -42,7 +42,7 @@ router.get('/', async (req, res, next) => {
     let queryObjCategory = {};
     queryObjCategory['name'] = query.Category;
 
-    let searchParam = '%';
+    let searchParam = '%'; //default search param
     if (query.search !== '') searchParam = `%${query.search}%`;
     queryObj['name'] = {'$iLike': searchParam};
 
