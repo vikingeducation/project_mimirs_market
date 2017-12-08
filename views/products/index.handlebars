@@ -8,9 +8,6 @@ description: DataTypes.STRING,
 price: DataTypes.INTEGER,
 categoryId: DataTypes.INTEGER, -->
 
-
-
-
 <h2>Search</h2>
 <form action="/products">
   {{!-- Price--}}
@@ -27,20 +24,6 @@ categoryId: DataTypes.INTEGER, -->
     {{/times}}
   </select>
 
-
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Category
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      {{#each categories as |category|}}
-      <li>{{category}}<</li>
-      {{/each}}
-    </ul>
-  </div>
-
-
   {{!-- Category Type --}}
   <h3>Category Type</h3>
   {{#each products as |product| }}
@@ -55,8 +38,6 @@ categoryId: DataTypes.INTEGER, -->
     <input type="submit" class="btn btn-primary">
   </div>
 </form>
-
-
 
 
 {{#if products.length }}
