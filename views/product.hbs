@@ -1,12 +1,14 @@
 <div class="container-fluid">
-	<div class="row">
-		<form class="form-inline" action="/products/search" method="get">
-			<select name="category">
+  <div class="row">
+    <form class="form-inline" action="/products/search" method="get">
+      <select name="category">
+        <option></option>
 					{{#each categories as |category|}}
 					<option value="{{category.id}}">{{category.name}}</option>
 					{{/each}}
 				</select>
-			<select name="price">
+      <select name="price">
+        <option></option>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -18,38 +20,42 @@
 					<option value="9">9</option>
 					<option value="10">10</option>
 				</select>
-			<select name="min_max">
+      <select name="min_max">
+        <option></option>
 					<option value="min">min</option>
 					<option value="max">max</option>
 				</select>
-			<select name="sort_by">
+      <select name="sort_by">
+        <option></option>
 	<option value="price">price</option>
 	<option value="name">name</option>
 	<option value="createdAt">date</option>
 </select>
-			<select name="asc_desc">
+      <select name="asc_desc">
+        <option></option>
 	<option value="ascending">ascending</option>
 	<option value="descending">descending</option>
-</select>
-Search <input type = "text" name = "search">
-			<input type="submit" class="btn btn-primary">
-		</form>
-	</div>
+</select> Search <input type="text" name="search">
+      <input type="submit" class="btn btn-primary">
+    </form>
+  </div>
 </div>
 
 <div class="container-fluid">
-	<div class="row">
-		{{#each result as |product|}}
-		<div class="col-md-3">
-			<img height="40" width="40" src="/images/stock-vector-product-quality-vector-icon-539804044.jpg">
+  <div class="row">
+    {{#each result as |product|}}
+    <div class="col-md-3 card">
+      <img height="40" width="40" src="/images/stock-vector-product-quality-vector-icon-539804044.jpg">
       <p>Name: <a href='/products/{{product.name}}'>{{product.name}}</a></p>
-			<p>Category: {{product.category}}</p>
-			<p>Price: ${{product.price}}</p>
-			<p>Description: {{product.description}}</p>
-			<p># in stock: {{product.stock}}</p>
-			<button class = "btn btn-primary btn-sm">Add to Cart</button>
-			<br><br>
-		</div>
-		{{/each}}
-	</div>
+      <p>Category: {{product.category}}</p>
+      <p>Price: ${{product.price}}</p>
+      <p>Description: {{product.description}}</p>
+      <p># in stock: {{product.stock}}</p>
+      <form action='/cart/{{product.name}}/add' method='get'>
+        <button  class="btn btn-primary btn-sm">Add to Cart</button>
+      </form>
+      <br><br>
+    </div>
+    {{/each}}
+  </div>
 </div>

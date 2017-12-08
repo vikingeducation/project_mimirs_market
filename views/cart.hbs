@@ -1,0 +1,23 @@
+<h1>Your cart!</h1>
+<pre>
+{{renderThing}}
+</pre>
+<form action='/'>
+  <input type='submit' class='btn btn-primary' value='Back To Products'>
+</form>
+{{#each itemsArr as |item|}}
+<div class='row'>
+  <div class='col-md-4 offset-md-4 card p-5'>
+    <p>Product: {{item.[0]}}</p>
+    <form action='/cart/{{item.[0]}}/mod'>
+      Quantity:<input type='text' name='new' value='{{item.[1]}}'>
+      <input type='submit' class='btn btn-success btn-sm' value='Update Quantity'>
+    </form>
+  </div>
+</div>
+{{/each}}
+<div class='col-md-4 offset-md-4'>
+  <form action='/checkout' method='get'>
+    <input class='btn btn-primary' type='submit' value='Checkout'>
+  </form>
+</div>

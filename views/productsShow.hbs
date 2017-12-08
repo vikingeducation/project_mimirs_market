@@ -1,2 +1,21 @@
-{{product.name}}
-{{product.price}}
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-4 offset-md-4 card p-5 mb-5'>
+      <p>Product: {{product.name}}</p>
+      <p>Price: ${{product.price}}</p>
+    <form action='/cart/{{product.name}}/add' method='get'>
+      <button class='btn btn-primary'>Add to cart</button>
+    </form>
+    </div>
+    <div class='row'>
+      {{#each relatedArray as |related|}}
+      <div class='col-md-4 card p-2'>
+        {{related.name}} <br> {{related.price}} <br> {{related.description}}
+        <form action='/cart/{{related.name}}' method='get'>
+          <input type='submit' value='Add to cart' class='btn btn-primary btn-sm'>
+        </form>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

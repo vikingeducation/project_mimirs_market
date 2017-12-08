@@ -8,7 +8,7 @@ const Op = sequelize.Op;
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-  //todo
+  console.log(req.session);
   try {
     result = await Products.findAll();
     categories = await Categories.findAll();
@@ -16,52 +16,37 @@ router.get('/', async function(req, res, next) {
   } catch (e) {
     res.status(500).send(e.stack);
   }
-  // .catch(e => {
-  // 	res.status(500).send(e.stack);
-  // });
 });
 
 router.get('/search', async (req, res) => {
   let params = {};
-	console.log(req.query);
-  params['category'] = req.query.category;
-  if (req.query.min_max === 'max') {
-    params['price'] = {$lte: req.query.price};
-  } else {
-    params['price'] = {$gte: req.query.price};
+  params['where'] = {};
+  console.log(req.session);
+  if (req.query.category.length) {
+    params['where']['categoryId'] = `${req.query.category}`;
   }
-    params['nameOrPrice'] = [`${req.query.sort_by}`];
-  if (req.query.asc_desc === 'ascending') {
-  } else {
-    params['nameOrPrice'][1] =  'DESC';
+  if (req.query.price.length && req.query.min_max.length) {
+    if (req.query.min_max === 'max') {
+      params['where']['price'] = {$lte: req.query.price};
+    } else if (req.query.min_max === 'min') {
+      params['where']['price'] = {$gte: req.query.price};
+    }
+  }
+  if (req.query.sort_by.length && req.query.asc_desc === 'ascending') {
+    params['order'] = [[`${req.query.sort_by}`]];
+  } else if (req.query.sort_by.length && req.query.asc_desc === 'descending') {
+    params['order'] = [[`${req.query.sort_by}`, 'DESC']];
+  }
+  if (req.query.search.length) {
+    let searchString = `%${req.query.search}%`;
+    params['where'][Op.or] = [
+      {name: {[Op.iLike]: searchString}},
+      {description: {[Op.iLike]: searchString}},
+    ];
   }
   try {
     let categories = await Categories.findAll();
-    let result = await Products.findAll({
-      // where: {$and: [{category: params.category}, {price: params.price}, {description: {
-      //   [Op.like]: `%${req.query.search}%`}
-      where: {$and: [{categoryId: params.category}, {price: params.price}, {[Op.or]: [
-    {
-      name: {
-        [Op.like]: `%${req.query.search}%`
-      }
-    },
-    {
-      description: {
-        [Op.like]: `%${req.query.search}%`
-      }
-    },
-    {
-      categoryId: {
-        [Op.like]: `%${req.query.search}%`
-      }
-    }
-  ]}
-    ]},
-      order: [params.nameOrPrice]
-      //where: {$and: [{category: req.body.category}, {price: req.body.price}]},
-    });
-    console.log(result);
+    let result = await Products.findAll(params);
     res.render('product', {result, categories});
   } catch (e) {
     res.status(500).send(e.stack);
@@ -69,11 +54,16 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/:name', async function(req, res) {
+  console.log(req.session);
+  console.log(req.session.userId);
   let productName = req.params.name;
-  try{
+  try {
     let product = await Products.find({where: {name: productName}});
-    res.render('productsShow', {product});
-  }catch(e){
+    let relatedArray = await Products.findAll({
+      where: {categoryId: product.categoryId},
+    });
+    res.render('productsShow', {product, relatedArray});
+  } catch (e) {
     res.status(500).send(e.stack);
   }
 });
