@@ -22,6 +22,8 @@ const _buildSearchQuery = req => {
   return {
     price: { [Op.between]: [+req.query.price.min, +req.query.price.max] },
     Category: req.query.categories.submission,
+    sort: req.query.sort.submission,
+    search: req.query.search.submission
   };
 };
 
@@ -32,18 +34,35 @@ router.get('/', async (req, res, next) => {
   try {
     //query is an object that has the search queries
     const query = _buildSearchQuery(req);
+    console.log(query);
+
     let queryObj = {};
     queryObj['price'] = query.price;
+
     let queryObjCategory = {};
     queryObjCategory['name'] = query.Category;
+
+    let searchParam = '%';
+    if (query.search !== '') searchParam = `%${query.search}%`;
+    queryObj['name'] = {'$iLike': searchParam};
+
+    let querySort = {
+      sortNameASC: ['name', 'ASC'],
+      sortNameDESC: ['name', 'DESC'],
+      sortPriceASC:['price', 'ASC'],
+      sortPriceDESC: ['price', 'DESC']
+    }[query.sort] || [];
+
+    console.log(querySort);
 
     let products = await Product.findAll({
       where: queryObj,
       include: [{ model: Category, where: queryObjCategory }],
+      //order: [querySort]
     });
 
     let categories = await Category.findAll({});
-  
+
     res.render('products/index', { products, categories });
   } catch (e) {
     next(e);

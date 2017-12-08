@@ -32,6 +32,17 @@ categoryId: DataTypes.INTEGER, -->
     {{/each}}
   </select>
 
+  <h3>Sort</h3>
+  <select class="form-control" name="sort[submission]" id="sort">
+      <option value="sortNameASC" checked>Sort Name by Ascending</option>
+      <option value="sortNameDESC" checked>Sort Name by Descending</option>
+      <option value="sortPriceASC" checked>Sort Price by Ascending</option>
+      <option value="sortPriceDESC" checked>Sort Price by Ascending</option>
+  </select>
+
+  <h3>Search Name</h3>
+  <input type="text" placeholder="Search..." name="search[submission]" id="search">
+
   <div class="form-group">
     <input type="submit" class="btn btn-primary">
   </div>
