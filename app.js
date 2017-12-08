@@ -79,13 +79,8 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-const {
-  searchSettings,
-  router: productsRouter,
-} = require('./routers/products');
+const productsRouter = require('./routers/products');
 app.get('/', (req, res) => res.redirect('/products'));
-app.use(searchSettings);
-
 app.use('/products', productsRouter);
 
 // ----------------------------------------

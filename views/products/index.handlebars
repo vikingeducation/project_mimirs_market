@@ -14,25 +14,17 @@ categoryId: DataTypes.INTEGER, -->
   <h3>Price</h3>
   <select class="form-control" name="price[min]" id="price_min">
     {{#times start=0 stop=10 as |prices| }}
-      <option value="{{ prices }}" {{#if (eq searchSettings.price.min prices) }}selected{{/if }}>{{prices }}</option>
-    {{/times}}
-  </select>
-  <br>
-  <select class="form-control" name="price[max]" id="height_max">
-    {{#times start=0 stop=10 as |prices| }}
-      <option value="{{ prices }}" {{#if (eq searchSettings.price.max prices) }}selected{{/if }}>{{prices }}</option>
+      <option value="{{ prices }}" selected>{{prices }}</option>
     {{/times}}
   </select>
 
-  {{!-- Category Type --}}
-  <h3>Category Type</h3>
-  {{#each products as |product| }}
-    <div class="checkbox">
-      <label for="category_types_{{ product.Category.name }}">
-        <input type="checkbox" name="category_types[]" id="category_types_{{ product.Category.name }}" value="{{ product.Category.name }}" {{#if (lookup ../searchSettings.categoryTypes product.Category.name) }}checked{{/if }}> {{ product.Category.name }}
-      </label>
-    </div>
-  {{/each }}
+  <br>
+  <select class="form-control" name="price[max]" id="price_max">
+    {{#times start=0 stop=10 as |prices| }}
+      <option value="{{ prices }}" selected>{{prices }}</option>
+    {{/times}}
+  </select>
+
 
   <div class="form-group">
     <input type="submit" class="btn btn-primary">

@@ -9,82 +9,36 @@ const {
 } = require('../models/sequelize');
 const h = require('../helpers');
 
-const _searchSettings = settings => {
-  const r = (s, i) => {
-    s[i] = true;
-    return s;
-  };
-
-  const defaults = {
-    categories: Category.CategoryName.reduce(r, {}),
-    price: {
-      min: 0,
-      max: 10,
-    },
-  };
-
-  return Object.assign(defaults, settings);
-};
-
 // ----------------------------------------
-// Search Settings
+// Build Query Settings
 // ----------------------------------------
-app.use((req, res, next) => {
-  req.session.searchSettings = _searchSettings(req.session.searchSettings);
-  res.locals.searchSettings = req.session.searchSettings;
-  next();
-});
-
-//query is an object that we want to build
+//query is an object that we want to pass into the the query of Products
 const _buildSearchQuery = req => {
+  //if query object is empty, then return an empty query object
   if (h.isEmpty(req.query)) {
     return {};
   }
 
   const { categories: categories = Category.CategoryName, price } = req.query;
-
   return {
-    [Op.and]: [
-      { category: { [Op.in]: Category.CategoryName } },
-      { price: { [Op.between]: [+price.min, +price.max] } },
-    ],
+    price: { [Op.between]: [+price.min, +price.max] },
   };
 };
-
-// const _updateSearchSettings = req => {
-//   const r = (s, i) => {
-//     s[i] = true;
-//     return s;
-//   };
-//
-//   const { categories: categories = [], price = {} } = req.query;
-//
-//   const updated = {
-//     categories: Category.CategoryName.reduce(r, {}),
-//     price,
-//   };
-//
-//   return Object.assign(req.session.searchSettings, updated);
-// };
 
 // ----------------------------------------
 // Index
 // ----------------------------------------
 router.get('/', async (req, res, next) => {
   try {
+    //query is an object that has the search queries
     const query = _buildSearchQuery(req);
     const products = await Product.findAll({
-      include: [
-        {
-          model: Category,
-        },
-      ],
-      where: query,
+      include: Category,
+      where: query, //pass in query object
     });
 
-    const categories = Category.CategoryName;
+    const categories = await Category.findAll({});
 
-    //_updateSearchSettings(req);
     res.render('products/index', { products, categories });
   } catch (e) {
     next(e);
@@ -110,4 +64,4 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-module.exports = { searchSettings: app, router };
+module.exports = router;
