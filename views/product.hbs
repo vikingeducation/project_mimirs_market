@@ -1,3 +1,8 @@
+<div class='float-right'>
+  <form action='/cart' method='get'>
+    <input type='submit' value='Check Cart' class='btn btn-primary'>
+  </form>
+</div>
 <div class="container-fluid">
   <div class="row">
     <form class="form-inline" action="/products/search" method="get">
@@ -52,7 +57,7 @@
       <p>Description: {{product.description}}</p>
       <p># in stock: {{product.stock}}</p>
       <form action='/cart/{{product.name}}/add' method='get'>
-        <button  class="btn btn-primary btn-sm">Add to Cart</button>
+        <button class="btn btn-primary btn-sm">Add to Cart</button>
       </form>
       <br><br>
     </div>

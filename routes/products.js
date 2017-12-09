@@ -10,8 +10,8 @@ const Op = sequelize.Op;
 router.get('/', async function(req, res, next) {
   console.log(req.session);
   try {
-    result = await Products.findAll();
-    categories = await Categories.findAll();
+    let result = await Products.findAll();
+    let categories = await Categories.findAll();
     res.render('product', {result, categories});
   } catch (e) {
     res.status(500).send(e.stack);
