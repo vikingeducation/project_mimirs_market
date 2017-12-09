@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 
@@ -17,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Body Parser
 // ----------------------------------------
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // ----------------------------------------
 // Sessions/Cookies
@@ -28,10 +32,15 @@ app.use(
   cookieSession({
     name: 'session',
     keys: [process.env.SESSION_SECRET || 'secret'],
+    items: [],
+    total: 0, // CAN BE HACKED
   })
 );
 
 app.use((req, res, next) => {
+  if (req.session.items) {
+    return next();
+  }
   res.locals.session = req.session;
   next();
 });
@@ -76,12 +85,28 @@ const morganToolkit = require('morgan-toolkit')(morgan);
 
 app.use(morganToolkit());
 
+// middleware to connect to MongoDB via mongoose in your `app.js`
+var mongoose = require('mongoose');
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require('./mongo')().then(() => next());
+  }
+});
+
 // ----------------------------------------
 // Routes
 // ----------------------------------------
+
+const cartRouter = require('./routers/cart');
+app.use('/cart', cartRouter);
+
 const productsRouter = require('./routers/products');
-app.get('/', (req, res) => res.redirect('/products'));
 app.use('/products', productsRouter);
+
+const checkoutRouter = require('./routers/checkout');
+app.use('/checkout', checkoutRouter);
 
 // ----------------------------------------
 // Template Engine
@@ -112,7 +137,7 @@ args.push(() => {
 });
 
 if (require.main === module) {
-  app.listen.apply(app, args);
+  app.listen(...args);
 }
 
 // ----------------------------------------
@@ -126,7 +151,7 @@ app.use((err, req, res, next) => {
   if (err.stack) {
     err = err.stack;
   }
-  res.status(500).render('errors/500', { error: err });
+  res.status(500).render('errors/500', {error: err});
 });
 
 module.exports = app;

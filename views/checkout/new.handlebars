@@ -1,0 +1,51 @@
+<header class="page-header">
+  <h1>Checkout!</h1>
+</header>
+
+<div class="container">
+  <div class="row">
+<h2>Billing Info</h2>
+  <form action="/charges" method="post">
+  <h3>Personal</h3>
+  <input type="text" placeholder="First Name" name="fname">
+  <input type="text" placeholder="Last Name" name="lname">
+  <input type="text" placeholder="Email" name="email">
+
+  <h3>Address</h3>
+  <input type="text" placeholder="Street" name="street">
+  <input type="text" placeholder="City" name="city">
+
+
+  <form action="/charges" method="post">
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="{{ STRIPE_PK }}"
+      data-amount="100"
+      data-name="Stripe Node Test"
+      data-description="Widget"
+      data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+      data-locale="auto"></script>
+  </form>
+</form>
+</div>
+
+
+  <a href="/cart" class="btn btn-sm btn-primary">Return to Cart</a>
+
+<div class="row">
+  {{#if products.length }}
+    <h2>Orders</h2>
+    <div id="cart-results" class="row">
+      {{#each products as |product| }}
+              <h3>
+                <a href="{{ productPath product.id }}" class="btn btn-default" role="button">{{product.name}}</a>
+                <h4>${{product.price}}.00<h4>
+              </h3>
+      {{/each }}
+    </div>
+    <div class="total">Total:${{total}}.00</div>
+  {{else }}
+  <p class="text-danger">No Orders!</p>
+  {{/if }}
+  </div>
+</div>
