@@ -1,0 +1,25 @@
+<header class="page-header row">
+  <div class="col-md-4">
+    </div>
+  <div class="col-md-8">
+    <h1>{{ product.name }}</h1>
+    <h2>Price: ${{ product.price}}.00</h2>
+  </div>
+</header>
+
+<img src="{{ productImagePath }}" alt="Product image" class="img-responsive">
+
+<div class="details">
+  <div class="col-md-8">
+    <h2>Description</h2>
+    <p>{{ product.description }}</p>
+
+    <h2>SKU</h2>
+    <p>{{ product.sku }}</p>
+
+    <h2>Category</h2>
+    <p>{{ product.Category.name }}</p>
+
+    <a href="/cart/{{product.id}}" class="btn btn-lg btn-primary">Add Me to Shopping Cart!</a>
+  </div>
+</div>
