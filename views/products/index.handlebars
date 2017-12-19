@@ -1,0 +1,84 @@
+<div class="row text-center">
+  <h1>Products</h1>
+</div>
+<!-- <div class="row">
+  <form>
+  </form>
+</div> -->
+<div class="row text-center">
+  <form class="form-inline" action="/" method="POST">
+    <div class="form-group">
+      <select class="form-control" name="search[category]">
+        {{#setSelect filterCategory}}
+        <option value="" selected disabled hidden>Filter by Category</option>
+        <option value="">Any Category</option>
+        {{#each categories as |category|}}
+        <option value="{{category.id}}">{{category.name}}</option>
+        {{/each}}
+        {{/setSelect}}
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" name="search[minPrice]">
+        {{#setSelect minPrice}}
+        <option value="" selected disabled hidden>Min Price</option>
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        {{/setSelect}}
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" name="search[maxPrice]">
+        {{#setSelect maxPrice}}
+        <option value="" selected disabled hidden>Max Price</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="750">750</option>
+        {{/setSelect}}
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary" value="Submit Filter">
+    </div>
+  </form>
+</div>
+<div class="row text-center">
+  <form class="form-inline" action="/" method="POST">
+    <div class="form-group">
+      <select class="form-control" name="search[sort]">
+        {{#setSelect currentSort}}
+        <option value="name ASC">Sort By Name Ascending</option>
+        <option value="name DESC">Sort By Name Descending</option>
+        <option value="price ASC">Sort By Price Ascending</option>
+        <option value="price DESC">Sort By Price Descending</option>
+        <option value="createdAt DESC">Sort By Newest First</option>
+        <option value="createdAt ASC">Sort By Oldest First</option>
+        {{/setSelect}}
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary" value="Submit Sort By">
+    </div>
+  </form>
+</div>
+<hr>
+<div class="row">
+  {{#each products as |product|}}
+  <div class="col-sm-4">
+    <div class="thumbnail text-center">
+      <img src="/images/product_image.jpg">
+      <div class="caption">
+        <p>${{product.price}}</p>
+        <p>{{product.name}}</p>
+        <p>{{product.Category.name}}</p>
+        <button type="button" class="btn btn-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

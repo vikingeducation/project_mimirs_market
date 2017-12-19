@@ -14,6 +14,19 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    let categoryNames = new Set();
+    while (categoryNames.size < 10) {
+      categoryNames.add(faker.commerce.department());
+    }
+    categoryNames = [...categoryNames];
+
+    const categories = [];
+    for (let i = 0; i < 10; i++) {
+      categories.push({
+        name: categoryNames[i]
+      });
+    }
+
     return queryInterface.bulkInsert('Categories', categories);
   },
 

@@ -40,14 +40,14 @@ const morgan = require('morgan');
 app.use(morgan('tiny'));
 
 // Mongoose
-const mongoose = require('mongoose');
-app.use((req, res, next) => {
-  if (mongoose.connection.readyState) {
-    next();
-  } else {
-    require('./mongo')().then(() => next());
-  }
-});
+// const mongoose = require('mongoose');
+// app.use((req, res, next) => {
+//   if (mongoose.connection.readyState) {
+//     next();
+//   } else {
+//     require('./mongo')().then(() => next());
+//   }
+// });
 
 // Template engine
 const expressHandlebars = require('express-handlebars');
@@ -63,6 +63,9 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Routes
+const productsRoutes = require('./controllers/products');
+app.use('/', productsRoutes);
+app.use('/products', productsRoutes);
 
 // Server
 const port = process.env.PORT || process.argv[2] || 3000;

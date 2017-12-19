@@ -14,6 +14,17 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    const products = [];
+    for (let i = 0; i < 100; i++) {
+      products.push({
+        name: faker.commerce.productName(),
+        sku: faker.random.uuid(),
+        description: faker.lorem.paragraph(),
+        price: faker.commerce.price(),
+        categoryId: Math.floor(Math.random() * 10) + 1
+      });
+    }
+
     return queryInterface.bulkInsert('Products', products);
   },
 
