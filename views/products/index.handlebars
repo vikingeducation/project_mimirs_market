@@ -8,7 +8,7 @@
 <div class="row text-center">
   <form class="form-inline" action="/" method="POST">
     <div class="form-group">
-      <select class="form-control" name="search[category]">
+      <select class="form-control" name="search[filter][category]">
         {{#setSelect filterCategory}}
         <option value="" selected disabled hidden>Filter by Category</option>
         <option value="">Any Category</option>
@@ -19,7 +19,7 @@
       </select>
     </div>
     <div class="form-group">
-      <select class="form-control" name="search[minPrice]">
+      <select class="form-control" name="search[filter][minPrice]">
         {{#setSelect minPrice}}
         <option value="" selected disabled hidden>Min Price</option>
         <option value="10">10</option>
@@ -31,7 +31,7 @@
       </select>
     </div>
     <div class="form-group">
-      <select class="form-control" name="search[maxPrice]">
+      <select class="form-control" name="search[filter][maxPrice]">
         {{#setSelect maxPrice}}
         <option value="" selected disabled hidden>Max Price</option>
         <option value="50">50</option>
