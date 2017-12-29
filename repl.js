@@ -9,44 +9,74 @@ var models = {
 var helpers = require('./helpers');
 
 
-require('./mongo')().then(() => {
-  repl.context.models = models;
-  repl.context.helpers = helpers;
+// ----------------------------------------
+// Sequelize
+// ----------------------------------------
+Object.keys(models.sequelize).forEach((modelName) => {
+  console.log("modelName: ", modelName);
+  repl.context[modelName] = models.sequelize[modelName];
+});
+
+// ----------------------------------------
+// Logging
+// ----------------------------------------
+repl.context.lg = (data) => {
+  if (Array.isArray(data)) {
+    if (data.length && data[0].dataValues) {
+      data = data.map(item => item.dataValues);
+    }
+  }
+  console.log(data);
+};
+
+//console.log("How about here?");
+//require('./mongo')().then(() => {
+  //console.log("are we getting in here?");
+  //repl.context.models = models;
+  //repl.context.helpers = helpers;
+  //console.log("repl.context.models: ", repl.context.models);
+  
 
 
-  // ----------------------------------------
-  // Helpers
-  // ----------------------------------------
-  Object.keys(helpers).forEach((key) => {
-    repl.context[key] = helpers[key];
-  });
-
-
-  // ----------------------------------------
-  // Mongoose
-  // ----------------------------------------
-  // Object.keys(models.mongoose).forEach((modelName) => {
-  //  repl.context[modelName] = mongoose.model(modelName);
+  //// ----------------------------------------
+  //// Helpers
+  //// ----------------------------------------
+  //Object.keys(helpers).forEach((key) => {
+    //repl.context[key] = helpers[key];
   //});
 
 
-  // ----------------------------------------
-  // Sequelize
-  // ----------------------------------------
-  Object.keys(models.sequelize).forEach((modelName) => {
-    repl.context[modelName] = models.sequelize[modelName];
-  });
+  //// ----------------------------------------
+  //// Mongoose
+  //// W
+  //// ----------------------------------------
+  //// Object.keys(models.mongoose).forEach((modelName) => {
+  ////  repl.context[modelName] = mongoose.model(modelName);
+  ////});
 
 
-  // ----------------------------------------
-  // Logging
-  // ----------------------------------------
-  repl.context.lg = (data) => {
-    if (Array.isArray(data)) {
-      if (data.length && data[0].dataValues) {
-        data = data.map(item => item.dataValues);
-      }
-    }
-    console.log(data);
-  };
-});
+  //// ----------------------------------------
+  //// Sequelize
+  //// ----------------------------------------
+  //Object.keys(models.sequelize).forEach((modelName) => {
+    //console.log("modelName: ", modelName);
+    //repl.context[modelName] = models.sequelize[modelName];
+  //});
+
+
+  //// ----------------------------------------
+  //// Logging
+  //// ----------------------------------------
+  //repl.context.lg = (data) => {
+    //if (Array.isArray(data)) {
+      //if (data.length && data[0].dataValues) {
+        //data = data.map(item => item.dataValues);
+      //}
+    //}
+    //console.log(data);
+  //};
+//}).catch((err) => {
+  //console.error(err)
+//});
+
+

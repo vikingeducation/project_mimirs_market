@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
-const router = require('./routers/route')
-
+const router = require('./routers')
+const index = require('./routers/index.js');
+const shoppingCartRouter = require('./routers/shoppingCart');
+const productShowcaseRouter = require('./routers/productShowcase');
+let cart;
+// const product = require('./routers/posts.js');
 // ----------------------------------------
 // App Variables
 // ----------------------------------------
-app.locals.appName = 'My App';
+app.locals.appName = 'Mimirs Market';
 
 
 // ----------------------------------------
@@ -39,7 +43,6 @@ app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
 });
-
 
 // ----------------------------------------
 // Flash Messages
@@ -87,12 +90,19 @@ app.use(morganToolkit());
 // ----------------------------------------
 // Routes
 // ----------------------------------------
-app.use('/', (req, res) => {
-  req.flash('Hi!');
-  res.render('welcome/index');
+app.use('/', index);
+app.use('/shoppingCart', (req, res, next) => {
+  if (typeof cart !== "undefined") {
+    next();
+  }
+  const ShoppingCart = require('./shoppingCart.js');
+  cart = new ShoppingCart();
+  next();
 });
-app.use('/search', router);
-app.use('/product', router);
+app.use('/shoppingCart', shoppingCartRouter);
+app.use('/productShowcase', productShowcaseRouter);
+
+// app.use('products/', product);
 
 // ----------------------------------------
 // ----------------------------------------

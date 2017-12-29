@@ -1,0 +1,13 @@
+{{#each products as |product|}}
+<a href="/productShowcase/{{product.id}}" class="product-blurb">
+    <img src={{product.image}} width="70%" height="150px">
+    <h5>{{product.name}}</h3>
+    <p>{{product.description}}</p>
+    <p>${{product.price}}</p>
+    <p>{{product.category}}</p>
+    <form method="get" action="/shoppingCart/addNew">
+      <input type="hidden" value="{{product.id}}" name="cartId">
+      <input class="add-to-cart-button" type="submit" value="Add to cart"/>
+    </form>
+  </a>
+{{/each}}

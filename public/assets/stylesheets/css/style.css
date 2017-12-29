@@ -1,0 +1,180 @@
+body, html {
+  height:100%;
+  margin:0;
+}
+
+body {
+  background-image:url("https://ak6.picdn.net/shutterstock/videos/10160606/thumb/1.jpg");
+  background-position: center;
+  background-repeat:no-repeat;
+  background-size:cover;
+  z-index:-1;
+}
+#bg-screen {
+  height:100%;
+  width:100%;
+  background-color:rgba(255,255,255,.5);
+  z-index:2;
+}
+
+
+/* --------------- TOP FORM --------------- */
+
+form {
+  display:flex;
+  flex-direction:column;
+}
+
+/* ------ FORM GROUP (arranged by vertical level) */
+
+.form-group {
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+}
+.form-group input {
+  height:22px;
+}
+.form-group input[type="submit"] {
+  background-color:#2a34ed;
+  color:white;
+  border:1px solid black;
+  border-radius:2px;
+  width:70px;
+}
+.form-group:first-child .input-group:first-child {
+  width:45%;
+}
+
+/* ------ For special styling of row 2 */
+
+#filter-group {
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Every form element individually */
+
+.input-group {
+  margin-left:20px;
+  text-align:center;
+}
+.input-group:first-child {
+  margin-left:0px;
+}
+.input-group input[name="search"] {
+  border-radius:5px;
+  width:100%;
+  /*border:1px solid black;*/
+}
+
+/* ------------ MAIN SHOWCASE ------------ */
+
+.product-blurb {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  border:0.5px solid #1D1F20;
+  box-shadow:1px 2px;
+  border-radius:5%;
+  width:15%;
+  padding:10px;
+  margin:5px;
+  background-color:rgba(255,255,255,.5);
+}
+
+.product-blurb * {
+  text-align:center;
+}
+.product-blurb form {
+  margin-top:auto;
+}
+.product-blurb h5 {
+  font-weight:bold;
+}
+
+.add-to-cart-button {
+  background-color:#2a34ed;
+  color:white;
+}
+
+#product-showcase {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+#product-showcase * {
+  font-size:12px;
+}
+
+.clearfix::before,
+.clearfix::after {
+  display: table;
+  content: " ";
+}
+.clearfix::after {
+  clear: both;
+}
+
+.cart_button {
+    border:1px solid black;
+    border-radius:5px;
+    display: block;
+    height: 2.5em;
+    padding: 0 1em;
+    width: 10em;
+    text-decoration: none;
+}
+
+#checkOutButton {
+  float: left;
+}
+
+/* PRODUCT SHOWCASE PAGE */
+
+#main-item-display {
+  display:flex;
+  margin:0 auto;
+  width:60%;
+  padding:10px;
+
+  border:0.5px solid #1D1F20;
+  box-shadow:1px 2px;
+  border-radius:2%;
+  background-color:rgba(255,255,255,.5);
+  margin-bottom:20px;
+}
+#showcase-img {
+  width:35%;
+}
+#showcase-img img {
+  width:100%;
+}
+#showcase-blurb {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width: 60%;
+}
+#showcase-blurb input[type="submit"] {
+}
+
+.related-item-display {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  border:0.5px solid #1D1F20;
+  box-shadow:1px 2px;
+  border-radius:5%;
+  width:15%;
+  padding:10px;
+  margin:5px;
+  background-color:rgba(255,255,255,.5);
+}
+.related-item-display form {
+  margin-top:auto;
+}

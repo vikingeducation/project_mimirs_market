@@ -21,7 +21,7 @@ module.exports = {
         sku: faker.random.number(),
         description: faker.random.words(),
         price: faker.commerce.price(),
-        image: faker.image.food(),
+        image: `http://lorempixel.com/${Math.floor(Math.random()*600)}/491/food/`,
         categoryId: Math.floor(Math.random() * (10 - 1 + 1)) 
       });
     }
