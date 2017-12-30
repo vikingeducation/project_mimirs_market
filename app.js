@@ -28,9 +28,27 @@ const flash = require('express-flash-messages');
 app.use(flash());
 
 // Method override
-const methodOverride = require('method-override');
-const getPostSupport = require('express-method-override-get-post-support');
-app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
+app.use((req, res, next) => {
+  let method;
+
+  if (req.query._method) {
+    method = req.query._method;
+    delete req.query._method;
+  } else if (typeof req.body === 'object' && req.body._method) {
+    method = req.body._method;
+    delete req.body._method;
+  }
+
+  if (method) {
+    method = method.toUpperCase();
+    req.method = method;
+  }
+
+  next();
+});
+// const methodOverride = require('method-override');
+// const getPostSupport = require('express-method-override-get-post-support');
+// app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
 
 // Public
 app.use(express.static(`${__dirname}/public`));

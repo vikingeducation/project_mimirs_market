@@ -1,6 +1,10 @@
 const express = require('express');
 const models = require('./../models/sequelize');
-const { formatSearchParams } = require('./../helpers/params_helper');
+const {
+  formatSearch,
+  getSearchParams,
+  formatSortParams
+} = require('./../helpers/params_helper');
 
 const router = express.Router();
 const sequelize = models.sequelize;
@@ -10,95 +14,61 @@ const Category = models.Category;
 router.get('/', (req, res) => {
   let products;
   let categories;
-
-  sequelize
-    .transaction(t => {
-      return Product.findAll({
-        include: [{ model: Category }],
-        transaction: t
-      })
-        .then(result => {
-          products = result;
-
-          return Category.findAll({
-            transaction: t
-          });
-        })
-        .then(result => {
-          categories = result;
-          res.render('products/index', {
-            products,
-            categories
-          });
-        });
-    })
-    .catch(e => {
-      if (e.errors) {
-        e.errors.forEach(err => req.flash('error', err.message));
-        res.redirect('back');
-      } else {
-        res.status(500).send(e.stack);
-      }
-    });
-});
-
-router.post('/', (req, res) => {
-  let products;
-  let categories;
+  let sort;
   let search;
+  let searchParams;
 
-  if (req.body.search.filter) {
-    search = req.body.search;
-  } else {
+  if (req.query.sort) {
     search = req.session.search;
+    searchParams = req.session.searchParams;
+    sort = req.query.sort;
+  } else {
+    search = formatSearch(req.query.search);
+    searchParams = getSearchParams(search);
+    sort = 'name ASC';
   }
 
-  let { searchParams, sort } = formatSearchParams(search, req);
+  sort = formatSortParams(sort);
+  console.log(searchParams);
 
-  const minPrice = search.filter.minPrice || 0;
-  const maxPrice = search.filter.maxPrice || 1000;
-  const filterCategory = search.filter.category;
-
-  sequelize
-    .transaction(t => {
-      return Product.findAll({
-        where: searchParams,
-        include: [{ model: Category }],
-        order: sort.array,
-        transaction: t
-      })
-        .then(result => {
-          products = result;
-
-          return Category.findAll({
-            transaction: t
-          });
-        })
-        .then(result => {
-          categories = result;
-          req.session.search = search;
-          // req.session.searchParams = searchParams;
-          req.session.sort = sort;
-          res.render('products/index', {
-            products,
-            categories,
-            filterCategory,
-            minPrice,
-            maxPrice,
-            currentSort: sort.string
-          });
-        });
+  sequelize.transaction(t => {
+    return Product.findAll({
+      where: searchParams,
+      include: [{ model: Category }],
+      order: sort.array,
+      transaction: t
     })
-    .catch(e => {
-      if (e.errors) {
-        e.errors.forEach(err => req.flash('error', err.message));
-        res.redirect('back');
-      } else {
-        res.status(500).send(e.stack);
-      }
-    });
-});
+      .then(result => {
+        products = result;
 
-router.post('/sort', (req, res) => {});
+        return Category.findAll({
+          transaction: t
+        });
+      })
+      .then(result => {
+        categories = result;
+        req.session.search = search;
+        req.session.searchParams = searchParams;
+
+        res.render('products/index', {
+          products,
+          categories,
+          filterCategory: search.category,
+          productQuery: search.name,
+          minPrice: search.minPrice,
+          maxPrice: search.maxPrice,
+          currentSort: sort.string
+        });
+      })
+      .catch(e => {
+        if (e.errors) {
+          e.errors.forEach(err => req.flash('error', err.message));
+          res.redirect('back');
+        } else {
+          res.status(500).send(e.stack);
+        }
+      });
+  });
+});
 
 module.exports = router;
