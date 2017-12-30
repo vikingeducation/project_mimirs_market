@@ -23,20 +23,12 @@ const formatSearch = search => {
   formattedSearch.minPrice = formattedSearch.minPrice || defaults.minPrice;
   formattedSearch.maxPrice = formattedSearch.maxPrice || defaults.maxPrice;
 
-  if (
-    formattedSearch.category === '' ||
-    typeof formattedSearch.category === 'undefined'
-  ) {
-    formattedSearch.category = defaults.category;
-  } else {
-    formattedSearch.category = [formattedSearch.category];
-  }
-
   return formattedSearch;
 };
 
 const getSearchParams = search => {
   let searchParams = {};
+  let category;
 
   searchParams.name = {
     $iLike: `%${search.name}%`
@@ -46,8 +38,14 @@ const getSearchParams = search => {
     $between: [search.minPrice, search.maxPrice]
   };
 
+  if (search.category === '' || typeof search.category === 'undefined') {
+    category = defaults.category;
+  } else {
+    category = [search.category];
+  }
+
   searchParams.categoryId = {
-    $in: search.category
+    $in: category
   };
 
   return searchParams;

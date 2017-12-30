@@ -82,8 +82,11 @@ app.set('view engine', 'handlebars');
 
 // Routes
 const productsRoutes = require('./controllers/products');
-app.use('/', productsRoutes);
+
 app.use('/products', productsRoutes);
+app.use('/', (req, res) => {
+  res.redirect('/products');
+});
 
 // Server
 const port = process.env.PORT || process.argv[2] || 3000;

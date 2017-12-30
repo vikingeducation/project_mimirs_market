@@ -25,11 +25,10 @@ router.get('/', (req, res) => {
   } else {
     search = formatSearch(req.query.search);
     searchParams = getSearchParams(search);
-    sort = 'name ASC';
+    sort = req.session.sort || 'name ASC';
   }
 
   sort = formatSortParams(sort);
-  console.log(searchParams);
 
   sequelize.transaction(t => {
     return Product.findAll({
@@ -49,6 +48,7 @@ router.get('/', (req, res) => {
         categories = result;
         req.session.search = search;
         req.session.searchParams = searchParams;
+        req.session.sort = sort.string;
 
         res.render('products/index', {
           products,
@@ -64,6 +64,47 @@ router.get('/', (req, res) => {
         if (e.errors) {
           e.errors.forEach(err => req.flash('error', err.message));
           res.redirect('back');
+        } else {
+          res.status(500).send(e.stack);
+        }
+      });
+  });
+});
+
+router.get('/:id', (req, res) => {
+  let product;
+  let relatedProducts;
+
+  sequelize.transaction(t => {
+    return Product.findById(req.params.id, {
+      include: [{ model: Category }],
+      transaction: t
+    })
+      .then(result => {
+        product = result;
+        if (product) {
+          return Product.findAll({
+            where: {
+              categoryId: product.categoryId,
+              id: { $ne: product.id }
+            },
+            include: [{ model: Category }],
+            transaction: t
+          });
+        } else {
+          res.send(404);
+        }
+      })
+      .then(result => {
+        relatedProducts = result;
+        res.render('products/show', {
+          product,
+          relatedProducts
+        });
+      })
+      .catch(e => {
+        if (e.errors) {
+          e.errors.forEach(err => req.flash('error', err.message));
         } else {
           res.status(500).send(e.stack);
         }
