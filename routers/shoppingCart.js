@@ -14,29 +14,29 @@ let cart = new ShoppingCart();
 
 console.log("Maybe here.. ?");
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  Product.findAll({
-    include: [{model: Category}],
-    limit: 20,
-  }).then(qproducts => {
-    let products = qproducts.map(product => objectify(product));
-    console.log(products);
-    res.render('welcome/shopping_cart', {products});
-  });
+router.get('/', async (req, res, next) => {
+  let products = await Product.findAll({
+  })
+  products = products.map(product => objectify(product));
+  res.render('welcome/shopping_cart', {products});
 });
 
-//router.get('/addNew', (req, res, next) => {
-  //console.log(req.query.cartId)
+router.get('/addNew', async (req, res, next) => {
+
+  req.session.cart.push(req.query.cartId);
+
   //Product.findById(req.query.cartId, {
     //include: [{model: Category}],
     //limit: 20,
   //}).then(product => {
     //cart.add(product);
-    //res.render('welcome/shopping_cart', {cart.products});
+    //res.render('welcome/shopping_cart');
   //})
   //let products = qproducts.map(product => objectify(product));
   //console.log(products);
-//});
+  res.redirect('/shoppingCart');
+});
+
 module.exports = router;
 
 

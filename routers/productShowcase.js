@@ -10,6 +10,9 @@ let queryConstructor = showcaser.queryConstructor;
 let objectify = showcaser.objectify;
 
 router.get('/:id', async (req, res, next) => {
+
+  console.log("You are in the ID handler!");
+
   let primaryId = req.params.id;
 
   let primaryItem = objectify(await Product.findById(primaryId, {

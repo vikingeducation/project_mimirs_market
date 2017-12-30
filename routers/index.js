@@ -19,13 +19,14 @@ router.get('/', async function(req, res, next) {
     limit: 20,
   }).then(qproducts => {
     let products = qproducts.map(product => objectify(product));
-    console.log(products);
     res.render('welcome/index', {products});
   });
 });
 
 router.get('/filter', (req, res, next) => {
-  console.log();
+
+  console.log("You are in the filter!");
+
   Product.findAll(
     queryConstructor(
       req.query.search,
@@ -36,13 +37,8 @@ router.get('/filter', (req, res, next) => {
     ),
   ).then(qproducts => {
     let products = qproducts.map(product => objectify(product));
-//    console.log(products.slice(0,5));
     res.render('welcome/index', {products});
   });
 });
 
 module.exports = router;
-
-Product.findAll(queryConstructor('sausages', null, 500)).then(products => {
-  let searchArray = products.map(product => objectify(product));
-});

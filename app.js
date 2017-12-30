@@ -1,16 +1,18 @@
 const express = require('express');
 const app = express();
+
 const router = require('./routers')
 const index = require('./routers/index.js');
 const shoppingCartRouter = require('./routers/shoppingCart');
 const productShowcaseRouter = require('./routers/productShowcase');
+
 let cart;
 // const product = require('./routers/posts.js');
+
 // ----------------------------------------
 // App Variables
 // ----------------------------------------
 app.locals.appName = 'Mimirs Market';
-
 
 // ----------------------------------------
 // ENV
@@ -19,18 +21,36 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-
+app.use((req, res, next) => {
+  console.log("TOP OF MIDDLEWARE STACK");
+  next();
+});
 // ----------------------------------------
 // Body Parser
 // ----------------------------------------
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-
+// attaches .body to req object
 
 // ----------------------------------------
 // Sessions/Cookies
 // ----------------------------------------
 const cookieSession = require('cookie-session');
+
+const sessionTracker = (tracker) => {
+  app.use((req,res,next) => {
+    console.log("------------------- START req.session -------------------");
+    console.log(tracker);
+    console.log(req.session);
+    console.log("process.env.SESSION_SECRET: ", process.env.SESSION_SECRET);
+    console.log("-------------------- END req.session --------------------");
+    console.log(" ");
+    console.log(" ");
+    next();
+  });
+};
+
+sessionTracker("pre-session middleware");
 
 app.use(cookieSession({
   name: 'session',
@@ -39,8 +59,23 @@ app.use(cookieSession({
   ]
 }));
 
+
+sessionTracker("post-session middleware");
+
+// Makes 'session' object available to handlebars.
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  next();
+});
+
+// ---------------------------------------------------------
+// Shopping cart 
+// 2017-12-30 12:02
+// ---------------------------------------------------------
+// Set up session-based shopping cart if none-exists
+
+app.use((req, res, next) => {
+  if (!req.session.cart) req.session.cart = [];
   next();
 });
 
@@ -91,6 +126,9 @@ app.use(morganToolkit());
 // Routes
 // ----------------------------------------
 app.use('/', index);
+
+app.use('/productShowcase', productShowcaseRouter);
+
 app.use('/shoppingCart', (req, res, next) => {
   if (typeof cart !== "undefined") {
     next();
@@ -99,13 +137,15 @@ app.use('/shoppingCart', (req, res, next) => {
   cart = new ShoppingCart();
   next();
 });
+
 app.use('/shoppingCart', shoppingCartRouter);
-app.use('/productShowcase', productShowcaseRouter);
 
 // app.use('products/', product);
 
 // ----------------------------------------
+// Handlebars
 // ----------------------------------------
+
 const expressHandlebars = require('express-handlebars');
 const helpers = require('./helpers');
 
@@ -157,9 +197,4 @@ app.use((err, req, res, next) => {
 
 
 module.exports = app;
-
-
-
-
-
 
