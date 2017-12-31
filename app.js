@@ -19,7 +19,7 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
-  req.session.cart = req.session.cart || {};
+  req.session.cart = req.session.cart || { items: {}, size: 'empty' };
   next();
 });
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const models = require('./../models/sequelize');
+const { checkCartContent } = require('./../helpers/cart_helper');
 const {
   formatSearch,
   getSearchParams,
@@ -39,6 +40,8 @@ router.get('/', (req, res) => {
     })
       .then(result => {
         products = result;
+        let cart = req.session.cart;
+        products = checkCartContent(products, cart.items);
 
         return Category.findAll({
           transaction: t
@@ -82,6 +85,9 @@ router.get('/:id', (req, res) => {
     })
       .then(result => {
         product = result;
+        let cart = req.session.cart;
+        product = checkCartContent([product], cart.items)[0];
+
         if (product) {
           return Product.findAll({
             where: {
@@ -97,6 +103,9 @@ router.get('/:id', (req, res) => {
       })
       .then(result => {
         relatedProducts = result;
+        let cart = req.session.cart;
+        relatedProducts = checkCartContent(relatedProducts, cart.items);
+
         res.render('products/show', {
           product,
           relatedProducts

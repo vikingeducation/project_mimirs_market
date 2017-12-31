@@ -12,5 +12,17 @@ const calculateCart = (products, cartItems) => {
   return total;
 };
 
-module.exports = { calculateCart };
+const checkCartContent = (products, cartItems) => {
+  for (let id in cartItems) {
+    products.forEach(product => {
+      if (product.id.toString() === id) {
+        product.inCart = true;
+        product.quantity = cartItems[id];
+      }
+    });
+  }
 
+  return products;
+};
+
+module.exports = { calculateCart, checkCartContent };

@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('./../models/sequelize');
-const calculateCart = require('./../helpers/cart_helper');
+const { calculateCart, checkCartContent } = require('./../helpers/cart_helper');
 
 const router = express.Router();
 const sequelize = models.sequelize;
@@ -20,6 +20,8 @@ router.get('/', (req, res) => {
   })
     .then(result => {
       products = result;
+      let cart = req.session.cart;
+      products = checkCartContent(products, cart.items);
       const total = calculateCart(products, cart.items);
 
       res.render('cart/show', {
@@ -37,6 +39,29 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {});
+router.get('/:id', (req, res) => {
+  let cart = req.session.cart;
+  const quantity = req.query.quantity;
+
+  if (quantity <= 0) {
+    delete cart.items[req.params.id];
+    req.flash('success', 'Product removed from cart!');
+  } else {
+    cart.items[req.params.id] = quantity;
+    req.flash('success', 'Product quantity updated!');
+  }
+
+  const productIds = Object.keys(cart.items);
+  cart.size = productIds.length || 'empty';
+
+  res.redirect('back');
+});
+
+router.delete('/', (req, res) => {
+  req.session.cart.items = {};
+  req.session.cart.size = 'empty';
+  req.method = 'GET';
+  res.redirect('/cart');
+});
 
 module.exports = router;
