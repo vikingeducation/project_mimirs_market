@@ -19,7 +19,7 @@ app.use(
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
-  // Cart middleware here
+  req.session.cart = req.session.cart || {};
   next();
 });
 
@@ -82,8 +82,10 @@ app.set('view engine', 'handlebars');
 
 // Routes
 const productsRoutes = require('./controllers/products');
+const cartRoutes = require('./controllers/cart');
 
 app.use('/products', productsRoutes);
+app.use('/cart', cartRoutes);
 app.use('/', (req, res) => {
   res.redirect('/products');
 });

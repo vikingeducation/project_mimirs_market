@@ -1,0 +1,36 @@
+<div class="row text-center">
+  <h1>Cart</h1>
+</div>
+
+{{#each products as |product|}}
+<div class="row panel panel-default">
+  <div class="col-sm-3">
+    <img src="/images/product_image.jpg" class="img-responsive">
+  </div>
+  <div class="col-sm-3">
+    <p>{{product.name}}</p>
+    <p>{{product.Category.name}}</p>
+    <p>${{product.price}}</p>
+  </div>
+  <form action="/cart" method="get">
+  <div class="col-sm-3">
+    <input type="number" class="form-control" name="quantity" value="{{product.quantity}}">
+  </div>
+  <div class="col-sm-3">
+    <input type="submit" class="btn btn-success" value="Set Quantity">
+    <input type="hidden"
+    <button type="button" class="btn btn-danger">Remove</button>
+  </div>
+  </form>
+</div>
+{{/each}}
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Total: ${{cart.total}}</h3>
+  </div>
+  <div class="col-sm-6">
+    <a href="/cart/clear"><button type="button" class="btn-btn-danger btn-lg">Clear Cart</button></a>
+    <a href="/cart/checkout"><button type="button" class="btn-btn-primary btn-lg">Checkout</button></a>
+  </div>
+</div>
