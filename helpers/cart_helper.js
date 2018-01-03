@@ -4,6 +4,7 @@ const calculateCart = (products, cartItems) => {
   for (let id in cartItems) {
     products.forEach(product => {
       if (product.id.toString() === id) {
+        product.subtotal = cartItems[id] * product.price;
         total += cartItems[id] * product.price;
       }
     });

@@ -83,9 +83,11 @@ app.set('view engine', 'handlebars');
 // Routes
 const productsRoutes = require('./controllers/products');
 const cartRoutes = require('./controllers/cart');
+const checkoutRoutes = require('./controllers/checkout');
 
 app.use('/products', productsRoutes);
 app.use('/cart', cartRoutes);
+app.use('/checkout', checkoutRoutes);
 app.use('/', (req, res) => {
   res.redirect('/products');
 });

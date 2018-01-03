@@ -1,0 +1,90 @@
+<div class="row text-center">
+  <h1>Checkout</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-5 col-sm-offset-1">
+    <h2 class="text-center">Billing Info</h2>
+    <div class="panel panel-default">
+      <form action="/charges" method="POST">
+        <fieldset>
+          <legend class="col-form-legend text-center">Personal</legend>
+          <div class="form-group row">
+            <label for="fname" class="col-sm-3 col-form-label">First Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="fname" name="fname">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="lname" class="col-sm-3 col-form-label">Last Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="lname" name="lname">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" name="email">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="col-form-legend text-center">Address</legend>
+          <div class="form-group row">
+            <label for="street" class="col-sm-3 col-form-label">Street</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="street" name="street">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="city" class="col-sm-3 col-form-label">City</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="city" name="city">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-offset-3 col-sm-3">
+              <select class="form-control" name="state">
+                <option value="" selected disabled hidden>State</option>
+                {{#each states as |state|}}
+                <option value="{{state.id}}">{{state.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <h2 class="text-center">Order Items</h2>
+    <div class="panel panel-default">
+      {{#each products as |product|}}
+      <div class="row">
+        <div class="col-sm-2">
+          <img src="/images/product_image.jpg" class="img-responsive">
+        </div>
+        <div class="col-sm-5">
+          <a href="/products/{{product.id}}">{{product.name}}</a>
+        </div>
+        <div class="col-sm-5">
+          ${{product.price}} x {{product.quantity}} = ${{product.subtotal}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-6">
+        <h3>Total: ${{total}}.00</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-1">
+        <a href="/cart"><button type="button" class="btn btn-danger btn-lg">Return to Cart</button></a>
+      </div>
+      <div class="col-sm-5">
+        <a href="/checkout"><button type="button" class="btn btn-primary btn-lg">Submit Payment</button></a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,25 +5,31 @@ const { calculateCart, checkCartContent } = require('./../helpers/cart_helper');
 const router = express.Router();
 const sequelize = models.sequelize;
 const Product = models.Product;
-const Category = models.Category;
+const State = models.State;
 
 router.get('/', (req, res) => {
   const cart = req.session.cart;
   const productIds = Object.keys(cart.items);
+  let states;
   let products;
 
-  Product.findAll({
-    where: {
-      id: productIds
-    },
-    include: [{ model: Category }]
-  })
+  State.findAll()
+    .then(result => {
+      states = result;
+
+      return Product.findAll({
+        where: {
+          id: productIds
+        }
+      });
+    })
     .then(result => {
       products = result;
       products = checkCartContent(products, cart.items);
       const total = calculateCart(products, cart.items);
 
-      res.render('cart/show', {
+      res.render('checkouts/new', {
+        states,
         products,
         total
       });
@@ -36,31 +42,6 @@ router.get('/', (req, res) => {
         res.status(500).send(e.stack);
       }
     });
-});
-
-router.get('/:id', (req, res) => {
-  let cart = req.session.cart;
-  const quantity = req.query.quantity;
-
-  if (quantity <= 0) {
-    delete cart.items[req.params.id];
-    req.flash('success', 'Product removed from cart!');
-  } else {
-    cart.items[req.params.id] = quantity;
-    req.flash('success', 'Product quantity updated!');
-  }
-
-  const productIds = Object.keys(cart.items);
-  cart.size = productIds.length || 'empty';
-
-  res.redirect('back');
-});
-
-router.delete('/', (req, res) => {
-  req.session.cart.items = {};
-  req.session.cart.size = 'empty';
-  req.method = 'GET';
-  res.redirect('/cart');
 });
 
 module.exports = router;
