@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 // Body parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,14 +62,14 @@ const morgan = require('morgan');
 app.use(morgan('tiny'));
 
 // Mongoose
-// const mongoose = require('mongoose');
-// app.use((req, res, next) => {
-//   if (mongoose.connection.readyState) {
-//     next();
-//   } else {
-//     require('./mongo')().then(() => next());
-//   }
-// });
+const mongoose = require('mongoose');
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require('./mongo')().then(() => next());
+  }
+});
 
 // Template engine
 const expressHandlebars = require('express-handlebars');
@@ -84,10 +88,12 @@ app.set('view engine', 'handlebars');
 const productsRoutes = require('./controllers/products');
 const cartRoutes = require('./controllers/cart');
 const checkoutRoutes = require('./controllers/checkout');
+const chargesRoutes = require('./controllers/charges');
 
 app.use('/products', productsRoutes);
 app.use('/cart', cartRoutes);
 app.use('/checkout', checkoutRoutes);
+app.use('/charges', chargesRoutes);
 app.use('/', (req, res) => {
   res.redirect('/products');
 });

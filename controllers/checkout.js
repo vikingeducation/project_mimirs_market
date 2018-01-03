@@ -1,11 +1,16 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const models = require('./../models/sequelize');
+const mongooseModels = require('./../models/mongoose');
 const { calculateCart, checkCartContent } = require('./../helpers/cart_helper');
 
 const router = express.Router();
 const sequelize = models.sequelize;
 const Product = models.Product;
 const State = models.State;
+const Order = mongoose.model('Order');
+const { STRIPE_SK, STRIPE_PK } = process.env;
+const stripe = require('stripe')(STRIPE_SK);
 
 router.get('/', (req, res) => {
   const cart = req.session.cart;
@@ -31,7 +36,8 @@ router.get('/', (req, res) => {
       res.render('checkouts/new', {
         states,
         products,
-        total
+        total,
+        STRIPE_PK
       });
     })
     .catch(e => {
