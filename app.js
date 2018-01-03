@@ -89,11 +89,13 @@ const productsRoutes = require('./controllers/products');
 const cartRoutes = require('./controllers/cart');
 const checkoutRoutes = require('./controllers/checkout');
 const chargesRoutes = require('./controllers/charges');
+const adminRoutes = require('./controllers/admin');
 
 app.use('/products', productsRoutes);
 app.use('/cart', cartRoutes);
 app.use('/checkout', checkoutRoutes);
 app.use('/charges', chargesRoutes);
+app.use('/admin', adminRoutes);
 app.use('/', (req, res) => {
   res.redirect('/products');
 });

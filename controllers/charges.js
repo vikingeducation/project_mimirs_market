@@ -7,6 +7,7 @@ const { calculateCart, checkCartContent } = require('./../helpers/cart_helper');
 const router = express.Router();
 const sequelize = models.sequelize;
 const Product = models.Product;
+const Category = models.Category;
 const State = models.State;
 const Order = mongoose.model('Order');
 const { STRIPE_SK, STRIPE_PK } = process.env;
@@ -29,13 +30,14 @@ router.post('/', (req, res) => {
   const addressParams = {
     street: req.body.order.address.street,
     city: req.body.order.address.city,
-    stateId: req.body.order.address.state_id
+    state: req.body.order.address.state
   };
 
   Product.findAll({
     where: {
       id: productIds
-    }
+    },
+    include: [{ model: Category }]
   })
     .then(result => {
       products = result;
@@ -44,12 +46,14 @@ router.post('/', (req, res) => {
 
       products.forEach(product => {
         orderItems.push({
-          name: product.name,
-          sku: product.sku,
-          description: product.description,
-          price: product.price,
-          categoryId: product.categoryId,
-          quantity: product.quantity
+          product: {
+            name: product.name,
+            sku: product.sku,
+            description: product.description,
+            price: product.price,
+            category: product.Category.name,
+            quantity: product.quantity
+          }
         });
       });
       console.dir(orderItems);

@@ -16,7 +16,7 @@ const OrderSchema = new Schema(
     address: {
       street: String,
       city: String,
-      stateId: Number
+      state: String
     },
     orderItems: [
       {
@@ -25,7 +25,7 @@ const OrderSchema = new Schema(
           sku: String,
           description: String,
           price: Number,
-          categoryId: Number,
+          category: String,
           quantity: Number
         }
       }
