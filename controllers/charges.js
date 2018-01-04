@@ -56,7 +56,6 @@ router.post('/', (req, res) => {
           }
         });
       });
-      console.dir(orderItems);
 
       return stripe.charges.create({
         amount: total,
