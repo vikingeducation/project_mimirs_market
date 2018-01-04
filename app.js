@@ -50,9 +50,6 @@ app.use((req, res, next) => {
 
   next();
 });
-// const methodOverride = require('method-override');
-// const getPostSupport = require('express-method-override-get-post-support');
-// app.use(methodOverride(getPostSupport.callback, getPostSupport.options));
 
 // Public
 app.use(express.static(`${__dirname}/public`));

@@ -57,8 +57,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/', (req, res) => {
-  req.session.cart.items = {};
-  req.session.cart.size = 'empty';
+  req.session.cart = { items: {}, size: 'empty' };
   req.method = 'GET';
   res.redirect('/cart');
 });
