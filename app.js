@@ -12,12 +12,16 @@ var users = require('./routes/users');
 let products = require('./routes/products');
 let cart = require('./routes/cart');
 let checkout = require('./routes/checkout');
+let charges = require('./routes/charges');
+let admin = require('./routes/admin');
 
 var app = express();
+require('dotenv').config();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -47,6 +51,8 @@ app.use('/products', products);
 app.use('/users', users);
 app.use('/cart', cart);
 app.use('/checkout', checkout);
+app.use('/charges', charges);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,9 +72,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// app.listen(3000, ()=>{
-//   console.log("Server listening at port 3000: ");
-// }
-// );
 
 module.exports = app;

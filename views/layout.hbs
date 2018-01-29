@@ -6,6 +6,16 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+<nav class="navbar navbar-light" style="background-color:#F7F7F9">
+  <div class="container">
+  <a class="navbar-brand" href="/"><img id='mimir-pic' src="/images/mimir.jpg" height="40" width="40" alt=""> Mimir's Market</a>
+    <form class="form-inline" action="/products/search" method="get">
+<input type="text" class="form-control" name="search">
+      <input type="submit" value="Search" class="btn btn-outline-success">
+    </form>
+    <a href='/cart'><img src='/images/cart.svg' height="40" width="40" alt='Cart'></a>
+  </div>
+</nav>
     {{{body}}}
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
