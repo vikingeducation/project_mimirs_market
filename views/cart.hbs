@@ -1,0 +1,28 @@
+<div class='container'>
+  <h1 style='color:#1a1a1a'>Your cart</h1>
+  {{#if itemsArr.length}}
+  <table class='table table-striped'>
+    <thead>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th></th>
+    </thead>
+  {{#each itemsArr as |item|}}
+    <tr>
+      <td>{{item.[0]}}</td>
+      <form action='/cart/{{item.[0]}}/mod'>
+        <td><input type='text' name='new' value='{{item.[1]}}'></td>
+        <td><input type='submit' class='btn btn-success btn-sm' value='Update Quantity'></td>
+      </form>
+    </tr>
+  {{/each}}
+</table>
+  <div class='col-md-4 offset-md-4'>
+    <form action='/checkout' method='get'>
+      <input class='btn btn-primary' type='submit' value='Checkout'>
+    </form>
+  </div>
+  {{else}}
+  <p>You haven't added anything to your cart yet.</p>
+  {{/if}}
+</div>

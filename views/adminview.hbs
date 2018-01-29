@@ -1,0 +1,37 @@
+<div class='container'>
+  <h1>Admin</h1>
+  <br><br>
+  <h3>Orders</h3>
+  <table class='table table-striped'>
+    <thead>
+      <th>Order Number</th>
+      <th>Order Total</th>
+      <th>Card Type</th>
+      <th>State</th>
+      <th>Date</th>
+    </thead>
+    {{#each orders as |order|}}
+    <tr>
+      <td>{{order.[0]}}</td>
+      <td>${{order.[1]}}</td>
+      <td>{{order.[2]}}</td>
+      <td>{{order.[3]}}</td>
+      <td>{{order.[4]}}</td>
+    </tr>
+    {{/each}}
+  </table>
+  <h3>Revenue</h3>
+  <p>Total: ${{totalRevenue}}</p>
+  <table class='table table-striped'>
+    <thead>
+      <th>Category</th>
+      <th>Revenue</th>
+    </thead>
+    {{#each categories as |category|}}
+    <tr>
+      <td>{{category.[0]}}</td>
+      <td>${{category.[1]}}</td>
+    </tr>
+    {{/each}}
+  </table>
+</div>
