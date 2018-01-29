@@ -36,7 +36,7 @@ or
 
 should start the project, listening on port 3000.
 
-8. Navigate to [http://localhost:3000](http://localhost:3000) in your browser. You should be greeted with the following page:
+9. Navigate to [http://localhost:3000](http://localhost:3000) in your browser. You should be greeted with the following page:
 
 ![Main Page](https://raw.githubusercontent.com/GeneTinderholm/project_mimirs_market/master/images/main.png)
 
