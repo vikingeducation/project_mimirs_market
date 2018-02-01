@@ -2,12 +2,12 @@ var Sequelize = require('sequelize');
 var env       = process.env.NODE_ENV || 'development';
 var config    = require('../../config/sequelize.json')[env];
 
-
+let sequelize;
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
   if (env === 'test') config.logging = false;
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 const db = {};

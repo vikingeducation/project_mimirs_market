@@ -4,10 +4,9 @@
   "description": "A Viking eCommerce store for Thunder Gods that like to buy \"Antique Wooden Pizzas\"",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "jasmine",
+    "start": "node app.js",
     "debug": "node debug app",
-    "sql": "sequelize",
+    "sql": "node_modules/sequelize-cli/bin/sequelize",
     "sql:migrate:undo": "npm run sql db:migrate:undo:all",
     "sql:migrate": "npm run sql db:migrate",
     "sql:seed:undo": "npm run sql db:seed:undo:all",
@@ -49,7 +48,7 @@
     "pg": "^7.4.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.23.4",
-    "sequelize-cli": "^3.1.0",
+    "sequelize-cli": "^3.2.0",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "stripe": "^5.3.0"
