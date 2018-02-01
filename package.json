@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app",
-    "sql": "node_modules/sequelize-cli/bin/sequelize",
+    "sql": "node_modules/.bin/sequelize",
     "sql:migrate:undo": "npm run sql db:migrate:undo:all",
     "sql:migrate": "npm run sql db:migrate",
     "sql:seed:undo": "npm run sql db:seed:undo:all",
