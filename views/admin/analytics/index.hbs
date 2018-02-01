@@ -1,0 +1,80 @@
+<h2 class="text-center">Admin Analytics</h2>
+<div class="container">
+  <div class="col-sm-6">
+    <h4 class="text-center">Totals</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          <tr>
+            <th>Total Revenue Ever</th>
+            <td>${{displayPrice (convertToDollars analytics.totalRevenue)}}</td>
+          </tr>
+          <tr>
+            <th>Total Units Sold</th>
+            <td>{{analytics.totalUnits}}</td>
+          </tr>
+          <tr>
+            <th>Total Transactions</th>
+            <td>{{analytics.totalTransactions}}</td>
+          </tr>
+          <tr>
+            <th>Total Products</th>
+            <td>{{analytics.totalProducts}}</td>
+          </tr>
+          <tr>
+            <th>Total Categories</th>
+            <td>{{analytics.totalCategories}}</td>
+          </tr>
+          <tr>
+            <th>States Sold To</th>
+            <td>{{length analytics.stateRevenues}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="text-center">Revenue By Product</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each analytics.productRevenue}}
+            <tr>
+              <th>{{@key}}</th>
+              <td>${{displayPrice (convertToDollars this.revenue)}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <h4 class="text-center">Revenue By State</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each analytics.stateRevenues}}
+            <tr>
+              <th>{{this._id}}</th>
+              <td>${{displayPrice (convertToDollars this.total)}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <h4 class="text-center">Revenue By Category</h4>
+    <div class="col-sm-12">
+      <table class="table table-striped table-bordered">
+        <tbody>
+          {{#each analytics.categoryRevenue}}
+            <tr>
+              <th>{{@key}}</th>
+              <td>${{displayPrice (convertToDollars this.revenue)}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

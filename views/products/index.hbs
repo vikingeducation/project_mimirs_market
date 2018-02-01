@@ -1,0 +1,58 @@
+<h2 class="text-center">Products</h2>
+<hr>
+<div>
+  <form action="#" method="GET" class="form">
+    <div class="col-sm-offset-2 col-sm-6 form-group ">
+      <input type="text" name="search" class="form-control" placeholder="Search">
+    </div>
+    <button type="submit" class="btn btn-primary pull-left">Submit Search</button>
+  </form>
+</div>
+
+<div class="col-sm-offset-2 col-sm-10">
+  <form action="#" method="GET" class="form form-horizontal" id="filter-form">
+    <div class="col-sm-3 form-group ">
+      <select class="form-control" name="filter[category]">
+        <option selected="true" disabled="disabled">Filter by Category</option>
+        {{#each categories as |category|}}
+          <option value="{{category.id}}">{{category.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="col-sm-3 form-group ">
+      <select class="form-control" name="filter[minPrice]" id="minPrice">
+        <option selected="true" disabled="disabled">Min Price</option>
+      </select>
+    </div>
+    <div class="col-sm-3 form-group">
+      <select class="form-control" name="filter[maxPrice]" id="maxPrice">
+        <option selected="true" disabled="disabled">Max Price</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Filter</button>
+  </form>
+</div>
+
+<div class="col-sm-offset-2 col-sm-8">
+  <form action="#" method="GET" class="form">
+    <div class="col-sm-offset-2 col-sm-6 form-group ">
+      <select class="form-control" name="sortBy">
+        <option selected="true" disabled="true">Sort By</option>
+        <option value="nameAsc">Sort By Name Ascending</option>
+        <option value="nameDec">Sort By Name Descending</option>
+        <option value="priceAsc">Sort By Price Ascending</option>
+        <option value="priceDec">Sort By Price Descending</option>
+        <option value="newest">Sort By Newest First</option>
+        <option value="oldest">Sort By Oldest First</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary pull-left">Submit Sort By</button>
+  </form>
+</div>
+<hr class="clear">
+<section id="products">
+  {{#each products}}
+    {{> partials/_productPreview}}
+  {{/each}}
+</section>
+<script type="text/javascript" src="/searchFormSetup.js"></script>

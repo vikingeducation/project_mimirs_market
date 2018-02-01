@@ -1,0 +1,40 @@
+<h2 class="text-center">Review Cart</h2>
+{{#if (cartItemsCount cart)}}
+  {{#each products as |product|}}
+    <section class="cartProduct clearfix col-sm-8 col-sm-offset-2">
+      <div class="col-sm-3 cartProductImg">
+        <img src="{{product.img}}" class="pull-left" />
+      </div>
+      <div class="col-sm-3 cartProductInfo">
+        <p><span class="product-name">{{product.name}}</span></p>
+        <p>{{product.category.name}}</p>
+        <p>${{displayPrice product.price}}</p>
+      </div>
+      <form action="/checkout/update" method="POST">
+        <div class="col-sm-3">
+          <input type="hidden" name="productId" value="{{product.id}}">
+          <input type="number" name="quantity" class="form-control" id="{{product.id}}">
+        </div>
+        <div class="col-sm-3">
+          <div>
+            <button type="submit" class="btn btn-success cart-btn">Set Quantity</button>
+          </div>
+          <a href="/checkout/{{product.id}}?_method=delete" class="btn btn-danger cart-btn">Remove</a>
+        </div>
+      </form>
+    </section>
+  {{/each}}
+  <div class="col-sm-8 col-sm-offset-2" id="cart-bottom">
+    <div class="pull-left">
+      <h3 id="cart-total">Total: ${{displayPrice totalPrice}}</h3>
+    </div>
+    <div class="pull-right">
+      <a href="/checkout?_method=delete" class="btn btn-danger cart-btn">Clear Cart</a>
+      <a href="/checkout" class="btn btn-primary cart-btn">Checkout</a>
+    </div>
+  </div>
+{{else}}
+  <hr>
+  <h4 class="text-center">There are no items in your cart.</h4>
+{{/if}}
+<script type="text/javascript" src="/quantity_populater.js"></script>

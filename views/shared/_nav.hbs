@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Mimirs Market</a>
+      <ul class="nav navbar-nav navbar-right pull-right">
+        <li><a href="/products"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span id="cart-item-count">{{cartItemsCount cart}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            {{#if (cartItemsCount cart)}}
+              {{#each cart}}
+                <li><a href="/products/{{@key}}">({{this.quantity}}) {{this.name}}</a></li>
+              {{/each}}
+              <li class="divider"></li>
+              <li><a href="/checkout/cart">Checkout</a></li>
+            {{else}}
+              <li class="text-center">No Items Yet</li>
+            {{/if}}
+          </ul>
+        </li>
+        <li><a href="/admin/orders"><i class="fa fa-tachometer" aria-hidden="true"></i></a></li>
+        <li><a href="/admin/analytics"><i class="fa fa-calculator" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

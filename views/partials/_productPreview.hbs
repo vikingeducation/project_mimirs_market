@@ -1,0 +1,9 @@
+<div class="product text-center threecol">
+  <div class="product-image-preview">
+    <img src="{{this.img}}" />
+  </div>
+  <p>${{displayPrice this.price}}</p>
+  <p><a href="/products/{{this.id}}">{{this.name}}</a></p>
+  <p>{{this.category.name}}</p>
+  <a class="btn btn-primary add-to-cart" id="{{this.id}}">Add to Cart</a>
+</div>
