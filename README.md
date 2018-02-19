@@ -8,5 +8,10 @@ An e-commerce market where users can choose from among dozens of delicious foods
 
 ![main-page](public/images/screenshot-1.png)
 
+![main-page](public/images/screenshot-2.png)
+
+![main-page](public/images/screenshot-3.png)
+
+![main-page](public/images/screenshot-4.png)
 
 
