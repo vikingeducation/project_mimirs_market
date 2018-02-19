@@ -12,33 +12,23 @@ let queryConstructor = showcaser.queryConstructor;
 let objectify = showcaser.objectify;
 
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
-  // let result = await Promise.all(Product.findAll(queryConstructor("s", "Italian")));
-  Product.findAll({
-    include: [{model: Category}],
-    limit: 20,
-  }).then(qproducts => {
-    let products = qproducts.map(product => objectify(product));
-    res.render('welcome/index', {products});
-  });
-});
+router.get('/', async (req, res, next) => {
+  
+  let query = queryConstructor(
+    req.query.search,
+    req.query.category,
+    Number(req.query.min),
+    Number(req.query.max),
+    req.query.sort,
+  );
 
-router.get('/filter', (req, res, next) => {
+  if (req.query) query.limit = 12;
 
-  console.log("You are in the filter!");
+  let products = (await Product.findAll(query)).map(product =>
+    objectify(product),
+  );
 
-  Product.findAll(
-    queryConstructor(
-      req.query.search,
-      req.query.category,
-      Number(req.query.min),
-      Number(req.query.max),
-      req.query.sort,
-    ),
-  ).then(qproducts => {
-    let products = qproducts.map(product => objectify(product));
-    res.render('welcome/index', {products});
-  });
+  res.render('welcome/index', {products});
 });
 
 module.exports = router;

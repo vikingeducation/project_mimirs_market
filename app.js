@@ -75,7 +75,8 @@ app.use((req, res, next) => {
 // Set up session-based shopping cart if none-exists
 
 app.use((req, res, next) => {
-  if (!req.session.cart) req.session.cart = [];
+  req.session.cart = req.session.cart || [];
+  res.locals.session.totalNum = res.locals.session.totalNum || 0;
   next();
 });
 
@@ -97,7 +98,6 @@ app.use(methodOverride(
   getPostSupport.options // { methods: ['POST', 'GET'] }
 ));
 
-
 // ----------------------------------------
 // Referrer
 // ----------------------------------------
@@ -106,12 +106,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // ----------------------------------------
 // Public
 // ----------------------------------------
 app.use(express.static(`${__dirname}/public`));
-
 
 // ----------------------------------------
 // Logging
@@ -121,7 +119,6 @@ const morganToolkit = require('morgan-toolkit')(morgan);
 
 app.use(morganToolkit());
 
-
 // ----------------------------------------
 // Routes
 // ----------------------------------------
@@ -129,16 +126,11 @@ app.use('/', index);
 
 app.use('/productShowcase', productShowcaseRouter);
 
-app.use('/shoppingCart', (req, res, next) => {
-  if (typeof cart !== "undefined") {
-    next();
-  }
-  const ShoppingCart = require('./shoppingCart.js');
-  cart = new ShoppingCart();
-  next();
-});
-
 app.use('/shoppingCart', shoppingCartRouter);
+
+app.use('/checkout', (req,res,next) => {
+  res.render('welcome/checkout');
+});
 
 // app.use('products/', product);
 

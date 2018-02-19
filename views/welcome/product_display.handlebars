@@ -4,13 +4,14 @@
     <img src={{primaryItem.image}} width="70%" height="150px">
   </div>
   <div id="showcase-blurb">
-    <p>{{ session.backUrl }}</p>
     <h5>{{primaryItem.name}}</h3>
     <p>{{primaryItem.description}}</p>
     <p>${{primaryItem.price}}</p>
     <p>{{primaryItem.category}}</p>
-    <form method="get" action="/shoppingCart/addNew">
+    <form method="post" action="/shoppingCart">
+      <input type="hidden" value="1" name="quantity">
       <input type="hidden" value="{{primaryItem.id}}" name="cartId">
+      <input type="hidden" value="{{primaryItem.name}}" name="name">
       <input class="add-to-cart-button" type="submit" value="Add to cart"/>
     </form>
   </div>
@@ -24,8 +25,10 @@
     <p>{{relatedItem.description}}</p>
     <p>${{relatedItem.price}}</p>
     <p>{{relatedItem.category}}</p>
-    <form method="get" action="/shoppingCart/addNew">
+    <form method="post" action="/shoppingCart">
+      <input type="hidden" value="1" name="quantity">
       <input type="hidden" value="{{relatedItem.id}}" name="cartId">
+      <input type="hidden" value="{{relatedItem.name}}" name="name">
       <input class="add-to-cart-button" type="submit" value="Add to cart"/>
     </form>
   </a>
