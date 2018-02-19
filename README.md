@@ -6,11 +6,15 @@ An e-commerce market where users can choose from among dozens of delicious foods
 
 ## Walkthrough
 
-![main-page](public/images/screenshot-1.png)
+From the home page, you can filter and sort the food items, and you can also easily add them to your cart. Clicking on an image takes you to the single-food display (below), while clicking on the cart shows you the items you currently have and their quantity.
 
 ![main-page](public/images/screenshot-2.png)
 
+The single-food display page shows you the food you clicked on and other food items in the same category.
+
 ![main-page](public/images/screenshot-3.png)
+
+Clicking on an item in your cart takes you to the cart adjustment page. You can modify the quantity of an item and see that update the total in your cart, you can remove items, you can clear the cart copmletely, or you can checkout.
 
 ![main-page](public/images/screenshot-4.png)
 
