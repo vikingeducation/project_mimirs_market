@@ -14,7 +14,7 @@ The single-food display page shows you the food you clicked on and other food it
 
 ![main-page](public/images/screenshot-3.png)
 
-Clicking on an item in your cart takes you to the cart adjustment page. You can modify the quantity of an item and see that update the total in your cart. You can also remove items individually, clear the cart copmletely, or checkout.
+Clicking on an item in your cart takes you to the cart adjustment page. You can modify the quantity of an item and see that update the total in your cart. You can also remove items individually, clear the cart completely, or checkout.
 
 ![main-page](public/images/screenshot-4.png)
 
