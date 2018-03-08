@@ -67,14 +67,14 @@ analytics.revenueByState = () => {
 
 analytics.revenueByCategory = () => {
 	return Order.aggregate([
-		{ $unwind: "$orderedProducts" },
 		{
 			$group: {
-				_id: "$orderedProducts.category",
-				sum: { $sum: "$total" }
+				_id: "$Category.name",
+				revenueForCategory: { $sum: { $multiply: ["$price", "$quantity"] } }
 			}
 		},
-		{ $sort: { sum: -1 } }
+		{ $sort: { revenueForCategory: -1 } },
+		{ $limit: 10 }
 	]);
 };
 
