@@ -28,7 +28,7 @@ router.get("/order/:id", (req, res) => {
 
 router.get("/analytics", (req, res) => {
 	analytics.getAll().then(data => {
-		// console.log("data", JSON.stringify(data, 0, 2));
+		console.log("data", JSON.stringify(data, 0, 2));
 		res.render("admin/analytics", { data });
 	});
 });
