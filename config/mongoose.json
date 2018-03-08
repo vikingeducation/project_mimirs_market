@@ -8,6 +8,6 @@
 		"host": "localhost"
 	},
 	"production": {
-		"use_env_variable": "MONGOLAB_WHITE_URI"
+		"use_env_variable": "MONGOLAB_BRONZE_URI"
 	}
 }
