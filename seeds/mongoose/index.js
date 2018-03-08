@@ -2,6 +2,7 @@ var faker = require("faker");
 
 // mongoose
 const mongoose = require("mongoose");
+mongoose.Promise = require('bluebird');
 const models = require("./../../models/mongoose");
 var env = process.env.NODE_ENV || "development";
 var config = require("./../../config/mongoose")[env];
@@ -25,8 +26,7 @@ function getProduct(productId, i) {
 	var query = Products.findOne({
 		include: [{ model: Categories }],
 		where: { id: productId }
-	});
-	return query.exec((err, product) => {
+	}).then((err, product) => {
 		if (err) console.error(err);
 		if (product) {
 			product.quantity = i % 8;
