@@ -36,6 +36,13 @@ app.use((req, res, next) => {
 });
 
 // ----------------------------------------
+// Flash messages
+// ----------------------------------------
+
+var flash = require("express-flash-messages");
+app.use(flash());
+
+// ----------------------------------------
 // Method Override
 // ----------------------------------------
 const methodOverride = require("method-override");

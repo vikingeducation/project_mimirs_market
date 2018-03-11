@@ -37,6 +37,7 @@ router.get("/cart/:id/:name", (req, res) => {
 		});
 	}
 
+	req.flash('success', `${name} added to cart`)
 	res.redirect(`/product/${id}`);
 });
 
@@ -83,6 +84,7 @@ router.get("/mycart", (req, res) => {
 router.get("/mycart/delete", (req, res) => {
 	req.session.cart = null;
 	console.log("delete cart");
+	req.flash('info', "No more items in your cart")
 	res.redirect("/");
 });
 
@@ -92,6 +94,7 @@ router.get("/clear/:id", (req, res) => {
 	var id = req.params.id;
 	var index = findCartItem(req.session.cart, id);
 	req.session.cart.splice(index, 1);
+	req.flash('info', "Item removed from your cart")
 	res.redirect("back");
 });
 
@@ -108,6 +111,7 @@ router.post("/mycart/updateitem", (req, res) => {
 		req.session.cart[index].quantity = quantity;
 	}
 
+	req.flash("info", "Cart updated")
 	res.redirect("back");
 });
 
