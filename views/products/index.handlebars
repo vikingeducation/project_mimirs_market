@@ -67,7 +67,7 @@
   {{#each products as |product|}}
   <div class="col-md-3">
     <div class="card">
-      <img class="card-img-top" src="/images/product.png" alt="Card image cap">
+      <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}.00</h5>

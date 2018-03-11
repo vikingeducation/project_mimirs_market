@@ -1,14 +1,12 @@
 <h1>Product</h1>
 <div class="row">
-  <div class="col-sm-4">
-    <img src="/images/product.png" alt="">
+  <div class="col-sm">
+    <img src="/images/{{ photoId product.id}}.jpg" alt="">
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm">
     <h3>{{product.name}}</h3>
     <h5>{{product.Category.name}}</h5>
     <h3>${{product.price}}.00</h3>
-  </div>
-  <div class="col-sm-4">
     {{product.description}}<br>
     <!-- <form class="" action="/cart" method="post">
       <input type="hidden" name="id" value="{{product.id}}">
@@ -23,7 +21,7 @@
   {{#each relatedProducts as |product|}}
   <div class="col-sm-3">
     <div class="card">
-      <img class="card-img-top" src="/images/product.png" alt="Card image cap">
+      <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}</h5>

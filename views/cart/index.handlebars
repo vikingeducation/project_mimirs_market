@@ -4,15 +4,15 @@
 {{else}}
 {{#each result as |product|}}
   <div class="row mb-3">
-    <div class="col-md-4">
-      <img src="/images/product.png" alt="">
+    <div class="col-sm">
+      <img src="/images/{{ photoId product.id}}.jpg" style="width:320px;" alt="">
     </div>
-    <div class="col-md-4">
+    <div class="col-sm">
       <h2>{{product.name}}</h2>
       <h5>{{product.Category.name}}</h5>
       <h2>${{product.price}}.00</h2>
     </div>
-    <form class="col-md-4" action="/mycart/updateitem" method="post">
+    <form class="col-sm" action="/mycart/updateitem" method="post">
 
       <input type="number" name="quantity" value="{{product.quantity}}">
 

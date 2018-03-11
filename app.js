@@ -110,11 +110,16 @@ var expressHandlebars = require("express-handlebars");
 
 var hbs = expressHandlebars.create({
 	partialsDir: "views/",
-	defaultLayout: "application"
+	defaultLayout: "application",
+	helpers: {
+		photoId: id => Number(id) % 9
+	}
 });
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
+
+// expressHandlebars.registerHelper("photoId", );
 
 // ----------------------------------------
 // Server
