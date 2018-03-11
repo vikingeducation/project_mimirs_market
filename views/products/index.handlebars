@@ -1,20 +1,20 @@
-<h1>Hey</h1>
+
   <form class="" action="/search" method="post">
     <div class="form-group">
-      <input class="form-control" type="text" name="search" value="{{params.search}}" placeholder="Search">
+      <input class="form-control mb-3" type="text" name="search" value="{{params.search}}" placeholder="Search">
 
-      <label for="category-select">Select a Category</label>
-      <select name="category" class="form-control" id="category-select" >
-        <option>{{params.category}}</option>
-        {{#each categories as |category|}}
-        <option>{{category.name}}</option>
-        {{/each}}
-      </select>
+      <div class="form-row mb-3">
+        <div class="col">
+          <select name="category" class="form-control" id="category-select" >
+            <option>select category</option>
+            <option>{{params.category}}</option>
+            {{#each categories as |category|}}
+            <option>{{category.name}}</option>
+            {{/each}}
+          </select>
+        </div>
 
-      <div class="row">
-        <h5 class="col-sm-3">Select a Price</h5>
-        <div class="col-sm-3">
-          <label for="priceMin">Minimum price</label>
+        <div class="col">
           <select name="priceMin" id="priceMin" class="form-control">
             <option value="0">Min Price</option>
             <option value="0">Any</option>
@@ -24,8 +24,8 @@
           </select>
         </div>
 
-        <div class="col-sm-3">
-          <label for="priceMax">Max price</label>
+        <div class="col">
+          <!-- <label for="priceMax">Max price</label> -->
           <select name="priceMax" id="priceMax" class="form-control">
             <option value="300">Max Price</option>
             <option value="300">Any</option>
@@ -36,12 +36,8 @@
             <option value="1">$1.00</option>
           </select>
         </div>
-      </div>
 
-      <div class="row">
-        <h5 class="col-sm-3">Sort</h5>
-        <div class="col-sm-3">
-          <label for="sort">Sort</label>
+        <div class="col">
           <select name="sortVal" id="sort" class="form-control">
             <option>name</option>
             <option>price</option>
@@ -49,8 +45,7 @@
           </select>
         </div>
 
-        <div class="col-sm-3">
-          <label for="sort">Asc Desc</label>
+        <div class="col">
           <select name="sortDirection" id="sort" class="form-control">
             <option>ASC</option>
             <option>DESC</option>
@@ -58,26 +53,29 @@
         </div>
       </div>
 
-      <input type="submit" class="form-control"  name="" value="Submit Search" class="btn btn-defualt">
+      <input
+        type="submit"
+        class="form-control"
+        name=""
+        style="background-color: rgba(178, 34, 34, 0.8);color:white;"
+        value="Submit Search"
+        class="btn btn-defualt"
+      >
 
     </div>
   </form>
 
 <div class="row">
   {{#each products as |product|}}
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="card">
       <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}.00</h5>
         <h6>{{product.Category.name}}</h6>
-        <!-- <form class="" action="/cart" method="post">
-          <input type="hidden" name="name" value="{{product.name}}">
-          <input type="hidden" name="id" value="{{product.id}}">
-          <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
-        </form> -->
-        <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-primary pull-right" type="button" name="button">Add to Cart</button></a>
+
+        <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-light pull-right" style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;" type="button" name="button">Add to Cart</button></a>
       </div>
     </div>
   </div>

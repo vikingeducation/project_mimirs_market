@@ -8,30 +8,38 @@
     <h5>{{product.Category.name}}</h5>
     <h3>${{product.price}}.00</h3>
     {{product.description}}<br>
-    <!-- <form class="" action="/cart" method="post">
-      <input type="hidden" name="id" value="{{product.id}}">
-      <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
-    </form> -->
-    <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-primary pull-right" type="button" name="button">Add to Cart</button></a>
+    <a href="/cart/{{product.id}}/{{product.name}}">
+        <button
+          class="btn btn-xs btn-primary pull-right"
+          style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;"
+          type="button"
+          name="button"
+          >Add to Cart
+      </button>
+    </a>
   </div>
 </div>
 <hr>
 <h1>Related Products</h1>
 <div class="row">
   {{#each relatedProducts as |product|}}
-  <div class="col-sm-3">
+  <div class="col-sm-4">
     <div class="card">
       <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
         <h5>${{product.price}}</h5>
         <h6>{{product.Category.name}}</h6>
-        <!-- <form class="" action="/cart" method="post">
-          <input type="hidden" name="id" value="{{product.id}}">
-          <input type="hidden" name="name" value="{{product.name}}">
-          <input type="submit" name="" value="Add to Cart" class="btn btn-xs btn-primary pull-right">
-        </form> -->
-        <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-primary pull-right" type="button" name="button">Add to Cart</button></a>
+        <a href="/cart/{{product.id}}/{{product.name}}">
+          <button
+            class="btn btn-xs btn-primary pull-right"
+            type="button"
+            name="button"
+            style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;"
+          >
+          Add to Cart
+          </button>
+        </a>
       </div>
     </div>
   </div>
