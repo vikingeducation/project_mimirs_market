@@ -107,14 +107,11 @@
     <h2>Order Items</h2>
     {{#each result as |product|}}
       <div class="row mb-3">
-        <div class="col-md-4">
-          <img style="width:100px;height:100px;" src="/images/product.png" alt="">
-        </div>
-        <div class="col-md-4">
+        <div class="col">
           <h5>{{product.name}}</h5>
           <h6>{{product.Category.name}}</h6>
         </div>
-        <div class="col-md-4">
+        <div class="col">
           <h5>Each: ${{product.price}}.00</h5>
           <h5>{{product.quantity}} items</h5>
           <h5>subtotal: ${{product.total}}</h5>
