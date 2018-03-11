@@ -2,7 +2,7 @@ var faker = require("faker");
 
 // mongoose
 const mongoose = require("mongoose");
-mongoose.Promise = require('bluebird');
+mongoose.Promise = require("bluebird");
 const models = require("./../../models/mongoose");
 var env = process.env.NODE_ENV || "development";
 var config = require("./../../config/mongoose")[env];
@@ -23,7 +23,7 @@ function randomId() {
 }
 
 function getProduct(productId, i) {
-	var query = Products.findOne({
+	return Products.findOne({
 		include: [{ model: Categories }],
 		where: { id: productId }
 	}).then((err, product) => {
@@ -43,91 +43,99 @@ const seeds = () => {
 	var orders = [];
 	for (let i = 1; i < 222; i++) {
 		var productId = randomId();
-		var product = getProduct(productId, i);
 
-		var order = new Order({
-			fname: faker.name.firstName(),
-			lname: faker.name.lastName(),
-			address: faker.address.streetAddress(),
-			city: faker.address.city(),
-			state: faker.address.state(),
-			zip: faker.address.zipCode(),
-			total: i * 86,
-			orderedProducts: [product],
-			stripe: {
-				transfer_group: null,
-				status: "succeeded",
-				statement_descriptor: null,
-				source_transfer: null,
-				source: {
-					tokenization_method: null,
-					name: faker.internet.email(),
-					last4: "4242",
-					funding: "credit",
-					fingerprint: "CnRCuVZss2LTEKEz",
-					exp_year: 2018,
-					exp_month: 1,
-					dynamic_last4: null,
-					cvc_check: "pass",
-					customer: null,
-					country: "US",
-					brand: "Visa",
-					address_zip_check: null,
-					address_zip: null,
-					address_state: null,
-					address_line2: null,
-					address_line1_check: null,
-					address_line1: null,
-					address_country: null,
-					address_city: null,
-					object: "card",
-					id: "card_1BQirYGRxzsP4XGrMXaJ7W99"
-				},
-				shipping: null,
-				review: null,
-				refunds: {
-					url: "/v1/charges/ch_1BQirbGRxzsP4XGrdb1m7o6r/refunds",
-					total_count: 0,
-					has_more: false,
-					data: [],
-					object: "list"
-				},
-				refunded: false,
-				receipt_number: null,
-				receipt_email: null,
-				paid: true,
-				outcome: {
-					type: "authorized",
-					seller_message: "Payment complete.",
-					risk_level: "normal",
-					reason: null,
-					network_status: "approved_by_network"
-				},
-				order: null,
-				on_behalf_of: null,
-				livemode: false,
-				invoice: null,
-				failure_message: null,
-				failure_code: null,
-				dispute: null,
-				destination: null,
-				description: "Refined Rubber Hat",
-				customer: null,
-				currency: "usd",
-				created: 1511298063,
-				captured: true,
-				balance_transaction: "txn_1BQirbGRxzsP4XGrDiJ1MSv5",
-				application_fee: null,
-				application: null,
-				amount_refunded: 0,
-				amount: i * 86,
-				object: "charge",
-				id: "ch_1BQirbGRxzsP4XGrdb1m7o6r"
-			},
-			stripeToken: faker.random.uuid()
+		return new Promise(function(resolve, reject) {
+			getProduct(productId, i)
+				.then(product => {
+					var order = new Order({
+						fname: faker.name.firstName(),
+						lname: faker.name.lastName(),
+						address: faker.address.streetAddress(),
+						city: faker.address.city(),
+						state: faker.address.state(),
+						zip: faker.address.zipCode(),
+						total: i * 86,
+						orderedProducts: [product],
+						stripe: {
+							transfer_group: null,
+							status: "succeeded",
+							statement_descriptor: null,
+							source_transfer: null,
+							source: {
+								tokenization_method: null,
+								name: faker.internet.email(),
+								last4: "4242",
+								funding: "credit",
+								fingerprint: "CnRCuVZss2LTEKEz",
+								exp_year: 2018,
+								exp_month: 1,
+								dynamic_last4: null,
+								cvc_check: "pass",
+								customer: null,
+								country: "US",
+								brand: "Visa",
+								address_zip_check: null,
+								address_zip: null,
+								address_state: null,
+								address_line2: null,
+								address_line1_check: null,
+								address_line1: null,
+								address_country: null,
+								address_city: null,
+								object: "card",
+								id: "card_1BQirYGRxzsP4XGrMXaJ7W99"
+							},
+							shipping: null,
+							review: null,
+							refunds: {
+								url: "/v1/charges/ch_1BQirbGRxzsP4XGrdb1m7o6r/refunds",
+								total_count: 0,
+								has_more: false,
+								data: [],
+								object: "list"
+							},
+							refunded: false,
+							receipt_number: null,
+							receipt_email: null,
+							paid: true,
+							outcome: {
+								type: "authorized",
+								seller_message: "Payment complete.",
+								risk_level: "normal",
+								reason: null,
+								network_status: "approved_by_network"
+							},
+							order: null,
+							on_behalf_of: null,
+							livemode: false,
+							invoice: null,
+							failure_message: null,
+							failure_code: null,
+							dispute: null,
+							destination: null,
+							description: "Refined Rubber Hat",
+							customer: null,
+							currency: "usd",
+							created: 1511298063,
+							captured: true,
+							balance_transaction: "txn_1BQirbGRxzsP4XGrDiJ1MSv5",
+							application_fee: null,
+							application: null,
+							amount_refunded: 0,
+							amount: i * 86,
+							object: "charge",
+							id: "ch_1BQirbGRxzsP4XGrdb1m7o6r"
+						},
+						stripeToken: faker.random.uuid()
+					});
+
+					resolve(orders.push(order));
+				})
+				.catch(error => {
+					console.error(error);
+					reject(error);
+				});
 		});
-
-		orders.push(order);
 	}
 
 	// ----------------------------------------
