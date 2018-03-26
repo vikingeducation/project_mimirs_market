@@ -1,0 +1,83 @@
+
+  <form class="" action="/search" method="post">
+    <div class="form-group">
+      <input class="form-control mb-3" type="text" name="search" value="{{params.search}}" placeholder="Search">
+
+      <div class="form-row mb-3">
+        <div class="col">
+          <select name="category" class="form-control" id="category-select" >
+            <!-- <option>select category</option> -->
+            <option>{{params.category}}</option>
+            {{#each categories as |category|}}
+            <option>{{category.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="col">
+          <select name="priceMin" id="priceMin" class="form-control">
+            <option value="0">Min Price</option>
+            <option value="0">Any</option>
+            <option value="1">$1.00</option>
+            <option value="10">$10.00</option>
+            <option value="100">$100.00</option>
+          </select>
+        </div>
+
+        <div class="col">
+          <!-- <label for="priceMax">Max price</label> -->
+          <select name="priceMax" id="priceMax" class="form-control">
+            <option value="300">Max Price</option>
+            <option value="300">Any</option>
+            <option value="300">$300.00</option>
+            <option value="150">$150.00</option>
+            <option value="100">$100.00</option>
+            <option value="10">$10.00</option>
+            <option value="1">$1.00</option>
+          </select>
+        </div>
+
+        <div class="col">
+          <select name="sortVal" id="sort" class="form-control">
+            <option>name</option>
+            <option>price</option>
+            <option>createdAt</option>
+          </select>
+        </div>
+
+        <div class="col">
+          <select name="sortDirection" id="sort" class="form-control">
+            <option>ASC</option>
+            <option>DESC</option>
+          </select>
+        </div>
+      </div>
+
+      <input
+        type="submit"
+        class="form-control"
+        name=""
+        style="background-color: rgba(178, 34, 34, 0.8);color:white;"
+        value="Submit Search"
+        class="btn btn-defualt"
+      >
+
+    </div>
+  </form>
+
+<div class="row">
+  {{#each products as |product|}}
+  <div class="col-md-4">
+    <div class="card">
+      <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
+        <h5>${{product.price}}.00</h5>
+        <h6>{{product.Category.name}}</h6>
+
+        <a href="/cart/{{product.id}}/{{product.name}}"><button class="btn btn-xs btn-light pull-right" style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;" type="button" name="button">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

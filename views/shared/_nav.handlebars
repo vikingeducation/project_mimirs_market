@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-md navbar-dark mb-3 justify-content-between" style="background-color: rgba(178, 34, 34, 0.8);">
+  <a class="navbar-brand" href="/">
+    <img style="width:36px;" src="/icons/fire.svg">
+  money burner
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item  mr-3" data-toggle="tooltip" data-placement="bottom" title="Market">
+        <a class="nav-link" href="/">
+          <img style="width:26px;" src="/icons/dashboard.svg">
+          <span class="sr-only">(current)</span>
+          <span class="mx-2 text-white d-md-none">Market</span>
+        </a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/admin">
+          <img style="width:26px;" src="/icons/briefcase.svg">
+          <span class="sr-only">(current)</span>
+          <span class="mx-2 text-white d-md-none">Admin Orders</span>
+        </a>
+      </li>
+      <li class="nav-item mr-3">
+        <a class="nav-link" href="/analytics">
+          <img style="width:26px;" src="/icons/graph.svg">
+          <span class="sr-only">(current)</span>
+          <span class="mx-2 text-white d-md-none">Admin Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown" data-toggle="tooltip" data-placement="bottom" title="Shopping Cart">
+       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <img style="width:26px;" src="/icons/cart.svg">
+         {{#if cart.quantity}}
+          {{cart.quantity}}
+         {{/if}}
+         <span class="mx-2 text-white d-md-none">My Cart</span>
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+         <a class="dropdown-item" href="/mycart"> Go to my cart</a>
+         {{#each cart as |item|}}
+          <a class="dropdown-item"  href="/product/{{item.id}}">{{item.quantity}} - {{item.name}}</a>
+         {{/each}}
+       </div>
+     </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,47 @@
+<h1>Product</h1>
+<div class="row">
+  <div class="col-sm">
+    <img src="/images/{{ photoId product.id}}.jpg" alt="">
+  </div>
+  <div class="col-sm">
+    <h3>{{product.name}}</h3>
+    <h5>{{product.Category.name}}</h5>
+    <h3>${{product.price}}.00</h3>
+    {{product.description}}<br>
+    <a href="/cart/{{product.id}}/{{product.name}}">
+        <button
+          class="btn btn-xs btn-primary pull-right"
+          style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;"
+          type="button"
+          name="button"
+          >Add to Cart
+      </button>
+    </a>
+  </div>
+</div>
+<hr>
+<h1>Related Products</h1>
+<div class="row">
+  {{#each relatedProducts as |product|}}
+  <div class="col-sm-4">
+    <div class="card">
+      <img class="card-img-top" src="/images/{{ photoId product.id}}.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"><a href="/product/{{product.id}}">{{product.name}}</a></h5>
+        <h5>${{product.price}}</h5>
+        <h6>{{product.Category.name}}</h6>
+        <a href="/cart/{{product.id}}/{{product.name}}">
+          <button
+            class="btn btn-xs btn-primary pull-right"
+            type="button"
+            name="button"
+            style="background-color: rgba(178, 34, 34, 0.8);width:100%;color:white;"
+          >
+          Add to Cart
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
