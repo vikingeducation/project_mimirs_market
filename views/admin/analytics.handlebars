@@ -3,76 +3,80 @@
 <div class="row">
   <div class="col-md-6">
     <h2>Totals</h2>
-
-    <table class="table mb-5">
-      <tbody>
-        <tr>
-          <td>Total totalTransactions</td>
-          <td>{{data.totalTransactions}}</td>
-        </tr>
-        <tr>
-          <td>Total totalRevenueEver</td>
-          <td>${{data.totalRevenueEver.total}}.00</td>
-        </tr>
-        <tr>
-          <td>States sold to</td>
-          <td>{{data.totalUniqueStates}}</td>
-        </tr>
-        <tr>
-          <td>total customers</td>
-          <td>{{data.totalUniqueCustomers}}</td>
-        </tr>
-        <tr>
-          <td>Total Categories</td>
-          <td>{{data.totalCategories}}</td>
-        </tr>
-        <tr>
-          <td>Total Products</td>
-          <td>{{data.totalProducts}}</td>
-        </tr>
-        <tr>
-          <td>Total Products SOLD</td>
-          <td>{{data.totalItemsSold.total}}</td>
-        </tr>
-      </tbody>
-    </table>
-
+    <div class="table-responsive">
+      <table class="table mb-5">
+        <tbody>
+          <tr>
+            <td>Total totalTransactions</td>
+            <td>{{data.totalTransactions}}</td>
+          </tr>
+          <tr>
+            <td>Total totalRevenueEver</td>
+            <td>${{data.totalRevenueEver.total}}.00</td>
+          </tr>
+          <tr>
+            <td>States sold to</td>
+            <td>{{data.totalUniqueStates}}</td>
+          </tr>
+          <tr>
+            <td>total customers</td>
+            <td>{{data.totalUniqueCustomers}}</td>
+          </tr>
+          <tr>
+            <td>Total Categories</td>
+            <td>{{data.totalCategories}}</td>
+          </tr>
+          <tr>
+            <td>Total Products</td>
+            <td>{{data.totalProducts}}</td>
+          </tr>
+          <tr>
+            <td>Total Products SOLD</td>
+            <td>{{data.totalItemsSold.total}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="col-md-6">
     <h2>Revenue by State</h2>
-    <table class="table mb-5">
-      <tbody>
-        {{#each data.revenueByState as |state|}}
-        <tr>
-          <td>{{state._id}}</td>
-          <td>${{state.sum}}.00</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
+    <div class="table-responsive">
+      <table class="table mb-5">
+        <tbody>
+          {{#each data.revenueByState as |state|}}
+          <tr>
+            <td>{{state._id}}</td>
+            <td>${{state.sum}}.00</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
     <h2>Revenue by Category</h2>
-    <table class="table mb-5">
-      <tbody>
-        {{#each data.revenueByCategory as |category|}}
-        <tr>
-          <td>{{category._id}}</td>
-          <td>${{category.sum}}.00</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
+    <div class="table-responsive">
+      <table class="table mb-5">
+        <tbody>
+          {{#each data.revenueByCategory as |category|}}
+          <tr>
+            <td>{{category._id}}</td>
+            <td>${{category.sum}}.00</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
     <h2>Revenue by Product</h2>
-    <table class="table mb-5">
-      <tbody>
-        {{#each data.revenueByProduct as |product|}}
-        <tr>
-          <td>{{product.name}}</td>
-          <td>${{product.sum}}.00</td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table mb-5">
+        <tbody>
+          {{#each data.revenueByProduct as |product|}}
+          <tr>
+            <td>{{product.name}}</td>
+            <td>${{product.sum}}.00</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
