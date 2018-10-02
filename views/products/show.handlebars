@@ -1,0 +1,42 @@
+<div class="row text-center">
+  <h1>Product</h1>
+</div>
+<div class="row panel panel-default">
+  <div class="col-sm-2 col-sm-offset-1">
+    <img src="/images/product_image.jpg" class="img-responsive">
+  </div>
+  <div class="col-sm-3">
+    <p>{{product.name}}</p>
+    <p>{{product.Category.name}}</p>
+    <p>${{product.price}}</p>
+  </div>
+  <div class="col-sm-6">
+    <p>{{product.description}}</p>
+    {{#if product.inCart}}
+    <a href="/cart"><button class="btn btn-success">Edit in Cart</button></a>
+    {{else}}
+    <a href="/cart/{{product.id}}?quantity=1"><button class="btn btn-primary">Add to Cart</button></a>
+    {{/if}}
+  </div>
+</div>
+
+<div class="row">
+  <h2 class="text-center">Related Products</h2>
+  {{#each relatedProducts as |product|}}
+  <div class="col-sm-4">
+    <div class="thumbnail text-center">
+      <img src="/images/product_image.jpg">
+      <div class="caption">
+        <p>${{product.price}}</p>
+        <p><a href="/products/{{product.id}}">{{product.name}}</a></p>
+        <p>{{product.Category.name}}</p>
+        {{#if product.inCart}}
+        <a href="/cart"><button class="btn btn-success">Edit in Cart</button></a>
+        {{else}}
+        <a href="/cart/{{product.id}}?quantity=1"><button class="btn btn-primary">Add to Cart</button></a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
